@@ -18,14 +18,8 @@ app = Flask(__name__)
 @app.route('/')
 def status():
 
-    # Attempt to load current statistics, if available:
-    for mins in range(0,30):
-        try:
-            json_file = CheckStatus(date=datetime.datetime.today()-datetime.timedelta(minutes=mins)).output().path
-            #json_file = "../state/monitor/checkstatus.2016-11-22T1110"
-            services = load_services(json_file)
-        except Exception as e:
-            app.logger.info("Could not load %i mins ago..." % mins)
+    # Get services and status:
+    services = load_service_status()
 
     # Log collected data:
     #app.logger.info(json.dumps(services, indent=4))
@@ -33,6 +27,40 @@ def status():
     # And render
     return render_template('dashboard.html', title="Status", services=services)
 
+
+@app.route('/overview')
+def overview():
+
+    # Get services and status:
+    services = load_service_status()
+
+    # Log collected data:
+    #app.logger.info(json.dumps(services, indent=4))
+
+    # And render
+    return render_template('overview.html', title="Status", services=services)
+
+
+def load_service_status():
+    services = None
+    # Attempt to load current statistics, backtracking until stats are available:
+    for mins in range(0,1000):
+        try:
+            status_date = datetime.datetime.today()-datetime.timedelta(minutes=mins)
+            json_file = CheckStatus(date=status_date).output().path
+            #json_file = "../state/monitor/checkstatus.2016-11-22T1110"
+            services = load_services(json_file)
+            services['status_date'] = status_date
+            services['status_date_delta'] = mins
+            if( mins > 1 ):
+                status['status_date_warning'] = "Status data is %s minutes old!" % mins
+        except Exception as e:
+            app.logger.info("Could not load %i mins ago..." % mins)
+
+    if services is None:
+        abort(500, "Could not load a recent service status file!")
+
+    return services
 
 def load_services(json_file):
     app.logger.info("Attempting to load %s" % json_file)

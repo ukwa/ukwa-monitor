@@ -1,0 +1,29 @@
+<!doctype html>
+<head>
+    <title>{{ title }}</title>
+    <meta http-equiv="refresh" content="60">
+    <style>
+#h3-pc-daily {
+  fill: green !important;
+}
+#pc-daily-rate {
+  animation: draws 3s linear infinite;
+}
+#hdfs-prod {
+  fill: orange !important;
+}
+@keyframes draws {
+    0% {
+        stroke-dashoffset: 90;
+    }
+    100% {
+        stroke-dashoffset: 0;
+    }
+}
+    </style>
+</head>
+<body>
+
+{% include 'overview.svg' %}
+
+</body>
