@@ -34,11 +34,21 @@ def overview():
     # Get services and status:
     services = load_service_status()
 
+    # Set up colour mappings:
+    colours = {}
+    colours["status-alert"] = '#E73F3F'
+    colours['status-warning'] = '#F76C27'
+    colours['status-okay'] = '#E7E737'
+    colours['status-in-flux'] = '#6D9DD1'
+    colours['status-oos'] = '#6D9DD1'
+    colours['status-good'] = 'rgb(28, 184, 65)'
+    colours['status-unknown'] = "red"
+
     # Log collected data:
     #app.logger.info(json.dumps(services, indent=4))
 
     # And render
-    return render_template('overview.html', title="Status", services=services)
+    return render_template('overview.html', title="Overview", services=services, colours=colours)
 
 
 def load_service_status():

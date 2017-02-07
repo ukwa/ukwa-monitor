@@ -4,7 +4,7 @@
     <meta http-equiv="refresh" content="60">
     <style>
 #h3-pc-daily {
-  fill: green !important;
+  fill: {{ colours[ services['jobs']['daily']['state']['status-class'] ] }} !important;
 }
 #pc-daily-rate {
   animation: draws 3s linear infinite;
