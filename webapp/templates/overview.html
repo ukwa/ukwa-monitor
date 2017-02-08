@@ -3,12 +3,14 @@
     <title>{{ title }}</title>
     <meta http-equiv="refresh" content="60">
     <style>
-#h3-pc-daily {
-  fill: {{ colours[ services['jobs']['daily']['state']['status-class'] ] }} !important;
+{% for job in ['daily', 'weekly', 'monthly', 'quarterly', 'six-monthly', 'annual'] %}
+#h3-pc-{{ job }} {
+  fill: {{ colours[ services['jobs'][job]['state']['status-class'] ] }} !important;
 }
-#pc-daily-rate {
+#pc-{{ job }}-rate {
   animation: draws 3s linear infinite;
 }
+{% endfor %}
 #hdfs-prod {
   fill: orange !important;
 }
@@ -20,10 +22,15 @@
         stroke-dashoffset: 0;
     }
 }
+#overview-map {
+    text-align: center;
+}
     </style>
 </head>
 <body>
 
+<div id="overview-map">
 {% include 'overview.svg' %}
+</div>
 
 </body>
