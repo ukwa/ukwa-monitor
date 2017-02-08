@@ -48,4 +48,10 @@
 {% include 'overview.svg' %}
 </div>
 
+{% if 'status_date_warning' in services %}
+<p>
+    {{ services['status_date_warning'] }}
+</p>
+{% endif %}
+
 </body>
