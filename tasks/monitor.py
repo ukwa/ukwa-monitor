@@ -4,15 +4,24 @@ import luigi
 import socket
 import logging
 import requests
+import requests.adapters
 import datetime
 import xml.etree.ElementTree as etree
 from hapy import hapy
+from multiprocessing import Pool, Process
+
 
 logger = logging.getLogger('luigi-interface')
 
 # Avoid hangs when systems are unreachable:
-TIMEOUT = 6
+TIMEOUT = 10
 socket.setdefaulttimeout(TIMEOUT)
+
+# Set up a request session that does not retry:
+s = requests.Session()
+a = requests.adapters.HTTPAdapter(max_retries=1)
+s.mount('http://', a)
+s.mount('https://', a)
 
 
 class CheckStatus(luigi.Task):
@@ -30,31 +39,123 @@ class CheckStatus(luigi.Task):
 
     def run(self):
         services = self.load_as_json(self.services)
+        services['timestamp'] = datetime.datetime.utcnow().isoformat()
 
+        pool = Pool(20)
+
+        # Parallel check for H3 job status:
+        argsv = []
         for job in services.get('jobs', []):
             server = services['servers'][services['jobs'][job]['server']]
             server_url = server['url']
             server_user =  server['user']
             server_pass = os.environ['HERITRIX_PASSWORD']
             # app.logger.info(json.dumps(server, indent=4))
-            services['jobs'][job]['state'] = self.get_h3_status(services['jobs'][job]['name'], server_url, server_user, server_pass)
             services['jobs'][job]['url'] = server_url
+            argsv.append((services['jobs'][job]['name'], job, server_url, server_user, server_pass))
+        # Wait for all...
+        results = pool.map(get_h3_status, argsv)
+        for job, state in results:
+            services['jobs'][job]['state'] = state
 
+        # Parallel check for queue statuses:
+        argsv = []
         for queue in services.get('queues', []):
             server_prefix = services['servers'][services['queues'][queue]['server']]['prefix']
             services['queues'][queue]['prefix'] = server_prefix
-            services['queues'][queue]['state'] = self.get_queue_status(services['queues'][queue]['name'], server_prefix)
+            queue_name = services['queues'][queue]['name']
+            argsv.append((queue_name, queue, server_prefix))
+        # Wait for all...
+        results = pool.map(get_queue_status, argsv)
+        for queue, state in results:
+            services['queues'][queue]['state'] = state
 
+        # Parallel check for HTTP status:
+        argsv = []
         for http in services.get('http', []):
-            services['http'][http]['state'] = self.get_http_status(services['http'][http]['url'])
+            argsv.append((http,services['http'][http]['url']))
+        # Wait for all...
+        results = pool.map(get_http_status, argsv)
+        for http, state in results:
+            services['http'][http]['state'] = state
 
+        argsv = []
         for hdfs in services.get('hdfs', []):
-            services['hdfs'][hdfs]['state'] = self.get_hdfs_status(services['hdfs'][hdfs])
+            argsv.append((hdfs, services['hdfs'][hdfs]['url']))
+        # Wait for all...
+        results = pool.map(get_hdfs_status, argsv)
+        for hdfs, state in results:
+            services['hdfs'][hdfs]['state'] = state
 
         with self.output().open('w') as f:
             f.write('{}'.format(json.dumps(services, indent=4)))
 
-    def get_h3_status(self, job, server_url, server_user, server_pass):
+    def load_as_json(self, filename):
+        script_dir = os.path.dirname(__file__)
+        file_path = os.path.join(script_dir, filename)
+        with open(file_path, 'r') as fi:
+            return json.load(fi)
+
+
+def get_queue_status(args):
+    queue, queue_id, server_prefix = args
+    state = {}
+    try:
+        logger.info("Getting status for queue %s on %s" % (queue, server_prefix))
+        qurl = '%s%s' % (server_prefix, queue)
+        # app.logger.info("GET: %s" % qurl)
+        r = s.get(qurl, timeout=(TIMEOUT, TIMEOUT))
+        state['details'] = r.json()
+        state['count'] = "{:0,}".format(state['details']['messages'])
+        if 'error' in state['details']:
+            state['status'] = "ERROR"
+            state['status-class'] = "status-alert"
+            state['error'] = state['details']['reason']
+        elif state['details']['consumers'] == 0:
+            state['status'] = "BECALMED"
+            state['status-class'] = "status-oos"
+            state['error'] = 'No consumers!'
+        else:
+            state['status'] = state['details']['messages']
+            state['status-class'] = "status-good"
+    except Exception as e:
+        state['status'] = "DOWN"
+        state['status-class'] = "status-alert"
+        logger.error("Get Queue Status failed. %s" % e)
+
+    return queue_id, state
+
+
+def get_hdfs_status(args):
+    hdfs_id, url = args
+    state = {}
+    try:
+        logger.info("Getting status for hdfs %s" % (url))
+        r = s.get(url, timeout=(TIMEOUT, TIMEOUT))
+        state['status'] = "%s" % r.status_code
+        if r.status_code / 100 == 2:
+            state['status-class'] = "status-good"
+            tree = etree.fromstring(r.text, etree.HTMLParser())
+            percent = tree.xpath("//div[@id='dfstable']//tr[5]/td[3]")[0].text
+            percent = percent.replace(" ", "")
+            state['percent'] = percent
+            state['remaining'] = tree.xpath("//div[@id='dfstable']//tr[4]/td[3]")[0].text.replace(" ", "")
+            underr = int(tree.xpath("//div[@id='dfstable']//tr[10]/td[3]")[0].text)
+            if underr != 0:
+                state['status'] = "HDFS has %i under-replicated blocks!" % underr
+                state['status-class'] = "status-warning"
+        else:
+            state['status-class'] = "status-warning"
+    except Exception as e:
+        logger.exception(e)
+        state['status'] = "DOWN"
+        state['status-class'] = "status-alert"
+
+    return hdfs_id, state
+
+
+def get_h3_status(args):
+        job, job_id, server_url, server_user, server_pass = args
         # Set up connection to H3:
         h = hapy.Hapy(server_url, username=server_user, password=server_pass, timeout=TIMEOUT)
         state = {}
@@ -85,83 +186,26 @@ class CheckStatus(luigi.Task):
         else:
             state['status-class'] = "status-warning"
 
-        return state
+        return job_id, state
 
-    def get_queue_status(self, queue, server_prefix):
-        state = {}
-        try:
-            logger.info("Getting status for queue %s on %s" % (queue, server_prefix))
-            qurl = '%s%s' % (server_prefix, queue)
-            # app.logger.info("GET: %s" % qurl)
-            r = requests.get(qurl, timeout=TIMEOUT)
-            state['details'] = r.json()
-            state['count'] = "{:0,}".format(state['details']['messages'])
-            if 'error' in state['details']:
-                state['status'] = "ERROR"
-                state['status-class'] = "status-alert"
-                state['error'] = state['details']['reason']
-            elif state['details']['consumers'] == 0:
-                state['status'] = "BECALMED"
-                state['status-class'] = "status-oos"
-                state['error'] = 'No consumers!'
-            else:
-                state['status'] = state['details']['messages']
-                state['status-class'] = "status-good"
-        except Exception as e:
-            state['status'] = "DOWN"
-            state['status-class'] = "status-alert"
-            logger.error("Get Queue Status failed. %s" % e)
 
-        return state
+def get_http_status(args):
+    http, url = args
+    state = {}
+    try:
+        logger.info("Getting status for %s" % (url))
+        r = s.get(url, allow_redirects=False, timeout=(TIMEOUT,TIMEOUT))
+        state['status'] = "%s" % r.status_code
+        if r.status_code / 100 == 2 or r.status_code / 100 == 3:
+            state['status'] = "%.3fs" % r.elapsed.total_seconds()
+            state['status-class'] = "status-good"
+        else:
+            state['status-class'] = "status-warning"
+    except:
+        state['status'] = "DOWN"
+        state['status-class'] = "status-alert"
 
-    def get_http_status(self, url):
-        state = {}
-        try:
-            logger.info("Getting status for %s" % (url))
-            r = requests.get(url, allow_redirects=False, timeout=TIMEOUT)
-            state['status'] = "%s" % r.status_code
-            if r.status_code / 100 == 2 or r.status_code / 100 == 3:
-                state['status'] = "%.3fs" % r.elapsed.total_seconds()
-                state['status-class'] = "status-good"
-            else:
-                state['status-class'] = "status-warning"
-        except:
-            state['status'] = "DOWN"
-            state['status-class'] = "status-alert"
-
-        return state
-
-    def get_hdfs_status(self, hdfs):
-        state = {}
-        try:
-            logger.info("Getting status for hdfs %s" % (hdfs))
-            r = requests.get(hdfs['url'], timeout=TIMEOUT)
-            state['status'] = "%s" % r.status_code
-            if r.status_code / 100 == 2:
-                state['status-class'] = "status-good"
-                tree = etree.fromstring(r.text, etree.HTMLParser())
-                percent = tree.xpath("//div[@id='dfstable']//tr[5]/td[3]")[0].text
-                percent = percent.replace(" ", "")
-                state['percent'] = percent
-                state['remaining'] = tree.xpath("//div[@id='dfstable']//tr[4]/td[3]")[0].text.replace(" ", "")
-                underr = int(tree.xpath("//div[@id='dfstable']//tr[10]/td[3]")[0].text)
-                if underr != 0:
-                    state['status'] = "HDFS has %i under-replicated blocks!" % underr
-                    state['status-class'] = "status-warning"
-            else:
-                state['status-class'] = "status-warning"
-        except Exception as e:
-            logger.exception(e)
-            state['status'] = "DOWN"
-            state['status-class'] = "status-alert"
-
-        return state
-
-    def load_as_json(self, filename):
-        script_dir = os.path.dirname(__file__)
-        file_path = os.path.join(script_dir, filename)
-        with open(file_path, 'r') as fi:
-            return json.load(fi)
+    return http, state
 
 
 if __name__ == '__main__':

@@ -24,17 +24,17 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.0724445"
-     inkscape:cx="526.18109"
-     inkscape:cy="289.32314"
+     inkscape:zoom="1.0737884"
+     inkscape:cx="368.32876"
+     inkscape:cy="372.04724"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
-     inkscape:window-width="1654"
+     inkscape:window-width="1650"
      inkscape:window-height="1005"
-     inkscape:window-x="33"
-     inkscape:window-y="0"
-     inkscape:window-maximized="0">
+     inkscape:window-x="30"
+     inkscape:window-y="1"
+     inkscape:window-maximized="1">
     <inkscape:grid
        type="xygrid"
        id="grid3006"
@@ -51,7 +51,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -61,12 +61,12 @@
      id="layer1"
      transform="translate(0,-308.2677)">
     <rect
-       style="fill:#f9f9f9;stroke:#000000;stroke-width:1.50000000000000000;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       style="fill:#f9f9f9;stroke:#000000;stroke-width:1.5;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
        id="rect3903"
-       width="100"
-       height="410"
-       x="228.60156"
-       y="380.36218"
+       width="121.39844"
+       height="330"
+       x="238.60156"
+       y="372.36218"
        ry="14" />
     <path
        sodipodi:type="arc"
@@ -83,7 +83,7 @@
     </path>
     <path
        style="fill:none;stroke:#000000;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:3, 3;stroke-dashoffset:0"
-       d="m 60,582.36218 c 70,-30 152.15099,-138.7849 220,-132"
+       d="m 60,582.36218 c 70,-30 140,-80 210,-130"
        id="pc-daily-rate"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cc">
@@ -94,14 +94,14 @@
        sodipodi:nodetypes="cc"
        inkscape:connector-curvature="0"
        id="pc-weekly-rate"
-       d="m 60,592.36218 c 70,-30 152.15099,-88.7849 220,-82"
+       d="m 60,592.36218 c 70,-30 150,-70 210,-100"
        style="fill:none;stroke:#000000;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:3, 3;stroke-dashoffset:0"
        inkscape:label="#path3867">
       <title
          id="title3869">Weekly Crawl Downloads</title>
     </path>
     <path
-       transform="matrix(1,0,0,-1,-61.398437,704.45666)"
+       transform="matrix(0.7,0,0,-0.7,32.601563,628.72832)"
        d="m 360,254.09448 a 20,20 0 1 1 -40,0 20,20 0 1 1 40,0 z"
        sodipodi:ry="20"
        sodipodi:rx="20"
@@ -124,7 +124,7 @@
        sodipodi:rx="20"
        sodipodi:ry="20"
        d="m 360,254.09448 a 20,20 0 1 1 -40,0 20,20 0 1 1 40,0 z"
-       transform="matrix(1,0,0,-1,-61.398437,766.45666)">
+       transform="matrix(0.7,0,0,-0.7,32.601563,670.52828)">
       <title
          id="title3851">Weekly Crawl</title>
     </path>
@@ -132,7 +132,7 @@
        sodipodi:nodetypes="cc"
        inkscape:connector-curvature="0"
        id="pc-monthly-rate"
-       d="m 60,602.36218 c 70,-30 152.15099,-32.7849 220,-26"
+       d="m 60,602.36218 c 70,-30 140,-40 210,-70"
        style="fill:none;stroke:#000000;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:3, 3;stroke-dashoffset:0"
        inkscape:label="#path3871">
       <title
@@ -141,7 +141,7 @@
     <path
        inkscape:label="#path3867"
        style="fill:none;stroke:#000000;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:3, 3;stroke-dashoffset:0"
-       d="m 60,612.36218 c 70,-30 152.15099,17.2151 220,24"
+       d="m 60,612.36218 c 70,-30 140,-30 210,-40"
        id="pc-quarterly-rate"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cc">
@@ -158,12 +158,12 @@
        sodipodi:rx="20"
        sodipodi:ry="20"
        d="m 360,254.09448 a 20,20 0 1 1 -40,0 20,20 0 1 1 40,0 z"
-       transform="matrix(1,0,0,-1,-61.398437,828.45666)">
+       transform="matrix(0.7,0,0,-0.7,32.601563,712.32831)">
       <title
          id="title3881">Monthly Crawl</title>
     </path>
     <path
-       transform="matrix(1,0,0,-1,-61.398437,890.45667)"
+       transform="matrix(0.7,0,0,-0.7,32.601563,754.12834)"
        d="m 360,254.09448 a 20,20 0 1 1 -40,0 20,20 0 1 1 40,0 z"
        sodipodi:ry="20"
        sodipodi:rx="20"
@@ -178,7 +178,7 @@
     </path>
     <path
        style="fill:none;stroke:#000000;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:3, 3;stroke-dashoffset:0"
-       d="m 60,622.36218 c 70,-30 152.15099,69.2151 220,76"
+       d="m 60,622.36218 c 70,-30 210,-20 210,0"
        id="pc-six-monthly-rate"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cc"
@@ -190,14 +190,14 @@
        sodipodi:nodetypes="cc"
        inkscape:connector-curvature="0"
        id="pc-annual-rate"
-       d="m 60,632.36218 c 70,-30 152.15099,119.2151 220,126"
+       d="m 60,632.36218 c 70,-30 150,0 210,30"
        style="fill:none;stroke:#000000;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:3, 3;stroke-dashoffset:0"
        inkscape:label="#path3867">
       <title
          id="title3893">Annual Crawl Downloads</title>
     </path>
     <path
-       transform="matrix(1,0,0,-1,-61.398437,952.4567)"
+       transform="matrix(0.7,0,0,-0.7,32.601563,795.92833)"
        d="m 360,254.09448 a 20,20 0 1 1 -40,0 20,20 0 1 1 40,0 z"
        sodipodi:ry="20"
        sodipodi:rx="20"
@@ -220,23 +220,23 @@
        sodipodi:rx="20"
        sodipodi:ry="20"
        d="m 360,254.09448 a 20,20 0 1 1 -40,0 20,20 0 1 1 40,0 z"
-       transform="matrix(1,0,0,-1,-61.398437,1014.4567)">
+       transform="matrix(0.7,0,0,-0.7,32.601563,837.72835)">
       <title
          id="title3901">Annual Crawl</title>
     </path>
     <text
        xml:space="preserve"
        style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial"
-       x="278"
+       x="298.69922"
        y="400.36218"
        id="text3905"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan3907"
-         x="278"
+         x="298.69922"
          y="400.36218">Frequent</tspan><tspan
          sodipodi:role="line"
-         x="278"
+         x="298.69922"
          y="420.36218"
          id="tspan3909">Crawls</tspan></text>
     <text

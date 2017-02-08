@@ -45,7 +45,7 @@ def overview():
     colours['status-unknown'] = "red"
 
     # Log collected data:
-    #app.logger.info(json.dumps(services, indent=4))
+    # app.logger.info(json.dumps(services, indent=4))
 
     # And render
     return render_template('overview.html', title="Overview", services=services, colours=colours)
@@ -54,16 +54,17 @@ def overview():
 def load_service_status():
     services = None
     # Attempt to load current statistics, backtracking until stats are available:
-    for mins in range(0,1000):
+    for mins in range(0,100):
         try:
-            status_date = datetime.datetime.today()-datetime.timedelta(minutes=mins)
+            status_date = datetime.datetime.today() - datetime.timedelta(minutes=mins)
             json_file = CheckStatus(date=status_date).output().path
             #json_file = "../state/monitor/checkstatus.2016-11-22T1110"
             services = load_services(json_file)
-            services['status_date'] = status_date
+            services['status_date'] = status_date.isoformat()
             services['status_date_delta'] = mins
             if( mins > 1 ):
                 status['status_date_warning'] = "Status data is %s minutes old!" % mins
+            break
         except Exception as e:
             app.logger.info("Could not load %i mins ago..." % mins)
 
@@ -158,5 +159,5 @@ if __name__ == "__main__":
     os.environ['CDX_SERVER'] = "http://localhost:9090/fc"
     os.environ['WEBHDFS_PREFIX'] = "http://localhost:50070/webhdfs/v1"
     os.environ['HDFS_PREFIX'] = "/1_data/pulse"
-    os.environ['LUIGI_STATE_FOLDER'] = ".."
+    os.environ['LUIGI_STATE_FOLDER'] = "/Users/andy/Documents/workspace/ukwa-monitor"
     app.run(debug=True, port=5505, use_reloader=False)

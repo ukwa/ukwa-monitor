@@ -1,48 +1,71 @@
 {
   "servers": {
     "AMQP-FC": {
-      "prefix": "http://guest:guest@127.0.0.1:15672/api/queues/%2F/"
-    },
-    "AMQP-PC": {
-      "prefix": "http://guest:guest@127.0.0.1:15672/api/queues/%2F/"
+      "prefix": "http://guest:guest@192.168.45.26:15672/api/queues/%2F/",
+      "user_prefix": "http://192.168.45.26:15672/#/queues/%2F/"
     },
     "AMQP-DC": {
-      "prefix": "http://guest:guest@127.0.0.1:15672/api/queues/%2F/"
+      "prefix": "http://guest:guest@192.168.45.53:15672/api/queues/%2F/",
+      "user_prefix": "http://192.168.45.53:15672/#/queues/%2F/"
     },
     "H3-FC0": {
-      "url":"https://localhost:8443/",
+      "url":"https://crawler03.bl.uk:8443/",
       "user": "admin"
     },
     "H3-FC1": {
-      "url":"https://localhost:8443/",
+      "url":"https://crawler03.bl.uk:8444/",
       "user": "admin"
     },
     "H3-FC2": {
-      "url":"https://localhost:8443/",
+      "url":"https://crawler03.bl.uk:8445/",
       "user": "admin"
     },
     "H3-FC3": {
-      "url":"https://localhost:8443/",
+      "url":"https://crawler03.bl.uk:8446/",
       "user": "admin"
     },
+    "AMQP-PC": {
+      "prefix": "http://guest:guest@192.168.45.86:15672/api/queues/%2F/",
+      "user_prefix": "http://192.168.45.86:15672/#/queues/%2F/"
+    },
     "H3-PC0": {
-      "url":"https://localhost:8443/",
+      "url":"https://crawler07:8443/",
+      "user": "admin"
+    },
+    "H3-PC1": {
+      "url":"https://crawler07:8444/",
+      "user": "admin"
+    },
+    "H3-PC2": {
+      "url":"https://crawler07:8445/",
+      "user": "admin"
+    },
+    "H3-PC3": {
+      "url":"https://crawler07:8446/",
+      "user": "admin"
+    },
+    "H3-PC4": {
+      "url":"https://crawler07:8447/",
+      "user": "admin"
+    },
+    "H3-PC5": {
+      "url":"https://crawler07:8448/",
       "user": "admin"
     },
     "H3-DC0": {
-      "url":"https://localhost:8443/",
+      "url":"https://192.168.45.12:8443/",
       "user": "admin"
     },
     "H3-DC1": {
-      "url":"https://localhost:8443/",
+      "url":"https://192.168.45.12:8444/",
       "user": "admin"
     },
     "H3-DC2": {
-      "url":"https://localhost:8443/",
+      "url":"https://192.168.45.12:8445/",
       "user": "admin"
     },
     "H3-DC3": {
-      "url":"https://localhost:8443/",
+      "url":"https://192.168.45.12:8446/",
       "user": "admin"
     }
   },
@@ -170,23 +193,23 @@
     },
     "weekly-2": {
       "name": "weekly",
-      "server": "H3-PC0"
+      "server": "H3-PC1"
     },
     "monthly-2": {
       "name": "monthly",
-      "server": "H3-PC0"
+      "server": "H3-PC2"
     },
     "quarterly-2": {
       "name": "quarterly",
-      "server": "H3-PC0"
+      "server": "H3-PC3"
     },
     "six-monthly-2": {
       "name": "sixmonthly",
-      "server": "H3-PC0"
+      "server": "H3-PC4"
     },
     "annual-2": {
       "name": "annual",
-      "server": "H3-PC0"
+      "server": "H3-PC5"
     }
   },
   "http": {
@@ -207,8 +230,8 @@
       "url": "https://www.webarchive.org.uk/act"
     },
     "wayback-prod": {
-      "name": "Wayback",
-      "url": "http://crawler03.bl.uk:8080/wayback/"
+      "name": "QA Wayback",
+      "url": "http://act1-wayback.wa.bl.uk:8080/wayback/"
     },
     "act-ddb": {
       "name": "ACT DDB",
@@ -222,6 +245,46 @@
       "name": "CDX DDB",
       "url": "http://192.168.45.38:8080/fc"
     },
+    "wrender-ddb": {
+      "name": "Web Render DDB",
+      "url": "http://webrender.bl.uk:8010/render?url=http://monitor.wa.bl.uk:5000/"
+    },
+    "act-dev": {
+      "name": "ACT",
+      "url": "http://crawler07:9000/act/login"
+    },
+    "wb-dev": {
+      "name": "Wayback",
+      "url": "http://crawler07:9080/archive/"
+    },
+    "cdx-dev": {
+      "name": "CDX Server",
+      "url": "http://192.168.45.21:8080/ddhapt-beta"
+    },
+    "wrender-dev": {
+      "name": "Web Render",
+      "url": "http://crawler07:8010/render?url=http://monitor.wa.bl.uk:5000/"
+    },
+    "pdf2htmlex-dev": {
+      "name": "PDF2HTMLex",
+      "url": "http://crawler07:5005/convert?url=http://data.webarchive.org.uk/crawl-test-site/resources/documents/lorem-ipsum.PDFA1-a.pdf"
+    },
+    "warcprox-dev": {
+      "name": "warcprox - can't be HTTP-checked easily!",
+      "url": "http://crawler07:8000/"
+    },
+    "amqp-dev": {
+      "name": "RabbitMQ",
+      "url": "http://crawler07:15672/"
+    },
+    "monitrix-dev": {
+      "name": "Monitrix",
+      "url": "http://crawler07:5601/"
+    },
+    "luigi-dev": {
+      "name": "Luigi Dashboard",
+      "url": "http://crawler07:5082/"
+    },
     "ukwa": {
       "name": "HTTPD",
       "url": "http://www.webarchive.org.uk/"
@@ -232,11 +295,11 @@
     },
     "ukwa-as": {
       "name": "Access Tool Search",
-      "url": "http://www.webarchive.org.uk/ukwa/search?text=test+search&option_search=text&submit_quick=search"
+      "url": "http://www.webarchive.org.uk/ukwa/search?text=test&option_search=text&submit_quick=search"
     },
     "ukwa-wb": {
       "name": "Wayback",
-      "url": "http://www.webarchive.org.uk/wayback/archive/*/http://www.bl.uk/"
+      "url": "https://www.webarchive.org.uk/wayback/archive/20160215012242/http://www.bl.uk/"
     },
     "ukwa-mt": {
       "name": "Mementos",
@@ -245,6 +308,14 @@
     "ukwa-sh": {
       "name": "Shine",
       "url": "https://www.webarchive.org.uk/shine"
+    },
+    "webhdfs-prod": {
+       "name": "WebHDFS Gateway",
+       "url": "http://hdfs.gtw.wa.bl.uk:14000/webhdfs/v1/?op=LISTSTATUS&user.name=tomcat"
+    },
+    "webhdfs-dev": {
+       "name": "WebHDFS DEV",
+       "url": "http://hadoop.ddb.wa.bl.uk:14000/webhdfs/v1/?op=LISTSTATUS&user.name=tomcat"
     }
   },
   "hdfs": {
@@ -253,10 +324,10 @@
       "host": "nellie.bl.uk",
       "url": "http://nellie.bl.uk:50070/dfshealth.jsp"
     },
-    "hdfs-ddb": {
-      "name": "HDFS DDB",
+    "hdfs-dev": {
+      "name": "HDFS DEV",
       "host": "hadoop.ddb.wa.bl.uk",
-      "url": "http://hadoop.ddb.wa.bl.uk:50070"
+      "url": "http://hadoop.ddb.wa.bl.uk:50070/dfshealth.jsp"
     }
   }
 }
