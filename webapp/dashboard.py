@@ -2,6 +2,7 @@
 import io
 import os
 import json
+import logging
 import datetime
 from requests.utils import quote
 import xml.dom.minidom
@@ -14,6 +15,12 @@ from flask import Flask
 from flask import render_template, redirect, url_for, request, Response, send_file, abort
 app = Flask(__name__)
 
+@app.before_first_request
+def setup_logging():
+    if not app.debug:
+        # In production mode, add log handler to sys.stderr.
+        app.logger.addHandler(logging.StreamHandler())
+        app.logger.setLevel(logging.INFO)
 
 @app.route('/')
 def status():
@@ -30,6 +37,8 @@ def status():
 
 @app.route('/overview')
 def overview():
+
+    app.logger.info(os.environ)
 
     # Get services and status:
     services = load_service_status()
@@ -54,7 +63,7 @@ def overview():
 def load_service_status():
     services = None
     # Attempt to load current statistics, backtracking until stats are available:
-    for mins in range(0,500):
+    for mins in range(0,60):
         try:
             status_date = datetime.datetime.today() - datetime.timedelta(minutes=mins)
             json_file = CheckStatus(date=status_date).output().path
@@ -66,6 +75,7 @@ def load_service_status():
                 services['status_date_warning'] = "Status data is %s minutes old!" % mins
         except Exception as e:
             app.logger.info("Could not load %i mins ago... %s" % (mins, e))
+            #app.logger.exception(e)
 
         if services is not None:
             break
@@ -161,5 +171,5 @@ if __name__ == "__main__":
     os.environ['CDX_SERVER'] = "http://localhost:9090/fc"
     os.environ['WEBHDFS_PREFIX'] = "http://localhost:50070/webhdfs/v1"
     os.environ['HDFS_PREFIX'] = "/1_data/pulse"
-    os.environ['LUIGI_STATE_FOLDER'] = "/Users/andy/Documents/workspace/ukwa-monitor"
-    app.run(debug=True, port=5505, use_reloader=False)
+    os.environ['LUIGI_STATE_FOLDER'] = "/var/log/luigi/task-state/"
+    app.run(debug=True, port=5000, host="0.0.0.0", use_reloader=False)

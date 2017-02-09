@@ -6,7 +6,7 @@ import logging
 import requests
 import requests.adapters
 import datetime
-import xml.etree.ElementTree as etree
+import lxml.etree as etree
 from hapy import hapy
 from multiprocessing import Pool, Process
 
