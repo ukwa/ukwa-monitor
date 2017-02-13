@@ -82,6 +82,16 @@
                     </div>
 
                 </div>
+                <div class="pure-u-1-1">
+
+                    <div class="pure-g">
+                        {% set http_set = ['wrender-dev', 'luigi-dev'] %}
+                        {% include '_http.html' %}
+                        {% set http_set = ['monitrix-dev', 'amqp-dev'] %}
+                        {% include '_http.html' %}
+                    </div>
+
+                </div>
                 <div class="pure-u-1-1 dashboard-title-small dashboard-piece-greybg">
                     <h1>DOMAIN CRAWL</h1>
                 </div>
@@ -204,11 +214,9 @@
                 <div class="pure-u-1-1">
 
                     <div class="pure-g">
-                        {% set http_set = ['act-dev','wb-dev','cdx-dev'] %}
+                        {% set http_set = ['act-dev', 'wb-dev'] %}
                         {% include '_http.html' %}
-                        {% set http_set = ['wrender-dev', 'luigi-dev', 'monitrix-dev'] %}
-                        {% include '_http.html' %}
-                        {% set http_set = ['pdf2htmlex-dev', 'amqp-dev'] %}
+                        {% set http_set = ['pdf2htmlex-dev', 'cdx-dev'] %}
                         {% include '_http.html' %}
                     </div>
 
