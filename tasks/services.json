@@ -263,7 +263,7 @@
     },
     "wrender-dev": {
       "name": "Web Render",
-      "url": "http://crawler07:8010/render?url=http://monitor.wa.bl.uk:5000/"
+      "url": "http://crawler07:8010/render?url=http://192.168.45.204:5000/"
     },
     "pdf2htmlex-dev": {
       "name": "PDF2HTMLex",
