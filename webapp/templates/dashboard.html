@@ -85,9 +85,7 @@
                 <div class="pure-u-1-1">
 
                     <div class="pure-g">
-                        {% set http_set = ['wrender-dev', 'luigi-dev'] %}
-                        {% include '_http.html' %}
-                        {% set http_set = ['monitrix-dev', 'amqp-dev'] %}
+                        {% set http_set = ['wrender-dev', 'amqp-dev'] %}
                         {% include '_http.html' %}
                     </div>
 
@@ -155,6 +153,17 @@
                     </div>
                 </div>
 
+                <div class="pure-u-1-1 dashboard-title-small dashboard-piece-greybg">
+                    <h1>MANAGEMENT &amp; MONITORING (DEV)</h1>
+                </div>
+                <div class="pure-u-1-1">
+
+                    <div class="pure-g">
+                        {% set http_set = ['luigi-dev', 'monitrix-dev'] %}
+                        {% include '_http.html' %}
+                    </div>
+
+                </div>
 
             </div>
 
