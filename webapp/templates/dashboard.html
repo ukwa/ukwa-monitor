@@ -129,6 +129,8 @@
                     <div class="pure-g">
                         {% set hdfs = services['hdfs']['hdfs-prod'] %}
                         {% include '_hdfs.html' %}
+                        {% set http_set = ['webhdfs-prod'] %}
+                        {% include '_http.html' %}
                     </div>
                 </div>
 
@@ -140,21 +142,13 @@
                     <div class="pure-g">
                         {% set hdfs = services['hdfs']['hdfs-dev'] %}
                         {% include '_hdfs.html' %}
-                    </div>
-                </div>
-
-                <div class="pure-u-1-1 dashboard-title-small dashboard-piece-greybg">
-                    <h1>WebHDFS</h1>
-                </div>
-                <div class="pure-u-1-1">
-                    <div class="pure-g">
-                        {% set http_set = ['webhdfs-prod', 'webhdfs-dev'] %}
+                        {% set http_set = ['webhdfs-dev'] %}
                         {% include '_http.html' %}
                     </div>
                 </div>
 
                 <div class="pure-u-1-1 dashboard-title-small dashboard-piece-greybg">
-                    <h1>MANAGEMENT &amp; MONITORING (DEV)</h1>
+                    <h1>MANAGEMENT &amp; MONITORING</h1>
                 </div>
                 <div class="pure-u-1-1">
 
