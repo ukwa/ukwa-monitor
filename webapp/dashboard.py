@@ -127,7 +127,7 @@ def get_rendered_original():
     if compressedendoffset:
         url = "%s&length=%s" % (url, compressedendoffset)
     app.logger.info("Requesting copy from HDFS: %s " % url)
-    r = requests.get(url)
+    r = requests.get(url, stream=True)
     app.logger.info("Loading from: %s" % r.url)
     r.raw.decode_content = False
     rl = ArcWarcRecordLoader()
