@@ -115,7 +115,7 @@ def get_rendered_original():
     qurl = "%s:%s" % (type, url)
     # Query CDX Server for the item
     app.logger.info("Querying CDX for prefix...")
-    (warc_filename, warc_offset) = lookup_in_cdx(qurl)
+    warc_filename, warc_offset, compressedendoffset = lookup_in_cdx(qurl)
 
     # If not found, say so:
     if warc_filename is None:
@@ -123,9 +123,11 @@ def get_rendered_original():
 
     # Grab the payload from the WARC and return it.
     WEBHDFS_PREFIX = os.environ['WEBHDFS_PREFIX']
-    app.logger.info("Requesting copy from HDFS")
-    r = requests.get("%s%s?op=OPEN&user.name=%s&offset=%s" % (WEBHDFS_PREFIX,
-                                                              warc_filename, webhdfs().user, warc_offset))
+    url = "%s%s?op=OPEN&user.name=%s&offset=%s" % (WEBHDFS_PREFIX, warc_filename, webhdfs().user, warc_offset)
+    if compressedendoffset:
+        url = "%s&length=%s" % (url, compressedendoffset)
+    app.logger.info("Requesting copy from HDFS: %s " % url)
+    r = requests.get(url)
     app.logger.info("Loading from: %s" % r.url)
     r.raw.decode_content = False
     rl = ArcWarcRecordLoader()
@@ -158,7 +160,12 @@ def lookup_in_cdx(qurl):
             for result in dom.getElementsByTagName('result'):
                 file = result.getElementsByTagName('file')[0].firstChild.nodeValue
                 compressedoffset = result.getElementsByTagName('compressedoffset')[0].firstChild.nodeValue
-                return file, compressedoffset
+                # Support compressed record length if present:
+                if( len(result.getElementsByTagName('compressedendoffset')) > 0):
+                    compressedendoffset = result.getElementsByTagName('compressedendoffset')[0].firstChild.nodeValue
+                else:
+                    compressedendoffset = None
+                return file, compressedoffset, compressedendoffset
         except Exception as e:
             app.logger.error("Lookup failed for %s!" % qurl)
             app.logger.exception(e)
@@ -166,7 +173,7 @@ def lookup_in_cdx(qurl):
         #    if de.firstChild.nodeValue == self.ts:
         #        # Excellent, it's been found:
         #        return
-    return None, None
+    return None, None, None
 
 
 if __name__ == "__main__":
