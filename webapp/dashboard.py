@@ -114,6 +114,7 @@ def get_rendered_original():
     # Query URL
     qurl = "%s:%s" % (type, url)
     # Query CDX Server for the item
+    app.logger.info("Querying CDX for prefix...")
     (warc_filename, warc_offset) = lookup_in_cdx(qurl)
 
     # If not found, say so:
@@ -122,17 +123,18 @@ def get_rendered_original():
 
     # Grab the payload from the WARC and return it.
     WEBHDFS_PREFIX = os.environ['WEBHDFS_PREFIX']
-    HDFS_PREFIX = os.environ['HDFS_PREFIX']
-    r = requests.get("%s%s%s?op=OPEN&user.name=%s&offset=%s" % (WEBHDFS_PREFIX, HDFS_PREFIX,
-                                                           warc_filename, webhdfs().user, warc_offset))
+    app.logger.info("Requesting copy from HDFS")
+    r = requests.get("%s%s?op=OPEN&user.name=%s&offset=%s" % (WEBHDFS_PREFIX,
+                                                              warc_filename, webhdfs().user, warc_offset))
     app.logger.info("Loading from: %s" % r.url)
     r.raw.decode_content = False
     rl = ArcWarcRecordLoader()
+    app.logger.info("Passing response to parser...")
     record = rl.parse_record_stream(DecompressingBufferedReader(stream=io.BytesIO(r.content)))
-    print(record)
-    print(record.length)
-    print(record.stream.limit)
+    app.logger.info("RESULT:")
+    app.logger.info(record)
 
+    app.logger.info("Returning stream...")
     return send_file(record.stream, mimetype=record.content_type)
 
     #return "Test %s@%s" % (warc_filename, warc_offset)

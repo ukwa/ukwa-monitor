@@ -60,6 +60,78 @@
      inkscape:groupmode="layer"
      id="layer1"
      transform="translate(0,-308.2677)">
+    <rect
+       style="fill:#f9f9f9;stroke:#000000;stroke-width:1.5;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect3469"
+       width="400"
+       height="90"
+       x="270"
+       y="502.36218"
+       ry="14"
+       inkscape:label="#rect3903">
+      <title
+         id="title3471">Domain Crawl</title>
+    </rect>
+    <rect
+       inkscape:label="#rect3903"
+       ry="14"
+       y="382.36218"
+       x="380"
+       height="110"
+       width="240"
+       id="rect3453"
+       style="fill:#f9f9f9;stroke:#000000;stroke-width:1.5;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0">
+      <title
+         id="title3455">Domain Crawl</title>
+    </rect>
+    <rect
+       style="fill:#f9f9f9;stroke:#000000;stroke-width:1.5;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect3457"
+       width="290"
+       height="180"
+       x="380"
+       y="702.36218"
+       ry="14"
+       inkscape:label="#rect3903">
+      <title
+         id="title3459">Domain Crawl</title>
+    </rect>
+    <rect
+       inkscape:label="#rect3903"
+       ry="14"
+       y="582.36218"
+       x="680"
+       height="90"
+       width="340"
+       id="rect3461"
+       style="fill:#f9f9f9;stroke:#000000;stroke-width:1.5;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0">
+      <title
+         id="title3463">Domain Crawl</title>
+    </rect>
+    <rect
+       style="fill:#f9f9f9;stroke:#000000;stroke-width:1.5;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect3465"
+       width="340"
+       height="100"
+       x="680"
+       y="692.36218"
+       ry="14"
+       inkscape:label="#rect3903">
+      <title
+         id="title3467">Domain Crawl</title>
+    </rect>
+    <rect
+       style="fill:#f9f9f9;stroke:#000000;stroke-width:1.5;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect3423"
+       width="340"
+       height="190"
+       x="680"
+       y="382.36218"
+       ry="14"
+       inkscape:label="#rect3903">
+      <title
+         id="title3425">Domain Crawl</title>
+    </rect>
     <path
        inkscape:connector-curvature="0"
        id="path3247"
@@ -92,7 +164,7 @@
        sodipodi:rx="20"
        sodipodi:ry="20"
        d="m 360,254.09448 a 20,20 0 1 1 -40,0 20,20 0 1 1 40,0 z"
-       transform="matrix(1,0,0,-1,92,712.45666)">
+       transform="matrix(1,0,0,-1,148.29053,678.95664)">
       <title
          id="title3778">HDFS</title>
     </path>
@@ -265,17 +337,6 @@
          id="tspan3913"
          x="110"
          y="352.36218">INGEST</tspan></text>
-    <text
-       xml:space="preserve"
-       style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial"
-       x="489.84619"
-       y="352.36218"
-       id="text3915"
-       sodipodi:linespacing="125%"><tspan
-         sodipodi:role="line"
-         id="tspan3917"
-         x="489.84619"
-         y="352.36218">PRESERVE</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial"
@@ -908,11 +969,694 @@
        inkscape:label="#rect3118"
        sodipodi:nodetypes="ccccccc"
        inkscape:connector-curvature="0"
-       id="webhdfs-gateway"
-       d="m 421,527.36218 20,0 6,-15 -6,-15 -20,0 -6,15 z"
+       id="map-reduce"
+       d="m 538.29053,439.86216 20,0 6,-15 -6,-15 -20,0 -6,15 z"
        style="fill:#ff0000;fill-opacity:1;stroke:#000000;stroke-width:1.5;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dashoffset:0">
       <title
-         id="title3281">WebHDFS Gateway</title>
+         id="title3281">Map-Reduce Load</title>
+    </path>
+    <text
+       xml:space="preserve"
+       style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial"
+       x="489.85443"
+       y="231.88927"
+       id="text3306"
+       sodipodi:linespacing="125%"
+       transform="translate(0,308.2677)"><tspan
+         sodipodi:role="line"
+         id="tspan3308"
+         x="489.85443"
+         y="231.88927" /></text>
+    <text
+       xml:space="preserve"
+       style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial"
+       x="488.10254"
+       y="462.90839"
+       id="text3310"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3312"
+         x="488.10254"
+         y="462.90839"
+         style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;font-family:Arial;-inkscape-font-specification:Arial">HDFS</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial"
+       x="428"
+       y="462.73749"
+       id="text3314"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3316"
+         x="428"
+         y="462.73749"
+         style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;font-family:Arial;-inkscape-font-specification:Arial">HttpFs</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial"
+       x="960"
+       y="762.35535"
+       id="text3318"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3320"
+         x="960"
+         y="762.35535">W3ACT</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial"
+       x="960"
+       y="432.36218"
+       id="text3322"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3324"
+         x="960"
+         y="432.36218">HTTPD</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial"
+       x="860"
+       y="432.19812"
+       id="text3326"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3328"
+         x="860"
+         y="432.19812">Access Tool</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial"
+       x="850"
+       y="492.18445"
+       id="text3330"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3332"
+         x="850"
+         y="492.18445">Access Tool</tspan><tspan
+         sodipodi:role="line"
+         x="850"
+         y="509.68445"
+         id="tspan3334">Search</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial"
+       x="970"
+       y="492.36218"
+       id="text3336"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3338"
+         x="970"
+         y="492.36218">OUKWA</tspan><tspan
+         sodipodi:role="line"
+         x="970"
+         y="509.86218"
+         id="tspan3342">Wayback</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial"
+       x="750"
+       y="492.35535"
+       id="text3346"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3348"
+         x="750"
+         y="492.35535">Shine</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial"
+       x="750"
+       y="562.36218"
+       id="text3350"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3352"
+         x="750"
+         y="562.36218">Mementos</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial"
+       x="960"
+       y="562.36218"
+       id="text3354"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3356"
+         x="960"
+         y="562.36218">Interject</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial"
+       x="860"
+       y="762.36218"
+       id="text3358"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3360"
+         x="860"
+         y="762.36218">QA</tspan><tspan
+         sodipodi:role="line"
+         x="860"
+         y="779.86218"
+         id="tspan3362">Wayback</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial"
+       x="740"
+       y="762.22546"
+       id="text3364"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3366"
+         x="740"
+         y="762.22546">PDF2HTMLex</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial"
+       x="480"
+       y="822.36218"
+       id="text3368"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3370"
+         x="480"
+         y="822.36218">Luigi</tspan><tspan
+         sodipodi:role="line"
+         x="480"
+         y="839.86218"
+         id="tspan3372">Scheduler</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial"
+       x="446.37531"
+       y="762.35535"
+       id="text3374"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         x="446.37531"
+         y="762.35535"
+         id="tspan3378">CDX</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial"
+       x="970"
+       y="632.36218"
+       id="text3382"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         x="970"
+         y="632.36218"
+         id="tspan3386">WCT</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial"
+       x="730"
+       y="632.36218"
+       id="text3390"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3392"
+         x="730"
+         y="632.36218">SPT</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial"
+       x="850"
+       y="632.36218"
+       id="text3394"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3396"
+         x="850"
+         y="632.36218">WCT</tspan><tspan
+         sodipodi:role="line"
+         x="850"
+         y="649.86218"
+         id="tspan3398">Wayback</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial"
+       x="750"
+       y="412.36218"
+       id="text3427"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3429"
+         x="750"
+         y="412.36218">Open</tspan><tspan
+         sodipodi:role="line"
+         x="750"
+         y="432.36218"
+         id="tspan3431">UKWA</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial"
+       x="530"
+       y="762.36218"
+       id="text3433"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3435"
+         x="530"
+         y="762.36218">SOLR</tspan></text>
+    <text
+       sodipodi:linespacing="125%"
+       id="text3437"
+       y="352.36218"
+       x="490"
+       style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial"
+       xml:space="preserve"><tspan
+         y="352.36218"
+         x="490"
+         id="tspan3439"
+         sodipodi:role="line">PRESERVE</tspan></text>
+    <path
+       transform="matrix(0.7,0,0,-0.7,190.29053,602.7283)"
+       d="m 360,254.09448 a 20,20 0 1 1 -40,0 20,20 0 1 1 40,0 z"
+       sodipodi:ry="20"
+       sodipodi:rx="20"
+       sodipodi:cy="254.09448"
+       sodipodi:cx="340"
+       id="httpfs-gateway"
+       style="fill:#ff0000;fill-opacity:1;stroke:#000000;stroke-width:2;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       sodipodi:type="arc"
+       inkscape:label="#httpfs-gateway">
+      <title
+         id="title3443">HttpFs Gateway</title>
+    </path>
+    <text
+       xml:space="preserve"
+       style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial"
+       x="548.28711"
+       y="462.73749"
+       id="text3445"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         x="548.28711"
+         y="462.73749"
+         id="tspan3449">Jobs</tspan></text>
+    <g
+       id="g3533"
+       transform="translate(-2.0086823,-2.7276498)">
+      <path
+         style="fill:#ff0000;fill-opacity:1;stroke:#000000;stroke-width:1.5;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dashoffset:0"
+         d="m 442.59178,513.86216 -20,0 0,30 20,0 10,-15 z"
+         id="path3473"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="cccccc"
+         inkscape:label="#rect3118">
+        <title
+           id="title3475">URL Queue for DC0</title>
+      </path>
+      <path
+         inkscape:label="#rect3118"
+         sodipodi:nodetypes="cccccc"
+         inkscape:connector-curvature="0"
+         id="path3477"
+         d="m 313.72195,513.86216 -20,0 0,30 20,0 10,-15 z"
+         style="fill:#ff0000;fill-opacity:1;stroke:#000000;stroke-width:1.5;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dashoffset:0">
+        <title
+           id="title3479">URL Queue for DC0</title>
+      </path>
+      <path
+         transform="matrix(0.7,0,0,-0.7,328.46155,706.7283)"
+         d="m 360,254.09448 c 0,11.0457 -8.95431,20 -20,20 -11.04569,0 -20,-8.9543 -20,-20 0,-11.04569 8.95431,-20 20,-20 11.04569,0 20,8.95431 20,20 z"
+         sodipodi:ry="20"
+         sodipodi:rx="20"
+         sodipodi:cy="254.09448"
+         sodipodi:cx="340"
+         id="path3481"
+         style="fill:#ff0000;fill-opacity:1;stroke:#000000;stroke-width:2;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+         sodipodi:type="arc"
+         inkscape:label="#httpfs-gateway">
+        <title
+           id="title3483">HttpFs Gateway</title>
+      </path>
+      <path
+         inkscape:label="#httpfs-gateway"
+         sodipodi:type="arc"
+         style="fill:#ff0000;fill-opacity:1;stroke:#000000;stroke-width:2;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+         id="path3485"
+         sodipodi:cx="340"
+         sodipodi:cy="254.09448"
+         sodipodi:rx="20"
+         sodipodi:ry="20"
+         d="m 360,254.09448 c 0,11.0457 -8.95431,20 -20,20 -11.04569,0 -20,-8.9543 -20,-20 0,-11.04569 8.95431,-20 20,-20 11.04569,0 20,8.95431 20,20 z"
+         transform="matrix(0.7,0,0,-0.7,392.89648,706.7283)">
+        <title
+           id="title3487">HttpFs Gateway</title>
+      </path>
+      <path
+         inkscape:label="#rect3118"
+         sodipodi:nodetypes="cccccc"
+         inkscape:connector-curvature="0"
+         id="path3489"
+         d="m 507.02668,513.86216 -20,0 0,30 20,0 10,-15 z"
+         style="fill:#ff0000;fill-opacity:1;stroke:#000000;stroke-width:1.5;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dashoffset:0">
+        <title
+           id="title3491">URL Queue for DC0</title>
+      </path>
+      <text
+         sodipodi:linespacing="125%"
+         id="text3493"
+         y="566.61438"
+         x="308.11697"
+         style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial"
+         xml:space="preserve"><tspan
+           y="566.61438"
+           x="308.11697"
+           id="tspan3495"
+           sodipodi:role="line">WDI</tspan><tspan
+           id="tspan3503"
+           y="584.11438"
+           x="308.11697"
+           sodipodi:role="line">Ingest</tspan></text>
+      <text
+         sodipodi:linespacing="125%"
+         id="text3497"
+         y="566.61438"
+         x="372.55188"
+         style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial"
+         xml:space="preserve"><tspan
+           y="566.61438"
+           x="372.55188"
+           id="tspan3499"
+           sodipodi:role="line">WAP</tspan><tspan
+           id="tspan3501"
+           y="584.11438"
+           x="372.55188"
+           sodipodi:role="line">Ingest</tspan></text>
+      <text
+         sodipodi:linespacing="125%"
+         id="text3505"
+         y="566.61438"
+         x="437.36276"
+         style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial"
+         xml:space="preserve"><tspan
+           y="566.61438"
+           x="437.36276"
+           id="tspan3507"
+           sodipodi:role="line">eBook</tspan><tspan
+           id="tspan3509"
+           y="584.11438"
+           x="437.36276"
+           sodipodi:role="line">Ingest</tspan></text>
+      <text
+         sodipodi:linespacing="125%"
+         id="text3511"
+         y="566.61438"
+         x="502.26593"
+         style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial"
+         xml:space="preserve"><tspan
+           y="566.61438"
+           x="502.26593"
+           id="tspan3513"
+           sodipodi:role="line">eJournal</tspan><tspan
+           id="tspan3515"
+           y="584.11438"
+           x="502.26593"
+           sodipodi:role="line">Ingest</tspan></text>
+      <text
+         sodipodi:linespacing="125%"
+         id="text3517"
+         y="566.78528"
+         x="566.18127"
+         style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial"
+         xml:space="preserve"><tspan
+           y="566.78528"
+           x="566.18127"
+           id="tspan3519"
+           sodipodi:role="line">DLS</tspan><tspan
+           id="tspan3521"
+           y="584.28528"
+           x="566.18127"
+           sodipodi:role="line">Reports</tspan></text>
+      <text
+         sodipodi:linespacing="125%"
+         id="text3523"
+         y="566.61438"
+         x="630.87598"
+         style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial"
+         xml:space="preserve"><tspan
+           y="566.61438"
+           x="630.87598"
+           id="tspan3525"
+           sodipodi:role="line">Access</tspan><tspan
+           id="tspan3527"
+           y="584.11438"
+           x="630.87598"
+           sodipodi:role="line">Service</tspan></text>
+      <path
+         inkscape:label="#rect3118"
+         sodipodi:nodetypes="cccccc"
+         inkscape:connector-curvature="0"
+         id="path3529"
+         d="m 378.15686,513.86216 -20,0 0,30 20,0 10,-15 z"
+         style="fill:#ff0000;fill-opacity:1;stroke:#000000;stroke-width:1.5;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dashoffset:0">
+        <title
+           id="title3531">URL Queue for DC0</title>
+      </path>
+    </g>
+    <path
+       transform="matrix(0.7,0,0,-0.7,198.60156,910.7283)"
+       d="m 360,254.09448 a 20,20 0 1 1 -40,0 20,20 0 1 1 40,0 z"
+       sodipodi:ry="20"
+       sodipodi:rx="20"
+       sodipodi:cy="254.09448"
+       sodipodi:cx="340"
+       id="path3565"
+       style="fill:#ff0000;fill-opacity:1;stroke:#000000;stroke-width:2;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       sodipodi:type="arc"
+       inkscape:label="#h3-dc0">
+      <title
+         id="title3567">Domain Crawler 0</title>
+    </path>
+    <path
+       inkscape:label="#h3-dc0"
+       sodipodi:type="arc"
+       style="fill:#ff0000;fill-opacity:1;stroke:#000000;stroke-width:2;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="path3569"
+       sodipodi:cx="340"
+       sodipodi:cy="254.09448"
+       sodipodi:rx="20"
+       sodipodi:ry="20"
+       d="m 360,254.09448 a 20,20 0 1 1 -40,0 20,20 0 1 1 40,0 z"
+       transform="matrix(0.7,0,0,-0.7,298.60156,910.7283)">
+      <title
+         id="title3571">Domain Crawler 0</title>
+    </path>
+    <path
+       transform="matrix(0.7,0,0,-0.7,238.60156,970.7283)"
+       d="m 360,254.09448 a 20,20 0 1 1 -40,0 20,20 0 1 1 40,0 z"
+       sodipodi:ry="20"
+       sodipodi:rx="20"
+       sodipodi:cy="254.09448"
+       sodipodi:cx="340"
+       id="path3573"
+       style="fill:#ff0000;fill-opacity:1;stroke:#000000;stroke-width:2;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       sodipodi:type="arc"
+       inkscape:label="#h3-dc0">
+      <title
+         id="title3575">Domain Crawler 0</title>
+    </path>
+    <path
+       inkscape:label="#h3-dc0"
+       sodipodi:type="arc"
+       style="fill:#ff0000;fill-opacity:1;stroke:#000000;stroke-width:2;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="path3577"
+       sodipodi:cx="340"
+       sodipodi:cy="254.09448"
+       sodipodi:rx="20"
+       sodipodi:ry="20"
+       d="m 360,254.09448 a 20,20 0 1 1 -40,0 20,20 0 1 1 40,0 z"
+       transform="matrix(0.7,0,0,-0.7,498.60156,910.7283)">
+      <title
+         id="title3579">Domain Crawler 0</title>
+    </path>
+    <path
+       transform="matrix(0.7,0,0,-0.7,624.60156,910.7283)"
+       d="m 360,254.09448 a 20,20 0 1 1 -40,0 20,20 0 1 1 40,0 z"
+       sodipodi:ry="20"
+       sodipodi:rx="20"
+       sodipodi:cy="254.09448"
+       sodipodi:cx="340"
+       id="path3581"
+       style="fill:#ff0000;fill-opacity:1;stroke:#000000;stroke-width:2;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       sodipodi:type="arc"
+       inkscape:label="#h3-dc0">
+      <title
+         id="title3583">Domain Crawler 0</title>
+    </path>
+    <path
+       inkscape:label="#h3-dc0"
+       sodipodi:type="arc"
+       style="fill:#ff0000;fill-opacity:1;stroke:#000000;stroke-width:2;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="path3585"
+       sodipodi:cx="340"
+       sodipodi:cy="254.09448"
+       sodipodi:rx="20"
+       sodipodi:ry="20"
+       d="m 360,254.09448 a 20,20 0 1 1 -40,0 20,20 0 1 1 40,0 z"
+       transform="matrix(0.7,0,0,-0.7,726.60156,910.7283)">
+      <title
+         id="title3587">Domain Crawler 0</title>
+    </path>
+    <path
+       transform="matrix(0.7,0,0,-0.7,726.60156,790.7283)"
+       d="m 360,254.09448 a 20,20 0 1 1 -40,0 20,20 0 1 1 40,0 z"
+       sodipodi:ry="20"
+       sodipodi:rx="20"
+       sodipodi:cy="254.09448"
+       sodipodi:cx="340"
+       id="path3589"
+       style="fill:#ff0000;fill-opacity:1;stroke:#000000;stroke-width:2;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       sodipodi:type="arc"
+       inkscape:label="#h3-dc0">
+      <title
+         id="title3591">Domain Crawler 0</title>
+    </path>
+    <path
+       inkscape:label="#h3-dc0"
+       sodipodi:type="arc"
+       style="fill:#ff0000;fill-opacity:1;stroke:#000000;stroke-width:2;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="path3593"
+       sodipodi:cx="340"
+       sodipodi:cy="254.09448"
+       sodipodi:rx="20"
+       sodipodi:ry="20"
+       d="m 360,254.09448 a 20,20 0 1 1 -40,0 20,20 0 1 1 40,0 z"
+       transform="matrix(0.7,0,0,-0.7,626.60156,790.7283)">
+      <title
+         id="title3595">Domain Crawler 0</title>
+    </path>
+    <path
+       transform="matrix(0.7,0,0,-0.7,506.60156,790.7283)"
+       d="m 360,254.09448 a 20,20 0 1 1 -40,0 20,20 0 1 1 40,0 z"
+       sodipodi:ry="20"
+       sodipodi:rx="20"
+       sodipodi:cy="254.09448"
+       sodipodi:cx="340"
+       id="path3597"
+       style="fill:#ff0000;fill-opacity:1;stroke:#000000;stroke-width:2;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       sodipodi:type="arc"
+       inkscape:label="#h3-dc0">
+      <title
+         id="title3599">Domain Crawler 0</title>
+    </path>
+    <path
+       inkscape:label="#h3-dc0"
+       sodipodi:type="arc"
+       style="fill:#ff0000;fill-opacity:1;stroke:#000000;stroke-width:2;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="path3601"
+       sodipodi:cx="340"
+       sodipodi:cy="254.09448"
+       sodipodi:rx="20"
+       sodipodi:ry="20"
+       d="m 360,254.09448 a 20,20 0 1 1 -40,0 20,20 0 1 1 40,0 z"
+       transform="matrix(0.7,0,0,-0.7,506.60156,710.7283)">
+      <title
+         id="title3603">Domain Crawler 0</title>
+    </path>
+    <path
+       transform="matrix(0.7,0,0,-0.7,506.60156,650.7283)"
+       d="m 360,254.09448 a 20,20 0 1 1 -40,0 20,20 0 1 1 40,0 z"
+       sodipodi:ry="20"
+       sodipodi:rx="20"
+       sodipodi:cy="254.09448"
+       sodipodi:cx="340"
+       id="path3605"
+       style="fill:#ff0000;fill-opacity:1;stroke:#000000;stroke-width:2;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       sodipodi:type="arc"
+       inkscape:label="#h3-dc0">
+      <title
+         id="title3607">Domain Crawler 0</title>
+    </path>
+    <path
+       inkscape:label="#h3-dc0"
+       sodipodi:type="arc"
+       style="fill:#ff0000;fill-opacity:1;stroke:#000000;stroke-width:2;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="path3609"
+       sodipodi:cx="340"
+       sodipodi:cy="254.09448"
+       sodipodi:rx="20"
+       sodipodi:ry="20"
+       d="m 360,254.09448 a 20,20 0 1 1 -40,0 20,20 0 1 1 40,0 z"
+       transform="matrix(0.7,0,0,-0.7,606.60156,650.7283)">
+      <title
+         id="title3611">Domain Crawler 0</title>
+    </path>
+    <path
+       transform="matrix(0.7,0,0,-0.7,726.60156,650.7283)"
+       d="m 360,254.09448 a 20,20 0 1 1 -40,0 20,20 0 1 1 40,0 z"
+       sodipodi:ry="20"
+       sodipodi:rx="20"
+       sodipodi:cy="254.09448"
+       sodipodi:cx="340"
+       id="path3613"
+       style="fill:#ff0000;fill-opacity:1;stroke:#000000;stroke-width:2;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       sodipodi:type="arc"
+       inkscape:label="#h3-dc0">
+      <title
+         id="title3615">Domain Crawler 0</title>
+    </path>
+    <path
+       inkscape:label="#h3-dc0"
+       sodipodi:type="arc"
+       style="fill:#ff0000;fill-opacity:1;stroke:#000000;stroke-width:2;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="path3617"
+       sodipodi:cx="340"
+       sodipodi:cy="254.09448"
+       sodipodi:rx="20"
+       sodipodi:ry="20"
+       d="m 360,254.09448 a 20,20 0 1 1 -40,0 20,20 0 1 1 40,0 z"
+       transform="matrix(0.7,0,0,-0.7,726.60156,710.7283)">
+      <title
+         id="title3619">Domain Crawler 0</title>
+    </path>
+    <path
+       transform="matrix(0.7,0,0,-0.7,726.60156,570.7283)"
+       d="m 360,254.09448 a 20,20 0 1 1 -40,0 20,20 0 1 1 40,0 z"
+       sodipodi:ry="20"
+       sodipodi:rx="20"
+       sodipodi:cy="254.09448"
+       sodipodi:cx="340"
+       id="path3621"
+       style="fill:#ff0000;fill-opacity:1;stroke:#000000;stroke-width:2;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       sodipodi:type="arc"
+       inkscape:label="#h3-dc0">
+      <title
+         id="title3623">Domain Crawler 0</title>
+    </path>
+    <path
+       inkscape:label="#h3-dc0"
+       sodipodi:type="arc"
+       style="fill:#ff0000;fill-opacity:1;stroke:#000000;stroke-width:2;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="path3625"
+       sodipodi:cx="340"
+       sodipodi:cy="254.09448"
+       sodipodi:rx="20"
+       sodipodi:ry="20"
+       d="m 360,254.09448 a 20,20 0 1 1 -40,0 20,20 0 1 1 40,0 z"
+       transform="matrix(0.7,0,0,-0.7,626.60156,570.7283)">
+      <title
+         id="title3627">Domain Crawler 0</title>
+    </path>
+    <path
+       transform="matrix(0.7,0,0,-0.7,626.60156,570.7283)"
+       d="m 360,254.09448 a 20,20 0 1 1 -40,0 20,20 0 1 1 40,0 z"
+       sodipodi:ry="20"
+       sodipodi:rx="20"
+       sodipodi:cy="254.09448"
+       sodipodi:cx="340"
+       id="path3629"
+       style="fill:#ff0000;fill-opacity:1;stroke:#000000;stroke-width:2;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       sodipodi:type="arc"
+       inkscape:label="#h3-dc0">
+      <title
+         id="title3631">Domain Crawler 0</title>
     </path>
   </g>
 </svg>
