@@ -132,7 +132,7 @@ def get_rendered_original():
     r.raw.decode_content = False
     rl = ArcWarcRecordLoader()
     app.logger.info("Passing response to parser...")
-    record = rl.parse_record_stream(DecompressingBufferedReader(stream=io.BytesIO(r.content)))
+    record = rl.parse_record_stream(DecompressingBufferedReader(stream=r.raw))
     app.logger.info("RESULT:")
     app.logger.info(record)
 
