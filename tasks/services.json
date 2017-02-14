@@ -229,16 +229,48 @@
       "name": "ACT",
       "url": "https://www.webarchive.org.uk/act"
     },
-    "wayback-prod": {
+    "wayback-old": {
       "name": "QA Wayback",
       "url": "http://act1-wayback.wa.bl.uk:8080/wayback/"
+    },
+    "act-prod-backend": {
+      "name": "ACT",
+      "url": "http://crawler07:9000/act/login"
+    },
+    "qawb-prod": {
+      "name": "QA Wayback",
+      "url": "http://crawler07:9080/archive/"
+    },
+    "cdx-prod": {
+      "name": "CDX Server",
+      "url": "http://192.168.45.21:8080/ddhapt-beta"
+    },
+    "pdf2htmlex-prod": {
+      "name": "PDF2HTMLex",
+      "url": "http://crawler07:5005/convert?url=http://data.webarchive.org.uk/crawl-test-site/resources/documents/lorem-ipsum.PDFA1-a.pdf"
+    },
+    "pc-wrender-prod": {
+      "name": "Web Render",
+      "url": "http://crawler07:8010/render?url=http://192.168.45.204:5000/"
+    },
+    "pc-amqp-prod": {
+      "name": "RabbitMQ",
+      "url": "http://crawler07:15672/"
+    },
+    "pc-monitrix-prod": {
+      "name": "Monitrix",
+      "url": "http://crawler07:5601/"
+    },
+    "pc-luigi-prod": {
+      "name": "LuigiD",
+      "url": "http://crawler07:5082/"
     },
     "act-ddb": {
       "name": "ACT DDB",
       "url": "https://www.webarchive.org.uk/act-ddb/about"
     },
-    "wb-ddb": {
-      "name": "Wayback DDB",
+    "qawb-ddb": {
+      "name": "QA Wayback DDB",
       "url": "http://192.168.45.42:8080/"
     },
     "cdx-ddb": {
@@ -248,42 +280,6 @@
     "wrender-ddb": {
       "name": "Web Render DDB",
       "url": "http://webrender.bl.uk:8010/render?url=http://monitor.wa.bl.uk:5000/"
-    },
-    "act-dev": {
-      "name": "ACT",
-      "url": "http://crawler07:9000/act/login"
-    },
-    "wb-dev": {
-      "name": "Wayback",
-      "url": "http://crawler07:9080/archive/"
-    },
-    "cdx-dev": {
-      "name": "CDX Server",
-      "url": "http://192.168.45.21:8080/ddhapt-beta"
-    },
-    "wrender-dev": {
-      "name": "Web Render",
-      "url": "http://crawler07:8010/render?url=http://192.168.45.204:5000/"
-    },
-    "pdf2htmlex-dev": {
-      "name": "PDF2HTMLex",
-      "url": "http://crawler07:5005/convert?url=http://data.webarchive.org.uk/crawl-test-site/resources/documents/lorem-ipsum.PDFA1-a.pdf"
-    },
-    "warcprox-dev": {
-      "name": "warcprox - can't be HTTP-checked easily!",
-      "url": "http://crawler07:8000/"
-    },
-    "amqp-dev": {
-      "name": "RabbitMQ",
-      "url": "http://crawler07:15672/"
-    },
-    "monitrix-dev": {
-      "name": "Monitrix",
-      "url": "http://crawler07:5601/"
-    },
-    "luigi-dev": {
-      "name": "Luigi Dashboard",
-      "url": "http://crawler07:5082/"
     },
     "ukwa": {
       "name": "HTTPD",
@@ -316,6 +312,10 @@
     "webhdfs-dev": {
        "name": "WebHDFS DEV",
        "url": "http://hadoop.ddb.wa.bl.uk:14000/webhdfs/v1/?op=LISTSTATUS&user.name=tomcat"
+    },
+    "luigid-prod": {
+       "name": "Luigi Scheduler",
+       "url": "http://monitor.wa.bl.uk:8082/"
     }
   },
   "hdfs": {
