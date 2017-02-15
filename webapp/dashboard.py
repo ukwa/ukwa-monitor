@@ -106,15 +106,15 @@ def get_rendered_original():
     i.e. 'screenshot:http://' and replaces them with 'http://screenshot:http://'
     """
     url = request.args.get('url')
-    app.logger.debug("Got URL: %s" % url)
+    #app.logger.debug("Got URL: %s" % url)
     #
     type = request.args.get('type', 'screenshot')
-    app.logger.debug("Got type: %s" % type)
+    #app.logger.debug("Got type: %s" % type)
 
     # Query URL
     qurl = "%s:%s" % (type, url)
     # Query CDX Server for the item
-    app.logger.info("Querying CDX for prefix...")
+    #app.logger.info("Querying CDX for prefix...")
     warc_filename, warc_offset, compressedendoffset = lookup_in_cdx(qurl)
 
     # If not found, say so:
@@ -126,17 +126,17 @@ def get_rendered_original():
     url = "%s%s?op=OPEN&user.name=%s&offset=%s" % (WEBHDFS_PREFIX, warc_filename, webhdfs().user, warc_offset)
     if compressedendoffset:
         url = "%s&length=%s" % (url, compressedendoffset)
-    app.logger.info("Requesting copy from HDFS: %s " % url)
+    #app.logger.info("Requesting copy from HDFS: %s " % url)
     r = requests.get(url, stream=True)
-    app.logger.info("Loading from: %s" % r.url)
+    #app.logger.info("Loading from: %s" % r.url)
     r.raw.decode_content = False
     rl = ArcWarcRecordLoader()
-    app.logger.info("Passing response to parser...")
+    #app.logger.info("Passing response to parser...")
     record = rl.parse_record_stream(DecompressingBufferedReader(stream=r.raw))
-    app.logger.info("RESULT:")
-    app.logger.info(record)
+    #app.logger.info("RESULT:")
+    #app.logger.info(record)
 
-    app.logger.info("Returning stream...")
+    #app.logger.info("Returning stream...")
     return send_file(record.stream, mimetype=record.content_type)
 
     #return "Test %s@%s" % (warc_filename, warc_offset)
