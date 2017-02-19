@@ -220,20 +220,33 @@ class RecordStatus(luigi.contrib.esindex.CopyToIndex):
     host = os.environ['ELASTICSEARCH_HOST']
     port = os.environ.get('ELASTICSEARCH_PORT', 9200)
     doc_type = 'default'
-    #mapping = { "content": { "type": "text" } }
+    mapping = {"properties": {"service": {"type": "string", "analyzer": "keyword" }}}
     purge_existing_index = False
-    index =  "{}-{}".format(os.environ.get('ELASTICSEARCH_INDEX_PREFIX','pulse-'),
+    index = "{}-{}".format(os.environ.get('ELASTICSEARCH_INDEX_PREFIX','pulse-'),
                              datetime.datetime.now().strftime('%Y-%m-%d'))
 
     def requires(self):
         return CheckStatus()
 
+    #def complete(self):
+    #    return False
+
     def docs(self):
         with self.input().open() as f:
-            doc = json.load(f)
-        # Add more default/standard fields:
-        doc['timestamp'] = datetime.datetime.now().isoformat()
-        return [doc]
+            status_doc = json.load(f)
+        docs = []
+        for status_type in status_doc:
+            if "timestamp" == status_type:
+                continue
+            for service in status_doc[status_type]:
+                doc = status_doc[status_type][service]
+                # Add more default/standard fields:
+                doc['service'] = service
+                doc['type'] = status_type
+                doc['timestamp'] = datetime.datetime.now().isoformat()
+                # And append
+                docs.append(doc)
+        return docs
 
 
 if __name__ == '__main__':
