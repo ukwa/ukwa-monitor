@@ -1,6 +1,7 @@
 import os
 import json
 import luigi
+import luigi.contrib.esindex
 import socket
 import logging
 import requests
@@ -87,6 +88,7 @@ class CheckStatus(luigi.Task):
         for hdfs, state in results:
             services['hdfs'][hdfs]['state'] = state
 
+        # And then write to a file
         with self.output().open('w') as f:
             f.write('{}'.format(json.dumps(services, indent=4)))
 
@@ -197,6 +199,7 @@ def get_http_status(args):
         r = s.get(url, allow_redirects=False, timeout=(TIMEOUT,TIMEOUT))
         state['status'] = "%s" % r.status_code
         if r.status_code / 100 == 2 or r.status_code / 100 == 3:
+            state['response_time_seconds'] = r.elapsed.total_seconds()
             state['status'] = "%.3fs" % r.elapsed.total_seconds()
             state['status-class'] = "status-good"
         else:
@@ -208,7 +211,32 @@ def get_http_status(args):
     return http, state
 
 
+class RecordStatus(luigi.contrib.esindex.CopyToIndex):
+    """
+    Post this data to an appropriate Elasticsearch index.
+    """
+    task_namespace = 'monitor'
+
+    host = os.environ['ELASTICSEARCH_HOST']
+    port = os.environ.get('ELASTICSEARCH_PORT', 9200)
+    doc_type = 'default'
+    #mapping = { "content": { "type": "text" } }
+    purge_existing_index = False
+    index =  "{}-{}".format(os.environ.get('ELASTICSEARCH_INDEX_PREFIX','pulse-'),
+                             datetime.datetime.now().strftime('%Y-%m-%d'))
+
+    def requires(self):
+        return CheckStatus()
+
+    def docs(self):
+        with self.input().open() as f:
+            doc = json.load(f)
+        # Add more default/standard fields:
+        doc['timestamp'] = datetime.datetime.now().isoformat()
+        return [doc]
+
+
 if __name__ == '__main__':
     os.environ['HERITRIX_PASSWORD'] = 'heritrix'
     os.environ['LUIGI_STATE_FOLDER'] = ".."
-    luigi.run(['monitor.CheckStatus', '--local-scheduler'])
+    luigi.run(['monitor.RecordStatus', '--local-scheduler'])
