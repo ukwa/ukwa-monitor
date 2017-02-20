@@ -216,8 +216,9 @@ class RecordStatus(luigi.contrib.esindex.CopyToIndex):
     Post this data to an appropriate Elasticsearch index.
     """
     task_namespace = 'monitor'
+    date = luigi.DateMinuteParameter(default=datetime.datetime.today())
 
-    host = os.environ['ELASTICSEARCH_HOST']
+    host = os.environ.get('ELASTICSEARCH_HOST', 'localhost')
     port = os.environ.get('ELASTICSEARCH_PORT', 9200)
     doc_type = 'default'
     mapping = {"properties": {"service": {"type": "string", "analyzer": "keyword" }}}
@@ -228,8 +229,12 @@ class RecordStatus(luigi.contrib.esindex.CopyToIndex):
     def requires(self):
         return CheckStatus()
 
-    #def complete(self):
-    #    return False
+    def complete(self):
+        """
+        Always re-run this task.
+        :return: False
+        """
+        return False
 
     def docs(self):
         with self.input().open() as f:
