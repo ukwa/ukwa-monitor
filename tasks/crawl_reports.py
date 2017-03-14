@@ -50,8 +50,9 @@ class ScanForOutputs(luigi.WrapperTask):
                 logger.debug("Looking for job launch folders matching %s in %s/%s" %
                              (launch_glob, CRAWL_STATS_PREFIX, job))
                 for launch_item in client.listdir("%s/%s" % (CRAWL_STATS_PREFIX, job)):
-                    if launch_item.startswith(launch_glob):
-                        launch = os.path.basename(launch_item)
+                    logger.debug("Looking at %s" % launch_item)
+                    launch = os.path.basename(launch_item)
+                    if launch.startswith(launch_glob):
                         yield (job, launch)
 
 
