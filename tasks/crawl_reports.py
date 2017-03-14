@@ -47,7 +47,8 @@ class ScanForOutputs(luigi.WrapperTask):
             for job_item in client.listdir(CRAWL_STATS_PREFIX):
                 job = os.path.basename(job_item)
                 launch_glob = date.strftime('%Y%m%d')
-                logger.debug("Looking for job launch folders matching %s" % launch_glob)
+                logger.debug("Looking for job launch folders matching %s in %s/%s" %
+                             (launch_glob, CRAWL_STATS_PREFIX, job))
                 for launch_item in client.listdir("%s/%s" % (CRAWL_STATS_PREFIX, job)):
                     if launch_item.startswith(launch_glob):
                         launch = os.path.basename(launch_item)
