@@ -16,6 +16,10 @@ DEDUP = 'De-duplicated responses'
 BYTES = 'Bytes downloaded'
 
 
+# Capture our current directory
+TEMPLATE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)),'templates')
+
+
 def load_timeline(summary_file):
     hours = []
     statistics = []
@@ -153,9 +157,6 @@ def pie_for(stats, prefix, title, label_max_length=40, max_slices=20):
     trace = go.Pie(labels=labels, values=values, textinfo='none')
     fig = go.Figure(data=[trace], layout=layout)
     return fig
-
-# Capture our current directory
-TEMPLATE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)),'templates')
 
 
 def get_plot_div(figure, include_plotlyjs=True):

@@ -63,8 +63,8 @@ class ScanForCrawlStats(ScanForOutputs):
     task_namespace = 'scan'
 
     def process_output(self, job, launch):
-        a_summary_file = '../../tasks/process/test-data/weekly-20170220090024-crawl-logs-14.analysis.tsjson.sorted'
-        generate_crawl_summary('weekly', '20170220090024', a_summary_file, './report-tmp')
+        #a_summary_file = '../../tasks/process/test-data/weekly-20170220090024-crawl-logs-14.analysis.tsjson.sorted'
+        #generate_crawl_summary('weekly', '20170220090024', a_summary_file, './report-tmp')
         print(job, launch)
 
 
