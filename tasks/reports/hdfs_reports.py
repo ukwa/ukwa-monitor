@@ -70,17 +70,21 @@ class GenerateHDFSReport(luigi.Task):
     def run(self):
         # Read remote targets:
         empty_files = []
+        empty_files_total = 0
         with self.remote_target().open() as f:
             for line in f:
+                empty_files_total += 1
                 item = json.loads(line)
-                empty_files.append(item)
+                if item['filename'].endswith('arc.gz'):
+                    empty_files.append(item)
 
         # Create the jinja2 environment.
         j2_env = Environment(loader=FileSystemLoader(TEMPLATE_DIR),
                              trim_blocks=True)
         out = j2_env.get_template('hdfs_summary.html').render(
             title='HDFS Summary on %s' % self.date,
-            empty_files= empty_files
+            empty_files= empty_files,
+            empty_files_total=empty_files_total
         )
 
         # Write to a file:
