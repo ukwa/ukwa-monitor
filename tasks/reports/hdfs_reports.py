@@ -16,7 +16,7 @@ INGEST_SERVICES_HOST = "ingest"
 
 
 def state_file_path(date, tag, suffix):
-    path = os.path.join( LUIGI_STATE_FOLDER,
+    path = os.path.join( '/root/github/python-shepherd/state',
                          date.strftime("%Y-%m"),
                          tag,
                          '%s-%s' % (date.strftime("%Y-%m-%d"), suffix))
