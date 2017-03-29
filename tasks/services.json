@@ -8,20 +8,28 @@
       "prefix": "http://guest:guest@192.168.45.53:15672/api/queues/%2F/",
       "user_prefix": "http://192.168.45.53:15672/#/queues/%2F/"
     },
-    "H3-FC0": {
-      "url":"https://crawler03.bl.uk:8443/",
+    "C1-H3-PC0": {
+      "url":"https://crawler01:8443/",
       "user": "admin"
     },
-    "H3-FC1": {
-      "url":"https://crawler03.bl.uk:8444/",
+    "C1-H3-PC1": {
+      "url":"https://crawler01:8444/",
       "user": "admin"
     },
-    "H3-FC2": {
-      "url":"https://crawler03.bl.uk:8445/",
+    "C1-H3-PC2": {
+      "url":"https://crawler01:8445/",
       "user": "admin"
     },
-    "H3-FC3": {
-      "url":"https://crawler03.bl.uk:8446/",
+    "C1-H3-PC3": {
+      "url":"https://crawler01:8446/",
+      "user": "admin"
+    },
+    "C1-H3-PC4": {
+      "url":"https://crawler01:8447/",
+      "user": "admin"
+    },
+    "C1-H3-PC5": {
+      "url":"https://crawler01:8448/",
       "user": "admin"
     },
     "AMQP-PC": {
@@ -149,27 +157,27 @@
   "jobs": {
     "daily": {
       "name" : "daily",
-      "server": "H3-FC1"
+      "server": "C1-H3-PC0"
     },
     "weekly": {
       "name": "weekly",
-      "server": "H3-FC2"
+      "server": "C1-H3-PC1"
     },
     "monthly": {
       "name": "monthly",
-      "server": "H3-FC3"
+      "server": "C1-H3-PC2"
     },
     "quarterly": {
       "name": "quarterly",
-      "server": "H3-FC0"
+      "server": "C1-H3-PC3"
     },
     "six-monthly": {
       "name": "sixmonthly",
-      "server": "H3-FC0"
+      "server": "C1-H3-PC4"
     },
     "annual": {
       "name": "annual",
-      "server": "H3-FC0"
+      "server": "C1-H3-PC5"
     },
     "dc0-2016": {
       "name": "dc0-20160810",

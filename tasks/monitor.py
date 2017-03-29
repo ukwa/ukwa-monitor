@@ -175,7 +175,7 @@ def get_h3_status(args):
             state['error'] = "Could not reach Heritrix! %s" % e
             # app.logger.exception(e)
         # Classify
-        if state['status'] == "DOWN":
+        if state['status'] == "DOWN" or state['status'] == "EMPTY":
             state['status-class'] = "status-oos"
         elif state['status'] == "RUNNING":
             # Replacing RUNNING with docs/second rate
