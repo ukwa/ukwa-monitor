@@ -296,15 +296,15 @@
     },
     "qawb-beta": {
       "name": "QA Wayback (BETA)",
-      "url": "http://act.wa.bl.uk:8080/"
+      "url": "http://act:8080/"
     },
     "pdf2htmlex-beta": {
       "name": "PDF2HTMLex (BETA)",
-      "url": "http://act.wa.bl.uk:5005/convert?url=http://data.webarchive.org.uk/crawl-test-site/resources/documents/lorem-ipsum.PDFA1-a.pdf"
+      "url": "http://act:5005/convert?url=http://data.webarchive.org.uk/crawl-test-site/resources/documents/lorem-ipsum.PDFA1-a.pdf"
     },
     "cdx-beta": {
       "name": "CDX (BETA)",
-      "url": "http://192.168.45.21:8080/data-heritrix"
+      "url": "http://bigcdx:8080/data-heritrix"
     },
     "ukwa": {
       "name": "HTTPD",
@@ -344,7 +344,7 @@
     },
     "ingest-luigid-prod": {
        "name": "Ingest Task Scheduler",
-       "url": "http://192.168.45.60:8082/"
+       "url": "http://ingest:8082/"
     }
   },
   "hdfs": {
