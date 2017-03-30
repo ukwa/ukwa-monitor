@@ -44,6 +44,28 @@
                 </div>
                 -->
                 <div class="pure-u-1-1 dashboard-title-small dashboard-piece-greybg">
+                    <h1>FREQUENT CRAWLS (CRAWLER01)</h1>
+                </div>
+                <div class="pure-u-1-1">
+
+                    <div class="pure-g">
+                        {% for job in ['daily','weekly', 'monthly', 'quarterly', 'six-monthly', 'annual'] %}
+                        {% set crawler = services['jobs'][job] %}
+                        {% set tile_class = "pure-u-1-3" %}
+                        {% include '_crawl_job.html' %}
+                        {% endfor %}
+                    </div>
+
+                </div>
+                <div class="pure-u-1-1">
+
+                    <div class="pure-g">
+                        {% set http_set = ['pc-wrender-prod-1', 'pc-amqp-prod-1', 'pc-luigi-prod-1', 'pc-monitrix-prod-1'] %}
+                        {% include '_http.html' %}
+                    </div>
+
+                </div>
+                <div class="pure-u-1-1 dashboard-title-small dashboard-piece-greybg">
                     <h1>FREQUENT CRAWLS (CRAWLER07)</h1>
                 </div>
                 <div class="pure-u-1-1">
@@ -60,22 +82,8 @@
                 <div class="pure-u-1-1">
 
                     <div class="pure-g">
-                        {% set http_set = ['pc-wrender-prod', 'pc-amqp-prod', 'pc-luigi-prod', 'pc-monitrix-prod'] %}
+                        {% set http_set = ['pc-wrender-prod-2', 'pc-amqp-prod-2', 'pc-luigi-prod-2', 'pc-monitrix-prod-2'] %}
                         {% include '_http.html' %}
-                    </div>
-
-                </div>
-                <div class="pure-u-1-1 dashboard-title-small dashboard-piece-greybg">
-                    <h1>FREQUENT CRAWLS (CRAWLER01)</h1>
-                </div>
-                <div class="pure-u-1-1">
-
-                    <div class="pure-g">
-                        {% for job in ['daily','weekly', 'monthly', 'quarterly', 'six-monthly', 'annual'] %}
-                        {% set crawler = services['jobs'][job] %}
-                        {% set tile_class = "pure-u-1-3" %}
-                        {% include '_crawl_job.html' %}
-                        {% endfor %}
                     </div>
 
                 </div>

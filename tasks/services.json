@@ -257,19 +257,35 @@
       "name": "PDF2HTMLex",
       "url": "http://crawler07:5005/convert?url=http://data.webarchive.org.uk/crawl-test-site/resources/documents/lorem-ipsum.PDFA1-a.pdf"
     },
-    "pc-wrender-prod": {
+    "pc-wrender-prod-1": {
+      "name": "Web Render",
+      "url": "http://crawler01:8010/render?url=http://192.168.45.204:5000/"
+    },
+    "pc-amqp-prod-1": {
+      "name": "RabbitMQ",
+      "url": "http://crawler01:15672/"
+    },
+    "pc-monitrix-prod-1": {
+      "name": "Monitrix",
+      "url": "http://crawler01:5601/"
+    },
+    "pc-luigi-prod-1": {
+      "name": "LuigiD",
+      "url": "http://crawler01:5082/"
+    },
+    "pc-wrender-prod-2": {
       "name": "Web Render",
       "url": "http://crawler07:8010/render?url=http://192.168.45.204:5000/"
     },
-    "pc-amqp-prod": {
+    "pc-amqp-prod-2": {
       "name": "RabbitMQ",
       "url": "http://crawler07:15672/"
     },
-    "pc-monitrix-prod": {
+    "pc-monitrix-prod-2": {
       "name": "Monitrix",
       "url": "http://crawler07:5601/"
     },
-    "pc-luigi-prod": {
+    "pc-luigi-prod-2": {
       "name": "LuigiD",
       "url": "http://crawler07:5082/"
     },
