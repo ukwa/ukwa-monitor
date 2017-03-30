@@ -164,7 +164,7 @@
                 <div class="pure-u-1-1">
 
                     <div class="pure-g">
-                        {% set http_set = ['luigid-prod'] %}
+                        {% set http_set = ['ingest-luigid-prod', 'monitor-luigid-prod'] %}
                         {% include '_http.html' %}
                     </div>
 
@@ -224,13 +224,15 @@
                 </div>
 
                 <div class="pure-u-1-1 dashboard-title-small dashboard-piece-greybg">
-                    <h1>CURATION (ACT DDB)</h1>
+                    <h1>CURATION (ACT BETA)</h1>
                 </div>
 
                 <div class="pure-u-1-1">
 
                     <div class="pure-g">
-                        {% set http_set = ['act-ddb', 'qawb-ddb'] %}
+                        {% set http_set = ['act-beta', 'qawb-beta'] %}
+                        {% include '_http.html' %}
+                        {% set http_set = ['pdf2htmlex-beta', 'cdx-beta'] %}
                         {% include '_http.html' %}
                     </div>
 

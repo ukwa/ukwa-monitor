@@ -251,7 +251,7 @@
     },
     "cdx-prod": {
       "name": "CDX Server",
-      "url": "http://192.168.45.21:8080/ddhapt-beta"
+      "url": "http://192.168.45.21:8080/data-heritrix"
     },
     "pdf2htmlex-prod": {
       "name": "PDF2HTMLex",
@@ -289,21 +289,22 @@
       "name": "LuigiD",
       "url": "http://crawler07:5082/"
     },
-    "act-ddb": {
-      "name": "ACT DDB",
-      "url": "https://www.webarchive.org.uk/act-ddb/about"
+    "act-beta": {
+      "name": "ACT (BETA)",
+      "url": "http://act.wa.bl.uk:9000/act/about",
+      "url_prod": "https://beta.webarchive.org.uk/act/about"
     },
-    "qawb-ddb": {
-      "name": "QA Wayback DDB",
-      "url": "http://192.168.45.42:8080/"
+    "qawb-beta": {
+      "name": "QA Wayback (BETA)",
+      "url": "http://act.wa.bl.uk:8080/"
     },
-    "cdx-ddb": {
-      "name": "CDX DDB",
-      "url": "http://192.168.45.38:8080/fc"
+    "pdf2htmlex-beta": {
+      "name": "PDF2HTMLex (BETA)",
+      "url": "http://act.wa.bl.uk:5005/convert?url=http://data.webarchive.org.uk/crawl-test-site/resources/documents/lorem-ipsum.PDFA1-a.pdf"
     },
-    "wrender-ddb": {
-      "name": "Web Render DDB",
-      "url": "http://webrender.bl.uk:8010/render?url=http://monitor.wa.bl.uk:5000/"
+    "cdx-beta": {
+      "name": "CDX (BETA)",
+      "url": "http://192.168.45.21:8080/data-heritrix"
     },
     "ukwa": {
       "name": "HTTPD",
@@ -337,9 +338,13 @@
        "name": "WebHDFS DEV",
        "url": "http://hadoop.ddb.wa.bl.uk:14000/webhdfs/v1/?op=LISTSTATUS&user.name=tomcat"
     },
-    "luigid-prod": {
-       "name": "Luigi Scheduler",
+    "monitor-luigid-prod": {
+       "name": "Monitor Task Scheduler",
        "url": "http://monitor.wa.bl.uk:8082/"
+    },
+    "ingest-luigid-prod": {
+       "name": "Ingest Task Scheduler",
+       "url": "http://ingest.wa.bl.uk:8082/"
     }
   },
   "hdfs": {
