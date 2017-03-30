@@ -344,7 +344,7 @@
     },
     "ingest-luigid-prod": {
        "name": "Ingest Task Scheduler",
-       "url": "http://ingest.wa.bl.uk:8082/"
+       "url": "http://192.168.45.60:8082/"
     }
   },
   "hdfs": {
