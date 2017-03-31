@@ -234,7 +234,7 @@
       "url": "https://wct.bl.uk/wayback/"
     },
     "act-prod": {
-      "name": "ACT",
+      "name": "ACT (via SSL)",
       "url": "https://www.webarchive.org.uk/act"
     },
     "wayback-old": {
@@ -243,19 +243,19 @@
     },
     "act-prod-backend": {
       "name": "ACT",
-      "url": "http://crawler07:9000/act/login"
+      "url": "http://crawler01:9000/act/login"
     },
     "qawb-prod": {
       "name": "QA Wayback",
-      "url": "http://crawler07:9080/archive/"
+      "url": "http://crawler01:9080/archive/"
     },
     "cdx-prod": {
       "name": "CDX Server",
-      "url": "http://192.168.45.21:8080/data-heritrix"
+      "url": "http://bigcdx:8080/data-heritrix"
     },
     "pdf2htmlex-prod": {
       "name": "PDF2HTMLex",
-      "url": "http://crawler07:5005/convert?url=http://data.webarchive.org.uk/crawl-test-site/resources/documents/lorem-ipsum.PDFA1-a.pdf"
+      "url": "http://crawler01:5005/convert?url=http://data.webarchive.org.uk/crawl-test-site/resources/documents/lorem-ipsum.PDFA1-a.pdf"
     },
     "pc-wrender-prod-1": {
       "name": "Web Render",
