@@ -65,10 +65,10 @@
                     </div>
 
                 </div>
-<!--
                 <div class="pure-u-1-1 dashboard-title-small dashboard-piece-greybg">
                     <h1>FREQUENT CRAWLS (CRAWLER07)</h1>
                 </div>
+<!--
                 <div class="pure-u-1-1">
 
                     <div class="pure-g">
@@ -89,6 +89,14 @@
 
                 </div>
 -->
+                <div class="pure-u-1-1">
+
+                    <div class="pure-g">
+                        {% set http_set = ['pc-luigi-prod-2'] %}
+                        {% include '_http.html' %}
+                    </div>
+
+                </div>
                 <div class="pure-u-1-1 dashboard-title-small dashboard-piece-greybg">
                     <h1>FREQUENT CRAWLS (LEGACY)</h1>
                 </div>
