@@ -204,6 +204,7 @@ def get_http_status(args):
             state['status-class'] = "status-good"
         else:
             state['status-class'] = "status-warning"
+            logger.error("ERROR was: %s" % r.text)
     except:
         state['status'] = "DOWN"
         state['status-class'] = "status-alert"
