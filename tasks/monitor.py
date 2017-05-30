@@ -195,8 +195,10 @@ def get_http_status(args):
     http, url = args
     state = {}
     try:
-        logger.info("Getting status for %s" % (url))
+        logger.info("Getting status for %s" % url)
         r = s.get(url, allow_redirects=False, timeout=(TIMEOUT,TIMEOUT))
+        logger.info("Got status %i" % r.status_code)
+        logger.info("Got text %s" % r.text)
         state['status'] = "%s" % r.status_code
         if r.status_code / 100 == 2 or r.status_code / 100 == 3:
             state['response_time_seconds'] = r.elapsed.total_seconds()
