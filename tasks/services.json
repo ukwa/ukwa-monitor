@@ -237,10 +237,6 @@
       "name": "ACT (via SSL)",
       "url": "https://www.webarchive.org.uk/act"
     },
-    "wayback-old": {
-      "name": "QA Wayback",
-      "url": "http://act1-wayback.wa.bl.uk:8080/wayback/"
-    },
     "act-prod-backend": {
       "name": "ACT",
       "url": "http://crawler01:9000/act/login"
@@ -285,6 +281,22 @@
     "pdf2htmlex-beta": {
       "name": "PDF2HTMLex β",
       "url": "http://crawler02:5005/convert?url=http://data.webarchive.org.uk/crawl-test-site/resources/documents/lorem-ipsum.PDFA1-a.pdf"
+    },
+    "pc-wrender-beta": {
+      "name": "Web Render β",
+      "url": "http://crawler02:8010/render?url=http://192.168.45.204:5000/"
+    },
+    "pc-amqp-beta": {
+      "name": "RabbitMQ β",
+      "url": "http://crawler02:15672/"
+    },
+    "pc-monitrix-beta": {
+      "name": "Monitrix",
+      "url": "http://crawler02:5601/"
+    },
+    "pc-luigi-beta": {
+      "name": "LuigiD",
+      "url": "http://crawler02:5082/"
     },
     "cdx-beta": {
       "name": "CDX β",
