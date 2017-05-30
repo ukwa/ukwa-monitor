@@ -37,43 +37,43 @@
       "user_prefix": "http://192.168.45.86:15672/#/queues/%2F/"
     },
     "H3-PC0": {
-      "url":"https://crawler07:8443/",
+      "url":"https://crawler02:8443/",
       "user": "admin"
     },
     "H3-PC1": {
-      "url":"https://crawler07:8444/",
+      "url":"https://crawler02:8444/",
       "user": "admin"
     },
     "H3-PC2": {
-      "url":"https://crawler07:8445/",
+      "url":"https://crawler02:8445/",
       "user": "admin"
     },
     "H3-PC3": {
-      "url":"https://crawler07:8446/",
+      "url":"https://crawler02:8446/",
       "user": "admin"
     },
     "H3-PC4": {
-      "url":"https://crawler07:8447/",
+      "url":"https://crawler02:8447/",
       "user": "admin"
     },
     "H3-PC5": {
-      "url":"https://crawler07:8448/",
+      "url":"https://crawler02:8448/",
       "user": "admin"
     },
     "H3-DC0": {
-      "url":"https://192.168.45.12:8443/",
+      "url":"https://crawler04:8443/",
       "user": "admin"
     },
     "H3-DC1": {
-      "url":"https://192.168.45.12:8444/",
+      "url":"https://crawler04:8444/",
       "user": "admin"
     },
     "H3-DC2": {
-      "url":"https://192.168.45.12:8445/",
+      "url":"https://crawler04:8445/",
       "user": "admin"
     },
     "H3-DC3": {
-      "url":"https://192.168.45.12:8446/",
+      "url":"https://crawler04:8446/",
       "user": "admin"
     }
   },
@@ -135,22 +135,22 @@
     },
     "DC0": {
       "server":"AMQP-DC",
-      "name": "dc0-20160810",
+      "name": "dc0-20150515",
       "short": "DC0"
     },
     "DC1": {
       "server":"AMQP-DC",
-      "name": "dc1-20160810",
+      "name": "dc1-20150515",
       "short": "DC1"
     },
     "DC2": {
       "server":"AMQP-DC",
-      "name": "dc2-20160810",
+      "name": "dc2-20150515",
       "short": "DC2"
     },
     "DC3": {
       "server":"AMQP-DC",
-      "name": "dc3-20160810",
+      "name": "dc3-20150515",
       "short": "DC3"
     }
   },
@@ -195,28 +195,28 @@
       "name": "dc3-20160810",
       "server": "H3-DC3"
     },
-    "daily-2": {
-      "name" : "daily",
+    "daily-beta": {
+      "name" : "daily β",
       "server": "H3-PC0"
     },
-    "weekly-2": {
-      "name": "weekly",
+    "weekly-beta": {
+      "name": "weekly β",
       "server": "H3-PC1"
     },
-    "monthly-2": {
-      "name": "monthly",
+    "monthly-beta": {
+      "name": "monthly β",
       "server": "H3-PC2"
     },
-    "quarterly-2": {
-      "name": "quarterly",
+    "quarterly-beta": {
+      "name": "quarterly β",
       "server": "H3-PC3"
     },
-    "six-monthly-2": {
-      "name": "sixmonthly",
+    "six-monthly-beta": {
+      "name": "sixmonthly β",
       "server": "H3-PC4"
     },
-    "annual-2": {
-      "name": "annual",
+    "annual-beta": {
+      "name": "annual β",
       "server": "H3-PC5"
     }
   },
@@ -257,53 +257,37 @@
       "name": "PDF2HTMLex",
       "url": "http://crawler01:5005/convert?url=http://data.webarchive.org.uk/crawl-test-site/resources/documents/lorem-ipsum.PDFA1-a.pdf"
     },
-    "pc-wrender-prod-1": {
+    "pc-wrender-prod": {
       "name": "Web Render",
       "url": "http://crawler01:8010/render?url=http://192.168.45.204:5000/"
     },
-    "pc-amqp-prod-1": {
+    "pc-amqp-prod": {
       "name": "RabbitMQ",
       "url": "http://crawler01:15672/"
     },
-    "pc-monitrix-prod-1": {
+    "pc-monitrix-prod": {
       "name": "Monitrix",
       "url": "http://crawler01:5601/"
     },
-    "pc-luigi-prod-1": {
+    "pc-luigi-prod": {
       "name": "LuigiD",
       "url": "http://crawler01:5082/"
     },
-    "pc-wrender-prod-2": {
-      "name": "Web Render",
-      "url": "http://crawler07:8010/render?url=http://192.168.45.204:5000/"
-    },
-    "pc-amqp-prod-2": {
-      "name": "RabbitMQ",
-      "url": "http://crawler07:15672/"
-    },
-    "pc-monitrix-prod-2": {
-      "name": "Monitrix",
-      "url": "http://crawler07:5601/"
-    },
-    "pc-luigi-prod-2": {
-      "name": "LuigiD",
-      "url": "http://crawler07:5082/"
-    },
     "act-beta": {
-      "name": "ACT (BETA)",
-      "url": "http://act.wa.bl.uk:9000/act/about",
+      "name": "ACT β",
+      "url": "http://crawler02:9000/act/about",
       "url_prod": "https://beta.webarchive.org.uk/act/about"
     },
     "qawb-beta": {
-      "name": "QA Wayback (BETA)",
-      "url": "http://act:8080/"
+      "name": "QA Wayback β",
+      "url": "http://crawler02:8080/"
     },
     "pdf2htmlex-beta": {
-      "name": "PDF2HTMLex (BETA)",
-      "url": "http://act:5005/convert?url=http://data.webarchive.org.uk/crawl-test-site/resources/documents/lorem-ipsum.PDFA1-a.pdf"
+      "name": "PDF2HTMLex β",
+      "url": "http://crawler02:5005/convert?url=http://data.webarchive.org.uk/crawl-test-site/resources/documents/lorem-ipsum.PDFA1-a.pdf"
     },
     "cdx-beta": {
-      "name": "CDX (BETA)",
+      "name": "CDX β",
       "url": "http://bigcdx:8080/data-heritrix"
     },
     "ukwa": {
