@@ -197,8 +197,7 @@ def get_http_status(args):
     try:
         logger.info("Getting status for %s" % url)
         r = s.get(url, allow_redirects=False, timeout=(TIMEOUT,TIMEOUT))
-        logger.info("Got status %i" % r.status_code)
-        logger.info("Got text %s" % r.text)
+        logger.info("HTTP - Got status %i" % r.status_code)
         state['status'] = "%s" % r.status_code
         if r.status_code / 100 == 2 or r.status_code / 100 == 3:
             state['response_time_seconds'] = r.elapsed.total_seconds()
@@ -206,10 +205,11 @@ def get_http_status(args):
             state['status-class'] = "status-good"
         else:
             state['status-class'] = "status-warning"
-            logger.error("ERROR was: %s" % r.text)
-    except:
+            logger.info("HTTP - Got text %s" % r.text)
+    except Exception as e:
         state['status'] = "DOWN"
         state['status-class'] = "status-alert"
+        logger.exception("HTTP - ", e)
 
     return http, state
 
