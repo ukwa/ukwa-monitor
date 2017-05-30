@@ -209,7 +209,8 @@ def get_http_status(args):
     except Exception as e:
         state['status'] = "DOWN"
         state['status-class'] = "status-alert"
-        logger.exception("HTTP - ", e)
+        logger.info("HTTP - Got Exception: %s" % e)
+        logger.exception(e)
 
     return http, state
 
