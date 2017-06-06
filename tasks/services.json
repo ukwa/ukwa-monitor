@@ -5,7 +5,7 @@
       "user_prefix": "http://192.168.45.26:15672/#/queues/%2F/"
     },
     "AMQP-DC": {
-      "prefix": "http://guest:guest@192.168.45.27:15672/api/queues/%2F/",
+      "prefix": "http://guest:guest@192.168.45.26:15672/api/queues/%2F/",
       "user_prefix": "http://192.168.45.27:15672/#/queues/%2F/"
     },
     "C1-H3-PC0": {
@@ -135,22 +135,22 @@
     },
     "DC0": {
       "server":"AMQP-DC",
-      "name": "dc0-20150515",
+      "name": "dc0-20170515",
       "short": "DC0"
     },
     "DC1": {
       "server":"AMQP-DC",
-      "name": "dc1-20150515",
+      "name": "dc1-20170515",
       "short": "DC1"
     },
     "DC2": {
       "server":"AMQP-DC",
-      "name": "dc2-20150515",
+      "name": "dc2-20170515",
       "short": "DC2"
     },
     "DC3": {
       "server":"AMQP-DC",
-      "name": "dc3-20150515",
+      "name": "dc3-20170515",
       "short": "DC3"
     }
   },
