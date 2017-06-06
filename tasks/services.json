@@ -180,19 +180,19 @@
       "server": "C1-H3-PC5"
     },
     "dc0-2016": {
-      "name": "dc0-20160810",
+      "name": "dc0-20170515",
       "server": "H3-DC0"
     },
     "dc1-2016": {
-      "name": "dc1-20160810",
+      "name": "dc1-20170515",
       "server": "H3-DC1"
     },
     "dc2-2016": {
-      "name": "dc2-20160810",
+      "name": "dc2-20170515",
       "server": "H3-DC2"
     },
     "dc3-2016": {
-      "name": "dc3-20160810",
+      "name": "dc3-20170515",
       "server": "H3-DC3"
     },
     "daily-beta": {
