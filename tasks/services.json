@@ -5,7 +5,7 @@
       "user_prefix": "http://192.168.45.26:15672/#/queues/%2F/"
     },
     "AMQP-DC": {
-      "prefix": "http://guest:guest@192.168.45.26:15672/api/queues/%2F/",
+      "prefix": "http://guest:guest@192.168.45.27:15672/api/queues/%2F/",
       "user_prefix": "http://192.168.45.27:15672/#/queues/%2F/"
     },
     "C1-H3-PC0": {
