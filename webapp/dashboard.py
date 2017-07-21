@@ -1,5 +1,6 @@
 import os
 import logging
+import datetime
 from flask import Flask, render_template, redirect, url_for, request, Response, send_file, abort
 from flask_restplus import Resource, Api
 import monitor.webarchive
@@ -70,6 +71,7 @@ class Overview(Resource):
         # And render
         return render_template('overview.html', title="Overview", services=services, colours=colours)
 
+
 rend_ns = api.namespace('rendered', description='Access rendered web resources')
 
 
@@ -82,17 +84,21 @@ class RenderedOriginals(Resource):
     i.e. 'screenshot:http://' and replaces them with 'http://screenshot:http://'
     """
     @rend_ns.doc(id='get_rendered_original')
-    @rend_ns.response(200, 'The rendered image.')
+    @rend_ns.response(200, 'The rendered version of the original URL.')
     @rend_ns.response(404, 'If no screenshot for that url has been archived.')
-    @rend_ns.param('url', "The URL to look for.", required=True)
-    @rend_ns.param('render_type', "The type or rendered image to return.", required=True, default='screenshot')
+    @rend_ns.param('url', 'The URL to look for.  Note that this requires an exact match, '
+                           'e.g. "https://www.bl.uk/" will work but "https://www.bl.uk" will not', required=True)
+    @rend_ns.param('render_type', "The type or rendering to return. Can be 'screenshot', 'thumbnail, 'imagemap', 'onreadydom', 'har'.", required=True, default='screenshot')
+    @rend_ns.param('target_date', "The target date. The closest date match will be returned.", required=True, default=datetime.datetime.today().isoformat())
     def get(self):
         # get the URL parameters
         url = request.args.get('url')
         render_type = request.args.get('render_type', 'screenshot')
+        target_date_str = request.args.get('target_date', datetime.datetime.today().isoformat())
+        target_date = datetime.datetime.strptime(target_date_str, "%Y-%m-%dT%H:%M:%S.%f")
 
         # Look up the item via the CDX index:
-        stream, content_type = lib.webarchive.get_rendered_original(url, render_type)
+        stream, content_type = monitor.webarchive.get_rendered_original(url, render_type, target_date)
 
         # If it's not found:
         if stream is None:

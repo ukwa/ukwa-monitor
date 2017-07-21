@@ -11,6 +11,11 @@ from pywb.utils.bufferedreaders import DecompressingBufferedReader
 
 logger = logging.getLogger(__name__)
 
+os.environ['LUIGI_STATE_FOLDER'] = 'state'
+os.environ['CDX_SERVER'] = 'http://192.168.45.21:8080/data-heritrix'
+os.environ['WEBHDFS_PREFIX'] = 'http://hdfs.gtw.wa.bl.uk:14000/webhdfs/v1'
+os.environ['WEBHDFS_USER'] = 'heritrix'
+
 WEBHDFS_PREFIX = os.environ.get('WEBHDFS_PREFIX', 'http://localhost:50070/webhdfs/v1')
 WEBHDFS_USER = os.environ.get('WEBHDFS_USER', 'hdfs')
 CDX_SERVER = os.environ.get('CDX_SERVER','http://localhost:9090/fc')
@@ -18,7 +23,7 @@ CDX_SERVER = os.environ.get('CDX_SERVER','http://localhost:9090/fc')
 WAYBACK_TS_FORMAT = '%Y%m%d%H%M%S'
 
 
-def get_rendered_original(url, render_type='screenshot', target_date=datetime.date.today()):
+def get_rendered_original(url, render_type='screenshot', target_date=datetime.datetime.today()):
     # Query URL
     qurl = "%s:%s" % (render_type, url)
     # Query CDX Server for the item
@@ -47,7 +52,7 @@ def get_rendered_original(url, render_type='screenshot', target_date=datetime.da
     return record.stream, record.content_type
 
 
-def lookup_in_cdx(qurl, target_date=datetime.date.today()):
+def lookup_in_cdx(qurl, target_date=datetime.datetime.today()):
     """
     Checks if a resource is in the CDX index, closest to a specific date:
 
@@ -77,9 +82,7 @@ def list_from_cdx(qurl):
     """
     query = "%s?q=type:urlquery+url:%s" % (CDX_SERVER, quote(qurl))
     r = requests.get(query)
-    print(r.url)
     logger.debug("Availability response: %d" % r.status_code)
-    print(r.status_code, r.text)
     result_set = {}
     # Is it known, with a matching timestamp?
     if r.status_code == 200:
