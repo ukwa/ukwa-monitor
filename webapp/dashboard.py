@@ -2,7 +2,7 @@ import os
 import logging
 import datetime
 from flask import Flask, render_template, redirect, url_for, request, Response, send_file, abort
-from flask_restplus import Resource, Api
+from flask_restplus import Resource, Api, fields
 import monitor.webarchive
 from monitor.status import load_service_status
 
@@ -73,24 +73,29 @@ class Overview(Resource):
         return render_template('overview.html', title="Overview", services=services, colours=colours)
 
 
+class FileSchema(fields.Raw):
+    __schema_type__ = 'file'
+
 rend_ns = api.namespace('rendered', description='Access rendered web resources')
 
 
 @rend_ns.route('/original')
 class RenderedOriginals(Resource):
+
     """
     Grabs a rendered original resource as captured at harvest time.
 
     Only reason Wayback can't do this is that it does not like the extended URIs
     i.e. 'screenshot:http://' and replaces them with 'http://screenshot:http://'
     """
-    @rend_ns.doc(id='get_rendered_original')
+    @rend_ns.doc(id='get_rendered_original', model=FileSchema)
     @rend_ns.response(200, 'The rendered version of the original URL.')
     @rend_ns.response(404, 'If no screenshot for that url has been archived.')
     @rend_ns.param('url', 'The URL to look for.  Note that this requires an exact match, '
                            'e.g. "https://www.bl.uk/" will work but "https://www.bl.uk" will not', required=True)
     @rend_ns.param('render_type', "The type or rendering to return. Can be 'screenshot', 'thumbnail, 'imagemap', 'onreadydom', 'har'.", required=True, default='screenshot')
     @rend_ns.param('target_date', "The target date. The closest date match will be returned.", required=True, default=datetime.datetime.today().isoformat())
+    @api.representation('image/png')
     def get(self):
         # get the URL parameters
         url = request.args.get('url')
@@ -103,7 +108,7 @@ class RenderedOriginals(Resource):
 
         # If it's not found:
         if stream is None:
-            abort(404, "No rendering found.")
+            return Response(response="No such rendering found.", content_type='text/plain', status=404)
 
         return send_file(stream, mimetype=content_type)
 

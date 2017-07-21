@@ -18,6 +18,9 @@ logger = logging.getLogger('luigi-interface')
 TIMEOUT = 10
 socket.setdefaulttimeout(TIMEOUT)
 
+# Set up the task state folder:
+STATE_FOLDER = os.environ['LUIGI_STATE_FOLDER']
+
 # Set up a request session that does not retry:
 s = requests.Session()
 a = requests.adapters.HTTPAdapter(max_retries=1)
@@ -35,7 +38,6 @@ class CheckStatus(luigi.Task):
     services = os.path.join(os.path.dirname(__file__), 'services.json')
 
     def output(self):
-        STATE_FOLDER = os.environ['LUIGI_STATE_FOLDER']
         return luigi.LocalTarget('%s/monitor/checkstatus.%s' % (STATE_FOLDER, self.date.strftime(luigi.DateMinuteParameter.date_format)))
 
     def run(self):
