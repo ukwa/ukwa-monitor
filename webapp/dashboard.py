@@ -11,7 +11,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return redirect(url_for(Dashboard().get()))
+    return redirect('/status/dashboard', code=307)
 
 
 @app.before_first_request
@@ -34,6 +34,7 @@ class Dashboard(Resource):
     @status_ns.doc(id='get_status_dashboard')
     @status_ns.response(200, 'A HTML dashboard summarising the current service status')
     def get(self):
+        app.logger.info("GOT %s" % os.environ['LUIGI_STATE_FOLDER'])
         # Get services and status:
         services = load_service_status()
 
@@ -41,7 +42,7 @@ class Dashboard(Resource):
         #app.logger.info(json.dumps(services, indent=4))
 
         # And render
-        return render_template('dashboard.html', title="Status", services=services)
+        return Response(render_template('dashboard.html', title="Status", services=services), mimetype="text/html")
 
 
 @status_ns.route('/map')

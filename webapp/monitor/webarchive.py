@@ -11,11 +11,6 @@ from pywb.utils.bufferedreaders import DecompressingBufferedReader
 
 logger = logging.getLogger(__name__)
 
-os.environ['LUIGI_STATE_FOLDER'] = 'state'
-os.environ['CDX_SERVER'] = 'http://192.168.45.21:8080/data-heritrix'
-os.environ['WEBHDFS_PREFIX'] = 'http://hdfs.gtw.wa.bl.uk:14000/webhdfs/v1'
-os.environ['WEBHDFS_USER'] = 'heritrix'
-
 WEBHDFS_PREFIX = os.environ.get('WEBHDFS_PREFIX', 'http://localhost:50070/webhdfs/v1')
 WEBHDFS_USER = os.environ.get('WEBHDFS_USER', 'hdfs')
 CDX_SERVER = os.environ.get('CDX_SERVER','http://localhost:9090/fc')

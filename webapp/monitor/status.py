@@ -13,6 +13,7 @@ def load_service_status():
         try:
             status_date = datetime.datetime.today() - datetime.timedelta(minutes=mins)
             json_file = CheckStatus(date=status_date).output().path
+            logger.info("Looking for... %s" % json_file)
             #json_file = "../state/monitor/checkstatus.2016-11-22T1110"
             services = load_services(json_file)
             services['status_date'] = status_date.isoformat()
@@ -27,6 +28,7 @@ def load_service_status():
             break
 
     if services is None:
+        logger.error("Could not find any status file.")
         raise Exception("Could not load a recent service status file!")
 
     return services
