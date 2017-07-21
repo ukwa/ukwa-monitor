@@ -1,3 +1,4 @@
+aniso8601==1.2.1
 appdirs==1.4.0
 argh==0.26.2
 backports-abc==0.5
@@ -11,6 +12,7 @@ docutils==0.13.1
 elasticsearch==5.0.1
 enum34==1.1.6
 Flask==0.12
+flask-restplus==0.10.1
 functools32==3.2.3.post2
 gunicorn==19.6.0
 hapy-heritrix==0.1.1
@@ -32,6 +34,7 @@ plotly==2.0.5
 pycparser==2.17
 pyparsing==2.1.10
 python-daemon==2.1.2
+python-dateutil==2.6.1
 pytz==2016.10
 pywb==0.33.0
 PyYAML==3.12
