@@ -2,8 +2,8 @@ import os
 import logging
 from flask import Flask, render_template, redirect, url_for, request, Response, send_file, abort
 from flask_restplus import Resource, Api
-import lib.webarchive
-from lib.status import load_service_status
+import monitor.webarchive
+from monitor.status import load_service_status
 
 app = Flask(__name__)
 
