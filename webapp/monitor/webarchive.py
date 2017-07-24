@@ -3,6 +3,7 @@ import os
 import json
 import logging
 import datetime
+from collections import OrderedDict
 from requests.utils import quote
 import xml.dom.minidom
 import requests
@@ -18,13 +19,24 @@ CDX_SERVER = os.environ.get('CDX_SERVER','http://localhost:9090/fc')
 WAYBACK_TS_FORMAT = '%Y%m%d%H%M%S'
 
 
+def get_rendered_original_list(url, render_type='screenshot'):
+    # Query URL
+    qurl = "%s:%s" % (render_type, url)
+
+    return list_from_cdx(qurl)
+
+
 def get_rendered_original(url, render_type='screenshot', target_date=datetime.datetime.today()):
     # Query URL
     qurl = "%s:%s" % (render_type, url)
     # Query CDX Server for the item
-    #logger.info("Querying CDX for prefix...")
+    logger.info("Querying CDX for prefix...")
     warc_filename, warc_offset, compressedendoffset = lookup_in_cdx(qurl)
 
+    return warc_filename, warc_offset, compressedendoffset
+
+
+def get_rendered_original_stream(warc_filename, warc_offset, compressedendoffset):
     # If not found, say so:
     if warc_filename is None:
         return None, None
@@ -33,17 +45,17 @@ def get_rendered_original(url, render_type='screenshot', target_date=datetime.da
     url = "%s%s?op=OPEN&user.name=%s&offset=%s" % (WEBHDFS_PREFIX, warc_filename, WEBHDFS_USER, warc_offset)
     if compressedendoffset:
         url = "%s&length=%s" % (url, compressedendoffset)
-    #logger.info("Requesting copy from HDFS: %s " % url)
+    logger.info("Requesting copy from HDFS: %s " % url)
     r = requests.get(url, stream=True)
-    #logger.info("Loading from: %s" % r.url)
+    logger.info("Loading from: %s" % r.url)
     r.raw.decode_content = False
     rl = ArcWarcRecordLoader()
-    #logger.info("Passing response to parser...")
+    logger.info("Passing response to parser...")
     record = rl.parse_record_stream(DecompressingBufferedReader(stream=r.raw))
-    #logger.info("RESULT:")
-    #logger.info(record)
+    logger.info("RESULT:")
+    logger.info(record)
 
-    #logger.info("Returning stream...")
+    logger.info("Returning stream...")
     return record.stream, record.content_type
 
 
@@ -62,7 +74,8 @@ def lookup_in_cdx(qurl, target_date=datetime.datetime.today()):
     matched_ts = None
     for ts in matches.keys():
         wb_date = datetime.datetime.strptime(ts, WAYBACK_TS_FORMAT)
-        if matched_date is None or wb_date-target_date < matched_date-target_date:
+        if matched_date is None or abs((wb_date-target_date).total_seconds()) < \
+                abs((matched_date-target_date).total_seconds()):
             matched_date = wb_date
             matched_ts = ts
 
@@ -76,9 +89,10 @@ def list_from_cdx(qurl):
     :return: a list of matches by timestamp
     """
     query = "%s?q=type:urlquery+url:%s" % (CDX_SERVER, quote(qurl))
+    logger.info("Querying: %s" % query)
     r = requests.get(query)
-    logger.debug("Availability response: %d" % r.status_code)
-    result_set = {}
+    logger.info("Availability response: %d" % r.status_code)
+    result_set = OrderedDict()
     # Is it known, with a matching timestamp?
     if r.status_code == 200:
         try:

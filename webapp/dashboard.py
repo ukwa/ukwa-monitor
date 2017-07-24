@@ -16,6 +16,8 @@ def index():
 
 @app.before_first_request
 def setup_logging():
+    logging.getLogger("monitor").addHandler(logging.StreamHandler())
+    logging.getLogger("monitor").setLevel(logging.INFO)
     if not app.debug:
         # In production mode, add log handler to sys.stderr.
         app.logger.addHandler(logging.StreamHandler())
@@ -75,6 +77,8 @@ class Overview(Resource):
 
 class FileSchema(fields.Raw):
     __schema_type__ = 'file'
+    __schema_format__ = 'A JSON object describing the location of the rendered item, or the rendered ' \
+                        'version of the original URL. Determined via content negociation.'
 
 rend_ns = api.namespace('rendered', description='Access rendered web resources')
 
@@ -89,13 +93,11 @@ class RenderedOriginals(Resource):
     i.e. 'screenshot:http://' and replaces them with 'http://screenshot:http://'
     """
     @rend_ns.doc(id='get_rendered_original', model=FileSchema)
-    @rend_ns.response(200, 'The rendered version of the original URL.')
     @rend_ns.response(404, 'If no screenshot for that url has been archived.')
     @rend_ns.param('url', 'The URL to look for.  Note that this requires an exact match, '
                            'e.g. "https://www.bl.uk/" will work but "https://www.bl.uk" will not', required=True)
     @rend_ns.param('render_type', "The type or rendering to return. Can be 'screenshot', 'thumbnail, 'imagemap', 'onreadydom', 'har'.", required=True, default='screenshot')
     @rend_ns.param('target_date', "The target date. The closest date match will be returned.", required=True, default=datetime.datetime.today().isoformat())
-    @api.representation('image/png')
     def get(self):
         # get the URL parameters
         url = request.args.get('url')
@@ -103,14 +105,47 @@ class RenderedOriginals(Resource):
         target_date_str = request.args.get('target_date', datetime.datetime.today().isoformat())
         target_date = datetime.datetime.strptime(target_date_str, "%Y-%m-%dT%H:%M:%S.%f")
 
+        hit = monitor.webarchive.get_rendered_original(url,render_type,target_date)
+
+        if hit[0] is None:
+            abort(404, "No match found!")
+
+        return { 'result': hit }
+
+    @staticmethod
+    @api.representation('image/*')
+    def convert_to_image(data, code, headers=None):
         # Look up the item via the CDX index:
-        stream, content_type = monitor.webarchive.get_rendered_original(url, render_type, target_date)
+        warc_filename, warc_offset, compressedendoffset = data['result']
+        stream, content_type = monitor.webarchive.get_rendered_original_stream(warc_filename, warc_offset, compressedendoffset)
 
         # If it's not found:
         if stream is None:
             return Response(response="No such rendering found.", content_type='text/plain', status=404)
 
         return send_file(stream, mimetype=content_type)
+
+
+@rend_ns.route('/original/list')
+class ListRenderedOriginals(Resource):
+
+    """
+    Lists the renderings known for a URL.
+    """
+    @rend_ns.doc(id='get_rendered_original_list', model=FileSchema)
+    @rend_ns.response(200, 'The rendered version of the original URL.')
+    @rend_ns.response(404, 'If no screenshot for that url has been archived.')
+    @rend_ns.param('url', 'The URL to look for.  Note that this requires an exact match, '
+                           'e.g. "https://www.bl.uk/" will work but "https://www.bl.uk" will not', required=True)
+    @rend_ns.param('render_type', "The type or rendering to return. Can be 'screenshot', 'thumbnail, 'imagemap', 'onreadydom', 'har'.", required=True, default='screenshot')
+    #@api.representation('text/html')
+    def get(self):
+        # get the URL parameters
+        url = request.args.get('url')
+        render_type = request.args.get('render_type', 'screenshot')
+
+        # Look up the item via the CDX index:
+        return monitor.webarchive.get_rendered_original_list(url, render_type)
 
 
 if __name__ == "__main__":
