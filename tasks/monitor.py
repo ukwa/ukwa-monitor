@@ -227,7 +227,7 @@ class RecordStatus(luigi.contrib.esindex.CopyToIndex):
     host = os.environ.get('ELASTICSEARCH_HOST', 'localhost')
     port = os.environ.get('ELASTICSEARCH_PORT', 9200)
     doc_type = 'default'
-    mapping = {"properties": {"service": {"type": "string", "analyzer": "keyword" }}}
+    #mapping = {"properties": {"service": {"type": "string", "analyzer": "keyword" }}}
     purge_existing_index = False
     index = "{}-{}".format(os.environ.get('ELASTICSEARCH_INDEX_PREFIX','pulse-'),
                              datetime.datetime.now().strftime('%Y-%m-%d'))
