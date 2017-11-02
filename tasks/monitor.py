@@ -194,7 +194,8 @@ def get_h3_status(args):
                 dict_values_to_floats(info['job'], 'heapReport')
                 dict_values_to_floats(info['job'], 'rateReport')
                 dict_values_to_floats(info['job'], 'sizeTotalsReport')
-                dict_values_to_floats(info['job'], 'uriTotalsReport', ['lastReachedState'])
+                dict_values_to_floats(info['job'], 'uriTotalsReport')
+                dict_values_to_floats(info['job'], 'frontierReport', ['lastReachedState'])
         except Exception as e:
             state['status'] = "DOWN"
             state['error'] = "Could not reach Heritrix! %s" % e
