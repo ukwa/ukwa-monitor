@@ -172,7 +172,7 @@ def dict_values_to_floats(d, k, excluding=list()):
             if not sk in excluding:
                 d[k][sk] = float(d[k][sk])
                 if math.isnan(d[k][sk]) or math.isinf(d[k][sk]):
-                    d[k].pop(sk)
+                    d[k][sk] = None
 
 
 def get_h3_status(args):
@@ -198,7 +198,7 @@ def get_h3_status(args):
                 dict_values_to_floats(info['job'], 'frontierReport', ['lastReachedState'])
         except Exception as e:
             state['status'] = "DOWN"
-            state['error'] = "Could not reach Heritrix! %s" % e
+            state['error'] = "Exception while checking Heritrix! %s" % e
             # app.logger.exception(e)
         # Classify
         if state['status'] == "DOWN" or state['status'] == "EMPTY":
