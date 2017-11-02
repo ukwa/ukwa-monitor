@@ -168,7 +168,7 @@ def get_hdfs_status(args):
 
 def dict_values_to_floats(d, k, excluding=list()):
     if d.has_key(k):
-        for sk in d:
+        for sk in d[k]:
             if not sk in excluding:
                 d[k][sk] = float(d[k][sk])
                 if math.isnan(d[k][sk]) or math.isinf(d[k][sk]):
