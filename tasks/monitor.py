@@ -112,7 +112,8 @@ def get_queue_status(args):
         r = s.get(qurl, timeout=(TIMEOUT, TIMEOUT))
         state['details'] = r.json()
         # Strip out state.details.backing_queue_status.delta as ElasticSearch doesnt know how to parse it:
-        state['details']['backing_queue_status'].pop('delta', None)
+        #state['details']['backing_queue_status'].pop('delta', None)
+        state['details'].pop('backing_queue_status', None)
         state['count'] = "{:0,}".format(state['details']['messages'])
         if 'error' in state['details']:
             state['status'] = "ERROR"
