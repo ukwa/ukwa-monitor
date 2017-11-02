@@ -1,4 +1,5 @@
 import os
+import math
 import json
 import luigi
 import luigi.contrib.esindex
@@ -110,6 +111,8 @@ def get_queue_status(args):
         # app.logger.info("GET: %s" % qurl)
         r = s.get(qurl, timeout=(TIMEOUT, TIMEOUT))
         state['details'] = r.json()
+        # Strip out state.details.backing_queue_status.delta as ElasticSearch doesnt know how to parse it:
+        state['details']['backing_queue_status'].pop('delta', None)
         state['count'] = "{:0,}".format(state['details']['messages'])
         if 'error' in state['details']:
             state['status'] = "ERROR"
@@ -172,6 +175,12 @@ def get_h3_status(args):
                 if not state['status']:
                     state['status'] = info['job'].get("statusDescription", None)
                 state['status'] = state['status'].upper()
+                # Also look to store useful numbers as actual numbers:
+                if info['job'].has_key('rateReport'):
+                    for rateKey in info['job']['rateReport']:
+                        info['job']['rateReport'][rateKey] = float(info['job']['rateReport'][rateKey])
+                        if math.isnan(info['job']['rateReport'][rateKey]) or math.isinf(info['job']['rateReport'][rateKey]):
+                            info['job']['rateReport'].pop(rateKey)
         except Exception as e:
             state['status'] = "DOWN"
             state['error'] = "Could not reach Heritrix! %s" % e
@@ -226,21 +235,29 @@ class RecordStatus(luigi.contrib.esindex.CopyToIndex):
 
     host = os.environ.get('ELASTICSEARCH_HOST', 'localhost')
     port = os.environ.get('ELASTICSEARCH_PORT', 9200)
-    doc_type = 'default'
+    doc_type = 'monitored'
+            #"numeric_detection": "false",
+    mapping = {
+      "properties": { 
+          "state.status": {"type": "string"},
+          "state.details.job.sizeTotalsReport.totalCount": {"type": "long"}
+      }
+    }
     #mapping = {"properties": {"service": {"type": "string", "analyzer": "keyword" }}}
     purge_existing_index = False
-    index = "{}-{}".format(os.environ.get('ELASTICSEARCH_INDEX_PREFIX','pulse-'),
-                             datetime.datetime.now().strftime('%Y-%m-%d'))
+    index = "{}-{}".format(
+                     os.environ.get('ELASTICSEARCH_INDEX_PREFIX','pulse-'),
+                     datetime.datetime.now().strftime('%Y-%m-%d'))
 
     def requires(self):
-        return CheckStatus()
+        return CheckStatus(date=self.date)
 
-    def complete(self):
-        """
-        Always re-run this task.
-        :return: False
-        """
-        return False
+    #def complete(self):
+    #    """
+    #    Always re-run this task.
+    #    :return: False
+    #    """
+    #    return False
 
     def docs(self):
         with self.input().open() as f:
@@ -257,10 +274,9 @@ class RecordStatus(luigi.contrib.esindex.CopyToIndex):
                 doc['timestamp'] = datetime.datetime.now().isoformat()
                 # And append
                 docs.append(doc)
+        #print(docs)
         return docs
 
 
 if __name__ == '__main__':
-    os.environ['HERITRIX_PASSWORD'] = 'heritrix'
-    os.environ['LUIGI_STATE_FOLDER'] = ".."
-    luigi.run(['monitor.RecordStatus', '--local-scheduler'])
+    luigi.run(['monitor.RecordStatus'])
