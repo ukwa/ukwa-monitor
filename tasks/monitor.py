@@ -166,6 +166,15 @@ def get_hdfs_status(args):
     return hdfs_id, state
 
 
+def dict_values_to_floats(d, k, excluding=list()):
+    if d.has_key(k):
+        for sk in d:
+            if not sk in excluding:
+                d[k][sk] = float(d[k][sk])
+                if math.isnan(d[k][sk]) or math.isinf(d[k][sk]):
+                    d[k].pop(sk)
+
+
 def get_h3_status(args):
         job, job_id, server_url, server_user, server_pass = args
         # Set up connection to H3:
@@ -181,11 +190,11 @@ def get_h3_status(args):
                     state['status'] = info['job'].get("statusDescription", None)
                 state['status'] = state['status'].upper()
                 # Also look to store useful numbers as actual numbers:
-                if info['job'].has_key('rateReport'):
-                    for rateKey in info['job']['rateReport']:
-                        info['job']['rateReport'][rateKey] = float(info['job']['rateReport'][rateKey])
-                        if math.isnan(info['job']['rateReport'][rateKey]) or math.isinf(info['job']['rateReport'][rateKey]):
-                            info['job']['rateReport'].pop(rateKey)
+                dict_values_to_floats(info['job'], 'loadReport')
+                dict_values_to_floats(info['job'], 'heapReport')
+                dict_values_to_floats(info['job'], 'rateReport')
+                dict_values_to_floats(info['job'], 'sizeTotalsReport')
+                dict_values_to_floats(info['job'], 'uriTotalsReport', ['lastReachedState'])
         except Exception as e:
             state['status'] = "DOWN"
             state['error'] = "Could not reach Heritrix! %s" % e
