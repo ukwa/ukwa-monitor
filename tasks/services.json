@@ -81,118 +81,167 @@
     "FC-SIPS": {
       "server": "AMQP-FC",
       "name": "sips",
+      "deployment": "legacy",
+      "function": "ingest",
       "short": "to submit"
     },
     "FC-SUB": {
       "server": "AMQP-FC",
       "name": "sip-submitted",
+      "deployment": "legacy",
+      "function": "ingest",
       "short": "submitted"
     },
     "FC-ERR": {
       "server": "AMQP-FC",
       "name": "sip-error",
+      "deployment": "legacy",
+      "function": "ingest",
       "short": "to resubmit"
     },
     "FC-ALL": {
       "server": "AMQP-FC",
       "name": "qa",
+      "deployment": "legacy",
+      "function": "ingest",
       "short": "all"
     },
     "PULSE01": {
       "server": "AMQP-PC",
       "name": "PULSE-01-stop-start-job",
+      "deployment": "beta",
+      "function": "ingest",
       "short": "(re)start"
     },
     "PULSE02": {
       "server": "AMQP-PC",
       "name": "PULSE-02-assemble-job-output",
+      "deployment": "beta",
+      "function": "ingest",
       "short": "assemble"
     },
     "PULSE03": {
       "server": "AMQP-PC",
       "name": "PULSE-03-build-sip",
+      "deployment": "beta",
+      "function": "ingest",
       "short": "build"
     },
     "PULSE04": {
       "server": "AMQP-PC",
       "name": "PULSE-04-submit-sip",
+      "function": "ingest",
       "short": "submit"
     },
     "PULSE05": {
       "server": "AMQP-PC",
       "name": "PULSE-05-verify-sip",
+      "deployment": "beta",
+      "function": "ingest",
       "short": "verify"
     },
     "PULSE10": {
       "server": "AMQP-PC",
       "name": "PULSE-10-uri-to-index",
+      "deployment": "beta",
+      "function": "ingest",
       "short": "index"
     },
     "PULSE11": {
       "server": "AMQP-PC",
       "name": "PULSE-11-uri-to-doc",
+      "deployment": "beta",
+      "function": "ingest",
       "short": "doc"
     },
     "DC0": {
       "server":"AMQP-DC",
       "name": "dc0-20170515",
+      "deployment": "domaincrawl",
+      "function": "ingest",
       "short": "DC0"
     },
     "DC1": {
       "server":"AMQP-DC",
       "name": "dc1-20170515",
+      "deployment": "domaincrawl",
+      "function": "ingest",
       "short": "DC1"
     },
     "DC2": {
       "server":"AMQP-DC",
       "name": "dc2-20170515",
+      "deployment": "domaincrawl",
+      "function": "ingest",
       "short": "DC2"
     },
     "DC3": {
       "server":"AMQP-DC",
       "name": "dc3-20170515",
+      "deployment": "domaincrawl",
+      "function": "ingest",
       "short": "DC3"
     }
   },
   "jobs": {
     "daily": {
       "name" : "daily",
+      "deployment": "production",
+      "function": "ingest",
       "server": "C1-H3-PC0"
     },
     "weekly": {
       "name": "weekly",
+      "deployment": "production",
+      "function": "ingest",
       "server": "C1-H3-PC1"
     },
     "monthly": {
       "name": "monthly",
+      "deployment": "production",
+      "function": "ingest",
       "server": "C1-H3-PC2"
     },
     "quarterly": {
       "name": "quarterly",
+      "deployment": "production",
+      "function": "ingest",
       "server": "C1-H3-PC3"
     },
     "six-monthly": {
       "name": "sixmonthly",
+      "deployment": "production",
+      "function": "ingest",
       "server": "C1-H3-PC4"
     },
     "annual": {
       "name": "annual",
+      "deployment": "production",
+      "function": "ingest",
       "server": "C1-H3-PC5"
     },
     "dc0-2017": {
       "name": "dc0-20170515",
+      "deployment": "domaincrawl",
+      "function": "ingest",
       "server": "H3-DC0"
     },
     "dc1-2017": {
       "name": "dc1-20170515",
+      "deployment": "domaincrawl",
+      "function": "ingest",
       "server": "H3-DC1"
     },
     "dc2-2017": {
       "name": "dc2-20170515",
+      "deployment": "domaincrawl",
+      "function": "ingest",
       "server": "H3-DC2"
     },
     "dc3-2017": {
       "name": "dc3-20170515",
+      "deployment": "domaincrawl",
+      "function": "ingest",
       "server": "H3-DC3"
     },
     "daily-beta": {
@@ -223,123 +272,189 @@
   "http": {
     "spt": {
       "name": "SPT",
+      "deployment": "production",
+      "function": "ingest",
       "url": "https://wct.bl.uk/selection/service/"
     },
     "wct": {
       "name": "WCT",
+      "deployment": "production",
+      "function": "ingest",
       "url": "https://wct.bl.uk/wct/"
     },
     "wct-wayback": {
       "name": "WCT Wayback",
+      "deployment": "production",
+      "function": "ingest",
       "url": "https://wct.bl.uk/wayback/"
     },
     "act-prod": {
       "name": "ACT (via SSL)",
+      "deployment": "production",
+      "function": "ingest",
       "url": "https://www.webarchive.org.uk/act"
     },
     "act-prod-backend": {
       "name": "ACT",
+      "deployment": "production",
+      "function": "ingest",
       "url": "http://crawler01:9000/act/login"
     },
     "qawb-prod": {
       "name": "QA Wayback",
+      "deployment": "production",
+      "function": "ingest",
       "url": "http://crawler01:9080/archive/"
     },
     "cdx-prod": {
       "name": "CDX Server",
+      "deployment": "production",
+      "function": "ingest",
       "url": "http://bigcdx:8080/data-heritrix"
     },
     "pdf2htmlex-prod": {
       "name": "PDF2HTMLex",
+      "deployment": "production",
+      "function": "ingest",
       "url": "http://crawler01:5005/convert?url=http://data.webarchive.org.uk/crawl-test-site/resources/documents/lorem-ipsum.PDFA1-a.pdf"
     },
     "pc-wrender-prod": {
       "name": "Web Render",
+      "deployment": "production",
+      "function": "ingest",
       "url": "http://crawler01:8010/render?url=http://192.168.45.204:5000/"
     },
     "pc-amqp-prod": {
       "name": "RabbitMQ",
+      "deployment": "production",
+      "function": "ingest",
       "url": "http://crawler01:15672/"
     },
     "pc-monitrix-prod": {
       "name": "Monitrix",
+      "deployment": "production",
+      "function": "ingest",
       "url": "http://crawler01:5601/"
     },
     "pc-luigi-prod": {
       "name": "LuigiD",
+      "deployment": "production",
+      "function": "ingest",
       "url": "http://crawler01:5082/"
     },
     "act-beta": {
       "name": "ACT β",
+      "deployment": "beta",
+      "function": "ingest",
       "url": "http://crawler02:9000/act/about",
       "url_prod": "https://beta.webarchive.org.uk/act/about"
     },
     "qawb-beta": {
       "name": "QA Wayback β",
+      "deployment": "beta",
+      "function": "ingest",
       "url": "http://crawler02:8080/"
     },
     "pdf2htmlex-beta": {
       "name": "PDF2HTMLex β",
+      "deployment": "beta",
+      "function": "ingest",
       "url": "http://crawler02:5005/convert?url=http://data.webarchive.org.uk/crawl-test-site/resources/documents/lorem-ipsum.PDFA1-a.pdf"
     },
     "pc-wrender-beta": {
       "name": "Web Render β",
+      "deployment": "beta",
+      "function": "ingest",
       "url": "http://crawler02:8010/render?url=http://192.168.45.204:5000/"
     },
     "pc-amqp-beta": {
       "name": "RabbitMQ β",
+      "deployment": "beta",
+      "function": "ingest",
       "url": "http://crawler02:15672/"
     },
     "pc-monitrix-beta": {
       "name": "Monitrix",
+      "deployment": "beta",
+      "function": "ingest",
       "url": "http://crawler02:5601/"
     },
     "pc-luigi-beta": {
       "name": "LuigiD",
+      "deployment": "beta",
+      "function": "ingest",
       "url": "http://crawler02:5082/"
     },
     "cdx-beta": {
       "name": "CDX β",
+      "deployment": "beta",
+      "function": "ingest",
       "url": "http://bigcdx:8080/data-heritrix"
     },
     "ukwa": {
       "name": "HTTPD",
+      "function": "access",
+      "deployment": "production",
       "url": "https://www.webarchive.org.uk/"
     },
     "ukwa-at": {
       "name": "Access Tool",
+      "deployment": "production",
+      "function": "access",
       "url": "https://www.webarchive.org.uk/ukwa/"
     },
     "ukwa-as": {
       "name": "Access Tool Search",
+      "deployment": "production",
+      "function": "access",
       "url": "https://www.webarchive.org.uk/ukwa/search?text=test&option_search=text&submit_quick=search"
     },
     "ukwa-wb": {
       "name": "Wayback",
+      "deployment": "production",
+      "function": "access",
       "url": "https://www.webarchive.org.uk/wayback/archive/20160215012242/http://www.bl.uk/"
     },
     "ukwa-mt": {
       "name": "Mementos",
+      "deployment": "production",
+      "function": "access",
       "url": "https://www.webarchive.org.uk/mementos/search"
     },
     "ukwa-sh": {
       "name": "Shine",
+      "deployment": "production",
+      "function": "access",
       "url": "https://www.webarchive.org.uk/shine"
     },
     "webhdfs-prod": {
        "name": "WebHDFS Gateway",
+       "deployment": "production",
+       "function": "storage",
        "url": "http://hdfs.gtw.wa.bl.uk:14000/webhdfs/v1/?op=LISTSTATUS&user.name=tomcat"
     },
     "webhdfs-dev": {
        "name": "WebHDFS DEV",
+       "deployment": "development",
+       "function": "storage",
        "url": "http://hadoop.ddb.wa.bl.uk:14000/webhdfs/v1/?op=LISTSTATUS&user.name=tomcat"
     },
     "monitor-luigid-prod": {
        "name": "Monitor Task Scheduler",
+       "deployment": "production",
+       "function": "monitor",
        "url": "http://monitor.wa.bl.uk:8082/"
+    },
+    "access-luigid-prod": {
+       "name": "Access Task Scheduler",
+       "deployment": "production",
+       "function": "access",
+       "url": "http://access:8082/"
     },
     "ingest-luigid-prod": {
        "name": "Ingest Task Scheduler",
+       "deployment": "production",
+       "function": "ingest",
        "url": "http://ingest:8082/"
     }
   },
@@ -347,11 +462,15 @@
     "hdfs-prod": {
       "name": "HDFS",
       "host": "nellie.bl.uk",
+      "deployment": "production",
+      "function": "storage",
       "url": "http://nellie.bl.uk:50070/dfshealth.jsp"
     },
     "hdfs-dev": {
       "name": "HDFS DEV",
       "host": "hadoop.ddb.wa.bl.uk",
+      "deployment": "development",
+      "function": "storage",
       "url": "http://hadoop.ddb.wa.bl.uk:50070/dfshealth.jsp"
     }
   }
