@@ -2,32 +2,67 @@ version: '2'
 
 services:
 
+  # Log and event processing for analysis/debugging (ELK stack)
+  # -------------------------------------------------------------
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:${TAG}
+    environment: ['http.host=0.0.0.0', 'transport.host=127.0.0.1', 'xpack.security.enabled=false']
+    ports:
+      - "9200:9200"
+
+  # Logstash with knowledge of how to parse Heritrix3 crawl log files
+  logstash:
+    image: docker.elastic.co/logstash/logstash:${TAG}
+    ports:
+      - "9600:9600"
+      - "5044:5044"
+    volumes:
+      - ./logstash/pipeline:/usr/share/logstash/pipeline
+    depends_on: ['elasticsearch']
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:${TAG}
+    ports:
+      - "5601:5601"
+    depends_on: ['elasticsearch']
+
+  # For testing purposes
+  filebeat:
+    image: docker.elastic.co/beats/filebeat:${TAG}
+    # If the host system has logs at "/var/log", mount them at "/mnt/log"
+    # inside the container, where Filebeat can find them.
+    volumes: 
+      - './filebeat/test-logs:/heritrix/output/logs/test-logs:ro'
+      - './filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml'
+    depends_on: ['elasticsearch']
+
+  # Monitoring based on metrics (Prometheus + Grafana dashboard):
+  # -------------------------------------------------------------
+
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - 9090:9090
+    links:
+      - metrics-gateway:metrics-gateway
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+
+  metrics-gateway:
+    image: prom/pushgateway
+    ports:
+      - 9091:9091
+
   grafana:
     image: grafana/grafana
     ports:
       - "3000:3000"
-    links:
+    depends_on:
       - elasticsearch
+      - prometheus
     environment:
       - "GF_AUTH_ANONYMOUS_ENABLED=true"
+      - GF_SECURITY_ADMIN_PASSWORD=secret
     volumes:
       - ./target/testing/grafana-data:/var/lib/grafana
-
-  elasticsearch:
-    image: elasticsearch:alpine
-    ports:
-      - "9200:9200"
-
-  # Monitrix, built on ELK by extending Logstash to support Heritrix logs.
-  monitrix:
-    image: ukwa/monitrix
-    ports:
-      - "5601:5601"
-      - "9200:9200"
-      - "5000:5000"
-      - "5044:5044"
-
-  monitor:
-    build: .
-    ports:
-      - "5000:5000"
