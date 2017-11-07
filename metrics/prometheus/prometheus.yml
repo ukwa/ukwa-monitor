@@ -9,5 +9,6 @@ scrape_configs:
       - targets: ['localhost:9090']
 
   - job_name: 'metrics-gateway'
+    honor_labels: true
     static_configs:
       - targets: ['metrics-gateway:9091']
