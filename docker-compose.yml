@@ -1,5 +1,9 @@
 version: '2'
 
+# Environment variables common to all deployments
+env_file:
+  - ./common.env
+
 services:
 
   # Log and event processing for analysis/debugging (ELK stack)
