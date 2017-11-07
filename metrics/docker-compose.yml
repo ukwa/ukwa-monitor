@@ -13,6 +13,7 @@ services:
       - metrics-gateway:metrics-gateway
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./testing/prometheus-data:/prometheus
 
   metrics-gateway:
     image: prom/pushgateway
@@ -29,4 +30,4 @@ services:
       - "GF_AUTH_ANONYMOUS_ENABLED=true"
       - GF_SECURITY_ADMIN_PASSWORD=secret
     volumes:
-      - ./target/testing/grafana-data:/var/lib/grafana
+      - ./testing/grafana-data:/var/lib/grafana
