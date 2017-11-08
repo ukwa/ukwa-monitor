@@ -15,4 +15,4 @@ scrape_configs:
 
   - job_name: 'firefox-apache'
     static_configs:
-      - targets: ['localhost:9117']
+      - targets: ['apache-ukwa:9117']

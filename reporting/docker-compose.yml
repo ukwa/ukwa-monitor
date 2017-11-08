@@ -1,9 +1,5 @@
 version: '2'
 
-# Environment variables common to all deployments
-env_file:
-  - ./common.env
-
 services:
 
   # Log and event processing for reporting/debugging (ELK stack)
@@ -29,15 +25,5 @@ services:
     image: docker.elastic.co/kibana/kibana:${TAG}
     ports:
       - "5601:5601"
-    depends_on: ['elasticsearch']
-
-  # For testing purposes
-  filebeat:
-    image: docker.elastic.co/beats/filebeat:${TAG}
-    # If the host system has logs at "/var/log", mount them at "/mnt/log"
-    # inside the container, where Filebeat can find them.
-    volumes: 
-      - './filebeat/test-logs:/heritrix/output/logs/test-logs:ro'
-      - './filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml'
     depends_on: ['elasticsearch']
 

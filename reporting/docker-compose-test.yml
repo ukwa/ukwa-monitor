@@ -1,0 +1,15 @@
+version: '2'
+
+services:
+
+  # Example filebeat configuration to test with
+  # -------------------------------------------------------------
+  filebeat:
+    image: docker.elastic.co/beats/filebeat:${TAG}
+    # If the host system has logs at "/var/log", mount them at "/mnt/log"
+    # inside the container, where Filebeat can find them.
+    volumes: 
+      - './filebeat/test-logs:/heritrix/output/logs/test-logs:ro'
+      - './filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml'
+    depends_on: ['elasticsearch']
+
