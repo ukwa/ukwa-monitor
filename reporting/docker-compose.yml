@@ -12,14 +12,14 @@ services:
       - "9200:9200"
 
   # Logstash with knowledge of how to parse Heritrix3 crawl log files
-  logstash:
+  logstash-crawl-logs:
     image: docker.elastic.co/logstash/logstash:${TAG}
     ports:
       - "9600:9600"
       - "5044:5044"
     volumes:
-      - ./logstash/pipeline:/usr/share/logstash/pipeline
-    depends_on: ['elasticsearch']
+      - ./logstash/pipeline/heritrix-crawl-log-pipeline.conf:/usr/share/logstash/pipeline/logstash.conf
+    depends_on: ['elasticsearch', 'kafka']
 
   kibana:
     image: docker.elastic.co/kibana/kibana:${TAG}
@@ -27,3 +27,21 @@ services:
       - "5601:5601"
     depends_on: ['elasticsearch']
 
+  # Kafka used as main mechanism for routing data for monitoring
+  # Needs a Zookeeper too
+  # ----
+  zookeeper:
+    image: wurstmeister/zookeeper
+    ports:
+      - "2181:2181"
+
+  kafka:
+    image: wurstmeister/kafka
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: gleam.local
+      KAFKA_CREATE_TOPICS: "test:1:1"
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock

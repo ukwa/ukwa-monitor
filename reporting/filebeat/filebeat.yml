@@ -10,14 +10,8 @@ filebeat:
       fields:
         crawl_id: test-crawler
 
-shipper:
-  name: heritrix
-
 output:
-  logstash:
-    enabled: true
-
-    hosts: ["logstash:5044"]
-
-    tls:
-      disabled: true
+  # Route logs via Kafka:
+  kafka:
+    hosts: ["kafka:9092"]
+    topic: '%{[type]}'

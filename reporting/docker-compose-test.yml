@@ -11,5 +11,5 @@ services:
     volumes: 
       - './filebeat/test-logs:/heritrix/output/logs/test-logs:ro'
       - './filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml'
-    depends_on: ['elasticsearch']
+    depends_on: ['kafka']
 
