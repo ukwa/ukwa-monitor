@@ -18,7 +18,7 @@ services:
       - "9600:9600"
       - "5044:5044"
     volumes:
-      - ./logstash/pipeline/heritrix-crawl-log-pipeline.conf:/usr/share/logstash/pipeline/logstash.conf
+      - ./logstash/pipelines/heritrix-crawl-log-pipeline.conf:/usr/share/logstash/pipeline/logstash.conf
     depends_on: ['elasticsearch', 'kafka']
 
   kibana:
