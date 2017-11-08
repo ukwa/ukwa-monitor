@@ -34,6 +34,6 @@ services:
 
   apache-ukwa:
     image: garyritchie/apache_exporter
-    command: 'apache_exporter -scrape_uri "https://www.webarchive.org.uk/server-status/?auto"'
+    command: './apache_exporter -scrape_uri "https://www.webarchive.org.uk/server-status/?auto"'
     ports:
       - 9117:9117
