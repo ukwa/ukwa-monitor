@@ -11,6 +11,13 @@ services:
     ports:
       - "9200:9200"
 
+  kibana:
+    image: docker.elastic.co/kibana/kibana:${TAG}
+    command: [ "/bin/bash", "-c", "/usr/share/kibana/bin/kibana-plugin remove x-pack; /usr/local/bin/kibana-docker" ]
+    ports:
+      - "5601:5601"
+    depends_on: ['elasticsearch']
+
   # Logstash with knowledge of how to parse Heritrix3 crawl log files
   logstash-crawl-logs:
     image: docker.elastic.co/logstash/logstash:${TAG}
@@ -21,11 +28,15 @@ services:
       - ./logstash/pipelines/heritrix-crawl-log-pipeline.conf:/usr/share/logstash/pipeline/logstash.conf
     depends_on: ['elasticsearch', 'kafka']
 
-  kibana:
-    image: docker.elastic.co/kibana/kibana:${TAG}
+  # Logstash with knowledge of how to parse web access log files
+  logstash-www-logs:
+    image: docker.elastic.co/logstash/logstash:${TAG}
     ports:
-      - "5601:5601"
-    depends_on: ['elasticsearch']
+      - "9601:9600"
+      - "5045:5044"
+    volumes:
+      - ./logstash/pipelines/access-www-log-pipeline.conf:/usr/share/logstash/pipeline/logstash.conf
+    depends_on: ['elasticsearch', 'kafka']
 
   # Kafka used as main mechanism for routing data for monitoring
   # Needs a Zookeeper too
