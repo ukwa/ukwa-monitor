@@ -2,11 +2,26 @@ global:
   scrape_interval:     30s
   evaluation_interval: 30s
 
+# Load and evaluate rules in this file every 'evaluation_interval' seconds.
+rule_files:
+  - 'alert.rules'
+  # - "first.rules"
+  # - "second.rules"
+
+# alert
+alerting:
+  alertmanagers:
+  - scheme: http
+    static_configs:
+    - targets:
+      - "alertmanager:9093"
+
 scrape_configs:
 
   - job_name: 'prometheus'
+  - job_name: 'node'
     static_configs:
-      - targets: ['localhost:9090']
+      - targets: ['localhost:9090','cadvisor:8080','node-exporter:9100']
 
   - job_name: 'metrics-gateway'
     honor_labels: true
