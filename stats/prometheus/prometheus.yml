@@ -31,3 +31,7 @@ scrape_configs:
   - job_name: 'firefox-apache'
     static_configs:
       - targets: ['apache-ukwa:9117']
+
+  - job_name: 'docker'
+    static_configs:
+      - targets: ['crawler01:9323']
