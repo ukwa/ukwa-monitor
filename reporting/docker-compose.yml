@@ -1,4 +1,4 @@
-version: '2'
+version: '3.2'
 
 services:
 
@@ -6,34 +6,34 @@ services:
   # -------------------------------------------------------------
 
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:${TAG}
+    image: "docker.elastic.co/elasticsearch/elasticsearch:5.6.3"
     environment: ['http.host=0.0.0.0', 'transport.host=127.0.0.1', 'xpack.security.enabled=false']
     ports:
-      - "9200:9200"
+      - 9200:9200
 
   kibana:
-    image: docker.elastic.co/kibana/kibana:${TAG}
+    image: "docker.elastic.co/kibana/kibana:5.6.3"
     command: [ "/bin/bash", "-c", "/usr/share/kibana/bin/kibana-plugin remove x-pack; /usr/local/bin/kibana-docker" ]
     ports:
-      - "5601:5601"
+      - 5601:5601
     depends_on: ['elasticsearch']
 
   # Logstash with knowledge of how to parse Heritrix3 crawl log files
   logstash-crawl-logs:
-    image: docker.elastic.co/logstash/logstash:${TAG}
+    image: "docker.elastic.co/logstash/logstash:5.6.3"
     ports:
-      - "9600:9600"
-      - "5044:5044"
+      - 9600:9600
+      - 5044:5044
     volumes:
       - ./logstash/pipelines/heritrix-crawl-log-pipeline.conf:/usr/share/logstash/pipeline/logstash.conf
     depends_on: ['elasticsearch', 'kafka']
 
   # Logstash with knowledge of how to parse web access log files
   logstash-www-logs:
-    image: docker.elastic.co/logstash/logstash:${TAG}
+    image: "docker.elastic.co/logstash/logstash:5.6.3"
     ports:
-      - "9601:9600"
-      - "5045:5044"
+      - 9601:9600
+      - 5045:5044
     volumes:
       - ./logstash/pipelines/access-www-log-pipeline.conf:/usr/share/logstash/pipeline/logstash.conf
     depends_on: ['elasticsearch', 'kafka']
@@ -44,15 +44,22 @@ services:
   zookeeper:
     image: wurstmeister/zookeeper
     ports:
-      - "2181:2181"
+      - 2181:2181
 
   kafka:
     image: wurstmeister/kafka
     ports:
-      - "9092:9092"
+      - target: 9094
+        published: 9094
+        protocol: tcp
+        mode: host
     environment:
-      KAFKA_ADVERTISED_HOST_NAME: gleam.local
-      KAFKA_CREATE_TOPICS: "test:1:1"
+      HOSTNAME_COMMAND: "docker info | grep ^Name: | cut -d' ' -f 2"      
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
+      KAFKA_ADVERTISED_PROTOCOL_NAME: OUTSIDE
+      KAFKA_ADVERTISED_PORT: 9094
+      KAFKA_PROTOCOL_NAME: INSIDE
+      KAFKA_PORT: 9092
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock

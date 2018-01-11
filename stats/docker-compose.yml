@@ -1,4 +1,4 @@
-version: '2'
+version: '3.2'
 
 services:
 
@@ -13,7 +13,7 @@ services:
       - prometheus
     environment:
       - "GF_AUTH_ANONYMOUS_ENABLED=true"
-      - GF_SECURITY_ADMIN_PASSWORD=secret
+      - "GF_SECURITY_ADMIN_PASSWORD=secret"
     volumes:
       - ./testing/grafana-data:/var/lib/grafana
 
@@ -27,6 +27,7 @@ services:
       - cadvisor:cadvisor
     depends_on:
       - cadvisor
+    user: root
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
       - ./testing/prometheus-data:/prometheus
