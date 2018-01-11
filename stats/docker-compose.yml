@@ -50,6 +50,15 @@ services:
     ports:
       - 9091:9091
 
+  blackbox-exporter:
+    image: prom/blackbox-exporter
+    ports:
+      - "9115:9115"
+    volumes:
+      - ./blackbox_exporter:/config
+    command:
+      - '--config.file=/config/config.yml'
+
   apache-ukwa:
     image: garyritchie/apache_exporter
     command: './apache_exporter -scrape_uri "https://www.webarchive.org.uk/server-status/?auto"'

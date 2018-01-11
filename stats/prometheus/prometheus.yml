@@ -30,6 +30,7 @@ scrape_configs:
     static_configs:
       - targets: ['apache-ukwa:9117']
 
+  # See https://docs.docker.com/engine/admin/prometheus/
   - job_name: 'docker'
     static_configs:
       - targets: ['crawler01.n45.bl.uk:9323', 'crawler02.n45.bl.uk:9323']
