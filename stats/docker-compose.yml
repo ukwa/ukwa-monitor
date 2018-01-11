@@ -29,7 +29,7 @@ services:
       - cadvisor
     user: root
     volumes:
-      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./prometheus:/etc/prometheus
       - ./testing/prometheus-data:/prometheus
     extra_hosts:
       - "crawler01.n45.bl.uk:192.168.45.16"
