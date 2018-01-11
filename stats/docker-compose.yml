@@ -31,6 +31,9 @@ services:
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
       - ./testing/prometheus-data:/prometheus
+    extra_hosts:
+      - "crawler01.n45.bl.uk:192.168.45.16"
+      - "crawler02.n45.bl.uk:192.168.45.19"
 
   alertmanager:
     image: prom/alertmanager
