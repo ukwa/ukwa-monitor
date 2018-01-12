@@ -11,6 +11,10 @@ import logging
 from hapy import hapy
 from multiprocessing import Pool, Process
 
+# Avoid warnings about certs.
+import urllib3
+urllib3.disable_warnings()
+
 
 logger = logging.getLogger(__name__)
 
@@ -55,7 +59,8 @@ class Heritrix3Collector(object):
                     dns_job = dict(job)
                     dns_job['url'] = 'https://%s:8443/' % ip
                     services.append(dns_job)
-            except socket.gaierror:
+            except socket.gaierror as e:
+                print(e)
                 pass
 
         return services
@@ -71,7 +76,7 @@ class Heritrix3Collector(object):
             server_user = "admin"
             server_pass = os.environ['HERITRIX_PASSWORD']
             # app.logger.info(json.dumps(server, indent=4))
-            argsv.append((job['name'], job['job_name'], server_url, server_user, server_pass))
+            argsv.append((job['job_name'], server_url, server_user, server_pass))
         # Wait for all...
         result_list = self.pool.map(get_h3_status, argsv)
         results = {}
@@ -114,6 +119,8 @@ class Heritrix3Collector(object):
             except KeyError:
                 docs_total = 0.0
                 known_total = 0.0
+                print("Printing results in case there's an error:")
+                print(json.dumps(job))
             m_uri_down.add_metric([name,deployment, status], docs_total)
             m_uri_known.add_metric([name,deployment, status], known_total)
 
@@ -134,13 +141,13 @@ def dict_values_to_floats(d, k, excluding=list()):
 
 
 def get_h3_status(args):
-    job, job_id, server_url, server_user, server_pass = args
+    job_name, server_url, server_user, server_pass = args
     # Set up connection to H3:
     h = hapy.Hapy(server_url, username=server_user, password=server_pass, timeout=TIMEOUT)
     state = {}
     try:
-        logger.info("Getting status for job %s on %s" % (job, server_url))
-        info = h.get_job_info(job)
+        logger.info("Getting status for job %s on %s" % (job_name, server_url))
+        info = h.get_job_info(job_name)
         state['details'] = info
         if info.has_key('job'):
             state['status'] = info['job'].get("crawlControllerState", None)
@@ -172,7 +179,7 @@ def get_h3_status(args):
     else:
         state['status-class'] = "status-warning"
 
-    return job_id, state
+    return job_name, state
 
 
 if __name__ == "__main__":
