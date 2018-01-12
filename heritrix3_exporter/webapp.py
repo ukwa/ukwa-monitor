@@ -21,51 +21,107 @@ socket.setdefaulttimeout(TIMEOUT)
 
 class Heritrix3Collector(object):
 
+    def __init__(self):
+        self.pool = Pool(20)
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.pool.close()
+
     def load_as_json(self, filename):
         script_dir = os.path.dirname(__file__)
         file_path = os.path.join(script_dir, filename)
         with open(file_path, 'r') as fi:
             return json.load(fi)
 
+    def lookup_services(self):
+        # Load the config file:
+        service_list = self.load_as_json(os.path.join(os.path.dirname(__file__), 'crawl-jobs.json'))
+
+        # Find the services. If there are any DNS Service Discovery entries, filter them out.
+        services = []
+        dns_sd = []
+        for job in service_list:
+            if 'dns_sd_name' in job:
+                dns_sd.append(job)
+            else:
+                services.append(job)
+
+        # For each DNS SD entry, use DNS to discover the service:
+        for job in dns_sd:
+            dns_name = job['dns_sd_name']
+            try:
+                (hostname, alias, ipaddrlist) = socket.gethostbyname_ex(dns_name)
+                for ip in ipaddrlist:
+                    dns_job = dict(job)
+                    dns_job['url'] = 'https://%s:8443/' % ip
+                    services.append(dns_job)
+            except socket.gaierror:
+                pass
+
+        return services
+
     def run_api_requests(self):
-        services = self.load_as_json(os.path.join(os.path.dirname(__file__), 'crawl-jobs.json'))
-        pool = Pool(20)
+        # Find the list of Heritrixen to talk to
+        services = self.lookup_services()
 
         # Parallel check for H3 job status:
         argsv = []
         for job in services:
-            server_url = job['server']
+            server_url = job['url']
             server_user = "admin"
             server_pass = os.environ['HERITRIX_PASSWORD']
             # app.logger.info(json.dumps(server, indent=4))
-            services[job]['url'] = server_url
-            argsv.append((services[job]['name'], job, server_url, server_user, server_pass))
+            argsv.append((job['name'], job['job_name'], server_url, server_user, server_pass))
         # Wait for all...
-        results = pool.map(get_h3_status, argsv)
-        for job, state in results:
-            services[job]['state'] = state
+        result_list = self.pool.map(get_h3_status, argsv)
+        results = {}
+        for job_name, status in result_list:
+            results[job_name] = status
+
+        # Merge the results in:
+        for job in services:
+            job['state'] = results[job['job_name']]
 
         return services
 
     def collect(self):
         stats = self.run_api_requests()
 
-        metric = GaugeMetricFamily(
-            'jenkins_job_last_successful_build_timestamp_seconds',
-            'Jenkins build timestamp in unixtime for lastSuccessfulBuild',
-            labels=["jobname"])
+        m_uri_down = GaugeMetricFamily(
+            'heritrix3_crawl_job_uris_downloaded_total',
+            'Total URIs downloaded by a Heritrix3 crawl job',
+            labels=["jobname", "deployment", "status"])
 
-        result = json.load(urllib2.urlopen(
-            "http://jenkins:8080/api/json?tree="
-            + "jobs[name,lastSuccessfulBuild[timestamp]]"))
+        m_uri_known = GaugeMetricFamily(
+            'heritrix3_crawl_job_uris_known_total',
+            'Total URIs discovered by a Heritrix3 crawl job',
+            labels=["jobname", "deployment", "status"])
 
-        for job in result['jobs']:
+        result = self.run_api_requests()
+
+        for job in result:
+            #print(json.dumps(job))
+            # Get hold of the state and flags etc
             name = job['name']
-            # If there's a null result, we want to export a zero.
-            status = job['lastSuccessfulBuild'] or {}
-            metric.add_metric([name], status.get('timestamp', 0) / 1000.0)
+            deployment = job['deployment']
+            state = job['state'] or {}
+            status = state['status'] or None
 
-        yield metric
+            # Get the URI metrics
+            try:
+                docs_total = state['details']['job']['uriTotalsReport']['downloadedUriCount'] or 0.0
+                known_total = state['details']['job']['uriTotalsReport']['totalUriCount'] or 0.0
+            except KeyError:
+                docs_total = 0.0
+                known_total = 0.0
+            m_uri_down.add_metric([name,deployment, status], docs_total)
+            m_uri_known.add_metric([name,deployment, status], known_total)
+
+            #metric.add_metric([name], status.get('timestamp', 0) / 1000.0)
+
+        yield m_uri_down
+        yield m_uri_known
+
 
 
 def dict_values_to_floats(d, k, excluding=list()):

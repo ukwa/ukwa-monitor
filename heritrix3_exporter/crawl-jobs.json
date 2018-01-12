@@ -1,62 +1,79 @@
-{
-  "daily": {
+[
+  {
     "name": "daily",
-    "deployment": "production",
+    "job_name": "daily",
+    "deployment": "frequent",
     "function": "ingest",
-    "server": "https://crawler01:8443/"
+    "url": "https://crawler01.bl.uk:8443/"
   },
-  "weekly": {
+  {
     "name": "weekly",
-    "deployment": "production",
+    "job_name": "weekly",
+    "deployment": "frequent",
     "function": "ingest",
-    "server": "https://crawler01:8444/"
+    "url": "https://crawler01.bl.uk:8444/"
   },
-  "monthly": {
+  {
     "name": "monthly",
-    "deployment": "production",
+    "job_name": "monthly",
+    "deployment": "frequent",
     "function": "ingest",
-    "server": "https://crawler01:8445/"
+    "url": "https://crawler01.bl.uk:8445/"
   },
-  "quarterly": {
+  {
     "name": "quarterly",
-    "deployment": "production",
+    "job_name": "quarterly",
+    "deployment": "frequent",
     "function": "ingest",
-    "server": "https://crawler01:8446/"
+    "url": "https://crawler01.bl.uk:8446/"
   },
-  "six-monthly": {
-    "name": "sixmonthly",
-    "deployment": "production",
+  {
+    "name": "six-monthly",
+    "job_name": "sixmonthly",
+    "deployment": "frequent",
     "function": "ingest",
-    "server": "https://crawler01:8447/"
+    "url": "https://crawler01.bl.uk:8447/"
   },
-  "annual": {
+  {
     "name": "annual",
-    "deployment": "production",
+    "job_name": "annual",
+    "deployment": "frequent",
     "function": "ingest",
-    "server": "https://crawler01:8448/"
+    "url": "https://crawler01.bl.uk:8448/"
   },
-  "dc0-2017": {
-    "name": "dc0-20170515",
-    "deployment": "domaincrawl",
+  {
+    "name": "dc0-2017",
+    "job_name": "dc0-20170515",
+    "deployment": "domain",
     "function": "ingest",
-    "server": "https://crawler04:8443/"
+    "url": "https://crawler04.bl.uk:8443/"
   },
-  "dc1-2017": {
-    "name": "dc1-20170515",
-    "deployment": "domaincrawl",
+  {
+    "name": "dc1-2017",
+    "job_name": "dc1-20170515",
+    "deployment": "domain",
     "function": "ingest",
-    "server": "https://crawler04:8444/"
+    "url": "https://crawler04.bl.uk:8444/"
   },
-  "dc2-2017": {
-    "name": "dc2-20170515",
-    "deployment": "domaincrawl",
+  {
+    "name": "dc2-2017",
+    "job_name": "dc2-20170515",
+    "deployment": "domain",
     "function": "ingest",
-    "server": "https://crawler04:8445/"
+    "url": "https://crawler04.bl.uk:8445/"
   },
-  "dc3-2017": {
-    "name": "dc3-20170515",
-    "deployment": "domaincrawl",
+  {
+    "name": "dc3-2017",
+    "job_name": "dc3-20170515",
+    "deployment": "domain",
     "function": "ingest",
-    "server": "https://crawler04:8446/"
+    "url": "https://crawler04.bl.uk:8446/"
+  },
+  {
+    "name": "frequent-worker",
+    "job_name": "frequent",
+    "deployment": "beta",
+    "function": "ingest",
+    "dns_sd_name": "task.heritrix-worker"
   }
-}
+]
