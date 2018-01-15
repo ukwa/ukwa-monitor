@@ -2,8 +2,11 @@ FROM python:2.7
 
 # Install the monitor package:
 COPY . /monitor
-RUN cd /monitor/ && pip install --no-cache-dir -r requirements.txt
-RUN cd /monitor/ && python setup.py install
+WORKDIR /monitor
 
-# Run the dashboard
-CMD ["gunicorn", "webapp:app", "-b", "0.0.0.0:5000"]
+# Install
+RUN pip install --no-cache-dir -r requirements.txt
+RUN python setup.py install
+
+# Run the stats endpoint
+CMD ["python", "heritrix3_exporter.py"]
