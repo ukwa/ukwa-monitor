@@ -82,19 +82,6 @@ services:
   # Providing system and container level metrics:
   # -------------------------------------------------------------
 
-  node-exporter:
-    image: prom/node-exporter
-    volumes:
-      - /proc:/host/proc
-      - /sys:/host/sys
-      - /:/rootfs
-    command: 
-      - '--path.procfs=/host/proc' 
-      - '--path.sysfs=/host/sys'
-      - '--collector.filesystem.ignored-mount-points="^/(sys|proc|dev|host|etc)($$|/)"'
-    ports:
-      - 9100:9100
-
   cadvisor:
     image: google/cadvisor
     volumes:
