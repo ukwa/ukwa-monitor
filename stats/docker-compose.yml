@@ -13,6 +13,8 @@ services:
       - prometheus
     environment:
       - "GF_AUTH_ANONYMOUS_ENABLED=true"
+      - "GF_AUTH_ANONYMOUS_ORG_NAME=BL"
+      - "GF_AUTH_ANONYMOUS_ORG_ROLE=Viewer"
       - "GF_SECURITY_ADMIN_PASSWORD=secret"
     volumes:
       - ./testing/grafana-data:/var/lib/grafana
@@ -29,11 +31,20 @@ services:
       - cadvisor
     user: root
     volumes:
-      - ./prometheus:/etc/prometheus
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./prometheus/alert.rules.yml:/etc/prometheus/alert.rules.yml
       - ./testing/prometheus-data:/prometheus
     extra_hosts:
       - "crawler01.n45.bl.uk:192.168.45.16"
       - "crawler02.n45.bl.uk:192.168.45.19"
+      - "access.n45.wa.bl.uk:192.168.45.25"
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+      - '--web.external-url=http://dev-monitor.n45.wa.bl.uk:9090/'
+      - '--web.enable-admin-api'
 
   alertmanager:
     image: prom/alertmanager
@@ -44,6 +55,7 @@ services:
     command:
       - '-config.file=/etc/alertmanager/config.yml'
       - '-storage.path=/alertmanager'
+      - '-web.external-url=http://dev-monitor.n45.wa.bl.uk:9093/'
 
   metrics-gateway:
     image: prom/pushgateway
@@ -58,6 +70,8 @@ services:
       - ./blackbox_exporter:/config
     command:
       - '--config.file=/config/config.yml'
+    extra_hosts:
+      - "ukwa-ui-beta.n45.wa.bl.uk:192.168.45.95"
 
   apache-ukwa:
     image: garyritchie/apache_exporter

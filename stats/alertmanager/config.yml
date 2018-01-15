@@ -2,6 +2,7 @@ global:
   # The smarthost and SMTP sender used for mail notifications.
   smtp_smarthost: 'juno.bl.uk:25'
   smtp_from: 'alertmanager@dev-monitor'
+  smtp_require_tls: false
 
 # The directory from which notification templates are read.
 templates:
