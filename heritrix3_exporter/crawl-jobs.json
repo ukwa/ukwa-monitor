@@ -74,6 +74,6 @@
     "job_name": "frequent",
     "deployment": "beta",
     "function": "ingest",
-    "dns_sd_name": "tasks.heritrix-worker"
+    "dns_sd_name": "heritrix-worker"
   }
 ]

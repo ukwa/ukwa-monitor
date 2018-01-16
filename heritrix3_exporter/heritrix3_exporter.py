@@ -52,16 +52,29 @@ class Heritrix3Collector(object):
 
         # For each DNS SD entry, use DNS to discover the service:
         for job in dns_sd:
-            dns_name = job['dns_sd_name']
+            # DNS SD under Docker uses this form of naming to discover services:
+            dns_name = 'tasks.%s' % job['dns_sd_name']
             try:
                 # Look up service IP addresses via DNS:
                 (hostname, alias, ipaddrlist) = socket.gethostbyname_ex(dns_name)
                 for ip in ipaddrlist:
+                    # Make a copy of the dict to put the values in:
+                    dns_job = dict(job)
+                    # Default to using the IP address:
+                    dns_host = ip
+                    dns_job['id'] = '%s:%s' % (dns_job['id'], ip)
                     # Find the IP-level hostname via reverse lookup:
                     (r_hostname, r_aliaslist, r_ipaddrlist) = socket.gethostbyaddr(ip)
-                    dns_job = dict(job)
-                    dns_job['url'] = 'https://%s:8443/' % r_hostname
-                    dns_job['id'] = r_hostname
+                    # look for a domain alias that matches the expected form:
+                    for r_alias in r_aliaslist:
+                        if r_alias.startswith(job['dns_sd_name']):
+                            # Use this instead of the raw IP:
+                            dns_host = r_alias
+                            dns_job['id'] = r_alias
+                            break
+                    # Set the URL:
+                    dns_job['url'] = 'https://%s:8443/' % dns_host
+                    # Remember:
                     services.append(dns_job)
             except socket.gaierror as e:
                 print(e)
@@ -99,12 +112,12 @@ class Heritrix3Collector(object):
         m_uri_down = GaugeMetricFamily(
             'heritrix3_crawl_job_uris_downloaded_total',
             'Total URIs downloaded by a Heritrix3 crawl job',
-            labels=["jobname", "deployment", "status", "id"])
+            labels=["jobname", "deployment", "status", "id"]) # No hyphens in label names please!
 
         m_uri_known = GaugeMetricFamily(
             'heritrix3_crawl_job_uris_known_total',
             'Total URIs discovered by a Heritrix3 crawl job',
-            labels=["jobname", "deployment", "status", "id"])
+            labels=["jobname", "deployment", "status", "id"]) # No hyphens in label names please!
 
         result = self.run_api_requests()
 
