@@ -95,12 +95,12 @@ class Heritrix3Collector(object):
         m_uri_down = GaugeMetricFamily(
             'heritrix3_crawl_job_uris_downloaded_total',
             'Total URIs downloaded by a Heritrix3 crawl job',
-            labels=["jobname", "deployment", "status"])
+            labels=["jobname", "deployment", "status", "url"])
 
         m_uri_known = GaugeMetricFamily(
             'heritrix3_crawl_job_uris_known_total',
             'Total URIs discovered by a Heritrix3 crawl job',
-            labels=["jobname", "deployment", "status"])
+            labels=["jobname", "deployment", "status", "url"])
 
         result = self.run_api_requests()
 
@@ -108,6 +108,7 @@ class Heritrix3Collector(object):
             #print(json.dumps(job))
             # Get hold of the state and flags etc
             name = job['name']
+            url = job['url']
             deployment = job['deployment']
             state = job['state'] or {}
             status = state['status'] or None
@@ -121,8 +122,8 @@ class Heritrix3Collector(object):
                 known_total = 0.0
                 print("Printing results in case there's an error:")
                 print(json.dumps(job))
-            m_uri_down.add_metric([name,deployment, status], docs_total)
-            m_uri_known.add_metric([name,deployment, status], known_total)
+            m_uri_down.add_metric([name,deployment, status, url], docs_total)
+            m_uri_known.add_metric([name,deployment, status, url], known_total)
 
             #metric.add_metric([name], status.get('timestamp', 0) / 1000.0)
 
