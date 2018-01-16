@@ -54,10 +54,14 @@ class Heritrix3Collector(object):
         for job in dns_sd:
             dns_name = job['dns_sd_name']
             try:
+                # Look up service IP addresses via DNS:
                 (hostname, alias, ipaddrlist) = socket.gethostbyname_ex(dns_name)
                 for ip in ipaddrlist:
+                    # Find the IP-level hostname via reverse lookup:
+                    (r_hostname, r_aliaslist, r_ipaddrlist) = socket.gethostbyaddr(ip)
                     dns_job = dict(job)
-                    dns_job['url'] = 'https://%s:8443/' % ip
+                    dns_job['url'] = 'https://%s:8443/' % r_hostname
+                    dns_job['job_name'] = r_hostname
                     services.append(dns_job)
             except socket.gaierror as e:
                 print(e)
