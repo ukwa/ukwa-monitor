@@ -99,12 +99,12 @@ class Heritrix3Collector(object):
         m_uri_down = GaugeMetricFamily(
             'heritrix3_crawl_job_uris_downloaded_total',
             'Total URIs downloaded by a Heritrix3 crawl job',
-            labels=["job-name", "deployment", "status", "id"])
+            labels=["jobname", "deployment", "status", "id"])
 
         m_uri_known = GaugeMetricFamily(
             'heritrix3_crawl_job_uris_known_total',
             'Total URIs discovered by a Heritrix3 crawl job',
-            labels=["job-name", "deployment", "status", "id"])
+            labels=["jobname", "deployment", "status", "id"])
 
         result = self.run_api_requests()
 
