@@ -2,42 +2,42 @@
   {
     "id": "daily",
     "job_name": "daily",
-    "deployment": "frequent",
+    "deployment": "daily",
     "function": "ingest",
     "url": "https://crawler01.bl.uk:8443/"
   },
   {
     "id": "weekly",
     "job_name": "weekly",
-    "deployment": "frequent",
+    "deployment": "weekly",
     "function": "ingest",
     "url": "https://crawler01.bl.uk:8444/"
   },
   {
     "id": "monthly",
     "job_name": "monthly",
-    "deployment": "frequent",
+    "deployment": "monthly",
     "function": "ingest",
     "url": "https://crawler01.bl.uk:8445/"
   },
   {
     "id": "quarterly",
     "job_name": "quarterly",
-    "deployment": "frequent",
+    "deployment": "quarterly",
     "function": "ingest",
     "url": "https://crawler01.bl.uk:8446/"
   },
   {
     "id": "six-monthly",
     "job_name": "sixmonthly",
-    "deployment": "frequent",
+    "deployment": "six-monthly",
     "function": "ingest",
     "url": "https://crawler01.bl.uk:8447/"
   },
   {
     "id": "annual",
     "job_name": "annual",
-    "deployment": "frequent",
+    "deployment": "annual",
     "function": "ingest",
     "url": "https://crawler01.bl.uk:8448/"
   },
@@ -70,9 +70,9 @@
     "url": "https://crawler04.bl.uk:8446/"
   },
   {
-    "id": "frequent-worker",
+    "id": "frequent",
     "job_name": "frequent",
-    "deployment": "beta",
+    "deployment": "frequent",
     "function": "ingest",
     "dns_sd_name": "heritrix-worker"
   }
