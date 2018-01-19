@@ -134,10 +134,11 @@ class Heritrix3Collector(object):
             try:
                 docs_total = state['details']['job']['uriTotalsReport']['downloadedUriCount'] or 0.0
                 known_total = state['details']['job']['uriTotalsReport']['totalUriCount'] or 0.0
-            except KeyError:
+            except (KeyError, TypeError) as e:
                 docs_total = 0.0
                 known_total = 0.0
-                print("Printing results in case there's an error:")
+                print("Got exception", e)
+                print("Printing results in case there's an underlying issue:")
                 print(json.dumps(job))
             m_uri_down.add_metric([name,deployment, status, id], docs_total)
             m_uri_known.add_metric([name,deployment, status, id], known_total)
