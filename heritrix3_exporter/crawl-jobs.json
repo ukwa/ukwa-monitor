@@ -4,42 +4,42 @@
     "job_name": "daily",
     "deployment": "daily",
     "function": "ingest",
-    "url": "https://crawler01.bl.uk:8443/"
+    "url": "https://crawler03.bl.uk:8443/"
   },
   {
     "id": "weekly",
     "job_name": "weekly",
     "deployment": "weekly",
     "function": "ingest",
-    "url": "https://crawler01.bl.uk:8444/"
+    "url": "https://crawler03.bl.uk:8444/"
   },
   {
     "id": "monthly",
     "job_name": "monthly",
     "deployment": "monthly",
     "function": "ingest",
-    "url": "https://crawler01.bl.uk:8445/"
+    "url": "https://crawler03.bl.uk:8445/"
   },
   {
     "id": "quarterly",
     "job_name": "quarterly",
     "deployment": "quarterly",
     "function": "ingest",
-    "url": "https://crawler01.bl.uk:8446/"
+    "url": "https://crawler03.bl.uk:8446/"
   },
   {
     "id": "six-monthly",
     "job_name": "sixmonthly",
     "deployment": "six-monthly",
     "function": "ingest",
-    "url": "https://crawler01.bl.uk:8447/"
+    "url": "https://crawler03.bl.uk:8447/"
   },
   {
     "id": "annual",
     "job_name": "annual",
     "deployment": "annual",
     "function": "ingest",
-    "url": "https://crawler01.bl.uk:8448/"
+    "url": "https://crawler03.bl.uk:8448/"
   },
   {
     "id": "dc0-2017",
