@@ -5,7 +5,7 @@ groups:
   # Alert for any instance that is unreachable for >5 minutes.
   - alert: service_down
     expr: up == 0
-    for: 2m
+    for: 5m
     labels:
       severity: severe
     annotations:
@@ -14,7 +14,7 @@ groups:
 
   - alert: high_load
     expr: avg(node_load1) by (instance) / count(node_cpu{mode="idle"}) by (instance) > 5.0
-    for: 2m
+    for: 10m
     labels:
       severity: minor
     annotations:
