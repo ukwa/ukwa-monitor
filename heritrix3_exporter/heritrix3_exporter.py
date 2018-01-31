@@ -52,12 +52,29 @@ class Heritrix3Collector(object):
 
         # For each DNS SD entry, use DNS to discover the service:
         for job in dns_sd:
-            dns_name = job['dns_sd_name']
+            # DNS SD under Docker uses this form of naming to discover services:
+            dns_name = 'tasks.%s' % job['dns_sd_name']
             try:
+                # Look up service IP addresses via DNS:
                 (hostname, alias, ipaddrlist) = socket.gethostbyname_ex(dns_name)
                 for ip in ipaddrlist:
+                    # Make a copy of the dict to put the values in:
                     dns_job = dict(job)
-                    dns_job['url'] = 'https://%s:8443/' % ip
+                    # Default to using the IP address:
+                    dns_host = ip
+                    dns_job['id'] = '%s:%s' % (dns_job['id'], ip)
+                    # Find the IP-level hostname via reverse lookup:
+                    (r_hostname, r_aliaslist, r_ipaddrlist) = socket.gethostbyaddr(ip)
+                    # look for a domain alias that matches the expected form:
+                    for r_alias in r_aliaslist:
+                        if r_alias.startswith(job['dns_sd_name']):
+                            # Use this instead of the raw IP:
+                            dns_host = r_alias
+                            dns_job['id'] = r_alias
+                            break
+                    # Set the URL:
+                    dns_job['url'] = 'https://%s:8443/' % dns_host
+                    # Remember:
                     services.append(dns_job)
             except socket.gaierror as e:
                 print(e)
@@ -73,19 +90,19 @@ class Heritrix3Collector(object):
         argsv = []
         for job in services:
             server_url = job['url']
-            server_user = "admin"
-            server_pass = os.environ['HERITRIX_PASSWORD']
+            server_user = os.getenv('HERITRIX_USERNAME', "admin")
+            server_pass = os.getenv('HERITRIX_PASSWORD', "heritrix")
             # app.logger.info(json.dumps(server, indent=4))
-            argsv.append((job['job_name'], server_url, server_user, server_pass))
+            argsv.append((job['id'], job['job_name'], server_url, server_user, server_pass))
         # Wait for all...
         result_list = self.pool.map(get_h3_status, argsv)
         results = {}
-        for job_name, status in result_list:
-            results[job_name] = status
+        for job, status in result_list:
+            results[job] = status
 
         # Merge the results in:
         for job in services:
-            job['state'] = results[job['job_name']]
+            job['state'] = results[job['id']]
 
         return services
 
@@ -95,19 +112,20 @@ class Heritrix3Collector(object):
         m_uri_down = GaugeMetricFamily(
             'heritrix3_crawl_job_uris_downloaded_total',
             'Total URIs downloaded by a Heritrix3 crawl job',
-            labels=["jobname", "deployment", "status"])
+            labels=["jobname", "deployment", "status", "id"]) # No hyphens in label names please!
 
         m_uri_known = GaugeMetricFamily(
             'heritrix3_crawl_job_uris_known_total',
             'Total URIs discovered by a Heritrix3 crawl job',
-            labels=["jobname", "deployment", "status"])
+            labels=["jobname", "deployment", "status", "id"]) # No hyphens in label names please!
 
         result = self.run_api_requests()
 
         for job in result:
             #print(json.dumps(job))
             # Get hold of the state and flags etc
-            name = job['name']
+            name = job['job_name']
+            id = job['id']
             deployment = job['deployment']
             state = job['state'] or {}
             status = state['status'] or None
@@ -116,13 +134,14 @@ class Heritrix3Collector(object):
             try:
                 docs_total = state['details']['job']['uriTotalsReport']['downloadedUriCount'] or 0.0
                 known_total = state['details']['job']['uriTotalsReport']['totalUriCount'] or 0.0
-            except KeyError:
+            except (KeyError, TypeError) as e:
                 docs_total = 0.0
                 known_total = 0.0
-                print("Printing results in case there's an error:")
+                print("Got exception", e)
+                print("Printing results in case there's an underlying issue:")
                 print(json.dumps(job))
-            m_uri_down.add_metric([name,deployment, status], docs_total)
-            m_uri_known.add_metric([name,deployment, status], known_total)
+            m_uri_down.add_metric([name,deployment, status, id], docs_total)
+            m_uri_known.add_metric([name,deployment, status, id], known_total)
 
             #metric.add_metric([name], status.get('timestamp', 0) / 1000.0)
 
@@ -141,7 +160,7 @@ def dict_values_to_floats(d, k, excluding=list()):
 
 
 def get_h3_status(args):
-    job_name, server_url, server_user, server_pass = args
+    job_id, job_name, server_url, server_user, server_pass = args
     # Set up connection to H3:
     h = hapy.Hapy(server_url, username=server_user, password=server_pass, timeout=TIMEOUT)
     state = {}
@@ -179,7 +198,7 @@ def get_h3_status(args):
     else:
         state['status-class'] = "status-warning"
 
-    return job_name, state
+    return job_id, state
 
 
 if __name__ == "__main__":

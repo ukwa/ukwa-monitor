@@ -1,79 +1,79 @@
 [
   {
-    "name": "daily",
+    "id": "daily",
     "job_name": "daily",
-    "deployment": "frequent",
+    "deployment": "daily",
     "function": "ingest",
-    "url": "https://crawler01.bl.uk:8443/"
+    "url": "https://crawler03.bl.uk:8443/"
   },
   {
-    "name": "weekly",
+    "id": "weekly",
     "job_name": "weekly",
-    "deployment": "frequent",
+    "deployment": "weekly",
     "function": "ingest",
-    "url": "https://crawler01.bl.uk:8444/"
+    "url": "https://crawler03.bl.uk:8444/"
   },
   {
-    "name": "monthly",
+    "id": "monthly",
     "job_name": "monthly",
-    "deployment": "frequent",
+    "deployment": "monthly",
     "function": "ingest",
-    "url": "https://crawler01.bl.uk:8445/"
+    "url": "https://crawler03.bl.uk:8445/"
   },
   {
-    "name": "quarterly",
+    "id": "quarterly",
     "job_name": "quarterly",
-    "deployment": "frequent",
+    "deployment": "quarterly",
     "function": "ingest",
-    "url": "https://crawler01.bl.uk:8446/"
+    "url": "https://crawler03.bl.uk:8446/"
   },
   {
-    "name": "six-monthly",
+    "id": "six-monthly",
     "job_name": "sixmonthly",
-    "deployment": "frequent",
+    "deployment": "six-monthly",
     "function": "ingest",
-    "url": "https://crawler01.bl.uk:8447/"
+    "url": "https://crawler03.bl.uk:8447/"
   },
   {
-    "name": "annual",
+    "id": "annual",
     "job_name": "annual",
-    "deployment": "frequent",
+    "deployment": "annual",
     "function": "ingest",
-    "url": "https://crawler01.bl.uk:8448/"
+    "url": "https://crawler03.bl.uk:8448/"
   },
   {
-    "name": "dc0-2017",
+    "id": "dc0-2017",
     "job_name": "dc0-20170515",
     "deployment": "domain",
     "function": "ingest",
     "url": "https://crawler04.bl.uk:8443/"
   },
   {
-    "name": "dc1-2017",
+    "id": "dc1-2017",
     "job_name": "dc1-20170515",
     "deployment": "domain",
     "function": "ingest",
     "url": "https://crawler04.bl.uk:8444/"
   },
   {
-    "name": "dc2-2017",
+    "id": "dc2-2017",
     "job_name": "dc2-20170515",
     "deployment": "domain",
     "function": "ingest",
     "url": "https://crawler04.bl.uk:8445/"
   },
   {
-    "name": "dc3-2017",
+    "id": "dc3-2017",
     "job_name": "dc3-20170515",
     "deployment": "domain",
     "function": "ingest",
     "url": "https://crawler04.bl.uk:8446/"
   },
   {
-    "name": "frequent-worker",
+    "id": "frequent",
     "job_name": "frequent",
-    "deployment": "beta",
+    "deployment": "frequent",
     "function": "ingest",
-    "dns_sd_name": "tasks.heritrix-worker"
+    "dns_sd_name": "heritrix-worker"
   }
 ]
