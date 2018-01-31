@@ -31,13 +31,16 @@ services:
       - cadvisor
     user: root
     volumes:
-      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
-      - ./prometheus/alert.rules.yml:/etc/prometheus/alert.rules.yml
+      - ./prometheus:/etc/prometheus
+      #- ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      #- ./prometheus/alert.rules.yml:/etc/prometheus/alert.rules.yml
       - ./testing/prometheus-data:/prometheus
     extra_hosts:
-      - "crawler01.n45.bl.uk:192.168.45.16"
-      - "crawler02.n45.bl.uk:192.168.45.19"
-      - "access.n45.wa.bl.uk:192.168.45.25"
+      - "crawler01.n45:192.168.45.16"
+      - "crawler02.n45:192.168.45.19"
+      - "crawler03.n45:192.168.45.28"
+      - "access.n45:192.168.45.25"
+      - "dev-monitor.n45:192.168.45.101"
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--storage.tsdb.path=/prometheus'
@@ -45,6 +48,7 @@ services:
       - '--web.console.templates=/usr/share/prometheus/consoles'
       - '--web.external-url=http://dev-monitor.n45.wa.bl.uk:9090/'
       - '--web.enable-admin-api'
+      - '--web.enable-lifecycle'
 
   alertmanager:
     image: prom/alertmanager
@@ -53,9 +57,9 @@ services:
     volumes:
       - ./alertmanager/:/etc/alertmanager/
     command:
-      - '-config.file=/etc/alertmanager/config.yml'
-      - '-storage.path=/alertmanager'
-      - '-web.external-url=http://dev-monitor.n45.wa.bl.uk:9093/'
+      - '--config.file=/etc/alertmanager/config.yml'
+      - '--storage.path=/alertmanager'
+      - '--web.external-url=http://dev-monitor.n45.wa.bl.uk:9093/'
 
   metrics-gateway:
     image: prom/pushgateway
@@ -71,7 +75,7 @@ services:
     command:
       - '--config.file=/config/config.yml'
     extra_hosts:
-      - "ukwa-ui-beta.n45.wa.bl.uk:192.168.45.95"
+      - "ukwa-ui-beta:192.168.45.95"
 
   apache-ukwa:
     image: garyritchie/apache_exporter
