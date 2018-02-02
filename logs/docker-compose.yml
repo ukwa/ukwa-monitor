@@ -45,8 +45,10 @@ services:
   # ----
   zookeeper:
     image: wurstmeister/zookeeper
-    ports:
-      - 2181:2181
+#    ports:
+#      - 2181:2181
+    volumes:
+       - /data/logs/zookeeper:/opt/zookeeper-3.4.9/data
 
   kafka:
     image: wurstmeister/kafka
