@@ -40,6 +40,7 @@ services:
       - "crawler02.n45:192.168.45.19"
       - "crawler03.n45:192.168.45.28"
       - "access.n45:192.168.45.25"
+      - "ingest.n45:192.168.45.60"
       - "dev-monitor.n45:192.168.45.101"
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'

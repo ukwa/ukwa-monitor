@@ -39,3 +39,12 @@ groups:
       summary: "Disk space running out on {{ $labels.instance }} at {{ $labels.mountpoint }}"
       description: "Based on recent sampling, the disk is likely to will fill on volume {{ $labels.mountpoint }} within the next two weeks, for instance: {{ $labels.instance }}."
 
+  - alert: daily_task_has_run
+    expr: absent(ukwa_task_event_timestamp{job="DailyIngestTasks",status="event.core.success"})
+    for: 2h
+    labels:
+      severity: severe
+    annotations:
+      summary: "Task {{ $labels.job }} failed to run"
+      description: "Job {{ $labels.job }} failed to run successfully."
+    
