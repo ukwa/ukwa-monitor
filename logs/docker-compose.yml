@@ -6,15 +6,15 @@ services:
   # -------------------------------------------------------------
 
   elasticsearch:
-    image: "docker.elastic.co/elasticsearch/elasticsearch:5.6.3"
-    environment: ['http.host=0.0.0.0', 'transport.host=127.0.0.1', 'xpack.security.enabled=false']
+    image: "docker.elastic.co/elasticsearch/elasticsearch:5.6.6"
+    environment: ['http.host=0.0.0.0', 'transport.host=127.0.0.1', 'xpack.security.enabled=false', 'ES_JAVA_OPTS=-Xmx8g']
     ports:
       - 9200:9200
     volumes:
       - /data/logs/elasticsearch:/usr/share/elasticsearch/data
 
   kibana:
-    image: "docker.elastic.co/kibana/kibana:5.6.3"
+    image: "docker.elastic.co/kibana/kibana:5.6.6"
     command: [ "/bin/bash", "-c", "/usr/share/kibana/bin/kibana-plugin remove x-pack; /usr/local/bin/kibana-docker" ]
     ports:
       - 5601:5601
@@ -22,7 +22,7 @@ services:
 
   # Logstash with knowledge of how to parse Heritrix3 crawl log files
   logstash-crawl-logs:
-    image: "docker.elastic.co/logstash/logstash:5.6.3"
+    image: "docker.elastic.co/logstash/logstash:5.6.6"
     ports:
       - 9600:9600
       - 5044:5044
@@ -32,7 +32,7 @@ services:
 
   # Logstash with knowledge of how to parse web access log files
   logstash-www-logs:
-    image: "docker.elastic.co/logstash/logstash:5.6.3"
+    image: "docker.elastic.co/logstash/logstash:5.6.6"
     ports:
       - 9601:9600
       - 5045:5044
@@ -54,17 +54,16 @@ services:
     image: wurstmeister/kafka
     ports:
       - target: 9094
-        published: 9094
+        published: 9095
         protocol: tcp
         mode: host
     environment:
-      HOSTNAME_COMMAND: "docker info | grep ^Name: | cut -d' ' -f 2"      
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      HOSTNAME_COMMAND: "docker info | grep ^Name: | cut -d' ' -f 2"
+      KAFKA_ADVERTISED_LISTENERS: INSIDE://:9092,OUTSIDE://_{HOSTNAME_COMMAND}:9094
+      KAFKA_LISTENERS: INSIDE://:9092,OUTSIDE://:9094
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
-      KAFKA_ADVERTISED_PROTOCOL_NAME: OUTSIDE
-      KAFKA_ADVERTISED_PORT: 9094
-      KAFKA_PROTOCOL_NAME: INSIDE
-      KAFKA_PORT: 9092
+      KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /data/logs/kafka:/kafka
