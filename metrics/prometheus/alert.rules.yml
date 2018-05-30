@@ -31,7 +31,7 @@ groups:
       description: "{{ $labels.instance }} of job {{ $labels.job }} failed to run."
 
   - alert: predict_host_disk_space
-    expr: min(predict_linear(node_filesystem_free{mountpoint=~"/|/data"}[12h], 2*7*24*3600)) by (instance, mountpoint) < 0
+    expr: min(predict_linear(node_filesystem_free{mountpoint=~"/|/data"}[48h], 2*7*24*3600)) by (instance, mountpoint) < 0
     for: 1h
     labels:
       severity: severe
@@ -40,7 +40,7 @@ groups:
       description: "Based on recent sampling, the disk is likely to will fill on volume {{ $labels.mountpoint }} within the next two weeks, for instance: {{ $labels.instance }}."
 
   - alert: daily_task_has_run
-    expr: absent(ukwa_task_event_timestamp{job="DailyIngestTasks",status="event.core.success"})
+    expr: (time() - ukwa_task_event_timestamp{job=~"DailyAccessTasks|DailyIngestTasks", status="event.core.success"} ) / (60*60) > 24
     for: 2h
     labels:
       severity: severe
