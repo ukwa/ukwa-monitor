@@ -160,6 +160,7 @@ class Heritrix3Collector(object):
                 known_total = ji.get('uriTotalsReport',{}).get('totalUriCount', 0.0)
                 m_uri_down.add_metric([name, deployment, status, id], docs_total)
                 m_uri_known.add_metric([name, deployment, status, id], known_total)
+                # New-style metrics:
                 m_uris.add_metric([name, deployment, id, 'downloaded'], docs_total)
                 m_uris.add_metric([name, deployment, id, 'queued'], known_total)
                 m_uris.add_metric([name, deployment, id, 'novel'],
@@ -228,9 +229,8 @@ class Heritrix3Collector(object):
                         logger.warning("Could not handle processor value: '%s'" % proc_value)
 
             except (KeyError, TypeError, ValueError) as e:
-                print("Got exception", e)
-                print("Printing results in case there's an underlying issue:")
-                print(json.dumps(job)[:512])
+                logger.exception("Exception while parsing metrics!")
+                logger.info("Printing raw JSON in case there's an underlying issue: %s" % json.dumps(job)[:1024])
 
         # And return the metrics:
         yield m_uri_down
