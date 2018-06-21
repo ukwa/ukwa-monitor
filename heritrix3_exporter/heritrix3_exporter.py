@@ -16,6 +16,7 @@ from multiprocessing import Pool, Process
 import urllib3
 urllib3.disable_warnings()
 
+logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
 
 logger = logging.getLogger(__name__)
 
