@@ -207,16 +207,22 @@ class Heritrix3Collector(object):
                           ji.get('loadReport', {}).get('congestionRatio', 0.0))
                 m_ts.add_metric([name, deployment, id, 'toe-count'],
                           ji.get('threadReport', {}).get('toeCount', 0.0))
-                logger.info("Steps: %s" % ji.get('threadReport', {}).get('steps', {}))
+                # Thread Steps
                 for step_value in ji.get('threadReport', {}).get('steps', {}).get('value',[]):
-                    count, step = re.split(' ', step_value, maxsplit=1)
-                    step = "step-%s" % step.lower()
-                    m_ts.add_metric([name, deployment, id, step], float(count))
-                logger.info("Processors: %s" % ji.get('threadReport', {}).get('processors', {}))
+                    if ' ' in step_value:
+                        count, step = re.split(' ', step_value, maxsplit=1)
+                        step = "step-%s" % step.lower()
+                        m_ts.add_metric([name, deployment, id, step], float(count))
+                else:
+                    logger.warning("Could not handle step value: %s" % step_value)
+                # Thread Processors:
                 for proc_value in ji.get('threadReport', {}).get('processors', {}).get('value',[]):
-                    count, proc = re.split(' ', proc_value, maxsplit=1)
-                    proc = "processor-%s" % proc.lower()
-                    m_ts.add_metric([name, deployment, id, proc], float(count))
+                    if ' ' in proc_value:
+                        count, proc = re.split(' ', proc_value, maxsplit=1)
+                        proc = "processor-%s" % proc.lower()
+                        m_ts.add_metric([name, deployment, id, proc], float(count))
+                    else:
+                        logger.warning("Could not handle processor value: %s" % proc_value)
 
             except (KeyError, TypeError) as e:
                 print("Got exception", e)
