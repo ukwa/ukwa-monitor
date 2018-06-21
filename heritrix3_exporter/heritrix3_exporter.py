@@ -210,24 +210,24 @@ class Heritrix3Collector(object):
                           ji.get('threadReport', {}).get('toeCount', 0.0))
                 # Thread Steps
                 for step_value in ji.get('threadReport', {}).get('steps', {}).get('value',[]):
-                    logger.warning("Handling step value: %s" % step_value)
+                    logger.info("Handling step value: %s" % step_value)
                     splut = re.split(' ', step_value, maxsplit=1)
                     if len(splut) == 2:
                         count, step = splut
                         step = "step-%s" % step.lower()
-                        m_ts.add_metric([name, deployment, id, step], float(count))
-                else:
-                    logger.warning("Could not handle step value: %s" % step_value)
+                        m_ts.add_metric([name, deployment, id, step], float(int(count)))
+                    else:
+                        logger.warning("Could not handle step value: %s" % step_value)
                 # Thread Processors:
                 for proc_value in ji.get('threadReport', {}).get('processors', {}).get('value',[]):
-                    logger.warning("Handling processor value: %s" % proc_value)
+                    logger.info("Handling processor value: '%s'" % proc_value)
                     splut = re.split(' ', proc_value, maxsplit=1)
                     if len(splut) == 2:
                         count, proc = splut
                         proc = "processor-%s" % proc.lower()
                         m_ts.add_metric([name, deployment, id, proc], float(count))
                     else:
-                        logger.warning("Could not handle processor value: %s" % proc_value)
+                        logger.warning("Could not handle processor value: '%s'" % proc_value)
 
             except (KeyError, TypeError, ValueError) as e:
                 print("Got exception", e)
