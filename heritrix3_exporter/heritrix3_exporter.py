@@ -260,6 +260,7 @@ def get_h3_status(args):
             dict_values_to_floats(info['job'], 'loadReport')
             dict_values_to_floats(info['job'], 'heapReport')
             dict_values_to_floats(info['job'], 'rateReport')
+            dict_values_to_floats(info['job'], 'threadReport', ['steps','processors'])
             dict_values_to_floats(info['job'], 'sizeTotalsReport')
             dict_values_to_floats(info['job'], 'uriTotalsReport')
             dict_values_to_floats(info['job'], 'frontierReport', ['lastReachedState'])
