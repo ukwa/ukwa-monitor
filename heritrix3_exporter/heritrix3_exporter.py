@@ -1,4 +1,5 @@
 import os
+import re
 import math
 import json
 import time
@@ -208,12 +209,12 @@ class Heritrix3Collector(object):
                           ji.get('threadReport', {}).get('toeCount', 0.0))
                 logger.info("Steps: %s" % ji.get('threadReport', {}).get('steps', {}))
                 for step_value in ji.get('threadReport', {}).get('steps', {}).get('value',[]):
-                    count, step = step_value.split()
+                    count, step = re.split(' ', step_value, maxsplit=1)
                     step = "step-%s" % step.lower()
                     m_ts.add_metric([name, deployment, id, step], float(count))
                 logger.info("Processors: %s" % ji.get('threadReport', {}).get('processors', {}))
                 for proc_value in ji.get('threadReport', {}).get('processors', {}).get('value',[]):
-                    count, proc = proc_value.split()
+                    count, proc = re.split(' ', proc_value, maxsplit=1)
                     proc = "processor-%s" % proc.lower()
                     m_ts.add_metric([name, deployment, id, proc], float(count))
 
