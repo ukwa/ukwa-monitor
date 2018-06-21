@@ -208,12 +208,12 @@ class Heritrix3Collector(object):
                           ji.get('threadReport', {}).get('toeCount', 0.0))
                 logger.info("Steps: %s" % ji.get('threadReport', {}).get('steps', {}))
                 for step_value in ji.get('threadReport', {}).get('steps', {}).get('value',[]):
-                    count, step = step_value.split(maxsplit=1)
+                    count, step = step_value.split()
                     step = "step-%s" % step.lower()
                     m_ts.add_metric([name, deployment, id, step], float(count))
                 logger.info("Processors: %s" % ji.get('threadReport', {}).get('processors', {}))
                 for proc_value in ji.get('threadReport', {}).get('processors', {}).get('value',[]):
-                    count, proc = proc_value.split(maxsplit=1)
+                    count, proc = proc_value.split()
                     proc = "processor-%s" % proc.lower()
                     m_ts.add_metric([name, deployment, id, proc], float(count))
 
@@ -266,19 +266,6 @@ def get_h3_status(args):
         state['status'] = "DOWN"
         state['error'] = "Exception while checking Heritrix! %s" % e
         # app.logger.exception(e)
-    # Classify
-    if state['status'] == "DOWN" or state['status'] == "EMPTY":
-        state['status-class'] = "status-oos"
-    elif state['status'] == "RUNNING":
-        # Replacing RUNNING with docs/second rate
-        rate = state['details']['job']['rateReport']['currentDocsPerSecond']
-        state['rate'] = "%.1f" % float(rate)
-        if rate < 1.0:
-            state['status-class'] = "status-warning"
-        else:
-            state['status-class'] = "status-good"
-    else:
-        state['status-class'] = "status-warning"
 
     return job_id, state
 
