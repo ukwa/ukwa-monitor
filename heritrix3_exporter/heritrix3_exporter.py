@@ -209,8 +209,11 @@ class Heritrix3Collector(object):
                           ji.get('loadReport', {}).get('congestionRatio', 0.0))
                 m_ts.add_metric([name, deployment, id, 'toe-count'],
                           ji.get('threadReport', {}).get('toeCount', 0.0))
-                # Thread Steps
-                for step_value in ji.get('threadReport', {}).get('steps', {}).get('value',[]):
+                # Thread Steps (could be an array or just one entry):
+                steps = ji.get('threadReport', {}).get('steps', {}).get('value',[])
+                if isinstance(steps, basestring):
+                    steps = [steps]
+                for step_value in steps:
                     splut = re.split(' ', step_value, maxsplit=1)
                     if len(splut) == 2:
                         count, step = splut
@@ -218,8 +221,11 @@ class Heritrix3Collector(object):
                         m_ts.add_metric([name, deployment, id, step], float(int(count)))
                     else:
                         logger.warning("Could not handle step value: %s" % step_value)
-                # Thread Processors:
-                for proc_value in ji.get('threadReport', {}).get('processors', {}).get('value',[]):
+                # Thread Processors (could be an array or just one entry):
+                procs = ji.get('threadReport', {}).get('processors', {}).get('value', [])
+                if isinstance(procs, basestring):
+                    procs = [procs]
+                for proc_value in procs:
                     splut = re.split(' ', proc_value, maxsplit=1)
                     if len(splut) == 2:
                         count, proc = splut
