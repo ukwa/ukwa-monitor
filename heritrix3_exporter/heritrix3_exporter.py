@@ -195,8 +195,8 @@ class Heritrix3Collector(object):
                           ji.get('frontierReport', {}).get('ineligibleQueues', 0.0))
                 m_qs.add_metric([name, deployment, id, 'retired'],
                           ji.get('frontierReport', {}).get('retiredQueues', 0.0))
-                m_qs.add_metric([name, deployment, id, 'exausted'],
-                          ji.get('frontierReport', {}).get('exaustedQueues', 0.0))
+                m_qs.add_metric([name, deployment, id, 'exhausted'],
+                          ji.get('frontierReport', {}).get('exhaustedQueues', 0.0))
 
                 # Threads:
                 m_ts.add_metric([name, deployment, id, 'total'],
