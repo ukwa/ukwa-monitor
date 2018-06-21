@@ -209,6 +209,7 @@ class Heritrix3Collector(object):
                           ji.get('threadReport', {}).get('toeCount', 0.0))
                 # Thread Steps
                 for step_value in ji.get('threadReport', {}).get('steps', {}).get('value',[]):
+                    logger.warning("Handling step value: %s" % step_value)
                     splut = re.split(' ', step_value, maxsplit=1)
                     if len(splut) == 2:
                         count, step = splut
@@ -218,6 +219,7 @@ class Heritrix3Collector(object):
                     logger.warning("Could not handle step value: %s" % step_value)
                 # Thread Processors:
                 for proc_value in ji.get('threadReport', {}).get('processors', {}).get('value',[]):
+                    logger.warning("Handling processor value: %s" % proc_value)
                     splut = re.split(' ', proc_value, maxsplit=1)
                     if len(splut) == 2:
                         count, proc = splut
@@ -226,7 +228,7 @@ class Heritrix3Collector(object):
                     else:
                         logger.warning("Could not handle processor value: %s" % proc_value)
 
-            except (KeyError, TypeError) as e:
+            except (KeyError, TypeError, ValueError) as e:
                 print("Got exception", e)
                 print("Printing results in case there's an underlying issue:")
                 print(json.dumps(job)[:512])
