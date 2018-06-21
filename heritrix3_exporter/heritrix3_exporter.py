@@ -221,7 +221,7 @@ class Heritrix3Collector(object):
             except (KeyError, TypeError) as e:
                 print("Got exception", e)
                 print("Printing results in case there's an underlying issue:")
-                print(json.dumps(job))
+                print(json.dumps(job)[:512])
 
         # And return the metrics:
         yield m_uri_down
