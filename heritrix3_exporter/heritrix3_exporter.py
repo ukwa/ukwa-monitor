@@ -209,16 +209,18 @@ class Heritrix3Collector(object):
                           ji.get('threadReport', {}).get('toeCount', 0.0))
                 # Thread Steps
                 for step_value in ji.get('threadReport', {}).get('steps', {}).get('value',[]):
-                    if ' ' in step_value:
-                        count, step = re.split(' ', step_value, maxsplit=1)
+                    splut = re.split(' ', step_value, maxsplit=1)
+                    if len(splut) == 2:
+                        count, step = splut
                         step = "step-%s" % step.lower()
                         m_ts.add_metric([name, deployment, id, step], float(count))
                 else:
                     logger.warning("Could not handle step value: %s" % step_value)
                 # Thread Processors:
                 for proc_value in ji.get('threadReport', {}).get('processors', {}).get('value',[]):
-                    if ' ' in proc_value:
-                        count, proc = re.split(' ', proc_value, maxsplit=1)
+                    splut = re.split(' ', proc_value, maxsplit=1)
+                    if len(splut) == 2:
+                        count, proc = splut
                         proc = "processor-%s" % proc.lower()
                         m_ts.add_metric([name, deployment, id, proc], float(count))
                     else:
