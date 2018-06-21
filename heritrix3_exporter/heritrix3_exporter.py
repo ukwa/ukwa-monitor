@@ -119,6 +119,26 @@ class Heritrix3Collector(object):
             'Total URIs discovered by a Heritrix3 crawl job',
             labels=["jobname", "deployment", "status", "id"]) # No hyphens in label names please!
 
+        m_uris = GaugeMetricFamily(
+            'heritrix3_crawl_job_uris_total',
+            'URI counters from a Heritrix3 crawl job, labeled by kind',
+            labels=["jobname", "deployment", "id", "kind"]) # No hyphens in label names please!
+
+        m_bytes = GaugeMetricFamily(
+            'heritrix3_crawl_job_bytes_total',
+            'Byte counters from a Heritrix3 crawl job, labeled by kind',
+            labels=["jobname", "deployment", "id", "kind"]) # No hyphens in label names please!
+
+        m_qs = GaugeMetricFamily(
+            'heritrix3_crawl_job_queues_total',
+            'Queue counters from a Heritrix3 crawl job, labeled by kind',
+            labels=["jobname", "deployment", "id", "kind"]) # No hyphens in label names please!
+
+        m_ts = GaugeMetricFamily(
+            'heritrix3_crawl_job_threads_total',
+            'Thread counters from a Heritrix3 crawl job, labeled by kind',
+            labels=["jobname", "deployment", "id", "kind"]) # No hyphens in label names please!
+
         result = self.run_api_requests()
 
         for job in result:
@@ -132,21 +152,83 @@ class Heritrix3Collector(object):
 
             # Get the URI metrics
             try:
-                docs_total = state['details']['job']['uriTotalsReport']['downloadedUriCount'] or 0.0
-                known_total = state['details']['job']['uriTotalsReport']['totalUriCount'] or 0.0
+                # URIs:
+                ji = state.get('details',{}).get('job',{})
+                docs_total = ji.get('uriTotalsReport',{}).get('downloadedUriCount', 0.0)
+                known_total = ji.get('uriTotalsReport',{}).get('totalUriCount', 0.0)
+                m_uri_down.add_metric([name, deployment, status, id], docs_total)
+                m_uri_known.add_metric([name, deployment, status, id], known_total)
+                m_uris.add_metric([name, deployment, id, 'downloaded'], docs_total)
+                m_uris.add_metric([name, deployment, id, 'queued'], known_total)
+                m_uris.add_metric([name, deployment, id, 'novel'],
+                          ji.get('sizeTotalsReport', {}).get('novelCount', 0.0))
+                m_uris.add_metric([name, deployment, id, 'deduplicated'],
+                          ji.get('sizeTotalsReport', {}).get('dupByHashCount', 0.0))
+                m_uris.add_metric([name, deployment, id, 'deepest-queue-depth'],
+                          ji.get('loadReport', {}).get('deepestQueueDepth', 0.0))
+                m_uris.add_metric([name, deployment, id, 'average-queue-depth'],
+                          ji.get('loadReport', {}).get('averageQueueDepth', 0.0))
+
+                # Bytes:
+                m_bytes.add_metric([name, deployment, id, 'novel'],
+                          ji.get('sizeTotalsReport', {}).get('novel', 0.0))
+                m_bytes.add_metric([name, deployment, id, 'deduplicated'],
+                          ji.get('sizeTotalsReport', {}).get('dupByHash', 0.0))
+                m_bytes.add_metric([name, deployment, id, 'warc-novel-content'],
+                          ji.get('sizeTotalsReport', {}).get('warcNovelContentBytes', 0.0))
+
+                # Queues:
+                m_qs.add_metric([name, deployment, id, 'total'],
+                          ji.get('frontierReport', {}).get('totalQueues', 0.0))
+                m_qs.add_metric([name, deployment, id, 'in-process'],
+                          ji.get('frontierReport', {}).get('inProcessQueues', 0.0))
+                m_qs.add_metric([name, deployment, id, 'ready'],
+                          ji.get('frontierReport', {}).get('readyQueues', 0.0))
+                m_qs.add_metric([name, deployment, id, 'snoozed'],
+                          ji.get('frontierReport', {}).get('snoozedQueues', 0.0))
+                m_qs.add_metric([name, deployment, id, 'active'],
+                          ji.get('frontierReport', {}).get('activeQueues', 0.0))
+                m_qs.add_metric([name, deployment, id, 'inactive'],
+                          ji.get('frontierReport', {}).get('inactiveQueues', 0.0))
+                m_qs.add_metric([name, deployment, id, 'ineligible'],
+                          ji.get('frontierReport', {}).get('ineligibleQueues', 0.0))
+                m_qs.add_metric([name, deployment, id, 'retired'],
+                          ji.get('frontierReport', {}).get('retiredQueues', 0.0))
+                m_qs.add_metric([name, deployment, id, 'exausted'],
+                          ji.get('frontierReport', {}).get('exaustedQueues', 0.0))
+
+                # Threads:
+                m_ts.add_metric([name, deployment, id, 'total'],
+                          ji.get('loadReport', {}).get('totalThreads', 0.0))
+                m_ts.add_metric([name, deployment, id, 'busy'],
+                          ji.get('loadReport', {}).get('busyThreads', 0.0))
+                m_ts.add_metric([name, deployment, id, 'congestion-ratio'],
+                          ji.get('loadReport', {}).get('congestionRatio', 0.0))
+                m_ts.add_metric([name, deployment, id, 'toe-count'],
+                          ji.get('threadReport', {}).get('toeCount', 0.0))
+                logger.info("Steps: %s" % ji.get('threadReport', {}).get('steps', {}))
+                for step_value in ji.get('threadReport', {}).get('steps', {}).get('value',[]):
+                    count, step = step_value.split(maxsplit=1)
+                    step = "step-%s" % step.lower()
+                    m_ts.add_metric([name, deployment, id, step], float(count))
+                logger.info("Processors: %s" % ji.get('threadReport', {}).get('processors', {}))
+                for proc_value in ji.get('threadReport', {}).get('processors', {}).get('value',[]):
+                    count, proc = proc_value.split(maxsplit=1)
+                    proc = "processor-%s" % proc.lower()
+                    m_ts.add_metric([name, deployment, id, proc], float(count))
+
             except (KeyError, TypeError) as e:
-                docs_total = 0.0
-                known_total = 0.0
                 print("Got exception", e)
                 print("Printing results in case there's an underlying issue:")
                 print(json.dumps(job))
-            m_uri_down.add_metric([name,deployment, status, id], docs_total)
-            m_uri_known.add_metric([name,deployment, status, id], known_total)
 
-            #metric.add_metric([name], status.get('timestamp', 0) / 1000.0)
-
+        # And return the metrics:
         yield m_uri_down
         yield m_uri_known
+        yield m_uris
+        yield m_bytes
+        yield m_qs
+        yield m_ts
 
 
 
