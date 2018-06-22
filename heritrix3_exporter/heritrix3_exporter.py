@@ -109,6 +109,19 @@ class Heritrix3Collector(object):
         return services
 
     def collect(self):
+        m = self._collect()
+        filtered = []
+        for s in m.samples:
+            name, labels, value = s
+            if not isinstance(value, float):
+                logger.warning("This sample is not a float! %s" % s)
+            else:
+                filtered.append(s)
+            m.samples = filtered
+        yield m
+
+    def _collect(self):
+        # type: () -> GaugeMetricFamily
 
         m_uri_down = GaugeMetricFamily(
             'heritrix3_crawl_job_uris_downloaded_total',
