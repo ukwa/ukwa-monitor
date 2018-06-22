@@ -219,12 +219,12 @@ class Heritrix3Collector(object):
                           ji.get('loadReport', {}).get('totalThreads', 0.0))
                 m_ts.add_metric([name, deployment, id, 'busy'],
                           ji.get('loadReport', {}).get('busyThreads', 0.0))
-                m_ts.add_metric([name, deployment, id, 'congestion-ratio'],
-                          ji.get('loadReport', {}).get('congestionRatio', 0.0))
-                if ji.get('loadReport', {}).get('congestionRatio', 0.0) is None:
-                    logger.warning("Congestion-ratio looks odd, see: %s" % ji.get('loadReport', {}))
                 m_ts.add_metric([name, deployment, id, 'toe-count'],
                           ji.get('threadReport', {}).get('toeCount', 0.0))
+                # Congestion ratio can be literal 'null':
+                congestion = ji.get('loadReport', {}).get('congestionRatio', 0.0)
+                if congestion is not None:
+                    m_ts.add_metric([name, deployment, id, 'congestion-ratio'], congestion)
                 # Thread Steps (could be an array or just one entry):
                 steps = ji.get('threadReport', {}).get('steps', {}).get('value',[])
                 if isinstance(steps, basestring):
