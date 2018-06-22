@@ -114,7 +114,7 @@ class Heritrix3Collector(object):
             for s in m.samples:
                 name, labels, value = s
                 if not isinstance(value, float):
-                    logger.warning("This sample is not a float! %s" % s)
+                    logger.warning("This sample is not a float! %s, %s, %s" % (name, labels, value))
                 else:
                     filtered.append(s)
                 m.samples = filtered
