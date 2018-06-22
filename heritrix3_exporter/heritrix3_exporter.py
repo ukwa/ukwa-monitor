@@ -109,7 +109,6 @@ class Heritrix3Collector(object):
         return services
 
     def collect(self):
-        stats = self.run_api_requests()
 
         m_uri_down = GaugeMetricFamily(
             'heritrix3_crawl_job_uris_downloaded_total',
@@ -144,7 +143,9 @@ class Heritrix3Collector(object):
         result = self.run_api_requests()
 
         for job in result:
-            #print(json.dumps(job))
+            # Allow debugging:
+            logger.debug("Input:\n%s" % json.dumps(job, indent=2))
+
             # Get hold of the state and flags etc
             name = job['job_name']
             id = job['id']
@@ -238,6 +239,7 @@ class Heritrix3Collector(object):
                 logger.exception("Exception while parsing metrics!")
                 logger.info("Printing raw JSON in case there's an underlying issue: %s" % json.dumps(job)[:1024])
 
+
         # And return the metrics:
         yield m_uri_down
         yield m_uri_known
@@ -245,7 +247,6 @@ class Heritrix3Collector(object):
         yield m_bytes
         yield m_qs
         yield m_ts
-
 
 
 def dict_values_to_floats(d, k, excluding=list()):
