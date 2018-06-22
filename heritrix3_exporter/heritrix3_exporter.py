@@ -221,6 +221,8 @@ class Heritrix3Collector(object):
                           ji.get('loadReport', {}).get('busyThreads', 0.0))
                 m_ts.add_metric([name, deployment, id, 'congestion-ratio'],
                           ji.get('loadReport', {}).get('congestionRatio', 0.0))
+                if ji.get('loadReport', {}).get('congestionRatio', 0.0) is None:
+                    logger.warning("Congestion-ratio looks odd, see: %s" % ji.get('loadReport', {}))
                 m_ts.add_metric([name, deployment, id, 'toe-count'],
                           ji.get('threadReport', {}).get('toeCount', 0.0))
                 # Thread Steps (could be an array or just one entry):
@@ -232,7 +234,7 @@ class Heritrix3Collector(object):
                     if len(splut) == 2:
                         count, step = splut
                         step = "step-%s" % step.lower()
-                        m_ts.add_metric([name, deployment, id, step], float(int(count)))
+                        m_ts.add_metric([name, deployment, id, step], float(count))
                     else:
                         logger.warning("Could not handle step value: %s" % step_value)
                 # Thread Processors (could be an array or just one entry):
