@@ -1,9 +1,14 @@
 FROM python:2.7
 
-# Install the Monitor package:
-COPY . /monitor
-RUN cd /monitor/ && pip install --no-cache-dir -r requirements.txt
-RUN cd /monitor/ && python setup.py install
+# Install the dependencies:
+COPY requirements.txt /hdfs_exporter/requirements.txt
+RUN cd /hdfs_exporter/ && pip install --no-cache-dir -r requirements.txt
 
-# Run the dashboard
-CMD ["gunicorn", "webapp:app", "-b", "0.0.0.0:5000"]
+# Install the app:
+COPY webapp.py /hdfs_exporter/
+COPY setup.py /hdfs_exporter/
+COPY README.md /hdfs_exporter/
+RUN cd /hdfs_exporter/ && python setup.py install
+
+# Run the stats endpoint
+CMD ["python", "/hdfs_exporter/webapp.py"]
