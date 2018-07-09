@@ -62,6 +62,8 @@ class HDFSCollector(object):
             state['percent-used'] = float(percent.replace("%",""))
             state['remaining'] = tree.xpath("//div[@id='dfstable']//tr[4]/td[3]")[0].text.replace(" ", "")
             underr = int(tree.xpath("//div[@id='dfstable']//tr[10]/td[3]")[0].text)
+            if underr > 0:
+                logger.warning("Got under-rep-blocks > 0 from: %s" % r.text)
             state['under-replicated-blocks'] = underr
             state['live-nodes'] = int(tree.xpath("//div[@id='dfstable']//tr[7]/td[3]")[0].text)
             state['dead-nodes'] = int(tree.xpath("//div[@id='dfstable']//tr[8]/td[3]")[0].text)
