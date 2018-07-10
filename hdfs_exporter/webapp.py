@@ -29,22 +29,26 @@ class HDFSCollector(object):
                 'hdfs_under_replicated_block_count',
                 'Total number of under-replicated blocks',
                 labels=['service'])
-            urb.add_metric([service_label], stats.get('under-replicated-blocks', None))
-            yield urb
+            val = stats.get('under-replicated-blocks', None)
+            if val:
+                urb.add_metric([service_label], val)
+                yield urb
 
             hup = GaugeMetricFamily(
                 'hdfs_used_percent',
                 'HDFS used space as a percentage',
                 labels=['service'])
-            hup.add_metric([service_label], stats.get('percent-used', None))
-            yield hup
+            val = stats.get('percent-used', None)
+            if val:
+                hup.add_metric([service_label], val)
+                yield hup
 
             hnc = GaugeMetricFamily(
                 'hdfs_node_count',
                 'HDFS node counts',
                 labels=['service','status'])
-            hnc.add_metric([service_label, 'live'], stats.get('live-nodes', None))
-            hnc.add_metric([service_label, 'dead'], stats.get('dead-nodes', None))
+            hnc.add_metric([service_label, 'live'], stats.get('live-nodes', 0))
+            hnc.add_metric([service_label, 'dead'], stats.get('dead-nodes', 0))
             yield hnc
 
         except Exception as e:
@@ -67,6 +71,8 @@ class HDFSCollector(object):
             state['under-replicated-blocks'] = underr
             state['live-nodes'] = int(tree.xpath("//div[@id='dfstable']//tr[7]/td[3]")[0].text)
             state['dead-nodes'] = int(tree.xpath("//div[@id='dfstable']//tr[8]/td[3]")[0].text)
+        else:
+            logger.error("That went wrong! Status %i:\n%s" % (r.status_code, r.text))
 
         return state
 
