@@ -30,7 +30,7 @@ class HDFSCollector(object):
                 'Total number of under-replicated blocks',
                 labels=['service'])
             val = stats.get('under-replicated-blocks', None)
-            if val:
+            if val is not None:
                 urb.add_metric([service_label], val)
                 yield urb
 
@@ -39,7 +39,7 @@ class HDFSCollector(object):
                 'HDFS used space as a percentage',
                 labels=['service'])
             val = stats.get('percent-used', None)
-            if val:
+            if val is not None:
                 hup.add_metric([service_label], val)
                 yield hup
 
