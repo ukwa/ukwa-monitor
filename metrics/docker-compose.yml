@@ -23,7 +23,7 @@ services:
     image: prom/prometheus
     ports:
       - 9090:9090
-    links:
+    depends_on:
       - alertmanager:alertmanager
       - metrics-gateway:metrics-gateway
       - cadvisor:cadvisor
@@ -36,12 +36,15 @@ services:
       #- ./prometheus/alert.rules.yml:/etc/prometheus/alert.rules.yml
       - ./testing/prometheus-data:/prometheus
     extra_hosts:
-      - "crawler01.n45:192.168.45.16"
-      - "crawler02.n45:192.168.45.19"
-      - "crawler03.n45:192.168.45.28"
-      - "access.n45:192.168.45.25"
-      - "ingest.n45:192.168.45.60"
-      - "dev-monitor.n45:192.168.45.101"
+      - "access.wa:192.168.45.25"
+      - "ingest:192.168.45.60"
+      - "dev-monitor:192.168.45.101"
+      - "crawler01:192.168.45.16"
+      - "crawler02:192.168.45.19"
+      - "crawler03:192.168.45.28"
+      - "crawler04:192.168.45.12"
+      - "bigcdx:192.168.45.21"
+      - "solr1:192.168.1.71"
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--storage.tsdb.path=/prometheus'
@@ -77,9 +80,9 @@ services:
       - '--config.file=/config/config.yml'
     extra_hosts:
       - "ukwa-ui-beta:192.168.45.95"
-      - "crawler03.n45:192.168.45.28"
-      - "access.n45:192.168.45.25"
-      - "ingest.n45:192.168.45.60"
+      - "crawler03:192.168.45.28"
+      - "access.wa:192.168.45.25"
+      - "ingest:192.168.45.60"
       - "bigcdx:192.168.45.21"
 
   apache-ukwa:

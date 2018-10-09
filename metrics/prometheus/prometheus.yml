@@ -24,14 +24,18 @@ scrape_configs:
     static_configs:
       - targets: 
         - 'cadvisor:8080'
-        - 'dev-monitor.n45:9100'
-        - 'crawler02.n45:9323'
-        - 'crawler02.n45:9100'
-        - 'crawler03.n45:9323'
-        - 'crawler03.n45:9100'
-        - 'access.n45:9393'
-        - 'access.n45:9100'
-        - 'ingest.n45:9100'
+        - 'dev-monitor:9100'
+        - 'crawler02:9323'
+        - 'crawler03:9323'
+        - 'crawler01:9100'
+        - 'crawler02:9100'
+        - 'crawler03:9100'
+        - 'crawler04:9100'
+        - 'access.wa:9393'
+        - 'access.wa:9100'
+        - 'ingest:9100'
+        - 'bigcdx:9100'
+        - 'solr1:9100'
 
   - job_name: 'metrics-gateway'
     honor_labels: true
@@ -45,7 +49,7 @@ scrape_configs:
   # Crawl Metrics
   - job_name: 'crawl-h3'
     static_configs:
-      - targets: ['crawler03.n45:9118']
+      - targets: ['crawler03:9118']
 
   # HTTP Service endpoint metrics:
   - job_name: 'access-http'
@@ -63,13 +67,14 @@ scrape_configs:
         - "https://www.webarchive.org.uk/wayback/archive/20160215012242/http://www.bl.uk/"
         - "https://www.webarchive.org.uk/mementos/search"
         - "http://ukwa-ui-beta:9000/en/ukwa/index"
-        - "http://crawler03.n45:9000/act/login"
-        - "http://crawler03.n45:9080/archive/"
-        - "http://crawler03.n45:5005/convert?url=http://data.webarchive.org.uk/crawl-test-site/resources/documents/lorem-ipsum.PDFA1-a.pdf"
+        - "http://crawler03:9000/act/login"
+        - "http://crawler03:9080/archive/"
+        - "http://crawler03:5005/convert?url=http://data.webarchive.org.uk/crawl-test-site/resources/documents/lorem-ipsum.PDFA1-a.pdf"
         - "http://bigcdx:8080/data-heritrix"
         - "http://hdfs.gtw.wa.bl.uk:14000/webhdfs/v1/?user.name=tomcat&op=LISTSTATUS"
-        - "http://ingest.n45:8082/static/visualiser/index.html"
-        - "http://access.n45:8082/static/visualiser/index.html"
+        - "http://ingest:8082/static/visualiser/index.html"
+        - "http://access.wa:8082/static/visualiser/index.html"
+        - "http://intranet.wa.bl.uk/ukwa-reports/"
     relabel_configs:
       - source_labels: [__address__]
         target_label: __param_target
@@ -78,19 +83,27 @@ scrape_configs:
       - target_label: __address__
         replacement: blackbox-exporter:9115  # Blackbox exporter.
   
-  # HA Proxy Stats for Ingest HttpFS
+  # HA Proxy Stats for Access HttpFS
   - job_name: 'access-httpfs'
     static_configs:
-     - targets: ['crawler02.n45:9102']
+     - targets: ['crawler02:9101']
 
   # HA Proxy Stats for Ingest HttpFS
   - job_name: 'ingest-httpfs'
     static_configs:
-     - targets: ['ingest.n45:9101']
+     - targets: ['ingest:9101']
+
+  # HDFS stats scraped from the health page:
+  - job_name: 'hdfs-prod'
+    static_configs:
+     - targets: ['ingest:9118']
 
   # Docker-level metrics. See https://docs.docker.com/engine/admin/prometheus/
   - job_name: 'docker'
     static_configs:
-      - targets: ['crawler03.n45:9323', 'crawler02.n45:9323']
+      - targets: ['crawler03:9323', 'crawler02:9323']
 
-
+  # domain crawlers 2018
+  - job_name: 'dc-2018'
+    static_configs:
+      - targets: ['crawler01:9118']

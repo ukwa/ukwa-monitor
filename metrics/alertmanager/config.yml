@@ -36,4 +36,4 @@ route:
 receivers:
 - name: 'team-X-mails'
   email_configs:
-  - to: 'andrew.jackson@bl.uk'
+  - to: 'wa-sysadm@bl.uk'
