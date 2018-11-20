@@ -36,15 +36,12 @@ scrape_configs:
         - 'ingest:9100'
         - 'bigcdx:9100'
         - 'solr1:9100'
+        - 'solr2:9100'
 
   - job_name: 'metrics-gateway'
     honor_labels: true
     static_configs:
       - targets: ['metrics-gateway:9091']
-
-  - job_name: 'access-firefox-apache'
-    static_configs:
-      - targets: ['apache-ukwa:9117']
 
   # Crawl Metrics
   - job_name: 'crawl-h3'
@@ -59,14 +56,8 @@ scrape_configs:
       module: [http_2xx]  # Look for a HTTP 200 response.
     static_configs:
       - targets:
-        - "https://data.bl.uk/"
         - "http://intranet-wayback.wa.bl.uk:8080/wayback/20150724130909/http://intranet.bl.uk/"
-        - "https://www.webarchive.org.uk/ukwa/"
-        - "https://www.webarchive.org.uk/ukwa/search?text=test&option_search=text&submit_quick=search"
-        - "https://www.webarchive.org.uk/shine"
-        - "https://www.webarchive.org.uk/wayback/archive/20160215012242/http://www.bl.uk/"
-        - "https://www.webarchive.org.uk/mementos/search"
-        - "http://ukwa-ui-beta:9000/en/ukwa/index"
+        - "http://ukwa-ui-beta:9000/ukwa/"
         - "http://crawler03:9000/act/login"
         - "http://crawler03:9080/archive/"
         - "http://crawler03:5005/convert?url=http://data.webarchive.org.uk/crawl-test-site/resources/documents/lorem-ipsum.PDFA1-a.pdf"
@@ -75,6 +66,12 @@ scrape_configs:
         - "http://ingest:8082/static/visualiser/index.html"
         - "http://access.wa:8082/static/visualiser/index.html"
         - "http://intranet.wa.bl.uk/ukwa-reports/"
+        - "https://data.bl.uk/"
+        - "https://www.webarchive.org.uk/ukwa/"
+        - "https://www.webarchive.org.uk/en/ukwa/search?text=test&search_location=full_text&reset_filters=false&content_type=Web+Page"
+        - "https://www.webarchive.org.uk/shine"
+        - "https://www.webarchive.org.uk/wayback/archive/20160215012242/http://www.bl.uk/"
+        - "https://www.webarchive.org.uk/mementos/search"
     relabel_configs:
       - source_labels: [__address__]
         target_label: __param_target
@@ -82,7 +79,7 @@ scrape_configs:
         target_label: instance
       - target_label: __address__
         replacement: blackbox-exporter:9115  # Blackbox exporter.
-  
+
   # HA Proxy Stats for Access HttpFS
   - job_name: 'access-httpfs'
     static_configs:
@@ -106,4 +103,4 @@ scrape_configs:
   # domain crawlers 2018
   - job_name: 'dc-2018'
     static_configs:
-      - targets: ['crawler01:9118']
+      - targets: ['crawler04:9118']

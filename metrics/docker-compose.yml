@@ -45,6 +45,7 @@ services:
       - "crawler04:192.168.45.12"
       - "bigcdx:192.168.45.21"
       - "solr1:192.168.1.71"
+      - "solr2:192.168.1.72"
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--storage.tsdb.path=/prometheus'
@@ -84,6 +85,7 @@ services:
       - "access.wa:192.168.45.25"
       - "ingest:192.168.45.60"
       - "bigcdx:192.168.45.21"
+      - "www.webarchive.org.uk:192.168.45.10"
 
   apache-ukwa:
     image: garyritchie/apache_exporter
