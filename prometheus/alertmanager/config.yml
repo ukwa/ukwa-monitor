@@ -1,7 +1,7 @@
 global:
   # The smarthost and SMTP sender used for mail notifications.
   smtp_smarthost: 'juno.bl.uk:25'
-  smtp_from: 'alertmanager@dev-monitor'
+  smtp_from: 'alertmanager@monitor.wa.bl.uk'
   smtp_require_tls: false
 
 # The directory from which notification templates are read.
@@ -36,4 +36,4 @@ route:
 receivers:
 - name: 'team-X-mails'
   email_configs:
-  - to: 'andrew.jackson@bl.uk'
+  - to: 'gil.hoggarth@bl.uk'

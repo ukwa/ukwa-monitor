@@ -10,7 +10,7 @@ groups:
       severity: severe
     annotations:
       summary: "Instance {{ $labels.instance }} down"
-      description: "{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 2 minutes."
+      description: "{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 5 minutes."
 
   - alert: high_load
     expr: avg(node_load1) by (instance) / count(node_cpu{mode="idle"}) by (instance) > 5.0
@@ -21,15 +21,6 @@ groups:
       summary: "Instance {{ $labels.instance }} under high load"
       description: "{{ $labels.instance }} of job {{ $labels.job }} is under high load."
 
-  - alert: db_backup_failed
-    expr: absent(ukwa_task_database_backup_size_bytes)
-    for: 24h
-    labels:
-      severity: severe
-    annotations:
-      summary: "Databse back instance {{ $labels.instance }} failed to run"
-      description: "{{ $labels.instance }} of job {{ $labels.job }} failed to run."
-
   - alert: predict_host_disk_space
     expr: min(predict_linear(node_filesystem_free{mountpoint=~"/|/data"}[48h], 2*7*24*3600)) by (instance, mountpoint) < 0
     for: 1h
@@ -38,13 +29,3 @@ groups:
     annotations:
       summary: "Disk space running out on {{ $labels.instance }} at {{ $labels.mountpoint }}"
       description: "Based on recent sampling, the disk is likely to will fill on volume {{ $labels.mountpoint }} within the next two weeks, for instance: {{ $labels.instance }}."
-
-  - alert: daily_task_has_run
-    expr: (time() - ukwa_task_event_timestamp{job=~"DailyAccessTasks|DailyIngestTasks", status="event.core.success"} ) / (60*60) > 24
-    for: 2h
-    labels:
-      severity: severe
-    annotations:
-      summary: "Task {{ $labels.job }} failed to run"
-      description: "Job {{ $labels.job }} failed to run successfully."
-    

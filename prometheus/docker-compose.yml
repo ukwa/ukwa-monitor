@@ -1,23 +1,8 @@
 version: '3.2'
 
 services:
-
   # Monitoring based on metrics (Prometheus + Grafana dashboard):
   # -------------------------------------------------------------
-
-  grafana:
-    image: grafana/grafana
-    ports:
-      - "3000:3000"
-    depends_on:
-      - prometheus
-    environment:
-      - "GF_AUTH_ANONYMOUS_ENABLED=true"
-      - "GF_AUTH_ANONYMOUS_ORG_NAME=BL"
-      - "GF_AUTH_ANONYMOUS_ORG_ROLE=Viewer"
-      - "GF_SECURITY_ADMIN_PASSWORD=secret"
-    volumes:
-      - ./testing/grafana-data:/var/lib/grafana
 
   prometheus:
     image: prom/prometheus
@@ -25,29 +10,17 @@ services:
       - 9090:9090
     links:
       - alertmanager:alertmanager
-      - metrics-gateway:metrics-gateway
-      - cadvisor:cadvisor
-    depends_on:
-      - cadvisor
     user: root
     volumes:
       - ./prometheus:/etc/prometheus
-      #- ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
-      #- ./prometheus/alert.rules.yml:/etc/prometheus/alert.rules.yml
-      - ./testing/prometheus-data:/prometheus
     extra_hosts:
-      - "crawler01.n45:192.168.45.16"
-      - "crawler02.n45:192.168.45.19"
-      - "crawler03.n45:192.168.45.28"
-      - "access.n45:192.168.45.25"
-      - "ingest.n45:192.168.45.60"
-      - "dev-monitor.n45:192.168.45.101"
+      - "monitor:192.168.45.204"
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--storage.tsdb.path=/prometheus'
       - '--web.console.libraries=/usr/share/prometheus/console_libraries'
       - '--web.console.templates=/usr/share/prometheus/consoles'
-      - '--web.external-url=http://dev-monitor.n45.wa.bl.uk:9090/'
+      - '--web.external-url=http://monitor.wa.bl.uk:9090/'
       - '--web.enable-admin-api'
       - '--web.enable-lifecycle'
 
@@ -60,44 +33,4 @@ services:
     command:
       - '--config.file=/etc/alertmanager/config.yml'
       - '--storage.path=/alertmanager'
-      - '--web.external-url=http://dev-monitor.n45.wa.bl.uk:9093/'
-
-  metrics-gateway:
-    image: prom/pushgateway
-    ports:
-      - 9091:9091
-
-  blackbox-exporter:
-    image: prom/blackbox-exporter
-    ports:
-      - "9115:9115"
-    volumes:
-      - ./blackbox_exporter:/config
-    command:
-      - '--config.file=/config/config.yml'
-    extra_hosts:
-      - "ukwa-ui-beta:192.168.45.95"
-      - "crawler03.n45:192.168.45.28"
-      - "access.n45:192.168.45.25"
-      - "ingest.n45:192.168.45.60"
-      - "bigcdx:192.168.45.21"
-
-  apache-ukwa:
-    image: garyritchie/apache_exporter
-    command: './apache_exporter -scrape_uri "https://www.webarchive.org.uk/server-status/?auto"'
-    ports:
-      - 9117:9117
-
-  # Providing system and container level metrics:
-  # -------------------------------------------------------------
-
-  cadvisor:
-    image: google/cadvisor
-    volumes:
-      - /:/rootfs:ro
-      - /var/run:/var/run:rw
-      - /sys:/sys:ro
-      - /var/lib/docker/:/var/lib/docker:ro
-    ports:
-      - 8080:8080
-
+      - '--web.external-url=http://monitor.wa.bl.uk:9093/'
