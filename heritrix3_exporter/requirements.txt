@@ -1,2 +1,0 @@
-hapy-heritrix==0.1.1
-prometheus-client==0.0.21
