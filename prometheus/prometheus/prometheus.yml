@@ -5,11 +5,13 @@ global:
   scrape_interval:     1m
   evaluation_interval: 1m
 
-# Load and evaluate rules in this file every 'evaluation_interval' seconds.
+
+# Specify the location of rules we want prometheus to load
 rule_files:
   - 'alert.rules.yml'
 
-# alert
+
+# prometheus has a dependency on alertmanager, as defined in docker_compose.yml
 alerting:
   alertmanagers:
   - scheme: http
@@ -17,7 +19,11 @@ alerting:
     - targets:
       - "alertmanager:9093"
 
+# Define which resources prometheus should monitor
 scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['monitor:9090']
 
   - job_name: 'syslog'
     static_configs:
