@@ -19,6 +19,6 @@ alerting:
 
 scrape_configs:
 
-  - job_name: 'oukwa'
+  - job_name: 'syslog'
     static_configs:
-      - targets: ['wa-www:80']
+      - targets: ['syslog:9100']

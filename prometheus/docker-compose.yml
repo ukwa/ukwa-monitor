@@ -8,13 +8,14 @@ services:
     image: prom/prometheus
     ports:
       - 9090:9090
-    links:
+    depends_on:
       - alertmanager:alertmanager
     user: root
     volumes:
       - ./prometheus:/etc/prometheus
     extra_hosts:
       - "monitor:192.168.45.204"
+      - "syslog:192.168.45.9"
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--storage.tsdb.path=/prometheus'

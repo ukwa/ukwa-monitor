@@ -1,5 +1,5 @@
 groups:
-- name: example
+- name: Core metrics
   rules:
 
   # Alert for any instance that is unreachable for >5 minutes.
