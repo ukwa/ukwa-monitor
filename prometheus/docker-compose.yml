@@ -24,7 +24,8 @@ services:
       - "GF_AUTH_ANONYMOUS_ENABLED=true"
       - "GF_AUTH_ANONYMOUS_ORG_NAME=BL"
       - "GF_AUTH_ANONYMOUS_ORG_ROLE=Viewer"
-      - "GF_SECURITY_ADMIN_PASSWORD=gr4pwa"
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_ADMIN_PASSWORD}
+gr4pwa
     volumes:
       - /opt/data/grafana:/var/lib/grafana
 
