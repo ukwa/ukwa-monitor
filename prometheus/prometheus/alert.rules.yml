@@ -9,23 +9,14 @@ groups:
     labels:
       severity: severe
     annotations:
-      summary: "Instance {{ $labels.instance }} down"
+      summary: "Service {{ $labels.instance }} down"
       description: "{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 5 minutes."
 
-  - alert: high_load
-    expr: avg(node_load1) by (instance) / count(node_cpu{mode="idle"}) by (instance) > 5.0
-    for: 10m
-    labels:
-      severity: minor
-    annotations:
-      summary: "Instance {{ $labels.instance }} under high load"
-      description: "{{ $labels.instance }} of job {{ $labels.job }} is under high load."
-
-  - alert: predict_host_disk_space
-    expr: min(predict_linear(node_filesystem_free{mountpoint=~"/|/data"}[48h], 2*7*24*3600)) by (instance, mountpoint) < 0
-    for: 1h
+  - alert: host_free_disk_space
+    expr: (node_filesystem_free_bytes{fstype=~"ext.|xfs|zfs"}/node_filesystem_size_bytes{fstype=~"ext.|xfs|zfs"}) * 100 < 15
+    for: 5m
     labels:
       severity: severe
     annotations:
-      summary: "Disk space running out on {{ $labels.instance }} at {{ $labels.mountpoint }}"
-      description: "Based on recent sampling, the disk is likely to will fill on volume {{ $labels.mountpoint }} within the next two weeks, for instance: {{ $labels.instance }}."
+      summary: "Disk space free < 15% on {{ $labels.instance }}"
+      description: "Disk space free on {{ $labels.instance }} has been less that 15% for more than 5 minutes"
