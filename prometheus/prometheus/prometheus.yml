@@ -21,14 +21,73 @@ alerting:
 
 # Define which resources prometheus should monitor
 scrape_configs:
-  - job_name: 'prometheus'
+  - job_name: 'discovery_access'
     static_configs:
-      - targets: ['monitor:9090']
+      - targets:
+        - 'access:9100'
+        - 'bigcdx:9100'
+        - 'intranet:9100'
+        - 'wa-www:9100'
 
-  - job_name: 'syslog'
+  - job_name: 'gluster'
     static_configs:
-      - targets: ['syslog:9100']
+      - targets:
+        - 'gluster-fuse:9100'
+        - 'gluster01:9100'
+        - 'gluster02:9100'
+        - 'gluster03:9100'
+        - 'gluster04:9100'
+        - 'gluster05:9100'
+        - 'gluster06:9100'
+        - 'gluster07:9100'
+        - 'gluster08:9100'
+        - 'gluster09:9100'
+        - 'gluster10:9100'
+        - 'gluster11:9100'
+        - 'gluster12:9100'
 
-  - job_name: 'grunt01'
+  - job_name: 'hadoop'
     static_configs:
       - targets: ['grunt01:9100']
+
+  - job_name: 'infrastructure'
+    static_configs:
+      - targets:
+        - 'mapred:9100'
+        - 'priv-gtw-n1:9100'
+        - 'sh:9100'
+
+  - job_name: 'ingest_metadata'
+    static_configs:
+      - targets:
+        - 'crawler01:9100'
+        - 'crawler02:9100'
+        - 'crawler03:9100'
+        - 'crawler04:9100'
+        - 'ingest:9100'
+
+  - job_name: 'monitoring'
+    static_configs:
+      - targets: 
+        - 'monitor:9090'
+        - 'syslog:9100'
+
+  - job_name: 'solr'
+    static_configs:
+      - targets:
+        - 'solr1:9100'
+        - 'solr2:9100'
+        - 'solr-proxy:9100'
+        - 'zk1:9100'
+        - 'zk2:9100'
+        - 'zk3:9100'
+        - 'jisc03:9100'
+        - 'jisc-proxy:9100'
+        - 'jisc-zk01:9100'
+        - 'jisc-zk02:9100'
+        - 'jisc-zk03:9100'
+        - 'ldukwa04:9100'
+        - 'ldukwa-proxy:9100'
+        - 'ldukwa-zk01:9100'
+        - 'ldukwa-zk02:9100'
+        - 'ldukwa-zk03:9100'
