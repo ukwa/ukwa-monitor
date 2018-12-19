@@ -10,4 +10,4 @@ datasources:
     access: direct
     orgId: 1
     url: http://monitor:9090
-    isDefault: 1
+    isDefault: true
