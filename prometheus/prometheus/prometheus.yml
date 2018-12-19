@@ -48,18 +48,35 @@ scrape_configs:
 
   - job_name: 'hadoop'
     static_configs:
-      - targets: ['grunt01:9100']
+      - targets:
+        - 'grunt01:9100'
+        - 'hdfs:9100'
+        - 'hdfs-lb1:9100'
+        - 'hdfs-lb2:9100'
+        - 'hdfs-lb3:9100'
+        - 'hdfs-lb4:9100'
+        - 'hdfs-lb5:9100'
+        - 'mapred:9100'
 
   - job_name: 'infrastructure'
     static_configs:
       - targets:
-        - 'mapred:9100'
         - 'priv-gtw-n1:9100'
         - 'sh:9100'
 
   - job_name: 'ingest_metadata'
     static_configs:
       - targets:
+        - 'clamd:9100'
+        - 'clamd-lb1:9100'
+        - 'clamd-lb2:9100'
+        - 'clamd-lb3:9100'
+        - 'clamd-lb4:9100'
+        - 'clamd-lb5:9100'
+        - 'clamd-lb6:9100'
+        - 'clamd-lb7:9100'
+        - 'clamd-lb8:9100'
+        - 'clamd-lb9:9100'
         - 'crawler01:9100'
         - 'crawler02:9100'
         - 'crawler03:9100'
