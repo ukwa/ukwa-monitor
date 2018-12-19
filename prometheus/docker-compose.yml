@@ -26,6 +26,7 @@ services:
       - "GF_AUTH_ANONYMOUS_ORG_ROLE=Viewer"
       - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_ADMIN_PASSWORD}
     volumes:
+      - ./grafana:/etc/grafana
       - /opt/data/grafana:/var/lib/grafana
 
   prometheus:
