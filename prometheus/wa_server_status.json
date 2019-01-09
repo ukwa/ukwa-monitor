@@ -590,7 +590,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "rate(node_network_receive_bytes_total{device=~'en.*'}[5m])",
+          "expr": "rate(node_network_receive_bytes_total[5m])",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "RX {{ instance }}",
@@ -678,7 +678,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "rate(node_network_transmit_bytes_total{device=~'en.*'}[5m])",
+          "expr": "rate(node_network_transmit_bytes_total[5m])",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "TX {{ instance }}",
