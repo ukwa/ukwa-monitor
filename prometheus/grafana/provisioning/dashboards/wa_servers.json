@@ -15,7 +15,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 1,
+  "id": 4,
   "links": [],
   "panels": [
     {
@@ -23,26 +23,24 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "fill": 0,
+      "fill": 1,
       "gridPos": {
         "h": 6,
         "w": 12,
         "x": 0,
         "y": 0
       },
-      "id": 4,
+      "id": 16,
       "legend": {
         "alignAsTable": true,
         "avg": false,
-        "current": true,
+        "current": false,
         "max": false,
         "min": false,
         "rightSide": true,
         "show": true,
-        "sort": "current",
-        "sortDesc": true,
         "total": false,
-        "values": true
+        "values": false
       },
       "lines": true,
       "linewidth": 1,
@@ -58,22 +56,21 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "100 - 100*avg(irate(node_cpu_seconds_total{mode='idle'}[5m])) by (instance)",
+          "expr": "up",
           "format": "time_series",
-          "hide": false,
           "intervalFactor": 1,
           "legendFormat": "{{ instance }}",
-          "refId": "B"
+          "refId": "A"
         }
       ],
       "thresholds": [],
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "CPU usage",
+      "title": "Servers Up",
       "tooltip": {
         "shared": true,
-        "sort": 2,
+        "sort": 0,
         "value_type": "individual"
       },
       "type": "graph",
@@ -86,12 +83,11 @@
       },
       "yaxes": [
         {
-          "decimals": null,
-          "format": "percent",
+          "format": "short",
           "label": null,
           "logBase": 1,
-          "max": "100",
-          "min": "50",
+          "max": null,
+          "min": null,
           "show": true
         },
         {
@@ -213,7 +209,7 @@
         "x": 0,
         "y": 6
       },
-      "id": 9,
+      "id": 4,
       "legend": {
         "alignAsTable": true,
         "avg": false,
@@ -241,19 +237,19 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "(node_memory_MemFree_bytes / on (instance) node_memory_MemTotal_bytes) * 100",
+          "expr": "100 - 100*avg(irate(node_cpu_seconds_total{mode='idle'}[5m])) by (instance)",
           "format": "time_series",
-          "interval": "",
+          "hide": false,
           "intervalFactor": 1,
           "legendFormat": "{{ instance }}",
-          "refId": "A"
+          "refId": "B"
         }
       ],
       "thresholds": [],
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Memory usage",
+      "title": "CPU usage",
       "tooltip": {
         "shared": true,
         "sort": 2,
@@ -392,7 +388,7 @@
         "x": 0,
         "y": 12
       },
-      "id": 13,
+      "id": 9,
       "legend": {
         "alignAsTable": true,
         "avg": false,
@@ -420,10 +416,11 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "rate(node_network_receive_bytes_total[5m])",
+          "expr": "(node_memory_MemFree_bytes / on (instance) node_memory_MemTotal_bytes) * 100",
           "format": "time_series",
+          "interval": "",
           "intervalFactor": 1,
-          "legendFormat": "RX {{ instance }}",
+          "legendFormat": "{{ instance }}",
           "refId": "A"
         }
       ],
@@ -431,7 +428,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Network activity RX",
+      "title": "Memory usage",
       "tooltip": {
         "shared": true,
         "sort": 2,
@@ -447,11 +444,12 @@
       },
       "yaxes": [
         {
-          "format": "short",
+          "decimals": null,
+          "format": "percent",
           "label": null,
           "logBase": 1,
-          "max": null,
-          "min": "1000000",
+          "max": "100",
+          "min": "50",
           "show": true
         },
         {
@@ -555,6 +553,94 @@
         "align": false,
         "alignLevel": null
       }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "fill": 0,
+      "gridPos": {
+        "h": 6,
+        "w": 12,
+        "x": 0,
+        "y": 18
+      },
+      "id": 13,
+      "legend": {
+        "alignAsTable": true,
+        "avg": false,
+        "current": true,
+        "max": false,
+        "min": false,
+        "rightSide": true,
+        "show": true,
+        "sort": "current",
+        "sortDesc": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "rate(node_network_receive_bytes_total[5m])",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "RX {{ instance }}",
+          "refId": "A"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Network activity RX",
+      "tooltip": {
+        "shared": true,
+        "sort": 2,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": "1000000",
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": false
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
     }
   ],
   "refresh": "1m",
@@ -596,5 +682,5 @@
   "timezone": "",
   "title": "WA Servers",
   "uid": "vdET9Hsmz",
-  "version": 2
+  "version": 1
 }
