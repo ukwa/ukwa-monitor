@@ -218,7 +218,7 @@
         }
       ],
       "thresholds": "0.1,1",
-      "title": "Down",
+      "title": "Up",
       "type": "singlestat",
       "valueFontSize": "80%",
       "valueMaps": [],
@@ -537,7 +537,7 @@
         }
       ],
       "thresholds": "0.1,1",
-      "title": "Down",
+      "title": "Up",
       "type": "singlestat",
       "valueFontSize": "80%",
       "valueMaps": [],
@@ -856,7 +856,7 @@
         }
       ],
       "thresholds": "0.1,1",
-      "title": "Down",
+      "title": "Up",
       "type": "singlestat",
       "valueFontSize": "80%",
       "valueMaps": [],
@@ -1203,7 +1203,7 @@
         }
       ],
       "thresholds": "0.1,1",
-      "title": "Down",
+      "title": "Up",
       "type": "singlestat",
       "valueFontSize": "80%",
       "valueMaps": [],
@@ -1522,7 +1522,7 @@
         }
       ],
       "thresholds": "0.1,1",
-      "title": "Down",
+      "title": "Up",
       "type": "singlestat",
       "valueFontSize": "80%",
       "valueMaps": [],
@@ -1855,7 +1855,7 @@
         }
       ],
       "thresholds": "0.1,1",
-      "title": "Down",
+      "title": "Up",
       "type": "singlestat",
       "valueFontSize": "80%",
       "valueMaps": [],
