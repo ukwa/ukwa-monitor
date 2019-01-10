@@ -34,13 +34,15 @@
       "legend": {
         "alignAsTable": true,
         "avg": false,
-        "current": false,
+        "current": true,
         "max": false,
         "min": false,
         "rightSide": true,
         "show": true,
+        "sort": "current",
+        "sortDesc": true,
         "total": false,
-        "values": false
+        "values": true
       },
       "lines": true,
       "linewidth": 1,
@@ -56,7 +58,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "up",
+          "expr": "(1 - up)",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{ instance }}",
@@ -67,7 +69,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Servers Up",
+      "title": "Servers Down",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -87,7 +89,7 @@
           "label": null,
           "logBase": 1,
           "max": null,
-          "min": null,
+          "min": "0",
           "show": true
         },
         {
@@ -682,5 +684,5 @@
   "timezone": "",
   "title": "WA Servers",
   "uid": "vdET9Hsmz",
-  "version": 1
+  "version": 3
 }
