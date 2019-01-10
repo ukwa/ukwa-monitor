@@ -405,7 +405,7 @@
         "x": 6,
         "y": 7
       },
-      "id": 12,
+      "id": 32,
       "interval": null,
       "links": [],
       "mappingType": 1,
@@ -444,8 +444,16 @@
         {
           "expr": "count((node_memory_MemFree_bytes{job=\"ingest_metadata\"} / node_memory_MemTotal_bytes{job=\"ingest_metadata\"}) < 0.003) OR vector(0)",
           "format": "time_series",
+          "hide": false,
           "intervalFactor": 1,
           "refId": "A"
+        },
+        {
+          "expr": "count(((node_memory_MemTotal_bytes{job=\"ingest_metadata\"} - node_memory_MemAvailable_bytes{job=\"ingest_metadata\"}) / node_memory_MemTotal_bytes{job=\"ingest_metadata\"}) < 0.003) OR vector(0)",
+          "format": "time_series",
+          "hide": true,
+          "intervalFactor": 1,
+          "refId": "B"
         }
       ],
       "thresholds": "0.1,1",
@@ -716,7 +724,7 @@
         "x": 14,
         "y": 7
       },
-      "id": 21,
+      "id": 39,
       "interval": null,
       "links": [],
       "mappingType": 1,
@@ -755,8 +763,16 @@
         {
           "expr": "count((node_memory_MemFree_bytes{job=\"hadoop\"} / node_memory_MemTotal_bytes{job=\"hadoop\"}) < 0.003) OR vector(0)",
           "format": "time_series",
+          "hide": false,
           "intervalFactor": 1,
           "refId": "A"
+        },
+        {
+          "expr": "count(((node_memory_MemTotal_bytes{job=\"hadoop\"} - node_memory_MemAvailable_bytes{job=\"hadoop\"}) / node_memory_MemTotal_bytes{job=\"hadoop\"}) < 0.003) OR vector(0)",
+          "format": "time_series",
+          "hide": true,
+          "intervalFactor": 1,
+          "refId": "B"
         }
       ],
       "thresholds": "0.1,1",
@@ -1027,7 +1043,7 @@
         "x": 22,
         "y": 7
       },
-      "id": 22,
+      "id": 40,
       "interval": null,
       "links": [],
       "mappingType": 1,
@@ -1066,8 +1082,16 @@
         {
           "expr": "count((node_memory_MemFree_bytes{job=\"discovery_access\"} / node_memory_MemTotal_bytes{job=\"discovery_access\"}) < 0.003) OR vector(0)",
           "format": "time_series",
+          "hide": false,
           "intervalFactor": 1,
           "refId": "A"
+        },
+        {
+          "expr": "count(((node_memory_MemTotal_bytes{job=\"discovery_access\"} - node_memory_MemAvailable_bytes{job=\"discovery_access\"}) / node_memory_MemTotal_bytes{job=\"discovery_access\"}) < 0.003) OR vector(0)",
+          "format": "time_series",
+          "hide": true,
+          "intervalFactor": 1,
+          "refId": "B"
         }
       ],
       "thresholds": "0.1,1",
@@ -1366,7 +1390,7 @@
         "x": 14,
         "y": 9
       },
-      "id": 27,
+      "id": 41,
       "interval": null,
       "links": [],
       "mappingType": 1,
@@ -1405,8 +1429,16 @@
         {
           "expr": "count((node_memory_MemFree_bytes{job=\"gluster\"} / node_memory_MemTotal_bytes{job=\"gluster\"}) < 0.003) OR vector(0)",
           "format": "time_series",
+          "hide": false,
           "intervalFactor": 1,
           "refId": "A"
+        },
+        {
+          "expr": "count(((node_memory_MemTotal_bytes{job=\"gluster\"} - node_memory_MemAvailable_bytes{job=\"gluster\"}) / node_memory_MemTotal_bytes{job=\"gluster\"}) < 0.003) OR vector(0)",
+          "format": "time_series",
+          "hide": true,
+          "intervalFactor": 1,
+          "refId": "B"
         }
       ],
       "thresholds": "0.1,1",
@@ -1677,7 +1709,7 @@
         "x": 22,
         "y": 9
       },
-      "id": 32,
+      "id": 38,
       "interval": null,
       "links": [],
       "mappingType": 1,
@@ -1716,8 +1748,16 @@
         {
           "expr": "count((node_memory_MemFree_bytes{job=\"solr\"} / node_memory_MemTotal_bytes{job=\"solr\"}) < 0.003) OR vector(0)",
           "format": "time_series",
+          "hide": false,
           "intervalFactor": 1,
           "refId": "A"
+        },
+        {
+          "expr": "count(((node_memory_MemTotal_bytes{job=\"solr\"} - node_memory_MemAvailable_bytes{job=\"solr\"}) / node_memory_MemTotal_bytes{job=\"solr\"}) < 0.003) OR vector(0)",
+          "format": "time_series",
+          "hide": true,
+          "intervalFactor": 1,
+          "refId": "B"
         }
       ],
       "thresholds": "0.1,1",
@@ -2002,7 +2042,7 @@
         "x": 14,
         "y": 11
       },
-      "id": 37,
+      "id": 42,
       "interval": null,
       "links": [],
       "mappingType": 1,
@@ -2041,8 +2081,16 @@
         {
           "expr": "count((node_memory_MemFree_bytes{job=\"infrastructure\"} / node_memory_MemTotal_bytes{job=\"infrastructure\"}) < 0.003) OR vector(0)",
           "format": "time_series",
+          "hide": false,
           "intervalFactor": 1,
           "refId": "A"
+        },
+        {
+          "expr": "count(((node_memory_MemTotal_bytes{job=\"infrastructure\"} - node_memory_MemAvailable_bytes{job=\"infrastructure\"}) / node_memory_MemTotal_bytes{job=\"infrastructure\"}) < 0.003) OR vector(0)",
+          "format": "time_series",
+          "hide": true,
+          "intervalFactor": 1,
+          "refId": "B"
         }
       ],
       "thresholds": "0.1,1",
