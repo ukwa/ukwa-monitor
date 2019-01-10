@@ -418,12 +418,19 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "(node_memory_MemFree_bytes / on (instance) node_memory_MemTotal_bytes) * 100",
+          "expr": "(node_memory_MemFree_bytes / node_memory_MemTotal_bytes) * 100",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
-          "legendFormat": "{{ instance }}",
+          "legendFormat": "A {{ instance }}",
           "refId": "A"
+        },
+        {
+          "expr": "((node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes) / node_memory_MemTotal_bytes) * 100",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "B {{ instance }}",
+          "refId": "B"
         }
       ],
       "thresholds": [],
