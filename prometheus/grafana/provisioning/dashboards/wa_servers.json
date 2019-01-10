@@ -90,7 +90,7 @@
           "logBase": 1,
           "max": null,
           "min": "0",
-          "show": true
+          "show": false
         },
         {
           "format": "short",
@@ -112,6 +112,7 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "Prometheus",
+      "decimals": null,
       "fill": 0,
       "gridPos": {
         "h": 6,
@@ -128,6 +129,7 @@
         "min": false,
         "rightSide": true,
         "show": true,
+        "sideWidth": 250,
         "sort": "current",
         "sortDesc": true,
         "total": false,
@@ -152,7 +154,7 @@
           "hide": false,
           "interval": "",
           "intervalFactor": 1,
-          "legendFormat": "{{ instance }}",
+          "legendFormat": "{{ instance }} {{ mountpoint }}",
           "refId": "A"
         }
       ],
@@ -418,18 +420,19 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "(node_memory_MemFree_bytes / node_memory_MemTotal_bytes) * 100",
+          "expr": "((node_memory_MemTotal_bytes - node_memory_MemFree_bytes) / node_memory_MemTotal_bytes) * 100",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
-          "legendFormat": "A {{ instance }}",
+          "legendFormat": "{{ instance }}",
           "refId": "A"
         },
         {
           "expr": "((node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes) / node_memory_MemTotal_bytes) * 100",
           "format": "time_series",
+          "hide": true,
           "intervalFactor": 1,
-          "legendFormat": "B {{ instance }}",
+          "legendFormat": "{{ instance }}",
           "refId": "B"
         }
       ],
@@ -476,92 +479,18 @@
       }
     },
     {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "fill": 0,
+      "content": "",
       "gridPos": {
         "h": 6,
         "w": 12,
         "x": 12,
         "y": 12
       },
-      "id": 14,
-      "legend": {
-        "alignAsTable": true,
-        "avg": false,
-        "current": true,
-        "max": false,
-        "min": false,
-        "rightSide": true,
-        "show": true,
-        "sort": "current",
-        "sortDesc": true,
-        "total": false,
-        "values": true
-      },
-      "lines": true,
-      "linewidth": 1,
+      "id": 18,
       "links": [],
-      "nullPointMode": "null",
-      "percentage": false,
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "rate(node_network_transmit_bytes_total{device=~\"e.+\"}[5m])",
-          "format": "time_series",
-          "intervalFactor": 1,
-          "legendFormat": "TX {{ instance }} {{ device }}",
-          "refId": "A"
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Network activity TX",
-      "tooltip": {
-        "shared": true,
-        "sort": 2,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": "1000000",
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": false
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
+      "mode": "markdown",
+      "title": "",
+      "type": "text"
     },
     {
       "aliasColors": {},
@@ -615,6 +544,94 @@
       "timeRegions": [],
       "timeShift": null,
       "title": "Network activity RX",
+      "tooltip": {
+        "shared": true,
+        "sort": 2,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": "1000000",
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": false
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "fill": 0,
+      "gridPos": {
+        "h": 6,
+        "w": 12,
+        "x": 12,
+        "y": 18
+      },
+      "id": 14,
+      "legend": {
+        "alignAsTable": true,
+        "avg": false,
+        "current": true,
+        "max": false,
+        "min": false,
+        "rightSide": true,
+        "show": true,
+        "sort": "current",
+        "sortDesc": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "rate(node_network_transmit_bytes_total{device=~\"e.+\"}[5m])",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "TX {{ instance }} {{ device }}",
+          "refId": "A"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Network activity TX",
       "tooltip": {
         "shared": true,
         "sort": 2,
