@@ -80,8 +80,10 @@ scrape_configs:
         - 'crawler01:9100'
         - 'crawler02:9100'
         - 'crawler03:9100'
+        - 'crawler03:9118'
         - 'crawler04:9100'
         - 'ingest:9100'
+        - 'ingest:9118'
 
   - job_name: 'monitoring'
     static_configs:
