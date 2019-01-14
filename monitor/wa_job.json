@@ -16,7 +16,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 3,
-  "iteration": 1547476709024,
+  "iteration": 1547480050364,
   "links": [],
   "panels": [
     {
@@ -184,7 +184,7 @@
           "label": null,
           "logBase": 1,
           "max": "100",
-          "min": "50",
+          "min": "0",
           "show": true
         },
         {
@@ -275,7 +275,7 @@
           "label": null,
           "logBase": 1,
           "max": "100",
-          "min": "50",
+          "min": "0",
           "show": true
         },
         {
@@ -454,7 +454,7 @@
           "label": null,
           "logBase": 1,
           "max": "100",
-          "min": "50",
+          "min": "0",
           "show": true
         },
         {
@@ -672,8 +672,8 @@
         "allValue": null,
         "current": {
           "tags": [],
-          "text": "discovery_access",
-          "value": "discovery_access"
+          "text": "ingest_metadata",
+          "value": "ingest_metadata"
         },
         "datasource": "Prometheus",
         "definition": "up{instance=~\".*\"}",
@@ -684,7 +684,7 @@
         "name": "job",
         "options": [
           {
-            "selected": true,
+            "selected": false,
             "text": "discovery_access",
             "value": "discovery_access"
           },
@@ -704,7 +704,7 @@
             "value": "infrastructure"
           },
           {
-            "selected": false,
+            "selected": true,
             "text": "ingest_metadata",
             "value": "ingest_metadata"
           },
@@ -763,6 +763,6 @@
   },
   "timezone": "",
   "title": "WA Job Servers",
-  "uid": "wajs00001",
-  "version": 1
+  "uid": "wajs00002",
+  "version": 2
 }
