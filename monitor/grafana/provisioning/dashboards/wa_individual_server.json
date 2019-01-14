@@ -16,6 +16,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 4,
+  "iteration": 1547469088962,
   "links": [],
   "panels": [
     {
@@ -58,7 +59,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "(1 - up)",
+          "expr": "(1 - up{instance=\"$server\"})",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{ instance }}",
@@ -149,7 +150,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "(1 - node_filesystem_avail_bytes{fstype!~\"tmpfs\"} / node_filesystem_size_bytes{fstype!~\"tmpfs\"}) * 100",
+          "expr": "(1 - node_filesystem_avail_bytes{fstype!~\"tmpfs\",instance=\"$server\"} / node_filesystem_size_bytes{fstype!~\"tmpfs\",instance=\"$server\"}) * 100",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -183,7 +184,7 @@
           "label": null,
           "logBase": 1,
           "max": "100",
-          "min": "50",
+          "min": "0",
           "show": true
         },
         {
@@ -241,11 +242,11 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "100 - 100*avg(irate(node_cpu_seconds_total{mode='idle'}[5m])) by (instance)",
+          "expr": "100 - 100*(irate(node_cpu_seconds_total{instance=\"$server\",mode='idle'}[5m]))",
           "format": "time_series",
           "hide": false,
           "intervalFactor": 1,
-          "legendFormat": "{{ instance }}",
+          "legendFormat": "{{ $server }} - {{ cpu }}",
           "refId": "B"
         }
       ],
@@ -274,7 +275,7 @@
           "label": null,
           "logBase": 1,
           "max": "100",
-          "min": "50",
+          "min": "0",
           "show": true
         },
         {
@@ -331,10 +332,10 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "100*avg(irate(node_cpu_seconds_total{mode=\"iowait\"}[5m]))  by (instance)",
+          "expr": "(irate(node_cpu_seconds_total{instance=\"$server\",mode=\"iowait\"}[5m])) * 100",
           "format": "time_series",
           "intervalFactor": 1,
-          "legendFormat": "{{ instance }}",
+          "legendFormat": "{{ instance }} - {{ cpu }}",
           "refId": "A"
         }
       ],
@@ -420,20 +421,12 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "((node_memory_MemTotal_bytes - node_memory_MemFree_bytes) / node_memory_MemTotal_bytes) * 100",
+          "expr": "((node_memory_MemTotal_bytes{instance=\"$server\"} - node_memory_MemFree_bytes{instance=\"$server\"}) / node_memory_MemTotal_bytes{instance=\"$server\"}) * 100",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
           "legendFormat": "{{ instance }}",
           "refId": "A"
-        },
-        {
-          "expr": "((node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes) / node_memory_MemTotal_bytes) * 100",
-          "format": "time_series",
-          "hide": true,
-          "intervalFactor": 1,
-          "legendFormat": "{{ instance }}",
-          "refId": "B"
         }
       ],
       "thresholds": [],
@@ -461,7 +454,7 @@
           "label": null,
           "logBase": 1,
           "max": "100",
-          "min": "50",
+          "min": "0",
           "show": true
         },
         {
@@ -532,7 +525,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "rate(node_network_receive_bytes_total{device=~\"e.+\"}[5m])",
+          "expr": "rate(node_network_receive_bytes_total{instance=\"$server\",device=~\"e.+\"}[5m])",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "RX {{ instance }} {{ device }}",
@@ -620,7 +613,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "rate(node_network_transmit_bytes_total{device=~\"e.+\"}[5m])",
+          "expr": "rate(node_network_transmit_bytes_total{instance=\"$server\",device=~\"e.+\"}[5m])",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "TX {{ instance }} {{ device }}",
@@ -669,12 +662,39 @@
       }
     }
   ],
-  "refresh": "1m",
+  "refresh": "5s",
   "schemaVersion": 16,
   "style": "dark",
   "tags": [],
   "templating": {
-    "list": []
+    "list": [
+      {
+        "allValue": null,
+        "current": {
+          "tags": [],
+          "text": "crawler03:9100",
+          "value": "crawler03:9100"
+        },
+        "datasource": "Prometheus",
+        "definition": "up{instance=~\".*\"}",
+        "hide": 0,
+        "includeAll": false,
+        "label": null,
+        "multi": false,
+        "name": "server",
+        "options": [],
+        "query": "up{instance=~\".*\"}",
+        "refresh": 1,
+        "regex": "/.*instance=\"([^\"].+?)\".*/",
+        "skipUrlSync": false,
+        "sort": 1,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      }
+    ]
   },
   "time": {
     "from": "now-1h",
@@ -706,7 +726,7 @@
     ]
   },
   "timezone": "",
-  "title": "WA Servers",
-  "uid": "vdET9Hsmz",
-  "version": 3
+  "title": "WA Individual Server",
+  "uid": "wais00001",
+  "version": 1
 }
