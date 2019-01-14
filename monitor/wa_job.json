@@ -15,7 +15,8 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 4,
+  "id": 3,
+  "iteration": 1547476709024,
   "links": [],
   "panels": [
     {
@@ -58,7 +59,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "(1 - up)",
+          "expr": "(1 - up{job=\"$job\"})",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{ instance }}",
@@ -129,7 +130,7 @@
         "min": false,
         "rightSide": true,
         "show": true,
-        "sideWidth": 250,
+        "sideWidth": 320,
         "sort": "current",
         "sortDesc": true,
         "total": false,
@@ -149,7 +150,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "(1 - node_filesystem_avail_bytes{fstype!~\"tmpfs\"} / node_filesystem_size_bytes{fstype!~\"tmpfs\"}) * 100",
+          "expr": "(1 - node_filesystem_avail_bytes{fstype!~\"tmpfs\",job=\"$job\"} / node_filesystem_size_bytes{fstype!~\"tmpfs\",job=\"$job\"}) * 100",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -241,7 +242,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "100 - 100*avg(irate(node_cpu_seconds_total{mode='idle'}[5m])) by (instance)",
+          "expr": "100 - 100*avg(irate(node_cpu_seconds_total{mode='idle',job=\"$job\"}[5m])) by (instance)",
           "format": "time_series",
           "hide": false,
           "intervalFactor": 1,
@@ -331,7 +332,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "100*avg(irate(node_cpu_seconds_total{mode=\"iowait\"}[5m]))  by (instance)",
+          "expr": "100*avg(irate(node_cpu_seconds_total{job=\"$job\",mode=\"iowait\"}[5m]))  by (instance)",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{ instance }}",
@@ -420,20 +421,12 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "((node_memory_MemTotal_bytes - node_memory_MemFree_bytes) / node_memory_MemTotal_bytes) * 100",
+          "expr": "((node_memory_MemTotal_bytes{job=\"$job\"} - node_memory_MemFree_bytes{job=\"$job\"}) / node_memory_MemTotal_bytes{job=\"$job\"}) * 100",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
           "legendFormat": "{{ instance }}",
           "refId": "A"
-        },
-        {
-          "expr": "((node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes) / node_memory_MemTotal_bytes) * 100",
-          "format": "time_series",
-          "hide": true,
-          "intervalFactor": 1,
-          "legendFormat": "{{ instance }}",
-          "refId": "B"
         }
       ],
       "thresholds": [],
@@ -532,7 +525,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "rate(node_network_receive_bytes_total{device=~\"e.+\"}[5m])",
+          "expr": "rate(node_network_receive_bytes_total{job=\"$job\",device=~\"e.+\"}[5m])",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "RX {{ instance }} {{ device }}",
@@ -620,7 +613,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "rate(node_network_transmit_bytes_total{device=~\"e.+\"}[5m])",
+          "expr": "rate(node_network_transmit_bytes_total{job=\"$job\",device=~\"e.+\"}[5m])",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "TX {{ instance }} {{ device }}",
@@ -674,7 +667,70 @@
   "style": "dark",
   "tags": [],
   "templating": {
-    "list": []
+    "list": [
+      {
+        "allValue": null,
+        "current": {
+          "tags": [],
+          "text": "discovery_access",
+          "value": "discovery_access"
+        },
+        "datasource": "Prometheus",
+        "definition": "up{instance=~\".*\"}",
+        "hide": 0,
+        "includeAll": false,
+        "label": null,
+        "multi": false,
+        "name": "job",
+        "options": [
+          {
+            "selected": true,
+            "text": "discovery_access",
+            "value": "discovery_access"
+          },
+          {
+            "selected": false,
+            "text": "gluster",
+            "value": "gluster"
+          },
+          {
+            "selected": false,
+            "text": "hadoop",
+            "value": "hadoop"
+          },
+          {
+            "selected": false,
+            "text": "infrastructure",
+            "value": "infrastructure"
+          },
+          {
+            "selected": false,
+            "text": "ingest_metadata",
+            "value": "ingest_metadata"
+          },
+          {
+            "selected": false,
+            "text": "monitoring",
+            "value": "monitoring"
+          },
+          {
+            "selected": false,
+            "text": "solr",
+            "value": "solr"
+          }
+        ],
+        "query": "up{instance=~\".*\"}",
+        "refresh": 0,
+        "regex": "/.*job=\"([^\"].+)\".*/",
+        "skipUrlSync": false,
+        "sort": 1,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      }
+    ]
   },
   "time": {
     "from": "now-1h",

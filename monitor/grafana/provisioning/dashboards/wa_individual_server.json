@@ -15,8 +15,8 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 4,
-  "iteration": 1547469088962,
+  "id": 2,
+  "iteration": 1547475797841,
   "links": [],
   "panels": [
     {
@@ -130,7 +130,7 @@
         "min": false,
         "rightSide": true,
         "show": true,
-        "sideWidth": 250,
+        "sideWidth": 320,
         "sort": "current",
         "sortDesc": true,
         "total": false,
@@ -671,7 +671,6 @@
       {
         "allValue": null,
         "current": {
-          "tags": [],
           "text": "crawler03:9100",
           "value": "crawler03:9100"
         },
