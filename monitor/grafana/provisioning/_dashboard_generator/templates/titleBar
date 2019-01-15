@@ -1,0 +1,14 @@
+    { 
+      "content": "",
+      "gridPos": {
+        "h": <h>,
+        "w": <w>,
+        "x": <x>,
+        "y": <y>
+      },
+      "id": <id>,
+      "links": [],
+      "mode": "markdown",
+      "title": "<title>",
+      "type": "text"
+    },
