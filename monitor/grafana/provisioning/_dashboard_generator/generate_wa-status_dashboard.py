@@ -23,17 +23,17 @@ panelSingleXDict = {
 	'ingest_metadata':	{'Up':panelSingleWidth * 0, 'CPU':panelSingleWidth * 1, 'Dsk':panelSingleWidth * 2, 'Mem':panelSingleWidth * 3},
 	'hadoop':		{'Up':panelTitleWidth + (panelSingleWidth * 0), 'CPU':panelTitleWidth + (panelSingleWidth * 1), 'Dsk':panelTitleWidth + (panelSingleWidth * 2), 'Mem':panelTitleWidth + (panelSingleWidth * 3)},
 	'discovery_access':	{'Up':(panelTitleWidth * 2) + (panelSingleWidth * 0), 'CPU':(panelTitleWidth * 2) + (panelSingleWidth * 1), 'Dsk':(panelTitleWidth * 2) + (panelSingleWidth * 2), 'Mem':(panelTitleWidth * 2) + (panelSingleWidth * 3)},
-	'gluster':		{'Up':panelSingleWidth * 0, 'CPU':panelSingleWidth * 1, 'Dsk':panelSingleWidth * 2, 'Mem':panelSingleWidth * 3},
-	'solr':			{'Up':panelTitleWidth + (panelSingleWidth * 0), 'CPU':panelTitleWidth + (panelSingleWidth * 1), 'Dsk':panelTitleWidth + (panelSingleWidth * 2), 'Mem':panelTitleWidth + (panelSingleWidth * 3)},
-	'infrastructure':	{'Up':(panelTitleWidth * 2) + (panelSingleWidth * 0), 'CPU':(panelTitleWidth * 2) + (panelSingleWidth * 1), 'Dsk':(panelTitleWidth * 2) + (panelSingleWidth * 2), 'Mem':(panelTitleWidth * 2) + (panelSingleWidth * 3)}
+	'gluster':		{'Up':panelTitleWidth + (panelSingleWidth * 0), 'CPU':panelTitleWidth + (panelSingleWidth * 1), 'Dsk':panelTitleWidth + (panelSingleWidth * 2), 'Mem':panelTitleWidth + (panelSingleWidth * 3)},
+	'solr':			{'Up':(panelTitleWidth * 2) + (panelSingleWidth * 0), 'CPU':(panelTitleWidth * 2) + (panelSingleWidth * 1), 'Dsk':(panelTitleWidth * 2) + (panelSingleWidth * 2), 'Mem':(panelTitleWidth * 2) + (panelSingleWidth * 3)},
+	'infrastructure':	{'Up':panelTitleWidth + (panelSingleWidth * 0), 'CPU':panelTitleWidth + (panelSingleWidth * 1), 'Dsk':panelTitleWidth + (panelSingleWidth * 2), 'Mem':panelTitleWidth + (panelSingleWidth * 3)}
 }
 panelSingleYDict = {
-	'ingest_metadata':	{'Up':panelSingleWidth * 0, 'CPU':panelSingleWidth * 1, 'Dsk':panelSingleWidth * 2, 'Mem':panelSingleWidth * 3},
-	'hadoop':		{'Up':panelTitleWidth + (panelSingleWidth * 0), 'CPU':panelTitleWidth + (panelSingleWidth * 1), 'Dsk':panelTitleWidth + (panelSingleWidth * 2), 'Mem':panelTitleWidth + (panelSingleWidth * 3)},
-	'discovery_access':	{'Up':(panelTitleWidth * 2) + (panelSingleWidth * 0), 'CPU':(panelTitleWidth * 2) + (panelSingleWidth * 1), 'Dsk':(panelTitleWidth * 2) + (panelSingleWidth * 2), 'Mem':(panelTitleWidth * 2) + (panelSingleWidth * 3)},
-	'gluster':		{'Up':panelSingleWidth * 0, 'CPU':panelSingleWidth * 1, 'Dsk':panelSingleWidth * 2, 'Mem':panelSingleWidth * 3},
-	'solr':			{'Up':panelTitleWidth + (panelSingleWidth * 0), 'CPU':panelTitleWidth + (panelSingleWidth * 1), 'Dsk':panelTitleWidth + (panelSingleWidth * 2), 'Mem':panelTitleWidth + (panelSingleWidth * 3)},
-	'infrastructure':	{'Up':(panelTitleWidth * 2) + (panelSingleWidth * 0), 'CPU':(panelTitleWidth * 2) + (panelSingleWidth * 1), 'Dsk':(panelTitleWidth * 2) + (panelSingleWidth * 2), 'Mem':(panelTitleWidth * 2) + (panelSingleWidth * 3)}
+	'ingest_metadata':	{'Up':panelHeight, 'CPU':panelHeight, 'Dsk':panelHeight, 'Mem':panelHeight},
+	'hadoop':		{'Up':panelHeight, 'CPU':panelHeight, 'Dsk':panelHeight, 'Mem':panelHeight},
+	'discovery_access':	{'Up':panelHeight, 'CPU':panelHeight, 'Dsk':panelHeight, 'Mem':panelHeight},
+	'gluster':		{'Up':panelHeight * 3, 'CPU':panelHeight * 3, 'Dsk':panelHeight * 3, 'Mem':panelHeight * 3},
+	'solr':			{'Up':panelHeight * 3, 'CPU':panelHeight * 3, 'Dsk':panelHeight * 3, 'Mem':panelHeight * 3},
+	'infrastructure':	{'Up':panelHeight * 5, 'CPU':panelHeight * 5, 'Dsk':panelHeight * 5, 'Mem':panelHeight * 5}
 }
 panelFooter = 'templates/panelFooter'
 footer = 'templates/footer'
@@ -64,7 +64,7 @@ def output(**kwargs):
 			templateCode = templateCode.replace('<w>', str(panelTitleWidth))
 			templateCode = templateCode.replace('<x>', str(panelTitleXDict[kwargs['job']]))
 			templateCode = templateCode.replace('<y>', str(panelTitleYDict[kwargs['job']]))
-#			print("template: {}\n\ttitle: {}\n\tx: {}\n\ty: {}\n".format(tmpFl, panelTitleTitleDict[kwargs['title']], panelTitleXDict[kwargs['job']], panelTitleYDict[kwargs['job']]))		#### debugging
+#			print("\ntemplate: {}\ttitle: {}\tx: {}\ty: {}\n".format(tmpFl, panelTitleTitleDict[kwargs['title']], panelTitleXDict[kwargs['job']], panelTitleYDict[kwargs['job']]))		#### debugging
 
 		elif tmpFl == panelSingle:
 			templateCode = templateCode.replace('<title>', kwargs['title'])
@@ -72,15 +72,23 @@ def output(**kwargs):
 			templateCode = templateCode.replace('<w>', str(panelSingleWidth))
 			templateCode = templateCode.replace('<x>', str(panelSingleXDict[kwargs['job']][kwargs['title']]))
 			templateCode = templateCode.replace('<y>', str(panelSingleYDict[kwargs['job']][kwargs['title']]))
-			print("template: {}\n\tjob: {}\n\ttitle: {}\n\tx: {}\n\ty: {}\n".format(tmpFl, kwargs['job'], kwargs['title'], panelSingleXDict[kwargs['job']][kwargs['title']], panelSingleYDict[kwargs['job']][kwargs['title']]))		#### debugging
+#			print("template: {}\tjob: {}\ttitle: {}\tx: {}\ty: {}".format(tmpFl, kwargs['job'], kwargs['title'], panelSingleXDict[kwargs['job']][kwargs['title']], panelSingleYDict[kwargs['job']][kwargs['title']]))		#### debugging
 
-		# remaining templateCode replacements: title, expr, x and y
+			# add expr
+			exprUp = 'sum(1 - up{job=\\"' + kwargs['job'] + '\\"})'
+			exprCpu = 'count(sum(irate(node_cpu_seconds_total{job=\\"' + kwargs['job'] + '\\",mode=\\"idle\\"}[5m]) < 0.1) by (instance)) OR vector(0)'
+			exprDsk = 'count((node_filesystem_avail_bytes{job=\\"' + kwargs['job'] + '\\",fstype!~\\"tmpfs|cifs\\"} / node_filesystem_size_bytes{job=\\"' + kwargs['job'] + '\\",fstype!~\\"tmpfs|cifs\\"}) < 0.04) OR vector(0)'
+			exprMem = 'count((node_memory_MemFree_bytes{job=\\"' + kwargs['job'] + '\\"} / node_memory_MemTotal_bytes{job=\\"' + kwargs['job'] + '\\"}) < 0.01) OR vector(0)'
+			if kwargs['title'] == 'Up':
+				templateCode = templateCode.replace('<expr>', exprUp)
+			elif kwargs['title'] == 'CPU':
+				templateCode = templateCode.replace('<expr>', exprCpu)
+			elif kwargs['title'] == 'Dsk':
+				templateCode = templateCode.replace('<expr>', exprDsk)
+			else:
+				templateCode = templateCode.replace('<expr>', exprMem)
 
-#'<expr>':'sum(1 - up{job=\\"ingest_metadata\\"})'
-#'<expr>':'count(sum(irate(node_cpu_seconds_total{job=\\"ingest_metadata\\",mode=\\"idle\\"}[5m]) < 0.1) by (instance)) OR vector(0)'
-#'<expr>':'count((node_filesystem_avail_bytes{job=\\"ingest_metadata\\",fstype!~\\"tmpfs|cifs\\"} / node_filesystem_size_bytes{job=\\"ingest_metadata\\",fstype!~\\"tmpfs|cifs\\"}) < 0.04) OR vector(0)'
-#'<expr>':'count((node_memory_MemFree_bytes{job=\\"ingest_metadata\\"} / node_memory_MemTotal_bytes{job=\\"ingest_metadata\\"}) < 0.01) OR vector(0)'
-
+			# remove last comma if last panel
 			if 'lastPanel' in kwargs:
 				templateCode = re.sub(r'},$', '}', templateCode)
 
@@ -90,7 +98,7 @@ def output(**kwargs):
 ####			print("template: {}\n\ttitle: {}\n\tuid: {}".format(tmpFl, kwargs['title'], kwargs['uid']))		#### debugging
 
 	# print code block
-#	print(templateCode, end="")
+	print(templateCode, end="")
 
 # main -----------------------------------
 def main():
