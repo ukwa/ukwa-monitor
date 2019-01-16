@@ -15,7 +15,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 4,
+  "id": 3,
   "links": [],
   "panels": [
     {
@@ -26,7 +26,7 @@
       "fill": 1,
       "gridPos": {
         "h": 6,
-        "w": 12,
+        "w": 8,
         "x": 0,
         "y": 0
       },
@@ -34,14 +34,15 @@
       "legend": {
         "alignAsTable": true,
         "avg": false,
-        "current": true,
+        "current": false,
         "max": false,
         "min": false,
         "rightSide": true,
         "show": true,
-        "sort": "current",
+        "sideWidth": 200,
+        "sort": "total",
         "sortDesc": true,
-        "total": false,
+        "total": true,
         "values": true
       },
       "lines": true,
@@ -116,20 +117,20 @@
       "fill": 0,
       "gridPos": {
         "h": 6,
-        "w": 12,
-        "x": 12,
+        "w": 16,
+        "x": 8,
         "y": 0
       },
       "id": 2,
       "legend": {
-        "alignAsTable": true,
+        "alignAsTable": false,
         "avg": false,
         "current": true,
         "max": false,
         "min": false,
         "rightSide": true,
         "show": true,
-        "sideWidth": 250,
+        "sideWidth": 300,
         "sort": "current",
         "sortDesc": true,
         "total": false,
@@ -708,5 +709,5 @@
   "timezone": "",
   "title": "WA Servers",
   "uid": "wase",
-  "version": 4
+  "version": 1
 }
