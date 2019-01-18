@@ -678,6 +678,243 @@
       ],
       "valueName": "current"
     },
+    {
+      "cacheTimeout": null,
+      "colorBackground": true,
+      "colorValue": false,
+      "colors": [
+        "#299c46",
+        "rgba(237, 129, 40, 0.89)",
+        "#d44a3a"
+      ],
+      "format": "none",
+      "gauge": {
+        "maxValue": 100,
+        "minValue": 0,
+        "show": false,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 1,
+        "w": 2,
+        "x": 8,
+        "y": 2
+      },
+      "id": 11,
+      "interval": null,
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "postfix": "",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false
+      },
+      "tableColumn": "",
+      "targets": [
+        {
+          "expr": "hdfs_node_count{status=\"dead\",instance=\"ingest:9118\"}",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "refId": "A"
+        }
+      ],
+      "thresholds": "0.1,1",
+      "title": "Nodes",
+      "type": "singlestat",
+      "valueFontSize": "80%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ],
+      "valueName": "current"
+    },
+    {
+      "cacheTimeout": null,
+      "colorBackground": true,
+      "colorValue": false,
+      "colors": [
+        "#299c46",
+        "rgba(237, 129, 40, 0.89)",
+        "#d44a3a"
+      ],
+      "format": "none",
+      "gauge": {
+        "maxValue": 100,
+        "minValue": 0,
+        "show": false,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 1,
+        "w": 2,
+        "x": 10,
+        "y": 2
+      },
+      "id": 12,
+      "interval": null,
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "postfix": "",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false
+      },
+      "tableColumn": "",
+      "targets": [
+        {
+          "expr": "hdfs_under_replicated_block_count{instance=\"ingest:9118\"}",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "refId": "A"
+        }
+      ],
+      "thresholds": "0.1,1",
+      "title": "Under-rep",
+      "type": "singlestat",
+      "valueFontSize": "80%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ],
+      "valueName": "current"
+    },
+    {
+      "cacheTimeout": null,
+      "colorBackground": true,
+      "colorValue": false,
+      "colors": [
+        "#299c46",
+        "rgba(237, 129, 40, 0.89)",
+        "#d44a3a"
+      ],
+      "format": "none",
+      "gauge": {
+        "maxValue": 100,
+        "minValue": 0,
+        "show": false,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 2,
+        "x": 12,
+        "y": 2
+      },
+      "id": 13,
+      "interval": null,
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "postfix": "%",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false
+      },
+      "tableColumn": "",
+      "targets": [
+        {
+          "expr": "hdfs_used_percent{instance=\"ingest:9118\"}",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "refId": "A"
+        }
+      ],
+      "thresholds": "85,90",
+      "title": "Used",
+      "type": "singlestat",
+      "valueFontSize": "80%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ],
+      "valueName": "current"
+    },
     { 
       "content": "",
       "gridPos": {
@@ -686,7 +923,7 @@
         "x": 16,
         "y": 0
       },
-      "id": 11,
+      "id": 14,
       "links": [],
       "mode": "markdown",
       "title": "Discovery & Access",
@@ -715,7 +952,7 @@
         "x": 16,
         "y": 1
       },
-      "id": 12,
+      "id": 15,
       "interval": null,
       "links": [],
       "mappingType": 1,
@@ -794,7 +1031,7 @@
         "x": 18,
         "y": 1
       },
-      "id": 13,
+      "id": 16,
       "interval": null,
       "links": [],
       "mappingType": 1,
@@ -873,7 +1110,7 @@
         "x": 20,
         "y": 1
       },
-      "id": 14,
+      "id": 17,
       "interval": null,
       "links": [],
       "mappingType": 1,
@@ -952,7 +1189,7 @@
         "x": 22,
         "y": 1
       },
-      "id": 15,
+      "id": 18,
       "interval": null,
       "links": [],
       "mappingType": 1,
@@ -1014,9 +1251,9 @@
         "h": 1,
         "w": 8,
         "x": 8,
-        "y": 2
+        "y": 4
       },
-      "id": 16,
+      "id": 19,
       "links": [],
       "mode": "markdown",
       "title": "Gluster",
@@ -1043,9 +1280,9 @@
         "h": 1,
         "w": 2,
         "x": 8,
-        "y": 3
+        "y": 5
       },
-      "id": 17,
+      "id": 20,
       "interval": null,
       "links": [],
       "mappingType": 1,
@@ -1122,9 +1359,9 @@
         "h": 1,
         "w": 2,
         "x": 10,
-        "y": 3
+        "y": 5
       },
-      "id": 18,
+      "id": 21,
       "interval": null,
       "links": [],
       "mappingType": 1,
@@ -1201,9 +1438,9 @@
         "h": 1,
         "w": 2,
         "x": 12,
-        "y": 3
+        "y": 5
       },
-      "id": 19,
+      "id": 22,
       "interval": null,
       "links": [],
       "mappingType": 1,
@@ -1280,9 +1517,9 @@
         "h": 1,
         "w": 2,
         "x": 14,
-        "y": 3
+        "y": 5
       },
-      "id": 20,
+      "id": 23,
       "interval": null,
       "links": [],
       "mappingType": 1,
@@ -1346,10 +1583,10 @@
         "x": 16,
         "y": 2
       },
-      "id": 21,
+      "id": 24,
       "links": [],
       "mode": "markdown",
-      "title": "Solr",
+      "title": "Discovery & Access",
       "type": "text"
     },
     {
@@ -1375,7 +1612,7 @@
         "x": 16,
         "y": 3
       },
-      "id": 22,
+      "id": 25,
       "interval": null,
       "links": [],
       "mappingType": 1,
@@ -1412,7 +1649,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sum(1 - up{job=\"solr\"})",
+          "expr": "sum(1 - up{job=\"discovery_access\"})",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A"
@@ -1454,7 +1691,7 @@
         "x": 18,
         "y": 3
       },
-      "id": 23,
+      "id": 26,
       "interval": null,
       "links": [],
       "mappingType": 1,
@@ -1491,7 +1728,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "count(sum(irate(node_cpu_seconds_total{job=\"solr\",mode=\"idle\"}[5m]) < 0.1) by (instance)) OR vector(0)",
+          "expr": "count(sum(irate(node_cpu_seconds_total{job=\"discovery_access\",mode=\"idle\"}[5m]) < 0.1) by (instance)) OR vector(0)",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A"
@@ -1533,7 +1770,7 @@
         "x": 20,
         "y": 3
       },
-      "id": 24,
+      "id": 27,
       "interval": null,
       "links": [],
       "mappingType": 1,
@@ -1570,7 +1807,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "count((node_filesystem_avail_bytes{job=\"solr\",fstype!~\"tmpfs|cifs\"} / node_filesystem_size_bytes{job=\"solr\",fstype!~\"tmpfs|cifs\"}) < 0.04) OR vector(0)",
+          "expr": "count((node_filesystem_avail_bytes{job=\"discovery_access\",fstype!~\"tmpfs|cifs\"} / node_filesystem_size_bytes{job=\"discovery_access\",fstype!~\"tmpfs|cifs\"}) < 0.04) OR vector(0)",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A"
@@ -1612,7 +1849,7 @@
         "x": 22,
         "y": 3
       },
-      "id": 25,
+      "id": 28,
       "interval": null,
       "links": [],
       "mappingType": 1,
@@ -1649,7 +1886,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "count((node_memory_MemFree_bytes{job=\"solr\"} / node_memory_MemTotal_bytes{job=\"solr\"}) < 0.01) OR vector(0)",
+          "expr": "count((node_memory_MemFree_bytes{job=\"discovery_access\"} / node_memory_MemTotal_bytes{job=\"discovery_access\"}) < 0.01) OR vector(0)",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A"
@@ -1674,9 +1911,9 @@
         "h": 1,
         "w": 8,
         "x": 8,
-        "y": 4
+        "y": 6
       },
-      "id": 26,
+      "id": 29,
       "links": [],
       "mode": "markdown",
       "title": "Infrastructure",
@@ -1703,9 +1940,9 @@
         "h": 1,
         "w": 2,
         "x": 8,
-        "y": 5
+        "y": 7
       },
-      "id": 27,
+      "id": 30,
       "interval": null,
       "links": [],
       "mappingType": 1,
@@ -1782,9 +2019,9 @@
         "h": 1,
         "w": 2,
         "x": 10,
-        "y": 5
+        "y": 7
       },
-      "id": 28,
+      "id": 31,
       "interval": null,
       "links": [],
       "mappingType": 1,
@@ -1861,9 +2098,9 @@
         "h": 1,
         "w": 2,
         "x": 12,
-        "y": 5
+        "y": 7
       },
-      "id": 29,
+      "id": 32,
       "interval": null,
       "links": [],
       "mappingType": 1,
@@ -1940,9 +2177,9 @@
         "h": 1,
         "w": 2,
         "x": 14,
-        "y": 5
+        "y": 6
       },
-      "id": 30,
+      "id": 33,
       "interval": null,
       "links": [],
       "mappingType": 1,
@@ -2037,5 +2274,5 @@
   "timezone": "",
   "title": "WA Status",
   "uid": "wast",
-  "version": 4
+  "version": 3
 }
