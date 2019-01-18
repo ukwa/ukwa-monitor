@@ -8,6 +8,9 @@
 import re
 import datetime
 
+# output filename
+outFile = 'wa-status_json.out'
+
 # dashboard prefixes
 dashTitle = 'WA Status-'
 dashUid = 'wast-'
@@ -17,6 +20,7 @@ header = 'templates/header'
 panelHeader = 'templates/panelHeader'
 panelTitle = 'templates/panelTitle'
 panelSingle = 'templates/panelSingle'
+panelSingleHadoopUsed = 'templates/panelSingleHadoopUsed'
 panelFooter = 'templates/panelFooter'
 footer = 'templates/footer'
 
@@ -35,11 +39,11 @@ def read_template(**kwargs):
 		tplC = tC.read()
 	return tplC
 
-def output(**kwargs):
+def output(outHandle, **kwargs):
 	templateCode = read_template(tmpFl=kwargs['tmpFl'])
-#	print(templateCode, end="")
+	outHandle.write(templateCode)
 
-def replace_output_title(**kwargs):
+def replace_output_title(outHandle, **kwargs):
 	templateCode = read_template(tmpFl=kwargs['tmpFl'])
 
 	# replacements
@@ -50,10 +54,10 @@ def replace_output_title(**kwargs):
 	templateCode = templateCode.replace('<x>', str(kwargs['x']))
 	templateCode = templateCode.replace('<y>', str(kwargs['y']))
 
-	print("template: {}\tjob: {}\ttitle: {}\th: {}\tw: {}\t\tx: {}\ty: {}".format(kwargs['tmpFl'], kwargs['job'], kwargs['title'], kwargs['h'], kwargs['w'], kwargs['x'], kwargs['y']))		#### debugging
-#	print(templateCode, end="")
+	print("template: {}\tjob: {}\ttitle: {}\th: {}\tw: {}\t\tx: {}\ty: {}".format(kwargs['tmpFl'], kwargs['job'], kwargs['title'], kwargs['h'], kwargs['w'], kwargs['x'], kwargs['y']))		# action reporting
+	outHandle.write(templateCode)
 
-def replace_output_single(**kwargs):
+def replace_output_single(outHandle, **kwargs):
 	templateCode = read_template(tmpFl=kwargs['tmpFl'])
 
 	# replacements
@@ -74,47 +78,86 @@ def replace_output_single(**kwargs):
 	elif kwargs['title'] == 'Dsk':
 		exprDsk = 'count((node_filesystem_avail_bytes{job=\\"' + kwargs['job'] + '\\",fstype!~\\"tmpfs|cifs\\"} / node_filesystem_size_bytes{job=\\"' + kwargs['job'] + '\\",fstype!~\\"tmpfs|cifs\\"}) < 0.04) OR vector(0)'
 		templateCode = templateCode.replace('<expr>', exprDsk)
-	else:
+	elif kwargs['title'] == 'Mem':
 		exprMem = 'count((node_memory_MemFree_bytes{job=\\"' + kwargs['job'] + '\\"} / node_memory_MemTotal_bytes{job=\\"' + kwargs['job'] + '\\"}) < 0.01) OR vector(0)'
+		templateCode = templateCode.replace('<expr>', exprMem)
+	elif kwargs['title'] == 'Nodes':
+		exprMem = 'hdfs_node_count{status=\\"dead\\",instance=\\"ingest:9118\\"}'
+		templateCode = templateCode.replace('<expr>', exprMem)
+	elif kwargs['title'] == 'Under-rep':
+		exprMem = 'hdfs_under_replicated_block_count{instance=\\"ingest:9118\\"}'
+		templateCode = templateCode.replace('<expr>', exprMem)
+	elif kwargs['title'] == 'Used':
+		exprMem = 'hdfs_used_percent{instance=\\"ingest:9118\\"}'
 		templateCode = templateCode.replace('<expr>', exprMem)
 
 	# remove last comma if last panel
 	if 'lastPanel' in kwargs:
 		templateCode = re.sub(r'},$', '}', templateCode)
 
-	print("template: {}\tjob: {}\ttitle: {}\t\th: {}\tw: {}\t\t\tx: {}\ty: {}".format(kwargs['tmpFl'], kwargs['job'], kwargs['title'], kwargs['h'], kwargs['w'], kwargs['x'], kwargs['y']))		#### debugging
-#	print(templateCode, end="")
+	print("template: {}\tjob: {}\ttitle: {}\t\th: {}\tw: {}\t\t\tx: {}\ty: {}".format(kwargs['tmpFl'], kwargs['job'], kwargs['title'], kwargs['h'], kwargs['w'], kwargs['x'], kwargs['y']))		# action reporting
+	outHandle.write(templateCode)
 
-def replace_output_footer(**kwargs):
+def replace_output_footer(outHandle, **kwargs):
 	templateCode = read_template(tmpFl=kwargs['tmpFl'])
 
 	templateCode = templateCode.replace('<title>', kwargs['title'])
 	templateCode = templateCode.replace('<uid>', kwargs['uid'])
 
-	print("\ntemplate: {}\ttitle: {}\tuid: {}".format(kwargs['tmpFl'], kwargs['title'], kwargs['uid']))		#### debugging
-#	print(templateCode, end="")
+	print("\ntemplate: {}\ttitle: {}\tuid: {}".format(kwargs['tmpFl'], kwargs['title'], kwargs['uid']))		# action reporting
+	outHandle.write(templateCode)
 
 # main -----------------------------------
 def main():
-	output(tmpFl = header)
-	output(tmpFl = panelHeader)
+	outHandle = open(outFile, 'w')
+	output(outHandle, tmpFl = header)
+	output(outHandle, tmpFl = panelHeader)
 
 	# output single panels
-	replace_output_title(tmpFl=panelTitle, job='ingest_metadata', title='Ingest & Metadata', h=1, w=8, x=0, y=0)
-	replace_output_single(tmpFl=panelSingle, job='ingest_metadata', title='Up', h=1, w=2, x=0, y=1)
-	replace_output_single(tmpFl=panelSingle, job='ingest_metadata', title='CPU', h=1, w=2, x=2, y=1)
-	replace_output_single(tmpFl=panelSingle, job='ingest_metadata', title='Dsk', h=1, w=2, x=4, y=1)
-	replace_output_single(tmpFl=panelSingle, job='ingest_metadata', title='Mem', h=1, w=2, x=6, y=1)
+	replace_output_title(outHandle, tmpFl=panelTitle, job='ingest_metadata', title='Ingest & Metadata', h=1, w=8, x=0, y=0)
+	replace_output_single(outHandle, tmpFl=panelSingle, job='ingest_metadata', title='Up', h=1, w=2, x=0, y=1)
+	replace_output_single(outHandle, tmpFl=panelSingle, job='ingest_metadata', title='CPU', h=1, w=2, x=2, y=1)
+	replace_output_single(outHandle, tmpFl=panelSingle, job='ingest_metadata', title='Dsk', h=1, w=2, x=4, y=1)
+	replace_output_single(outHandle, tmpFl=panelSingle, job='ingest_metadata', title='Mem', h=1, w=2, x=6, y=1)
+	replace_output_title(outHandle, tmpFl=panelTitle, job='hadoop', title='Hadoop', h=1, w=8, x=8, y=0)
+	replace_output_single(outHandle, tmpFl=panelSingle, job='hadoop', title='Up', h=1, w=2, x=8, y=1)
+	replace_output_single(outHandle, tmpFl=panelSingle, job='hadoop', title='CPU', h=1, w=2, x=10, y=1)
+	replace_output_single(outHandle, tmpFl=panelSingle, job='hadoop', title='Dsk', h=1, w=2, x=12, y=1)
+	replace_output_single(outHandle, tmpFl=panelSingle, job='hadoop', title='Mem', h=1, w=2, x=14, y=1)
+	replace_output_single(outHandle, tmpFl=panelSingle, job='hadoop', title='Nodes', h=1, w=2, x=8, y=2)
+	replace_output_single(outHandle, tmpFl=panelSingle, job='hadoop', title='Under-rep', h=1, w=2, x=10, y=2)
+	replace_output_single(outHandle, tmpFl=panelSingleHadoopUsed, job='hadoop', title='Used', h=2, w=2, x=12, y=2)
+	replace_output_title(outHandle, tmpFl=panelTitle, job='discovery_access', title='Discovery & Access', h=1, w=8, x=16, y=0)
+	replace_output_single(outHandle, tmpFl=panelSingle, job='discovery_access', title='Up', h=1, w=2, x=16, y=1)
+	replace_output_single(outHandle, tmpFl=panelSingle, job='discovery_access', title='CPU', h=1, w=2, x=18, y=1)
+	replace_output_single(outHandle, tmpFl=panelSingle, job='discovery_access', title='Dsk', h=1, w=2, x=20, y=1)
+	replace_output_single(outHandle, tmpFl=panelSingle, job='discovery_access', title='Mem', h=1, w=2, x=22, y=1)
+	replace_output_title(outHandle, tmpFl=panelTitle, job='gluster', title='Gluster', h=1, w=8, x=8, y=4)
+	replace_output_single(outHandle, tmpFl=panelSingle, job='gluster', title='Up', h=1, w=2, x=8, y=5)
+	replace_output_single(outHandle, tmpFl=panelSingle, job='gluster', title='CPU', h=1, w=2, x=10, y=5)
+	replace_output_single(outHandle, tmpFl=panelSingle, job='gluster', title='Dsk', h=1, w=2, x=12, y=5)
+	replace_output_single(outHandle, tmpFl=panelSingle, job='gluster', title='Mem', h=1, w=2, x=14, y=5)
+	replace_output_title(outHandle, tmpFl=panelTitle, job='discovery_access', title='Discovery & Access', h=1, w=8, x=16, y=2)
+	replace_output_single(outHandle, tmpFl=panelSingle, job='discovery_access', title='Up', h=1, w=2, x=16, y=3)
+	replace_output_single(outHandle, tmpFl=panelSingle, job='discovery_access', title='CPU', h=1, w=2, x=18, y=3)
+	replace_output_single(outHandle, tmpFl=panelSingle, job='discovery_access', title='Dsk', h=1, w=2, x=20, y=3)
+	replace_output_single(outHandle, tmpFl=panelSingle, job='discovery_access', title='Mem', h=1, w=2, x=22, y=3)
+	replace_output_title(outHandle, tmpFl=panelTitle, job='infrastructure', title='Infrastructure', h=1, w=8, x=8, y=6)
+	replace_output_single(outHandle, tmpFl=panelSingle, job='infrastructure', title='Up', h=1, w=2, x=8, y=7)
+	replace_output_single(outHandle, tmpFl=panelSingle, job='infrastructure', title='CPU', h=1, w=2, x=10, y=7)
+	replace_output_single(outHandle, tmpFl=panelSingle, job='infrastructure', title='Dsk', h=1, w=2, x=12, y=7)
 
 
 	# output last singlestat panel with final ',' removed to make output json valid
-	replace_output_single(tmpFl = panelSingle, job = 'infrastructure', title = 'Mem', h=1, w=2, x=14, y=6, lastPanel = True)
+	replace_output_single(outHandle, tmpFl = panelSingle, job = 'infrastructure', title = 'Mem', h=1, w=2, x=14, y=6, lastPanel = True)
 
 	# amend dashboard values
-	output(tmpFl = panelFooter)
+	output(outHandle, tmpFl = panelFooter)
 	date = datetime.datetime.now()
 	formattedDate = date.strftime("%Y%m%d%H%M%S")
-	replace_output_footer(tmpFl = footer, title = dashTitle + formattedDate, uid = dashUid + formattedDate)
+	replace_output_footer(outHandle, tmpFl = footer, title = dashTitle + formattedDate, uid = dashUid + formattedDate)
+
+	outHandle.close()
 
 if __name__ == '__main__':
 	main()
