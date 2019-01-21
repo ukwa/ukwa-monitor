@@ -100,9 +100,9 @@ def replace_output_single(outHandle, **kwargs):
 		expr = 'hdfs_used_percent{instance=\\"ingest:9118\\"}'
 		templateCode = templateCode.replace('<expr>', expr)
 	elif kwargs['title'] == 'UTR':
-		expr = 'count(uptimerobot_monitor_up==0) by (name) OR vector(0)'
+		expr = 'count(uptimerobot_monitor_up==0) OR vector(0)'
 		templateCode = templateCode.replace('<expr>', expr)
-	elif kwargs['title'] == 'da-WWW':
+	elif kwargs['title'] == 'WWW':
 		expr = 'count(probe_http_status_code{job=\\"' + kwargs['job'] + '\\"} != 200) OR vector(0)'
 		templateCode = templateCode.replace('<expr>', expr)
 
@@ -134,6 +134,7 @@ def main():
 	replace_output_single(outHandle, tmpFl=panelSingle, job='ingest_metadata', title='CPU', h=1, w=2, x=2, y=1, thresholds='0.1,1.1', colour='#ba43a9')
 	replace_output_single(outHandle, tmpFl=panelSingle, job='ingest_metadata', title='Dsk', h=1, w=2, x=4, y=1)
 	replace_output_single(outHandle, tmpFl=panelSingle, job='ingest_metadata', title='Mem', h=1, w=2, x=6, y=1)
+	replace_output_single(outHandle, tmpFl=panelSingle, job='im-access-http', title='WWW', h=1, w=2, x=0, y=2)
 	replace_output_title(outHandle, tmpFl=panelTitle, job='hadoop', title='Hadoop', h=1, w=8, x=8, y=0)
 	replace_output_single(outHandle, tmpFl=panelSingle, job='hadoop', title='Up', h=1, w=2, x=8, y=1)
 	replace_output_single(outHandle, tmpFl=panelSingle, job='hadoop', title='CPU', h=1, w=2, x=10, y=1)
@@ -148,7 +149,7 @@ def main():
 	replace_output_single(outHandle, tmpFl=panelSingle, job='discovery_access', title='Dsk', h=1, w=2, x=20, y=1)
 	replace_output_single(outHandle, tmpFl=panelSingle, job='discovery_access', title='Mem', h=1, w=2, x=22, y=1)
 	replace_output_single(outHandle, tmpFl=panelSingle, job='discovery_access', title='UTR', h=1, w=2, x=16, y=2)
-	replace_output_single(outHandle, tmpFl=panelSingle, job='da-access-http', title='da-WWW', h=1, w=2, x=18, y=2)
+	replace_output_single(outHandle, tmpFl=panelSingle, job='da-access-http', title='WWW', h=1, w=2, x=18, y=2)
 	replace_output_title(outHandle, tmpFl=panelTitle, job='gluster', title='Gluster', h=1, w=8, x=8, y=4)
 	replace_output_single(outHandle, tmpFl=panelSingle, job='gluster', title='Up', h=1, w=2, x=8, y=5)
 	replace_output_single(outHandle, tmpFl=panelSingle, job='gluster', title='CPU', h=1, w=2, x=10, y=5)
