@@ -15,7 +15,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 3,
+  "id": 1,
   "links": [],
   "panels": [
     {
@@ -30,6 +30,7 @@
         "x": 0,
         "y": 0
       },
+      "hideTimeOverride": true,
       "id": 16,
       "legend": {
         "alignAsTable": true,
@@ -67,7 +68,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
+      "timeFrom": "1w",
       "timeRegions": [],
       "timeShift": null,
       "title": "Servers Down",
@@ -678,7 +679,7 @@
     "list": []
   },
   "time": {
-    "from": "now-1h",
+    "from": "now-3h",
     "to": "now"
   },
   "timepicker": {
