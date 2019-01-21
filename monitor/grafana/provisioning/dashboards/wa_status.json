@@ -98,7 +98,7 @@
           "refId": "A"
         }
       ],
-      "thresholds": "0.1,1",
+      "thresholds": "0.1,1.5",
       "title": "Up",
       "type": "singlestat",
       "valueFontSize": "80%",
