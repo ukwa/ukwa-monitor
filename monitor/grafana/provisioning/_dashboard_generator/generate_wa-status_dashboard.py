@@ -88,7 +88,7 @@ def replace_output_single(outHandle, **kwargs):
 		expr = 'count((node_filesystem_avail_bytes{job=\\"' + kwargs['job'] + '\\",fstype!~\\"tmpfs|cifs\\"} / node_filesystem_size_bytes{job=\\"' + kwargs['job'] + '\\",fstype!~\\"tmpfs|cifs\\"}) < 0.04) OR vector(0)'
 		templateCode = templateCode.replace('<expr>', expr)
 	elif kwargs['title'] == 'Mem':
-		expr = 'count((node_memory_MemFree_bytes{job=\\"' + kwargs['job'] + '\\"} / node_memory_MemTotal_bytes{job=\\"' + kwargs['job'] + '\\"}) < 0.01) OR vector(0)'
+		expr = 'count((sum(node_memory_MemFree_bytes{job=\\"' + kwargs['job'] + '\\"} + node_memory_Buffers_bytes{job=\\"' + kwargs['job'] + '\\"} + node_memory_Cached_bytes{job=\\"' + kwargs['job'] + '\\"}) by (instance)) / sum(node_memory_MemTotal_bytes{job=\\"' + kwargs['job'] + '\\"}) by (instance) > 0.975) OR vector(0)'
 		templateCode = templateCode.replace('<expr>', expr)
 	elif kwargs['title'] == 'Nodes':
 		expr = 'hdfs_node_count{status=\\"dead\\",instance=\\"ingest:9118\\"}'
@@ -159,7 +159,7 @@ def main():
 	replace_output_single(outHandle, tmpFl=panelSingle, job='solr', title='Up', h=1, w=2, x=16, y=4)
 	replace_output_single(outHandle, tmpFl=panelSingle, job='solr', title='CPU', h=1, w=2, x=18, y=4)
 	replace_output_single(outHandle, tmpFl=panelSingle, job='solr', title='Dsk', h=1, w=2, x=20, y=4)
-	replace_output_single(outHandle, tmpFl=panelSingle, job='solr', title='Mem', h=1, w=2, x=22, y=4, thresholds='0.1,4.1', colour='#ba43a9')
+	replace_output_single(outHandle, tmpFl=panelSingle, job='solr', title='Mem', h=1, w=2, x=22, y=4)
 	replace_output_title(outHandle, tmpFl=panelTitle, job='infrastructure', title='Infrastructure', h=1, w=8, x=8, y=6)
 	replace_output_single(outHandle, tmpFl=panelSingle, job='infrastructure', title='Up', h=1, w=2, x=8, y=7)
 	replace_output_single(outHandle, tmpFl=panelSingle, job='infrastructure', title='CPU', h=1, w=2, x=10, y=7)
