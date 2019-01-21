@@ -1753,7 +1753,7 @@
       "colorValue": false,
       "colors": [
         "#299c46",
-        "#ba43a9",
+        "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
       "format": "none",
@@ -1813,7 +1813,7 @@
           "refId": "A"
         }
       ],
-      "thresholds": "0.1,4.1",
+      "thresholds": "0.1,1",
       "title": "Dsk",
       "type": "singlestat",
       "valueFontSize": "80%",
@@ -1832,7 +1832,7 @@
       "colorValue": false,
       "colors": [
         "#299c46",
-        "rgba(237, 129, 40, 0.89)",
+        "#ba43a9",
         "#d44a3a"
       ],
       "format": "none",
@@ -1892,7 +1892,7 @@
           "refId": "A"
         }
       ],
-      "thresholds": "0.1,1",
+      "thresholds": "0.1,4.1",
       "title": "Mem",
       "type": "singlestat",
       "valueFontSize": "80%",
