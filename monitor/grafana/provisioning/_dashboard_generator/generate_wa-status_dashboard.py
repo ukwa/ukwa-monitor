@@ -20,6 +20,7 @@ header = 'templates/header'
 panelHeader = 'templates/panelHeader'
 panelTitle = 'templates/panelTitle'
 panelSingle = 'templates/panelSingle'
+panelSingleIMCPU = 'templates/panelSingleIMCPU'
 panelSingleHadoopUsed = 'templates/panelSingleHadoopUsed'
 panelFooter = 'templates/panelFooter'
 footer = 'templates/footer'
@@ -67,6 +68,14 @@ def replace_output_single(outHandle, **kwargs):
 	templateCode = templateCode.replace('<w>', str(kwargs['w']))
 	templateCode = templateCode.replace('<x>', str(kwargs['x']))
 	templateCode = templateCode.replace('<y>', str(kwargs['y']))
+	if 'thresholds' in kwargs:
+		templateCode = templateCode.replace('<thresholds>', kwargs['thresholds'])
+	else:
+		templateCode = templateCode.replace('<thresholds>', '0.1,1')			# default threshhold
+	if 'colour' in kwargs:
+		templateCode = templateCode.replace('<colour>', kwargs['colour'])
+	else:
+		templateCode = templateCode.replace('<colour>', 'rgba(237, 129, 40, 0.89)')			# default panel mid colour
 
 	# add expr
 	if kwargs['title'] == 'Up':
@@ -116,7 +125,7 @@ def main():
 	# output single panels
 	replace_output_title(outHandle, tmpFl=panelTitle, job='ingest_metadata', title='Ingest & Metadata', h=1, w=8, x=0, y=0)
 	replace_output_single(outHandle, tmpFl=panelSingle, job='ingest_metadata', title='Up', h=1, w=2, x=0, y=1)
-	replace_output_single(outHandle, tmpFl=panelSingle, job='ingest_metadata', title='CPU', h=1, w=2, x=2, y=1)
+	replace_output_single(outHandle, tmpFl=panelSingle, job='ingest_metadata', title='CPU', h=1, w=2, x=2, y=1, thresholds='0.1,1.5', colour='#ba43a9')
 	replace_output_single(outHandle, tmpFl=panelSingle, job='ingest_metadata', title='Dsk', h=1, w=2, x=4, y=1)
 	replace_output_single(outHandle, tmpFl=panelSingle, job='ingest_metadata', title='Mem', h=1, w=2, x=6, y=1)
 	replace_output_title(outHandle, tmpFl=panelTitle, job='hadoop', title='Hadoop', h=1, w=8, x=8, y=0)
@@ -137,11 +146,11 @@ def main():
 	replace_output_single(outHandle, tmpFl=panelSingle, job='gluster', title='CPU', h=1, w=2, x=10, y=5)
 	replace_output_single(outHandle, tmpFl=panelSingle, job='gluster', title='Dsk', h=1, w=2, x=12, y=5)
 	replace_output_single(outHandle, tmpFl=panelSingle, job='gluster', title='Mem', h=1, w=2, x=14, y=5)
-	replace_output_title(outHandle, tmpFl=panelTitle, job='discovery_access', title='Discovery & Access', h=1, w=8, x=16, y=2)
-	replace_output_single(outHandle, tmpFl=panelSingle, job='discovery_access', title='Up', h=1, w=2, x=16, y=3)
-	replace_output_single(outHandle, tmpFl=panelSingle, job='discovery_access', title='CPU', h=1, w=2, x=18, y=3)
-	replace_output_single(outHandle, tmpFl=panelSingle, job='discovery_access', title='Dsk', h=1, w=2, x=20, y=3)
-	replace_output_single(outHandle, tmpFl=panelSingle, job='discovery_access', title='Mem', h=1, w=2, x=22, y=3)
+	replace_output_title(outHandle, tmpFl=panelTitle, job='solr', title='Solr', h=1, w=8, x=16, y=2)
+	replace_output_single(outHandle, tmpFl=panelSingle, job='solr', title='Up', h=1, w=2, x=16, y=3)
+	replace_output_single(outHandle, tmpFl=panelSingle, job='solr', title='CPU', h=1, w=2, x=18, y=3)
+	replace_output_single(outHandle, tmpFl=panelSingle, job='solr', title='Dsk', h=1, w=2, x=20, y=3, thresholds='0.1,1.5', colour='#ba43a9')
+	replace_output_single(outHandle, tmpFl=panelSingle, job='solr', title='Mem', h=1, w=2, x=22, y=3)
 	replace_output_title(outHandle, tmpFl=panelTitle, job='infrastructure', title='Infrastructure', h=1, w=8, x=8, y=6)
 	replace_output_single(outHandle, tmpFl=panelSingle, job='infrastructure', title='Up', h=1, w=2, x=8, y=7)
 	replace_output_single(outHandle, tmpFl=panelSingle, job='infrastructure', title='CPU', h=1, w=2, x=10, y=7)

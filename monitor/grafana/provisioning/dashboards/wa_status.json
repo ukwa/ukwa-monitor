@@ -98,7 +98,7 @@
           "refId": "A"
         }
       ],
-      "thresholds": "0.1,1.5",
+      "thresholds": "0.1,1",
       "title": "Up",
       "type": "singlestat",
       "valueFontSize": "80%",
@@ -117,7 +117,7 @@
       "colorValue": false,
       "colors": [
         "#299c46",
-        "rgba(237, 129, 40, 0.89)",
+        "#ba43a9",
         "#d44a3a"
       ],
       "format": "none",
@@ -177,7 +177,7 @@
           "refId": "A"
         }
       ],
-      "thresholds": "0.1,1",
+      "thresholds": "0.1,1.5",
       "title": "CPU",
       "type": "singlestat",
       "valueFontSize": "80%",
@@ -1586,7 +1586,7 @@
       "id": 24,
       "links": [],
       "mode": "markdown",
-      "title": "Discovery & Access",
+      "title": "Solr",
       "type": "text"
     },
     {
@@ -1649,7 +1649,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sum(1 - up{job=\"discovery_access\"})",
+          "expr": "sum(1 - up{job=\"solr\"})",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A"
@@ -1728,7 +1728,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "count(sum(irate(node_cpu_seconds_total{job=\"discovery_access\",mode=\"idle\"}[5m]) < 0.1) by (instance)) OR vector(0)",
+          "expr": "count(sum(irate(node_cpu_seconds_total{job=\"solr\",mode=\"idle\"}[5m]) < 0.1) by (instance)) OR vector(0)",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A"
@@ -1753,7 +1753,7 @@
       "colorValue": false,
       "colors": [
         "#299c46",
-        "rgba(237, 129, 40, 0.89)",
+        "#ba43a9",
         "#d44a3a"
       ],
       "format": "none",
@@ -1807,13 +1807,13 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "count((node_filesystem_avail_bytes{job=\"discovery_access\",fstype!~\"tmpfs|cifs\"} / node_filesystem_size_bytes{job=\"discovery_access\",fstype!~\"tmpfs|cifs\"}) < 0.04) OR vector(0)",
+          "expr": "count((node_filesystem_avail_bytes{job=\"solr\",fstype!~\"tmpfs|cifs\"} / node_filesystem_size_bytes{job=\"solr\",fstype!~\"tmpfs|cifs\"}) < 0.04) OR vector(0)",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A"
         }
       ],
-      "thresholds": "0.1,1",
+      "thresholds": "0.1,1.5",
       "title": "Dsk",
       "type": "singlestat",
       "valueFontSize": "80%",
@@ -1886,7 +1886,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "count((node_memory_MemFree_bytes{job=\"discovery_access\"} / node_memory_MemTotal_bytes{job=\"discovery_access\"}) < 0.01) OR vector(0)",
+          "expr": "count((node_memory_MemFree_bytes{job=\"solr\"} / node_memory_MemTotal_bytes{job=\"solr\"}) < 0.01) OR vector(0)",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A"
@@ -2272,7 +2272,7 @@
     ]
   },
   "timezone": "",
-  "title": "WA Status",
-  "uid": "wast",
+  "title": "WA Status-20190121110454",
+  "uid": "wast-20190121110454",
   "version": 3
 }
