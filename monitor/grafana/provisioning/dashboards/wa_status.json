@@ -177,7 +177,7 @@
           "refId": "A"
         }
       ],
-      "thresholds": "0.1,1.5",
+      "thresholds": "0.1,1.1",
       "title": "CPU",
       "type": "singlestat",
       "valueFontSize": "80%",
@@ -1813,7 +1813,7 @@
           "refId": "A"
         }
       ],
-      "thresholds": "0.1,1.5",
+      "thresholds": "0.1,4.1",
       "title": "Dsk",
       "type": "singlestat",
       "valueFontSize": "80%",
@@ -2272,7 +2272,7 @@
     ]
   },
   "timezone": "",
-  "title": "WA Status-20190121110454",
-  "uid": "wast-20190121110454",
+  "title": "WA Status",
+  "uid": "wast",
   "version": 3
 }

@@ -125,7 +125,7 @@ def main():
 	# output single panels
 	replace_output_title(outHandle, tmpFl=panelTitle, job='ingest_metadata', title='Ingest & Metadata', h=1, w=8, x=0, y=0)
 	replace_output_single(outHandle, tmpFl=panelSingle, job='ingest_metadata', title='Up', h=1, w=2, x=0, y=1)
-	replace_output_single(outHandle, tmpFl=panelSingle, job='ingest_metadata', title='CPU', h=1, w=2, x=2, y=1, thresholds='0.1,1.5', colour='#ba43a9')
+	replace_output_single(outHandle, tmpFl=panelSingle, job='ingest_metadata', title='CPU', h=1, w=2, x=2, y=1, thresholds='0.1,1.1', colour='#ba43a9')
 	replace_output_single(outHandle, tmpFl=panelSingle, job='ingest_metadata', title='Dsk', h=1, w=2, x=4, y=1)
 	replace_output_single(outHandle, tmpFl=panelSingle, job='ingest_metadata', title='Mem', h=1, w=2, x=6, y=1)
 	replace_output_title(outHandle, tmpFl=panelTitle, job='hadoop', title='Hadoop', h=1, w=8, x=8, y=0)
@@ -149,7 +149,7 @@ def main():
 	replace_output_title(outHandle, tmpFl=panelTitle, job='solr', title='Solr', h=1, w=8, x=16, y=2)
 	replace_output_single(outHandle, tmpFl=panelSingle, job='solr', title='Up', h=1, w=2, x=16, y=3)
 	replace_output_single(outHandle, tmpFl=panelSingle, job='solr', title='CPU', h=1, w=2, x=18, y=3)
-	replace_output_single(outHandle, tmpFl=panelSingle, job='solr', title='Dsk', h=1, w=2, x=20, y=3, thresholds='0.1,1.5', colour='#ba43a9')
+	replace_output_single(outHandle, tmpFl=panelSingle, job='solr', title='Dsk', h=1, w=2, x=20, y=3, thresholds='0.1,4.1', colour='#ba43a9')
 	replace_output_single(outHandle, tmpFl=panelSingle, job='solr', title='Mem', h=1, w=2, x=22, y=3)
 	replace_output_title(outHandle, tmpFl=panelTitle, job='infrastructure', title='Infrastructure', h=1, w=8, x=8, y=6)
 	replace_output_single(outHandle, tmpFl=panelSingle, job='infrastructure', title='Up', h=1, w=2, x=8, y=7)
