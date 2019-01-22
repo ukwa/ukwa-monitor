@@ -250,7 +250,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "count((node_filesystem_avail_bytes{job=\"ingest_metadata\",fstype!~\"tmpfs|cifs\"} / node_filesystem_size_bytes{job=\"ingest_metadata\",fstype!~\"tmpfs|cifs\"}) < 0.04) OR vector(0)",
+          "expr": "count((node_filesystem_avail_bytes{job=\"ingest_metadata\",fstype!~\"tmpfs|rootfs|cifs\"} / node_filesystem_size_bytes{job=\"ingest_metadata\",fstype!~\"tmpfs|rootfs|cifs\"}) < 0.04) OR vector(0)",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A"
@@ -329,7 +329,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "count((sum(node_memory_MemFree_bytes{job=\"ingest_metadata\"} + node_memory_Buffers_bytes{job=\"ingest_metadata\"} + node_memory_Cached_bytes{job=\"ingest_metadata\"}) by (instance)) / sum(node_memory_MemTotal_bytes{job=\"ingest_metadata\"}) by (instance) > 0.975) OR vector(0)",
+          "expr": "count(sum(node_memory_MemAvailable_bytes{job=\"ingest_metadata\"}) by (instance)) / sum(node_memory_MemTotal_bytes{job=\"ingest_metadata\"}) by (instance) < 0.5) OR vector(0)",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A"
@@ -659,7 +659,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "count((node_filesystem_avail_bytes{job=\"hadoop\",fstype!~\"tmpfs|cifs\"} / node_filesystem_size_bytes{job=\"hadoop\",fstype!~\"tmpfs|cifs\"}) < 0.04) OR vector(0)",
+          "expr": "count((node_filesystem_avail_bytes{job=\"hadoop\",fstype!~\"tmpfs|rootfs|cifs\"} / node_filesystem_size_bytes{job=\"hadoop\",fstype!~\"tmpfs|rootfs|cifs\"}) < 0.04) OR vector(0)",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A"
@@ -738,7 +738,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "count((sum(node_memory_MemFree_bytes{job=\"hadoop\"} + node_memory_Buffers_bytes{job=\"hadoop\"} + node_memory_Cached_bytes{job=\"hadoop\"}) by (instance)) / sum(node_memory_MemTotal_bytes{job=\"hadoop\"}) by (instance) > 0.975) OR vector(0)",
+          "expr": "count(sum(node_memory_MemAvailable_bytes{job=\"hadoop\"}) by (instance)) / sum(node_memory_MemTotal_bytes{job=\"hadoop\"}) by (instance) < 0.5) OR vector(0)",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A"
@@ -1226,7 +1226,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "count((node_filesystem_avail_bytes{job=\"discovery_access\",fstype!~\"tmpfs|cifs\"} / node_filesystem_size_bytes{job=\"discovery_access\",fstype!~\"tmpfs|cifs\"}) < 0.04) OR vector(0)",
+          "expr": "count((node_filesystem_avail_bytes{job=\"discovery_access\",fstype!~\"tmpfs|rootfs|cifs\"} / node_filesystem_size_bytes{job=\"discovery_access\",fstype!~\"tmpfs|rootfs|cifs\"}) < 0.04) OR vector(0)",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A"
@@ -1305,7 +1305,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "count((sum(node_memory_MemFree_bytes{job=\"discovery_access\"} + node_memory_Buffers_bytes{job=\"discovery_access\"} + node_memory_Cached_bytes{job=\"discovery_access\"}) by (instance)) / sum(node_memory_MemTotal_bytes{job=\"discovery_access\"}) by (instance) > 0.975) OR vector(0)",
+          "expr": "count(sum(node_memory_MemAvailable_bytes{job=\"discovery_access\"}) by (instance)) / sum(node_memory_MemTotal_bytes{job=\"discovery_access\"}) by (instance) < 0.5) OR vector(0)",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A"
@@ -1714,7 +1714,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "count((node_filesystem_avail_bytes{job=\"gluster\",fstype!~\"tmpfs|cifs\"} / node_filesystem_size_bytes{job=\"gluster\",fstype!~\"tmpfs|cifs\"}) < 0.04) OR vector(0)",
+          "expr": "count((node_filesystem_avail_bytes{job=\"gluster\",fstype!~\"tmpfs|rootfs|cifs\"} / node_filesystem_size_bytes{job=\"gluster\",fstype!~\"tmpfs|rootfs|cifs\"}) < 0.04) OR vector(0)",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A"
@@ -1793,7 +1793,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "count((sum(node_memory_MemFree_bytes{job=\"gluster\"} + node_memory_Buffers_bytes{job=\"gluster\"} + node_memory_Cached_bytes{job=\"gluster\"}) by (instance)) / sum(node_memory_MemTotal_bytes{job=\"gluster\"}) by (instance) > 0.975) OR vector(0)",
+          "expr": "count(sum(node_memory_MemAvailable_bytes{job=\"gluster\"}) by (instance)) / sum(node_memory_MemTotal_bytes{job=\"gluster\"}) by (instance) < 0.5) OR vector(0)",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A"
@@ -2044,7 +2044,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "count((node_filesystem_avail_bytes{job=\"solr\",fstype!~\"tmpfs|cifs\"} / node_filesystem_size_bytes{job=\"solr\",fstype!~\"tmpfs|cifs\"}) < 0.04) OR vector(0)",
+          "expr": "count((node_filesystem_avail_bytes{job=\"solr\",fstype!~\"tmpfs|rootfs|cifs\"} / node_filesystem_size_bytes{job=\"solr\",fstype!~\"tmpfs|rootfs|cifs\"}) < 0.04) OR vector(0)",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A"
@@ -2123,7 +2123,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "count((sum(node_memory_MemFree_bytes{job=\"solr\"} + node_memory_Buffers_bytes{job=\"solr\"} + node_memory_Cached_bytes{job=\"solr\"}) by (instance)) / sum(node_memory_MemTotal_bytes{job=\"solr\"}) by (instance) > 0.975) OR vector(0)",
+          "expr": "count(sum(node_memory_MemAvailable_bytes{job=\"solr\"}) by (instance)) / sum(node_memory_MemTotal_bytes{job=\"solr\"}) by (instance) < 0.5) OR vector(0)",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A"
@@ -2374,7 +2374,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "count((node_filesystem_avail_bytes{job=\"infrastructure\",fstype!~\"tmpfs|cifs\"} / node_filesystem_size_bytes{job=\"infrastructure\",fstype!~\"tmpfs|cifs\"}) < 0.04) OR vector(0)",
+          "expr": "count((node_filesystem_avail_bytes{job=\"infrastructure\",fstype!~\"tmpfs|rootfs|cifs\"} / node_filesystem_size_bytes{job=\"infrastructure\",fstype!~\"tmpfs|rootfs|cifs\"}) < 0.04) OR vector(0)",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A"
@@ -2453,7 +2453,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "count((sum(node_memory_MemFree_bytes{job=\"infrastructure\"} + node_memory_Buffers_bytes{job=\"infrastructure\"} + node_memory_Cached_bytes{job=\"infrastructure\"}) by (instance)) / sum(node_memory_MemTotal_bytes{job=\"infrastructure\"}) by (instance) > 0.975) OR vector(0)",
+          "expr": "count(sum(node_memory_MemAvailable_bytes{job=\"infrastructure\"}) by (instance)) / sum(node_memory_MemTotal_bytes{job=\"infrastructure\"}) by (instance) < 0.5) OR vector(0)",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A"
@@ -2473,6 +2473,7 @@
       "valueName": "current"
     }
   ],
+  "refresh": "1m",
   "schemaVersion": 16,
   "style": "dark",
   "tags": [],
@@ -2480,7 +2481,7 @@
     "list": []
   },
   "time": {
-    "from": "now-6h",
+    "from": "now-1h",
     "to": "now"
   },
   "timepicker": {

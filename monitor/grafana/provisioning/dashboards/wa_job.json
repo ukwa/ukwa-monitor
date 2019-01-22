@@ -150,7 +150,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "(1 - node_filesystem_avail_bytes{fstype!~\"tmpfs\",job=\"$job\"} / node_filesystem_size_bytes{fstype!~\"tmpfs\",job=\"$job\"}) * 100",
+          "expr": "(1 - node_filesystem_avail_bytes{fstype!~\"tmpfs|rootfs\",job=\"$job\"} / node_filesystem_size_bytes{fstype!~\"tmpfs|rootfs\",job=\"$job\"}) * 100",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -421,7 +421,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "((node_memory_MemTotal_bytes{job=\"$job\"} - node_memory_MemFree_bytes{job=\"$job\"}) / node_memory_MemTotal_bytes{job=\"$job\"}) * 100",
+          "expr": "((node_memory_MemTotal_bytes{job=\"$job\"} - node_memory_MemAvailable_bytes{job=\"$job\"}) / node_memory_MemTotal_bytes{job=\"$job\"}) * 100",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,

@@ -151,7 +151,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "(1 - node_filesystem_avail_bytes{fstype!~\"tmpfs\"} / node_filesystem_size_bytes{fstype!~\"tmpfs\"}) * 100",
+          "expr": "(1 - node_filesystem_avail_bytes{fstype!~\"tmpfs|rootfs\"} / node_filesystem_size_bytes{fstype!~\"tmpfs|rootfs\"}) * 100",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -422,20 +422,12 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "((node_memory_MemTotal_bytes - node_memory_MemFree_bytes) / node_memory_MemTotal_bytes) * 100",
-          "format": "time_series",
-          "interval": "",
-          "intervalFactor": 1,
-          "legendFormat": "{{ instance }}",
-          "refId": "A"
-        },
-        {
           "expr": "((node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes) / node_memory_MemTotal_bytes) * 100",
           "format": "time_series",
           "hide": true,
           "intervalFactor": 1,
           "legendFormat": "{{ instance }}",
-          "refId": "B"
+          "refId": "A"
         }
       ],
       "thresholds": [],
