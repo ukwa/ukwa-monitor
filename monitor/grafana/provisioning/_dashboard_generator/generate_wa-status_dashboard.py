@@ -88,7 +88,7 @@ def replace_output_single(outHandle, **kwargs):
 		expr = 'count((node_filesystem_avail_bytes{job=\\"' + kwargs['job'] + '\\",fstype!~\\"tmpfs|rootfs|cifs\\"} / node_filesystem_size_bytes{job=\\"' + kwargs['job'] + '\\",fstype!~\\"tmpfs|rootfs|cifs\\"}) < 0.04) OR vector(0)'
 		templateCode = templateCode.replace('<expr>', expr)
 	elif kwargs['title'] == 'Mem':
-		expr = 'count(sum(node_memory_MemAvailable_bytes{job=\\"' + kwargs['job'] + '\\"}) by (instance)) / sum(node_memory_MemTotal_bytes{job=\\"' + kwargs['job'] + '\\"}) by (instance) < 0.5) OR vector(0)'
+		expr = 'count(sum(node_memory_MemAvailable_bytes{job=\\"' + kwargs['job'] + '\\"}) by (instance) / sum(node_memory_MemTotal_bytes{job=\\"' + kwargs['job'] + '\\"}) by (instance) < 0.5) OR vector(0)'
 		templateCode = templateCode.replace('<expr>', expr)
 	elif kwargs['title'] == 'Nodes':
 		expr = 'hdfs_node_count{status=\\"dead\\",instance=\\"ingest:9118\\"}'
