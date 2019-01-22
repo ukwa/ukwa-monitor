@@ -421,7 +421,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "((node_memory_MemTotal_bytes{instance=\"$server\"} - node_memory_MemAvailable_bytes{instance=\"$server\"}) / node_memory_MemTotal_bytes{instance=\"$server\"}) * 100",
+          "expr": "((node_memory_MemTotal_bytes{instance=\"$server\"} - node_memory_MemFree_bytes{instance=\"$server\"} - node_memory_Buffers_bytes{instance=\"$server\"} - node_memory_Cached_bytes{instance=\"$server\"}) / node_memory_MemTotal_bytes{instance=\"$server\"}) * 100",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
