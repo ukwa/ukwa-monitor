@@ -38,6 +38,7 @@ services:
     user: root
     volumes:
       - ./prometheus:/etc/prometheus
+      - /opt/data/prometheus:/prometheus
 
     # hosts referenced by docker prometheus must be detailed here
     # as OS /etc/hosts declaration not visible to container
