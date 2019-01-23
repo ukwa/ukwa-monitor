@@ -125,7 +125,6 @@ services:
 
   uptimerobot-exporter:
     image: ukwa/uptimerobot-prometheus-exporter
-#   container_name: uptimerobot-exporter
     environment:
       - UPTIMEROBOT_API_KEY=${UPTIMEROBOT_API_KEY}
       - http_proxy=http://194.66.232.92:3127
@@ -142,6 +141,14 @@ services:
       - '--config.file=/config/config.yml'
     extra_hosts:
       - "bigcdx:192.168.45.21"
+      - "ingest:192.168.45.60"
       - "intranet:192.168.45.30"
       - "intranet-wayback:192.168.45.23"
+      - "jisc03:192.168.1.57"
+      - "jisc-proxy:192.168.45.70"
+      - "ldukwa04:192.168.1.54"
+      - "ldukwa-proxy:192.168.45.17"
+      - "solr1:192.168.1.71"
+      - "solr2:192.168.1.72"
+      - "solr-proxy:192.168.45.33"
       - "www.webarchive.org.uk:192.168.45.10"

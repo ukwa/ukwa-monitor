@@ -329,7 +329,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "count(sum(node_memory_MemFree_bytes{job=\"ingest_metadata\"} + node_memory_Buffers_bytes{job=\"ingest_metadata\"} + node_memory_Cached_bytes{job=\"ingest_metadata\"}) by (instance) / sum(node_memory_MemTotal_bytes{job=\"ingest_metadata\"}) by (instance) < 0.5) OR vector(0)",
+          "expr": "count(sum(node_memory_MemFree_bytes{job=\"ingest_metadata\"} + node_memory_Buffers_bytes{job=\"ingest_metadata\"} + node_memory_Cached_bytes{job=\"ingest_metadata\"}) by (instance) / sum(node_memory_MemTotal_bytes{job=\"ingest_metadata\"}) by (instance) < 0.05) OR vector(0)",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A"
@@ -738,7 +738,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "count(sum(node_memory_MemFree_bytes{job=\"hadoop\"} + node_memory_Buffers_bytes{job=\"hadoop\"} + node_memory_Cached_bytes{job=\"hadoop\"}) by (instance) / sum(node_memory_MemTotal_bytes{job=\"hadoop\"}) by (instance) < 0.5) OR vector(0)",
+          "expr": "count(sum(node_memory_MemFree_bytes{job=\"hadoop\"} + node_memory_Buffers_bytes{job=\"hadoop\"} + node_memory_Cached_bytes{job=\"hadoop\"}) by (instance) / sum(node_memory_MemTotal_bytes{job=\"hadoop\"}) by (instance) < 0.05) OR vector(0)",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A"
@@ -1251,7 +1251,7 @@
       "colorValue": false,
       "colors": [
         "#299c46",
-        "rgba(237, 129, 40, 0.89)",
+        "#ba43a9",
         "#d44a3a"
       ],
       "format": "none",
@@ -1305,13 +1305,13 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "count(sum(node_memory_MemFree_bytes{job=\"discovery_access\"} + node_memory_Buffers_bytes{job=\"discovery_access\"} + node_memory_Cached_bytes{job=\"discovery_access\"}) by (instance) / sum(node_memory_MemTotal_bytes{job=\"discovery_access\"}) by (instance) < 0.5) OR vector(0)",
+          "expr": "count(sum(node_memory_MemFree_bytes{job=\"discovery_access\"} + node_memory_Buffers_bytes{job=\"discovery_access\"} + node_memory_Cached_bytes{job=\"discovery_access\"}) by (instance) / sum(node_memory_MemTotal_bytes{job=\"discovery_access\"}) by (instance) < 0.05) OR vector(0)",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A"
         }
       ],
-      "thresholds": "0.1,1",
+      "thresholds": "0.1,1.1",
       "title": "Mem",
       "type": "singlestat",
       "valueFontSize": "80%",
@@ -1793,7 +1793,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "count(sum(node_memory_MemFree_bytes{job=\"gluster\"} + node_memory_Buffers_bytes{job=\"gluster\"} + node_memory_Cached_bytes{job=\"gluster\"}) by (instance) / sum(node_memory_MemTotal_bytes{job=\"gluster\"}) by (instance) < 0.5) OR vector(0)",
+          "expr": "count(sum(node_memory_MemFree_bytes{job=\"gluster\"} + node_memory_Buffers_bytes{job=\"gluster\"} + node_memory_Cached_bytes{job=\"gluster\"}) by (instance) / sum(node_memory_MemTotal_bytes{job=\"gluster\"}) by (instance) < 0.05) OR vector(0)",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A"
@@ -2123,7 +2123,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "count(sum(node_memory_MemFree_bytes{job=\"solr\"} + node_memory_Buffers_bytes{job=\"solr\"} + node_memory_Cached_bytes{job=\"solr\"}) by (instance) / sum(node_memory_MemTotal_bytes{job=\"solr\"}) by (instance) < 0.5) OR vector(0)",
+          "expr": "count(sum(node_memory_MemFree_bytes{job=\"solr\"} + node_memory_Buffers_bytes{job=\"solr\"} + node_memory_Cached_bytes{job=\"solr\"}) by (instance) / sum(node_memory_MemTotal_bytes{job=\"solr\"}) by (instance) < 0.05) OR vector(0)",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A"
@@ -2131,6 +2131,85 @@
       ],
       "thresholds": "0.1,1",
       "title": "Mem",
+      "type": "singlestat",
+      "valueFontSize": "80%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ],
+      "valueName": "current"
+    },
+    {
+      "cacheTimeout": null,
+      "colorBackground": true,
+      "colorValue": false,
+      "colors": [
+        "#299c46",
+        "rgba(237, 129, 40, 0.89)",
+        "#d44a3a"
+      ],
+      "format": "none",
+      "gauge": {
+        "maxValue": 100,
+        "minValue": 0,
+        "show": false,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 1,
+        "w": 2,
+        "x": 16,
+        "y": 5
+      },
+      "id": 32,
+      "interval": null,
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "postfix": "",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false
+      },
+      "tableColumn": "",
+      "targets": [
+        {
+          "expr": "count(probe_http_status_code{job=\"solr-query\"} != 200) OR vector(0)",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "refId": "A"
+        }
+      ],
+      "thresholds": "0.1,1",
+      "title": "Query",
       "type": "singlestat",
       "valueFontSize": "80%",
       "valueMaps": [
@@ -2150,7 +2229,7 @@
         "x": 8,
         "y": 6
       },
-      "id": 32,
+      "id": 33,
       "links": [],
       "mode": "markdown",
       "title": "Infrastructure",
@@ -2179,7 +2258,7 @@
         "x": 8,
         "y": 7
       },
-      "id": 33,
+      "id": 34,
       "interval": null,
       "links": [],
       "mappingType": 1,
@@ -2258,7 +2337,7 @@
         "x": 10,
         "y": 7
       },
-      "id": 34,
+      "id": 35,
       "interval": null,
       "links": [],
       "mappingType": 1,
@@ -2337,7 +2416,7 @@
         "x": 12,
         "y": 7
       },
-      "id": 35,
+      "id": 36,
       "interval": null,
       "links": [],
       "mappingType": 1,
@@ -2416,7 +2495,7 @@
         "x": 14,
         "y": 6
       },
-      "id": 36,
+      "id": 37,
       "interval": null,
       "links": [],
       "mappingType": 1,
@@ -2453,7 +2532,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "count(sum(node_memory_MemFree_bytes{job=\"infrastructure\"} + node_memory_Buffers_bytes{job=\"infrastructure\"} + node_memory_Cached_bytes{job=\"infrastructure\"}) by (instance) / sum(node_memory_MemTotal_bytes{job=\"infrastructure\"}) by (instance) < 0.5) OR vector(0)",
+          "expr": "count(sum(node_memory_MemFree_bytes{job=\"infrastructure\"} + node_memory_Buffers_bytes{job=\"infrastructure\"} + node_memory_Cached_bytes{job=\"infrastructure\"}) by (instance) / sum(node_memory_MemTotal_bytes{job=\"infrastructure\"}) by (instance) < 0.05) OR vector(0)",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A"

@@ -88,7 +88,7 @@ def replace_output_single(outHandle, **kwargs):
 		expr = 'count((node_filesystem_avail_bytes{job=\\"' + kwargs['job'] + '\\",fstype!~\\"tmpfs|rootfs|cifs\\"} / node_filesystem_size_bytes{job=\\"' + kwargs['job'] + '\\",fstype!~\\"tmpfs|rootfs|cifs\\"}) < 0.04) OR vector(0)'
 		templateCode = templateCode.replace('<expr>', expr)
 	elif kwargs['title'] == 'Mem':
-		expr = 'count(sum(node_memory_MemFree_bytes{job=\\"' + kwargs['job'] + '\\"} + node_memory_Buffers_bytes{job=\\"' + kwargs['job'] + '\\"} + node_memory_Cached_bytes{job=\\"' + kwargs['job'] + '\\"}) by (instance) / sum(node_memory_MemTotal_bytes{job=\\"' + kwargs['job'] + '\\"}) by (instance) < 0.5) OR vector(0)'
+		expr = 'count(sum(node_memory_MemFree_bytes{job=\\"' + kwargs['job'] + '\\"} + node_memory_Buffers_bytes{job=\\"' + kwargs['job'] + '\\"} + node_memory_Cached_bytes{job=\\"' + kwargs['job'] + '\\"}) by (instance) / sum(node_memory_MemTotal_bytes{job=\\"' + kwargs['job'] + '\\"}) by (instance) < 0.05) OR vector(0)'
 		templateCode = templateCode.replace('<expr>', expr)
 	elif kwargs['title'] == 'Nodes':
 		expr = 'hdfs_node_count{status=\\"dead\\",instance=\\"ingest:9118\\"}'
@@ -102,7 +102,7 @@ def replace_output_single(outHandle, **kwargs):
 	elif kwargs['title'] == 'UTR':
 		expr = 'count(uptimerobot_monitor_up==0) OR vector(0)'
 		templateCode = templateCode.replace('<expr>', expr)
-	elif kwargs['title'] == 'WWW':
+	elif kwargs['title'] == 'WWW' or kwargs['title'] == 'Query':
 		expr = 'count(probe_http_status_code{job=\\"' + kwargs['job'] + '\\"} != 200) OR vector(0)'
 		templateCode = templateCode.replace('<expr>', expr)
 
@@ -147,7 +147,7 @@ def main():
 	replace_output_single(outHandle, tmpFl=panelSingle, job='discovery_access', title='Up', h=1, w=2, x=16, y=1)
 	replace_output_single(outHandle, tmpFl=panelSingle, job='discovery_access', title='CPU', h=1, w=2, x=18, y=1)
 	replace_output_single(outHandle, tmpFl=panelSingle, job='discovery_access', title='Dsk', h=1, w=2, x=20, y=1)
-	replace_output_single(outHandle, tmpFl=panelSingle, job='discovery_access', title='Mem', h=1, w=2, x=22, y=1)
+	replace_output_single(outHandle, tmpFl=panelSingle, job='discovery_access', title='Mem', h=1, w=2, x=22, y=1, thresholds='0.1,1.1', colour='#ba43a9')
 	replace_output_single(outHandle, tmpFl=panelSingle, job='discovery_access', title='UTR', h=1, w=2, x=16, y=2)
 	replace_output_single(outHandle, tmpFl=panelSingle, job='da-access-http', title='WWW', h=1, w=2, x=18, y=2)
 	replace_output_title(outHandle, tmpFl=panelTitle, job='gluster', title='Gluster', h=1, w=8, x=8, y=4)
@@ -160,6 +160,7 @@ def main():
 	replace_output_single(outHandle, tmpFl=panelSingle, job='solr', title='CPU', h=1, w=2, x=18, y=4)
 	replace_output_single(outHandle, tmpFl=panelSingle, job='solr', title='Dsk', h=1, w=2, x=20, y=4)
 	replace_output_single(outHandle, tmpFl=panelSingle, job='solr', title='Mem', h=1, w=2, x=22, y=4)
+	replace_output_single(outHandle, tmpFl=panelSingle, job='solr-query', title='Query', h=1, w=2, x=16, y=5)
 	replace_output_title(outHandle, tmpFl=panelTitle, job='infrastructure', title='Infrastructure', h=1, w=8, x=8, y=6)
 	replace_output_single(outHandle, tmpFl=panelSingle, job='infrastructure', title='Up', h=1, w=2, x=8, y=7)
 	replace_output_single(outHandle, tmpFl=panelSingle, job='infrastructure', title='CPU', h=1, w=2, x=10, y=7)
