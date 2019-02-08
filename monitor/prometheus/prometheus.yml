@@ -96,6 +96,7 @@ scrape_configs:
       - targets:
         - 'solr1:9100'
         - 'solr2:9100'
+        - 'solr3:9100'
         - 'solr-proxy:9100'
         - 'zk1:9100'
         - 'zk2:9100'
@@ -124,6 +125,7 @@ scrape_configs:
         - 'http://jisc03:8983/solr/jisc6/select?q=*:*'
         - 'http://solr1:8983/solr/all/select?q=*:*'
         - 'http://solr2:8983/solr/all/select?q=*:*'
+        - 'http://solr3:8983/solr/all/select?q=*:*'
         - 'http://solr-proxy:8983/solr/all/select?q=*:*'
     relabel_configs:
       - source_labels: [__address__]
@@ -185,3 +187,13 @@ scrape_configs:
         target_label: instance
       - target_label: __address__
         replacement: blackbox-exporter:9115  
+
+
+#### server monitoring services still to include
+# crawler03:9118        exists above but not exposed in grafana
+# crawler02:9323
+# crawler03:9323
+# access:9393
+# metrics-gateway:9091
+# crawler02:9101
+# ingest:9101

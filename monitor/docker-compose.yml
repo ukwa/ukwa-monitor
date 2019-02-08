@@ -97,6 +97,7 @@ services:
       - "sh:192.168.45.2"
       - "solr1:192.168.1.71"
       - "solr2:192.168.1.72"
+      - "solr3:192.168.1.73"
       - "solr-proxy:192.168.45.33"
       - "syslog:192.168.45.9"
       - "wa-www:192.168.45.10"
@@ -117,7 +118,8 @@ services:
     ports:
       - "9093:9093"
     volumes:
-      - ./alertmanager/:/etc/alertmanager/
+      - ./alertmanager:/etc/alertmanager
+      - /opt/data/alertmanager:/alertmanager
     command:
       - '--config.file=/etc/alertmanager/config.yml'
       - '--storage.path=/alertmanager'
@@ -150,5 +152,6 @@ services:
       - "ldukwa-proxy:192.168.45.17"
       - "solr1:192.168.1.71"
       - "solr2:192.168.1.72"
+      - "solr3:192.168.1.73"
       - "solr-proxy:192.168.45.33"
       - "www.webarchive.org.uk:192.168.45.10"
