@@ -155,3 +155,8 @@ services:
       - "solr3:192.168.1.73"
       - "solr-proxy:192.168.45.33"
       - "www.webarchive.org.uk:192.168.45.10"
+
+  pushgateway:
+    image: prom/pushgateway
+    ports:
+      - 9091:9091
