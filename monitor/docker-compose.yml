@@ -104,6 +104,7 @@ services:
       - "zk1:192.168.1.81"
       - "zk2:192.168.1.82"
       - "zk3:192.168.1.83"
+      - "zk4:192.168.1.84"
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--storage.tsdb.path=/prometheus'

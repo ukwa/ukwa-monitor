@@ -113,6 +113,7 @@ scrape_configs:
         - 'zk1:9100'
         - 'zk2:9100'
         - 'zk3:9100'
+        - 'zk4:9100'
         - 'jisc03:9100'
         - 'jisc-proxy:9100'
         - 'jisc-zk01:9100'
