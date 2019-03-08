@@ -57,6 +57,9 @@ scrape_configs:
         - 'gluster10:8080'
         - 'gluster11:8080'
         - 'gluster12:8080'
+        - 'gluster13:8080'
+        - 'gluster14:8080'
+        - 'gluster15:8080'
 
   - job_name: 'hadoop'
     static_configs:
