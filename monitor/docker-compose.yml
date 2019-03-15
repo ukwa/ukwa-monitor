@@ -104,10 +104,9 @@ services:
       - "solr-proxy:192.168.45.33"
       - "syslog:192.168.45.9"
       - "wa-www:192.168.45.10"
-      - "zk1:192.168.1.81"
-      - "zk2:192.168.1.82"
-      - "zk3:192.168.1.83"
       - "zk4:192.168.1.84"
+      - "zk5:192.168.1.85"
+      - "zk6:192.168.1.86"
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--storage.tsdb.path=/prometheus'
