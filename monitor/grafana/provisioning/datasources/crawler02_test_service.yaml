@@ -1,0 +1,13 @@
+# Instances of grafana will only update datasource configurations
+# for apiVersion numbers of same or lower. Thus, a new lower number
+# will not affect higher number configuration settings.
+# Typically BLUKWA keep this set to 1
+apiVersion: 1
+
+datasources:
+  - name: Prometheus (Crawler02 Test Service)
+    type: prometheus
+    access: server
+    orgId: 1
+    url: http://crawler02.n45.wa.bl.uk:9191
+    isDefault: false
