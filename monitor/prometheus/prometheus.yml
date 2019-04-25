@@ -27,6 +27,7 @@ scrape_configs:
       - targets:
         - 'access:9100'
         - 'bigcdx:9100'
+        - 'data.bl.uk:9100'
         - 'intranet:9100'
         - 'wa-www:9100'
 
@@ -65,7 +66,7 @@ scrape_configs:
   - job_name: 'hadoop'
     static_configs:
       - targets:
-        - 'grunt01:9100'
+        - 'grunt11:9100'
         - 'hdfs:9100'
         - 'hdfs-lb1:9100'
         - 'hdfs-lb2:9100'
@@ -129,6 +130,10 @@ scrape_configs:
         - 'ldukwa-zk01:9100'
         - 'ldukwa-zk02:9100'
         - 'ldukwa-zk03:9100'
+        - 'solr1:3903'
+        - 'solr2:3903'
+        - 'solr3:3903'
+        - 'solr-proxy:3903'
 
   - job_name: 'solr-query'
     metrics_path: /probe
@@ -206,12 +211,18 @@ scrape_configs:
       - target_label: __address__
         replacement: blackbox-exporter:9115  
 
+  - job_name: 'pushgateway'
+    honor_labels: true
+    static_configs:
+      - targets: ['pushgateway:9091']
+
+  - job_name: 'ingest-httpfs'
+    static_configs:
+      - targets: ['ingest:9101']
+
+
 
 #### server monitoring services still to include
-# crawler03:9118        exists above but not exposed in grafana
 # crawler02:9323
 # crawler03:9323
 # access:9393
-# metrics-gateway:9091
-# crawler02:9101
-# ingest:9101
