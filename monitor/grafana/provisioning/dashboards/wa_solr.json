@@ -23,13 +23,122 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "decimals": 0,
       "fill": 1,
       "gridPos": {
-        "h": 7,
+        "h": 6,
         "w": 24,
         "x": 0,
         "y": 0
+      },
+      "id": 6,
+      "legend": {
+        "alignAsTable": true,
+        "avg": false,
+        "current": true,
+        "max": false,
+        "min": false,
+        "rightSide": true,
+        "show": true,
+        "sort": "current",
+        "sortDesc": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "percentage": false,
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "rate(nginx_request_status{job=\"solr\",code=~\"2..\"}[2m]) * 60",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "{{ instance }} 200",
+          "refId": "A"
+        },
+        {
+          "expr": "rate(nginx_request_status{job=\"solr\",code=~\"3..\"}[2m]) * 60",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "{{ instance }} 300",
+          "refId": "B"
+        },
+        {
+          "expr": "rate(nginx_request_status{job=\"solr\",code=~\"4..\"}[2m]) * 60",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "{{ instance }} 400",
+          "refId": "C"
+        },
+        {
+          "expr": "rate(nginx_request_status{job=\"solr\",code=~\"5..\"}[2m]) * 60",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "{{ instance }} 500",
+          "refId": "D"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "wa-www nginx status codes",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": "q/m",
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "decimals": 0,
+      "fill": 1,
+      "gridPos": {
+        "h": 6,
+        "w": 24,
+        "x": 0,
+        "y": 6
       },
       "id": 4,
       "legend": {
@@ -92,7 +201,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Proxy httpd status codes",
+      "title": "solr-proxy httpd status codes",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -138,10 +247,10 @@
       "dashes": false,
       "fill": 1,
       "gridPos": {
-        "h": 7,
+        "h": 6,
         "w": 24,
         "x": 0,
-        "y": 7
+        "y": 12
       },
       "id": 2,
       "legend": {
@@ -261,5 +370,5 @@
   "timezone": "",
   "title": "Solr",
   "uid": "wa_solr",
-  "version": 7
+  "version": 8
 }
