@@ -134,6 +134,7 @@ scrape_configs:
         - 'solr2:3903'
         - 'solr3:3903'
         - 'solr-proxy:3903'
+        - 'wa-www:3903'
 
   - job_name: 'solr-query'
     metrics_path: /probe
