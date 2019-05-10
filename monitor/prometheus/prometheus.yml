@@ -50,6 +50,9 @@ scrape_configs:
         - 'gluster13:9100'
         - 'gluster14:9100'
         - 'gluster15:9100'
+        - 'gluster16:9100'
+        - 'gluster17:9100'
+        - 'gluster18:9100'
         - 'gluster01:8080'
         - 'gluster02:8080'
         - 'gluster03:8080'
@@ -101,6 +104,7 @@ scrape_configs:
         - 'crawler03:9100'
         - 'crawler03:9118'
         - 'crawler04:9100'
+        - 'crawler05:9100'
         - 'ingest:9100'
         - 'ingest:9118'
 
@@ -176,7 +180,7 @@ scrape_configs:
       module: [http_2xx]  # Look for a HTTP 200 response.
     static_configs:
       - targets:
-        - "http://bigcdx:8080/data-heritrix"
+        - "http://cdx-proxy/data-heritrix"
         - "http://intranet.wa.bl.uk/ukwa-reports/"
         - "https://data.bl.uk/"
         - "https://www.webarchive.org.uk/ukwa/"
@@ -200,9 +204,9 @@ scrape_configs:
       module: [http_2xx]  # Look for a HTTP 200 response.
     static_configs:
       - targets:
-        - "http://crawler03:9000/act/login"
-        - "http://crawler03:9080/archive/"
-        - "http://crawler03:5005/convert?url=http://data.webarchive.org.uk/crawl-test-site/resources/domcuments/lorem-ipsum-PDFA1-a.pdf"
+        - "http://ingest:9001/act/login"
+        - "http://ingest:9081/archive/"
+#        - "http://crawler03:5005/convert?url=http://data.webarchive.org.uk/crawl-test-site/resources/domcuments/lorem-ipsum-PDFA1-a.pdf"
         - "http://ingest:8082/static/visualiser/index.html"
     relabel_configs:
       - source_labels: [__address__]
@@ -221,7 +225,13 @@ scrape_configs:
     static_configs:
       - targets: ['ingest:9101']
 
+  - job_name: 'crawl-h3'
+    static_configs:
+      - targets: ['crawler05:9118']
 
+  - job_name: 'docker'
+    static_configs:
+      - targets: ['crawler02:9323', 'crawler03:9323', 'crawler05:9323']
 
 #### server monitoring services still to include
 # crawler02:9323
