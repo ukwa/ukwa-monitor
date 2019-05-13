@@ -102,7 +102,6 @@ scrape_configs:
         - 'crawler01:9100'
         - 'crawler02:9100'
         - 'crawler03:9100'
-        - 'crawler03:9118'
         - 'crawler04:9100'
         - 'crawler05:9100'
         - 'ingest:9100'
@@ -223,17 +222,18 @@ scrape_configs:
   - job_name: 'ingest-httpfs'
     static_configs:
       - targets: ['ingest:9101']
+
   - job_name: 'hdfs-prod'
     static_configs:
       - targets: ['ingest:9118']
 
   - job_name: 'crawl-h3'
     static_configs:
-      - targets: ['crawler03:9118', 'crawler05:9118']
+      - targets: ['crawler03:9118']
 
   - job_name: 'docker'
     static_configs:
-      - targets: ['crawler02:9323', 'crawler03:9323', 'crawler05:9323']
+      - targets: ['crawler02:9323', 'crawler03:9323']
 
 #### server monitoring services still to include
 # crawler02:9323
