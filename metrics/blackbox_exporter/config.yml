@@ -6,18 +6,15 @@ modules:
       valid_http_versions: ["HTTP/1.1", "HTTP/2"]
       valid_status_codes: []  # Defaults to 2xx
       method: GET
-      headers:
-        Host: vhost.example.com
-        Accept-Language: en-US
       no_follow_redirects: false
       fail_if_ssl: false
       fail_if_not_ssl: false
       fail_if_matches_regexp:
         - "Could not connect to database"
-      fail_if_not_matches_regexp:
-        - "Download the latest version here"
+      #fail_if_not_matches_regexp:
+      #  - "Download the latest version here"
       tls_config:
-        insecure_skip_verify: false
+        insecure_skip_verify: true
       preferred_ip_protocol: "ip4" # defaults to "ip6"
   http_post_2xx:
     prober: http

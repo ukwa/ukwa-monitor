@@ -86,12 +86,22 @@ services:
       - "ingest:192.168.45.60"
       - "bigcdx:192.168.45.21"
       - "www.webarchive.org.uk:192.168.45.10"
+      - "beta.webarchive.org.uk:192.168.45.10"
 
   apache-ukwa:
     image: garyritchie/apache_exporter
     command: './apache_exporter -scrape_uri "https://www.webarchive.org.uk/server-status/?auto"'
     ports:
       - 9117:9117
+
+  uptimerobot-exporter:
+    image: ukwa/uptimerobot-prometheus-exporter
+    container_name: uptimerobot-exporter
+    environment:
+      - UPTIMEROBOT_API_KEY=${UPTIMEROBOT_API_KEY}
+      - http_proxy=http://194.66.232.92:3127
+    ports:
+      - "9429:9429"
 
   # Providing system and container level metrics:
   # -------------------------------------------------------------
