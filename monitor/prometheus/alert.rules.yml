@@ -29,3 +29,49 @@ groups:
     annotations:
       summary: "Disk space free < 15% on {{ $labels.instance }}"
       description: "Disk space free on {{ $labels.instance }} has been less that 15% for more than 5 minutes"
+
+  - alert: db_backup_failed
+    expr: absent(ukwa_database_backup_size_bytes)
+    for: 24h
+    labels:
+      severity: severe
+    annotations:
+      summary: "Databse back instance {{ $labels.instance }} failed to run"
+      description: "{{ $labels.instance }} of job {{ $labels.job }} failed to run."
+
+  - alert: predict_host_disk_space
+    expr: min(predict_linear(node_filesystem_free{mountpoint=~"/|/data"}[48h], 2*7*24*3600)) by (instance, mountpoint) < 0
+    for: 1h
+    labels:
+      severity: severe
+    annotations:
+      summary: "Disk space running out on {{ $labels.instance }} at {{ $labels.mountpoint }}"
+      description: "Based on recent sampling, the disk is likely to will fill on volume {{ $labels.mountpoint }} within the next two weeks, for instance: {{ $labels.instance }}."
+
+  - alert: daily_task_has_not_run
+    expr: (time() - ukwa_task_event_timestamp{job=~"DailyAccessTasks|DailyIngestTasks", status="event.core.success"} ) / (60*60) > 24
+    for: 2h
+    labels:
+      severity: severe
+    annotations:
+      summary: "Task {{ $labels.job }} failed to run"
+      description: "Job {{ $labels.job }} failed to run successfully."
+
+  - alert: nominet_task_has_not_run
+    expr: (time() - ukwa_task_event_timestamp{job="NominetDomainListToHDFS", status="event.core.success"} ) / (60*60*24) > 31
+    for: 2h
+    labels:
+      severity: severe
+    annotations:
+      summary: "Task {{ $labels.job }} failed to run"
+      description: "Job {{ $labels.job }} failed to run successfully."
+
+  - alert: crawl_launcher_has_not_run
+    expr: (time() - ukwa_task_event_timestamp{job='crawl.LaunchCrawls', status="event.core.success"}) > 3600
+    for: 10m
+    labels:
+      severity: severe
+    annotations:
+      summary: "Task {{ $labels.job }} failed to run"
+      description: "Job {{ $labels.job }} failed to run successfully."
+ 

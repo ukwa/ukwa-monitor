@@ -219,5 +219,10 @@ scrape_configs:
     static_configs:
       - targets: ['crawler03:9118']
 
+  - job_name: 'crawl-db'
+    metrics_path: /_status/vars
+    static_configs:
+      - targets: ['bigcdx:18080']
+
 #### server monitoring services still to include
 # access:9393
