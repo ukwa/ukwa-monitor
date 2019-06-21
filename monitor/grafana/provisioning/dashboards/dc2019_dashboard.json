@@ -18,7 +18,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 19,
+  "id": 20,
   "links": [],
   "panels": [
     {
@@ -50,6 +50,7 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
+      "options": {},
       "percentage": false,
       "pointradius": 2,
       "points": false,
@@ -60,7 +61,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "rate(heritrix3_crawl_job_uris_total[5m])",
+          "expr": "sum(rate(heritrix3_crawl_job_uris_total[5m])) by (kind)",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{ kind }}",
@@ -137,6 +138,7 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
+      "options": {},
       "percentage": false,
       "pointradius": 2,
       "points": false,
@@ -150,15 +152,23 @@
           "expr": "sum(kafka_partition_offsets) by (topic)",
           "format": "time_series",
           "intervalFactor": 1,
-          "legendFormat": "{{ topic }}",
+          "legendFormat": "crawler status for {{ topic }}",
           "refId": "A"
+        },
+        {
+          "expr": "sum(kafka_log_logendoffset{topic!='__consumer_offsets'}) by (topic)",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "{{ topic }}",
+          "refId": "B"
         }
       ],
       "thresholds": [],
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Crawler Queue Consumption",
+      "title": "Kafka Topic Status",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -223,6 +233,7 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
+      "options": {},
       "percentage": false,
       "pointradius": 2,
       "points": false,
@@ -310,6 +321,7 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
+      "options": {},
       "percentage": false,
       "pointradius": 2,
       "points": false,
@@ -397,6 +409,7 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
+      "options": {},
       "percentage": false,
       "pointradius": 2,
       "points": false,
@@ -407,7 +420,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "heritrix3_crawl_job_bytes_total",
+          "expr": "sum(rate(heritrix3_crawl_job_bytes_total[10m])) by (kind)",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{ kind }}",
@@ -418,7 +431,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "DC 2019 Bytes Totals",
+      "title": "DC 2019 Bytes Rates (bytes/second)",
       "tooltip": {
         "shared": true,
         "sort": 1,
@@ -482,6 +495,7 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
+      "options": {},
       "percentage": false,
       "pointradius": 2,
       "points": false,
@@ -569,6 +583,7 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
+      "options": {},
       "percentage": false,
       "pointradius": 2,
       "points": false,
@@ -667,5 +682,5 @@
   "timezone": "",
   "title": "DC 2019 Dashboard",
   "uid": "dc2019",
-  "version": 1
+  "version": 2
 }
