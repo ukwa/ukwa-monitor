@@ -167,6 +167,12 @@ scrape_configs:
     static_configs:
       - targets:
         - "http://cdx-proxy/data-heritrix"
+        - "http://ingest:9001/act/login"
+        - "http://ingest:9081/archive/"
+        - "http://bigcdx:8080/data-heritrix"
+        - "http://hdfs.gtw.wa.bl.uk:14000/webhdfs/v1/?user.name=tomcat&op=LISTSTATUS"
+        - "http://ingest:8082/static/visualiser/index.html"
+        - "http://access.wa:8082/static/visualiser/index.html"
         - "http://intranet.wa.bl.uk/ukwa-reports/"
         - "https://data.bl.uk/"
         - "https://www.webarchive.org.uk/ukwa/"
@@ -174,6 +180,7 @@ scrape_configs:
         - "https://www.webarchive.org.uk/shine"
         - "https://www.webarchive.org.uk/wayback/archive/20160215012242/http://www.bl.uk/"
         - "https://www.webarchive.org.uk/mementos/search"
+        - "https://beta.webarchive.org.uk/ukwa/"
         - "http://intranet-wayback.wa.bl.uk:8080/wayback/20150724130909/http://intranet.bl.uk/"
     relabel_configs:
       - source_labels: [__address__]
@@ -218,6 +225,14 @@ scrape_configs:
   - job_name: 'crawl-h3'
     static_configs:
       - targets: ['crawler03:9118']
+
+  - job_name: 'webhdfs'
+    static_configs:
+      - targets: ['hdfs:3903']
+
+#  - job_name: 'container-metrics'
+#    static_configs:
+#      - targets: ['access:8389', 'ingest:8389']
 
 #  - job_name: 'crawl-db'
 #    metrics_path: /_status/vars
