@@ -35,13 +35,13 @@
       "legend": {
         "alignAsTable": true,
         "avg": false,
-        "current": false,
+        "current": true,
         "max": false,
         "min": false,
         "rightSide": true,
         "show": true,
         "sideWidth": 200,
-        "sort": "total",
+        "sort": "current",
         "sortDesc": true,
         "total": true,
         "values": true

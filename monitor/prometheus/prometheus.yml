@@ -92,6 +92,7 @@ scrape_configs:
         - 'crawler03:9100'
         - 'crawler04:9100'
         - 'crawler05:9100'
+        - 'crawler06:9100'
         - 'ingest:9100'
 
   - job_name: 'monitoring'
@@ -103,9 +104,10 @@ scrape_configs:
   - job_name: 'solr'
     static_configs:
       - targets:
-#        - 'solr1:9100'
+        - 'solr1:9100'
         - 'solr2:9100'
         - 'solr3:9100'
+        - 'solr4:9100'
         - 'solr.api.wa.bl.uk:9100'
         - 'solr-proxy:9100'
         - 'zk4:9100'
@@ -124,6 +126,7 @@ scrape_configs:
         - 'solr1:3903'
         - 'solr2:3903'
         - 'solr3:3903'
+        - 'solr4:3903'
         - 'solr-proxy:3903'
         - 'wa-www:3903'
 
@@ -138,9 +141,10 @@ scrape_configs:
         - 'http://ldukwa04:8983/solr/ldukwadev/select?q=*:*'
         - 'http://jisc-proxy:8983/solr/jisc/select?q=*:*'
         - 'http://jisc03:8983/solr/jisc6/select?q=*:*'
-#        - 'http://solr1:8983/solr/all/select?q=*:*'
+        - 'http://solr1:8983/solr/all/select?q=*:*'
         - 'http://solr2:8983/solr/all/select?q=*:*'
         - 'http://solr3:8983/solr/all/select?q=*:*'
+        - 'http://solr4:8983/solr/all/select?q=*:*'
         - 'http://solr-proxy:8983/solr/all/select?q=*:*'
         - 'http://solr.api.wa.bl.uk/solr/all/select?q=*:*'
     relabel_configs:
