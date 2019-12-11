@@ -58,6 +58,7 @@ scrape_configs:
     static_configs:
       - targets:
 #        - 'grunt11:9100'
+        - 'bellie2:9100'
         - 'hdfs:9100'
         - 'hdfs-lb1:9100'
         - 'hdfs-lb2:9100'
@@ -65,6 +66,8 @@ scrape_configs:
         - 'hdfs-lb4:9100'
         - 'hdfs-lb5:9100'
         - 'mapred:9100'
+        - 'namenode-backup:9100'
+        - 'nellie2:9100'
 
   - job_name: 'infrastructure'
     static_configs:
