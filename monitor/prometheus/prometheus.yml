@@ -58,7 +58,7 @@ scrape_configs:
     static_configs:
       - targets:
 #        - 'grunt11:9100'
-        - 'bellie2:9100'
+        - 'jobtracker:9100'
         - 'hdfs:9100'
         - 'hdfs-lb1:9100'
         - 'hdfs-lb2:9100'

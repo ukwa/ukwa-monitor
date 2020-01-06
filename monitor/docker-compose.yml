@@ -45,7 +45,7 @@ services:
     # as OS /etc/hosts declaration not visible to container
     extra_hosts:
       - "access:192.168.45.25"
-      - "bellie2:192.168.1.104"
+      - "jobtracker:192.168.1.104"
       - "bigcdx:192.168.45.21"
       - "cdx.api.wa.bl.uk:192.168.45.40"
       - "clamd:192.168.45.87"
