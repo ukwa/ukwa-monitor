@@ -66,8 +66,8 @@ scrape_configs:
         - 'hdfs-lb4:9100'
         - 'hdfs-lb5:9100'
         - 'mapred:9100'
+        - 'namenode:9100'
         - 'namenode-backup:9100'
-        - 'nellie2:9100'
 
   - job_name: 'infrastructure'
     static_configs:
@@ -90,10 +90,8 @@ scrape_configs:
         - 'clamd-lb7:9100'
         - 'clamd-lb8:9100'
         - 'clamd-lb9:9100'
-        - 'crawler01:9100'
         - 'crawler02:9100'
         - 'crawler03:9100'
-        - 'crawler04:9100'
         - 'crawler05:9100'
         - 'crawler06:9100'
         - 'ingest:9100'
