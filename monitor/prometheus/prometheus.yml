@@ -35,18 +35,6 @@ scrape_configs:
     static_configs:
       - targets:
         - 'gluster-fuse:9100'
-        - 'gluster01:9100'
-        - 'gluster02:9100'
-        - 'gluster03:9100'
-        - 'gluster04:9100'
-        - 'gluster05:9100'
-        - 'gluster06:9100'
-        - 'gluster07:9100'
-        - 'gluster08:9100'
-        - 'gluster09:9100'
-        - 'gluster10:9100'
-        - 'gluster11:9100'
-        - 'gluster12:9100'
         - 'gluster13:9100'
         - 'gluster14:9100'
         - 'gluster15:9100'
