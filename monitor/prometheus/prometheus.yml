@@ -24,6 +24,7 @@ alerting:
 scrape_configs:
   - job_name: 'services'
     static_configs:
+      - targets:
         - 'api-lb1:9100'
         - 'api-lb2:9100'
         - 'bapi-lb1:9100'
