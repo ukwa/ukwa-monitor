@@ -126,7 +126,7 @@ scrape_configs:
         - 'solr2:9100'
         - 'solr3:9100'
         - 'solr4:9100'
-        - 'solr-proxy.n45.wa.bl.uk:9100'
+        - 'solr-proxy:9100'
         - 'zk4:9100'
         - 'zk5:9100'
         - 'zk6:9100'
@@ -144,7 +144,7 @@ scrape_configs:
         - 'solr2:3903'
         - 'solr3:3903'
         - 'solr4:3903'
-        - 'solr-proxy.n45.wa.bl.uk:3903'
+        - 'solr-proxy:3903'
 
   - job_name: 'solr-query'
     metrics_path: /probe
