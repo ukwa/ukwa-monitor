@@ -1487,10 +1487,340 @@
       "gridPos": {
         "h": 1,
         "w": 8,
+        "x": 0,
+        "y": 3
+      },
+      "id": 22,
+      "links": [],
+      "mode": "markdown",
+      "title": "Services",
+      "type": "text"
+    },
+    {
+      "cacheTimeout": null,
+      "colorBackground": true,
+      "colorValue": false,
+      "colors": [
+        "#299c46",
+        "rgba(237, 129, 40, 0.89)",
+        "#d44a3a"
+      ],
+      "format": "none",
+      "gauge": {
+        "maxValue": 100,
+        "minValue": 0,
+        "show": false,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 1,
+        "w": 2,
+        "x": 0,
+        "y": 4
+      },
+      "id": 23,
+      "interval": null,
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "postfix": "",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false
+      },
+      "tableColumn": "",
+      "targets": [
+        {
+          "expr": "sum(1 - up{job=\"services\"})",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "refId": "A"
+        }
+      ],
+      "thresholds": "0.1,1",
+      "title": "Up",
+      "type": "singlestat",
+      "valueFontSize": "80%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ],
+      "valueName": "current"
+    },
+    {
+      "cacheTimeout": null,
+      "colorBackground": true,
+      "colorValue": false,
+      "colors": [
+        "#299c46",
+        "rgba(237, 129, 40, 0.89)",
+        "#d44a3a"
+      ],
+      "format": "none",
+      "gauge": {
+        "maxValue": 100,
+        "minValue": 0,
+        "show": false,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 1,
+        "w": 2,
+        "x": 2,
+        "y": 4
+      },
+      "id": 24,
+      "interval": null,
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "postfix": "",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false
+      },
+      "tableColumn": "",
+      "targets": [
+        {
+          "expr": "count(sum(irate(node_cpu_seconds_total{job=\"services\",mode=\"idle\"}[5m]) < 0.1) by (instance)) OR vector(0)",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "refId": "A"
+        }
+      ],
+      "thresholds": "0.1,1",
+      "title": "CPU",
+      "type": "singlestat",
+      "valueFontSize": "80%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ],
+      "valueName": "current"
+    },
+    {
+      "cacheTimeout": null,
+      "colorBackground": true,
+      "colorValue": false,
+      "colors": [
+        "#299c46",
+        "rgba(237, 129, 40, 0.89)",
+        "#d44a3a"
+      ],
+      "format": "none",
+      "gauge": {
+        "maxValue": 100,
+        "minValue": 0,
+        "show": false,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 1,
+        "w": 2,
+        "x": 4,
+        "y": 4
+      },
+      "id": 25,
+      "interval": null,
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "postfix": "",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false
+      },
+      "tableColumn": "",
+      "targets": [
+        {
+          "expr": "count((node_filesystem_avail_bytes{job=\"services\",fstype!~\"tmpfs|rootfs|cifs\"} / node_filesystem_size_bytes{job=\"services\",fstype!~\"tmpfs|rootfs|cifs\"}) < 0.04) OR vector(0)",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "refId": "A"
+        }
+      ],
+      "thresholds": "0.1,1",
+      "title": "Dsk",
+      "type": "singlestat",
+      "valueFontSize": "80%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ],
+      "valueName": "current"
+    },
+    {
+      "cacheTimeout": null,
+      "colorBackground": true,
+      "colorValue": false,
+      "colors": [
+        "#299c46",
+        "rgba(237, 129, 40, 0.89)",
+        "#d44a3a"
+      ],
+      "format": "none",
+      "gauge": {
+        "maxValue": 100,
+        "minValue": 0,
+        "show": false,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 1,
+        "w": 2,
+        "x": 6,
+        "y": 4
+      },
+      "id": 26,
+      "interval": null,
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "postfix": "",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false
+      },
+      "tableColumn": "",
+      "targets": [
+        {
+          "expr": "count(sum(node_memory_MemFree_bytes{job=\"services\"} + node_memory_Buffers_bytes{job=\"services\"} + node_memory_Cached_bytes{job=\"services\"}) by (instance) / sum(node_memory_MemTotal_bytes{job=\"services\"}) by (instance) < 0.05) OR vector(0)",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "refId": "A"
+        }
+      ],
+      "thresholds": "0.1,1",
+      "title": "Mem",
+      "type": "singlestat",
+      "valueFontSize": "80%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ],
+      "valueName": "current"
+    },
+    { 
+      "content": "",
+      "gridPos": {
+        "h": 1,
+        "w": 8,
         "x": 8,
         "y": 4
       },
-      "id": 22,
+      "id": 27,
       "links": [],
       "mode": "markdown",
       "title": "Gluster",
@@ -1519,7 +1849,7 @@
         "x": 8,
         "y": 5
       },
-      "id": 23,
+      "id": 28,
       "interval": null,
       "links": [],
       "mappingType": 1,
@@ -1598,7 +1928,7 @@
         "x": 10,
         "y": 5
       },
-      "id": 24,
+      "id": 29,
       "interval": null,
       "links": [],
       "mappingType": 1,
@@ -1677,7 +2007,7 @@
         "x": 12,
         "y": 5
       },
-      "id": 25,
+      "id": 30,
       "interval": null,
       "links": [],
       "mappingType": 1,
@@ -1756,7 +2086,7 @@
         "x": 14,
         "y": 5
       },
-      "id": 26,
+      "id": 31,
       "interval": null,
       "links": [],
       "mappingType": 1,
@@ -1820,7 +2150,7 @@
         "x": 16,
         "y": 3
       },
-      "id": 27,
+      "id": 32,
       "links": [],
       "mode": "markdown",
       "title": "Solr",
@@ -1849,7 +2179,7 @@
         "x": 16,
         "y": 4
       },
-      "id": 28,
+      "id": 33,
       "interval": null,
       "links": [],
       "mappingType": 1,
@@ -1928,7 +2258,7 @@
         "x": 18,
         "y": 4
       },
-      "id": 29,
+      "id": 34,
       "interval": null,
       "links": [],
       "mappingType": 1,
@@ -2007,7 +2337,7 @@
         "x": 20,
         "y": 4
       },
-      "id": 30,
+      "id": 35,
       "interval": null,
       "links": [],
       "mappingType": 1,
@@ -2086,7 +2416,7 @@
         "x": 22,
         "y": 4
       },
-      "id": 31,
+      "id": 36,
       "interval": null,
       "links": [],
       "mappingType": 1,
@@ -2165,7 +2495,7 @@
         "x": 16,
         "y": 5
       },
-      "id": 32,
+      "id": 37,
       "interval": null,
       "links": [],
       "mappingType": 1,
@@ -2229,7 +2559,7 @@
         "x": 8,
         "y": 6
       },
-      "id": 33,
+      "id": 38,
       "links": [],
       "mode": "markdown",
       "title": "Infrastructure",
@@ -2258,7 +2588,7 @@
         "x": 8,
         "y": 7
       },
-      "id": 34,
+      "id": 39,
       "interval": null,
       "links": [],
       "mappingType": 1,
@@ -2337,7 +2667,7 @@
         "x": 10,
         "y": 7
       },
-      "id": 35,
+      "id": 40,
       "interval": null,
       "links": [],
       "mappingType": 1,
@@ -2416,7 +2746,7 @@
         "x": 12,
         "y": 7
       },
-      "id": 36,
+      "id": 41,
       "interval": null,
       "links": [],
       "mappingType": 1,
@@ -2495,7 +2825,7 @@
         "x": 14,
         "y": 6
       },
-      "id": 37,
+      "id": 42,
       "interval": null,
       "links": [],
       "mappingType": 1,

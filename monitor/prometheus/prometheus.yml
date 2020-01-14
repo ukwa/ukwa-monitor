@@ -22,19 +22,46 @@ alerting:
 
 # Define which resources prometheus should monitor
 scrape_configs:
+  - job_name: 'services'
+    static_configs:
+        - 'api-lb1:9100'
+        - 'api-lb2:9100'
+        - 'bapi-lb1:9100'
+        - 'bapi-lb2:9100'
+        - 'beta1:9100'
+        - 'beta2:9100'
+        - 'dev1:9100'
+        - 'dev2:9100'
+        - 'mapred:9100'
+        - 'prod1:9100'
+#        - 'prod2:9100'
+
   - job_name: 'discovery_access'
     static_configs:
       - targets:
         - 'access:9100'
         - 'bigcdx:9100'
+        - 'cdx1:9100'
+        - 'cdx2:9100'
         - 'data.bl.uk:9100'
+        - 'h3dn1:9100'
+        - 'h3dn2:9100'
+        - 'h3dn3:9100'
+        - 'h3nn:9100'
+        - 'h3rm:9100'
+        - 'h3snn:9100'
         - 'intranet:9100'
+        - 'jupyter2:9100'
+        - 'wa-jupyter:9100'
         - 'wa-www:9100'
 
   - job_name: 'gluster'
     static_configs:
       - targets:
         - 'gluster-fuse:9100'
+        - 'gluster01:9100'
+        - 'gluster02:9100'
+        - 'gluster03:9100'
         - 'gluster13:9100'
         - 'gluster14:9100'
         - 'gluster15:9100'
@@ -53,13 +80,14 @@ scrape_configs:
         - 'hdfs-lb3:9100'
         - 'hdfs-lb4:9100'
         - 'hdfs-lb5:9100'
-        - 'mapred:9100'
         - 'namenode:9100'
         - 'namenode-backup:9100'
+        - 'nellie:9100'
 
   - job_name: 'infrastructure'
     static_configs:
       - targets:
+        - 'explorer2:9100'
         - 'ftp:9100'
         - 'git:9100'
         - 'priv-gtw-n1:9100'
@@ -87,6 +115,7 @@ scrape_configs:
   - job_name: 'monitoring'
     static_configs:
       - targets: 
+        - 'logs:9100'
         - 'monitor:9100'
         - 'syslog:9100'
 
@@ -97,7 +126,6 @@ scrape_configs:
         - 'solr2:9100'
         - 'solr3:9100'
         - 'solr4:9100'
-        - 'solr.api.wa.bl.uk:9100'
         - 'solr-proxy:9100'
         - 'zk4:9100'
         - 'zk5:9100'
@@ -117,7 +145,6 @@ scrape_configs:
         - 'solr3:3903'
         - 'solr4:3903'
         - 'solr-proxy:3903'
-        - 'wa-www:3903'
 
   - job_name: 'solr-query'
     metrics_path: /probe
