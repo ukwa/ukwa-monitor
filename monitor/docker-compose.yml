@@ -138,7 +138,7 @@ services:
       - '--storage.tsdb.retention.time=365d'
       - '--web.console.libraries=/usr/share/prometheus/console_libraries'
       - '--web.console.templates=/usr/share/prometheus/consoles'
-      - '--web.external-url=http://${PROMETHEUS_SERVICE_NAME}:${PROMETHEUS_PORT}/'
+      - '--web.external-url=http://${PROMETHEUS_SERVICE_NAME}/'
       - '--web.enable-admin-api'
       - '--web.enable-lifecycle'
 
@@ -152,7 +152,7 @@ services:
     command:
       - '--config.file=/etc/alertmanager/config.yml'
       - '--storage.path=/alertmanager'
-      - '--web.external-url=http://${ALERTMANAGER_SERVICE_NAME}:${ALERTMANAGER_PORT}/'
+      - '--web.external-url=http://${ALERTMANAGER_SERVICE_NAME}/'
 
   pushgateway:
     image: prom/pushgateway
