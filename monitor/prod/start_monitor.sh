@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+export HOST_IP=192.168.45.204
+export PROMETHEUS_SERVICE_NAME='monitor-prometheus.api.wa.bl.uk'
+export GRAFANA_SERVICE_NAME='monitor-grafana.api.wa.bl.uk'
+export ALERTMANAGER_SERVICE_NAME='monitor-alertmanager.api.wa.bl.uk'
+
 export VISUALIZER_PORT=8080
 export GRAFANA_PORT=3000
 export PROMETHEUS_PORT=9090

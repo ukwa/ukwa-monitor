@@ -28,6 +28,8 @@ services:
     volumes:
       - ./grafana:/etc/grafana
       - "${DATA_GRAFANA}:/var/lib/grafana"
+    command:
+      - '--web.external-url=http://${GRAFANA_SERVICE_NAME}:${GRAFANA_PORT}/'
 
   prometheus:
     image: prom/prometheus
@@ -112,7 +114,7 @@ services:
       - "ldukwa-zk03:192.168.1.211"
       - "logs:192.168.45.32"
       - "mapred:192.168.45.18"
-      - "monitor:192.168.45.204"
+      - "monitor:${HOST_IP}"
       - "namenode-backup:192.168.1.105"
       - "namenode:192.168.1.103"
       - "prod1:192.168.45.5"
@@ -137,7 +139,7 @@ services:
       - '--storage.tsdb.retention.time=365d'
       - '--web.console.libraries=/usr/share/prometheus/console_libraries'
       - '--web.console.templates=/usr/share/prometheus/consoles'
-      - '--web.external-url=http://monitor.wa.bl.uk:9090/'
+      - '--web.external-url=http://${PROMETHEUS_SERVICE_NAME}:${PROMETHEUS_PORT}/'
       - '--web.enable-admin-api'
       - '--web.enable-lifecycle'
 
@@ -151,7 +153,7 @@ services:
     command:
       - '--config.file=/etc/alertmanager/config.yml'
       - '--storage.path=/alertmanager'
-      - '--web.external-url=http://monitor.wa.bl.uk:9093/'
+      - '--web.external-url=http://${ALERTMANAGER_SERVICE_NAME}:${ALERTMANAGER_PORT}/'
 
   pushgateway:
     image: prom/pushgateway
