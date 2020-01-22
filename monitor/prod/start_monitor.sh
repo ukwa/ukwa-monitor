@@ -4,6 +4,7 @@ export HOST_IP=192.168.45.204
 export DEPLOYMENT_IP=192.168.45.40
 export PROMETHEUS_SERVICE_NAME='monitor-prometheus.api.wa.bl.uk'
 export ALERTMANAGER_SERVICE_NAME='monitor-alerts.api.wa.bl.uk'
+export GRAFANA_SERVICE_NAME='monitor-grafana.api.wa.bl.uk'
 
 export VISUALIZER_PORT=8080
 export GRAFANA_PORT=3000
@@ -15,4 +16,5 @@ export DATA_ALERTMANAGER=/opt/data/alertmanager
 export HTTP_PROXY=http://explorer2:3128/
 
 source ~/gitlab/ukwa-monitor/monitoring.sh
-docker stack deploy -c ../docker-compose.yml prometheus
+cd ../
+docker stack deploy -c docker-compose.yml prometheus
