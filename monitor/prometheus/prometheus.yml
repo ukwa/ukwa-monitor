@@ -131,7 +131,6 @@ scrape_configs:
         - 'zk5:9100'
         - 'zk6:9100'
         - 'jisc03:9100'
-        - 'jisc-proxy.n45.wa.bl.uk:9100'
         - 'jisc-zk01:9100'
         - 'jisc-zk02:9100'
         - 'jisc-zk03:9100'
@@ -155,7 +154,7 @@ scrape_configs:
       - targets:
         - 'http://ldukwa-proxy:8983/solr/ldwa/select?q=*:*'
         - 'http://ldukwa04:8983/solr/ldukwadev/select?q=*:*'
-        - 'http://jisc-proxy.n45.wa.bl.uk:8983/solr/jisc/select?q=*:*'
+        - 'http://solr-jisc.api.wa.bl.uk/solr/jisc/select?q=*:*'
         - 'http://jisc03:8983/solr/jisc6/select?q=*:*'
         - 'http://solr1:8983/solr/all/select?q=*:*'
         - 'http://solr2:8983/solr/all/select?q=*:*'
