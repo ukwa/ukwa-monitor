@@ -16,7 +16,7 @@ services:
   grafana:
     image: grafana/grafana
     ports:
-      - "3000:3000"
+      - "${GRAFANA_PORT}:3000"
     depends_on:
       - prometheus
     user: "1000"
@@ -27,21 +27,19 @@ services:
       - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_ADMIN_PASSWORD}
     volumes:
       - ./grafana:/etc/grafana
-#      - /opt/data/grafana:/var/lib/grafana
-      - ${DATA_GRAFANA}:/var/lib/grafana
+      - "${DATA_GRAFANA}:/var/lib/grafana"
 
   prometheus:
     image: prom/prometheus
     ports:
-      - "9090:9090"
+      - "${PROMETHEUS_PORT}:9090"
     depends_on:
       - alertmanager:alertmanager
       - pushgateway:pushgateway
     user: root
     volumes:
       - ./prometheus:/etc/prometheus
-#      - /opt/data/prometheus:/prometheus
-      - ${DATA_PROMETHEUS}:/prometheus
+      - "${DATA_PROMETHEUS}:/prometheus"
 
     # hosts referenced by docker prometheus must be detailed here
     # as OS /etc/hosts declaration not visible to container
@@ -147,11 +145,10 @@ services:
   alertmanager:
     image: prom/alertmanager
     ports:
-      - "9093:9093"
+      - "${ALERTMANAGER_PORT}:9093"
     volumes:
       - ./alertmanager:/etc/alertmanager
-#      - /opt/data/alertmanager:/alertmanager
-      - ${DATA_ALERTMANAGER}:/alertmanager
+      - "${DATA_ALERTMANAGER}:/alertmanager"
     command:
       - '--config.file=/etc/alertmanager/config.yml'
       - '--storage.path=/alertmanager'
@@ -166,7 +163,6 @@ services:
     image: ukwa/uptimerobot-prometheus-exporter
     environment:
       - UPTIMEROBOT_API_KEY=${UPTIMEROBOT_API_KEY}
-#      - http_proxy=http://194.66.232.92:3127
       - http_proxy=${HTTP_PROXY}
     ports:
       - "9429:9429"
