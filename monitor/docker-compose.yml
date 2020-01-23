@@ -148,6 +148,7 @@ services:
       - ./alertmanager:/etc/alertmanager
       - "${DATA_ALERTMANAGER}:/alertmanager"
     command:
+      - '/bin/bash -c "envsubst < /etc/alertmanager/config.yml-template > /etc/alertmanager/config.yml"'
       - '--config.file=/etc/alertmanager/config.yml'
       - '--storage.path=/alertmanager'
       - '--web.external-url=http://${ALERTMANAGER_SERVICE_NAME}/'
