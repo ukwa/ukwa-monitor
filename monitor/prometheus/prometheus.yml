@@ -1,0 +1,262 @@
+# Global configuration for prometheus (within docker, not relevant to docker)
+# scrape_interval controls frequency of scraping targets
+# evaluation_interval controls how often the prometheus rules are evaluated against target data
+global:
+  scrape_interval:     1m
+  scrape_timeout:      1m
+  evaluation_interval: 1m
+
+
+# Specify the location of rules we want prometheus to load
+rule_files:
+  - 'alert.rules.yml'
+
+
+# prometheus has a dependency on alertmanager, as defined in docker_compose.yml
+alerting:
+  alertmanagers:
+  - scheme: http
+    static_configs:
+    - targets:
+      - "monitor-alerts.dapi.wa.bl.uk:9093"
+
+# Define which resources prometheus should monitor
+scrape_configs:
+  - job_name: 'services'
+    static_configs:
+      - targets:
+        - 'api-lb1:9100'
+        - 'api-lb2:9100'
+        - 'bapi-lb1:9100'
+        - 'bapi-lb2:9100'
+        - 'beta1:9100'
+        - 'beta2:9100'
+        - 'dev1:9100'
+        - 'dev2:9100'
+        - 'mapred:9100'
+        - 'prod1:9100'
+#        - 'prod2:9100'
+
+  - job_name: 'discovery_access'
+    static_configs:
+      - targets:
+        - 'access:9100'
+        - 'bigcdx:9100'
+        - 'cdx1:9100'
+        - 'cdx2:9100'
+        - 'data.bl.uk:9100'
+        - 'h3dn1:9100'
+        - 'h3dn2:9100'
+        - 'h3dn3:9100'
+        - 'h3nn:9100'
+        - 'h3rm:9100'
+        - 'h3snn:9100'
+        - 'intranet:9100'
+        - 'jupyter2:9100'
+        - 'wa-jupyter:9100'
+        - 'wa-www:9100'
+
+  - job_name: 'gluster'
+    static_configs:
+      - targets:
+        - 'gluster-fuse:9100'
+        - 'gluster01:9100'
+        - 'gluster02:9100'
+        - 'gluster03:9100'
+        - 'gluster13:9100'
+        - 'gluster14:9100'
+        - 'gluster15:9100'
+        - 'gluster16:9100'
+        - 'gluster17:9100'
+        - 'gluster18:9100'
+
+  - job_name: 'hadoop'
+    static_configs:
+      - targets:
+#        - 'grunt11:9100'
+        - 'jobtracker:9100'
+        - 'hdfs:9100'
+        - 'hdfs-lb1:9100'
+        - 'hdfs-lb2:9100'
+        - 'hdfs-lb3:9100'
+        - 'hdfs-lb4:9100'
+        - 'hdfs-lb5:9100'
+        - 'namenode:9100'
+        - 'namenode-backup:9100'
+
+  - job_name: 'infrastructure'
+    static_configs:
+      - targets:
+        - 'explorer2:9100'
+        - 'ftp:9100'
+        - 'git:9100'
+        - 'priv-gtw-n1:9100'
+        - 'sh:9100'
+
+  - job_name: 'ingest_metadata'
+    static_configs:
+      - targets:
+        - 'clamd:9100'
+        - 'clamd-lb1:9100'
+        - 'clamd-lb2:9100'
+        - 'clamd-lb3:9100'
+        - 'clamd-lb4:9100'
+        - 'clamd-lb5:9100'
+        - 'clamd-lb6:9100'
+        - 'clamd-lb7:9100'
+        - 'clamd-lb8:9100'
+        - 'clamd-lb9:9100'
+        - 'crawler03:9100'
+        - 'crawler04:9100'
+        - 'crawler05:9100'
+        - 'crawler06:9100'
+        - 'ingest:9100'
+
+  - job_name: 'monitoring'
+    static_configs:
+      - targets: 
+        - 'logs:9100'
+        - 'monitor:9100'
+        - 'syslog:9100'
+
+  - job_name: 'solr'
+    static_configs:
+      - targets:
+        - 'solr1:9100'
+        - 'solr2:9100'
+        - 'solr3:9100'
+        - 'solr4:9100'
+        - 'solr-proxy:9100'
+        - 'zk4:9100'
+        - 'zk5:9100'
+        - 'zk6:9100'
+        - 'jisc03:9100'
+        - 'jisc-zk01:9100'
+        - 'jisc-zk02:9100'
+        - 'jisc-zk03:9100'
+        - 'ldukwa04:9100'
+        - 'ldukwa-proxy:9100'
+        - 'ldukwa-zk01:9100'
+        - 'ldukwa-zk02:9100'
+        - 'ldukwa-zk03:9100'
+        - 'solr1:3903'
+        - 'solr2:3903'
+        - 'solr3:3903'
+        - 'solr4:3903'
+        - 'solr-proxy:3903'
+
+  - job_name: 'solr-query'
+    metrics_path: /probe
+    scrape_timeout: 30s
+    params:
+      module: [http_2xx]  # Look for a HTTP 200 response.
+    static_configs:
+      - targets:
+        - 'http://ldukwa-proxy:8983/solr/ldwa/select?q=*:*'
+        - 'http://ldukwa04:8983/solr/ldukwadev/select?q=*:*'
+        - 'http://solr-jisc.api.wa.bl.uk/solr/jisc/select?q=*:*'
+        - 'http://jisc03:8983/solr/jisc6/select?q=*:*'
+        - 'http://solr1:8983/solr/all/select?q=*:*'
+        - 'http://solr2:8983/solr/all/select?q=*:*'
+        - 'http://solr3:8983/solr/all/select?q=*:*'
+        - 'http://solr4:8983/solr/all/select?q=*:*'
+        - 'http://solr.api.wa.bl.uk/solr/all/select?q=*:*'
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: blackbox-exporter:9115  
+
+  - job_name: 'Uptimerobot'
+    scrape_interval: 5m
+    scrape_timeout: 30s
+    static_configs:
+      - targets:
+        - 'uptimerobot-exporter:9429'
+    params:
+      collect[]:
+        - global_status
+
+  - job_name: 'da-access-http'
+    metrics_path: /probe
+    scrape_timeout: 30s
+    params:
+      module: [http_2xx]  # Look for a HTTP 200 response.
+    static_configs:
+      - targets:
+        - "http://cdx.api.wa.bl.uk/data-heritrix"
+        - "http://ingest:9001/act/login"
+        - "http://ingest:9081/archive/"
+        - "http://hdfs.gtw.wa.bl.uk:14000/webhdfs/v1/?user.name=tomcat&op=LISTSTATUS"
+#        - "http://access:8082/static/visualiser/index.html"
+        - "http://192.168.45.25:8082/static/visualiser/index.html"
+        - "http://ingest:8082/static/visualiser/index.html"
+        - "http://intranet.wa.bl.uk/ukwa-reports/"
+        - "https://data.bl.uk/"
+        - "https://www.webarchive.org.uk/ukwa/"
+        - "https://www.webarchive.org.uk/en/ukwa/search?text=test&search_location=full_text&reset_filters=false&content_type=Web+Page"
+        - "https://www.webarchive.org.uk/shine"
+        - "https://www.webarchive.org.uk/wayback/archive/20160215012242/http://www.bl.uk/"
+        - "https://www.webarchive.org.uk/mementos/search"
+        - "https://beta.webarchive.org.uk/ukwa/"
+        - "http://intranet-wayback.wa.bl.uk:8080/wayback/20150724130909/http://intranet.bl.uk/"
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: blackbox-exporter:9115  
+
+  - job_name: 'im-access-http'
+    metrics_path: /probe
+    scrape_timeout: 30s
+    params:
+      module: [http_2xx]  # Look for a HTTP 200 response.
+    static_configs:
+      - targets:
+        - "http://ingest:9001/act/login"
+        - "http://ingest:9081/archive/"
+        - "http://ingest:8082/static/visualiser/index.html"
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: blackbox-exporter:9115  
+
+  - job_name: 'pushgateway'
+    honor_labels: true
+    static_configs:
+      - targets: ['pushgateway:9091']
+
+  - job_name: 'ingest-httpfs'
+    static_configs:
+      - targets: ['ingest:9101']
+
+  - job_name: 'hdfs-prod'
+    static_configs:
+      - targets: ['ingest:9118']
+
+#  - job_name: 'crawl-h3'
+#    static_configs:
+#      - targets: ['crawler03:9118']
+
+  - job_name: 'webhdfs'
+    static_configs:
+      - targets: ['hdfs:3903']
+
+#  - job_name: 'container-metrics'
+#    static_configs:
+#      - targets: ['access:8389', 'ingest:8389']
+
+#  - job_name: 'crawl-db'
+#    metrics_path: /_status/vars
+#    static_configs:
+#      - targets: ['bigcdx:18080']
+
+#### server monitoring services still to include
+# access:9393

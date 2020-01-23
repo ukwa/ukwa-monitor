@@ -20,7 +20,7 @@ source ~/gitlab/ukwa-monitor/monitoring.sh
 cd ../
 envsubst < ./alertmanager/config.yml-template > ./alertmanager/config.yml
 envsubst < ./grafana/grafana.ini-template > ./grafana/grafani.ini
-envsubst < ./grafana/provisioning/datasource/prometheus.yaml-template > ./grafana/provisioning/datasource/prometheus.yaml
+envsubst < ./grafana/provisioning/datasources/prometheus.yaml-template > ./grafana/provisioning/datasources/prometheus.yaml
 envsubst < ./prometheus/prometheus.yml-template > ./prometheus/prometheus.yml
 
 docker stack deploy -c docker-compose.yml prometheus
