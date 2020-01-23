@@ -9,5 +9,5 @@ datasources:
     type: prometheus
     access: direct
     orgId: 1
-    url: http://${PROMETHEUS_DATASOURCE}
+    url: http://${PROMETHEUS_SERVICE_NAME}{${PROMETHEUS_PORT}
     isDefault: true
