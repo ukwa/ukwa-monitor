@@ -18,7 +18,7 @@ alerting:
   - scheme: http
     static_configs:
     - targets:
-      - "${ALERTMANAGER_SERVICE_NAME}:${ALERTMANAGER_PORT}"
+      - "${ALERTMANAGER_SERVICE_NAME}"
 
 # Define which resources prometheus should monitor
 scrape_configs:
