@@ -246,6 +246,7 @@ scrape_configs:
       - targets: ['hdfs:3903']
 #
 # The crawlers have their own embedded Prometheus instances, but we can pull them in here via federation:
+# (https://prometheus.io/docs/prometheus/latest/federation/)
 #
 
   - job_name: 'federate'
