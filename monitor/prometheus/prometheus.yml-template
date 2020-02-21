@@ -241,13 +241,29 @@ scrape_configs:
     static_configs:
       - targets: ['ingest:9118']
 
-#  - job_name: 'crawl-h3'
-#    static_configs:
-#      - targets: ['crawler03:9118']
-
   - job_name: 'webhdfs'
     static_configs:
       - targets: ['hdfs:3903']
+#
+# The crawlers have their own embedded Prometheus instances, but we can pull them in here via federation:
+#
+
+  - job_name: 'federate'
+    scrape_interval: 30s
+
+    honor_labels: true
+    metrics_path: '/federate'
+
+    params:
+      'match[]':
+        - '{job="npld-heritrix-workers"}'
+        - '{job="bypm-heritrix-workers"}'
+        - '{job="kafka"}'
+
+    static_configs:
+      - targets:
+        - '192.168.45.15:9191'
+
 
 #  - job_name: 'container-metrics'
 #    static_configs:

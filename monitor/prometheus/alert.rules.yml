@@ -93,3 +93,13 @@ groups:
       summary: "Task {{ $labels.job }} failed to run"
       description: "Job {{ $labels.job }} failed to run successfully."
  
+  - alert: fc_crawl_is_slow
+    expr: sum(rate(kafka_log_logendoffset{topic="fc.crawled"}[10m])) < 5
+    for: 10m
+    labels:
+      severity: severe
+    annotations:
+      summary: "The frequent crawl is not running as fast as expected!"
+      description: "The frequent crawl does not appear to be running as fast as it should be."
+ 
+
