@@ -36,4 +36,4 @@ route:
 receivers:
 - name: 'team-X-mails'
   email_configs:
-  - to: 'gil.hoggarth@bl.uk'
+  - to: "${ALERT_EMAIL}"

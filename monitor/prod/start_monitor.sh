@@ -15,6 +15,8 @@ export DATA_PROMETHEUS=/opt/data/prometheus
 export DATA_ALERTMANAGER=/opt/data/alertmanager
 export HTTP_PROXY=http://explorer2:3128/
 
+export ALERT_EMAIL='wa-sysadm@bl.uk'
+
 source ~/gitlab/ukwa-monitor/monitoring.sh
 cd ../
 envsubst < ./alertmanager/config.yml-template > ./alertmanager/config.yml

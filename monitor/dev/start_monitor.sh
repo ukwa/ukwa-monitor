@@ -15,8 +15,9 @@ export DATA_PROMETHEUS=/mnt/nfs/data/ukwa-monitor/prometheus
 export DATA_ALERTMANAGER=/mnt/nfs/data/ukwa-monitor/alertmanager
 export HTTP_PROXY=http://explorer2:3128/
 
-source ~/gitlab/ukwa-monitor/monitoring.sh
+export ALERT_EMAIL='gil.hoggarth@bl.uk'
 
+source ~/gitlab/ukwa-monitor/monitoring.sh
 cd ../
 envsubst < ./alertmanager/config.yml-template > ./alertmanager/config.yml
 envsubst < ./grafana/grafana.ini-template > ./grafana/grafana.ini

@@ -35,7 +35,7 @@ scrape_configs:
         - 'dev2:9100'
         - 'mapred:9100'
         - 'prod1:9100'
-#        - 'prod2:9100'
+        - 'prod2:9100'
 
   - job_name: 'discovery_access'
     static_configs:
@@ -106,7 +106,6 @@ scrape_configs:
         - 'clamd-lb7:9100'
         - 'clamd-lb8:9100'
         - 'clamd-lb9:9100'
-        - 'crawler03:9100'
         - 'crawler04:9100'
         - 'crawler05:9100'
         - 'crawler06:9100'
@@ -190,8 +189,7 @@ scrape_configs:
         - "http://ingest:9001/act/login"
         - "http://ingest:9081/archive/"
         - "http://hdfs.gtw.wa.bl.uk:14000/webhdfs/v1/?user.name=tomcat&op=LISTSTATUS"
-#        - "http://access:8082/static/visualiser/index.html"
-        - "http://192.168.45.25:8082/static/visualiser/index.html"
+        - "http://access:8082/static/visualiser/index.html"
         - "http://ingest:8082/static/visualiser/index.html"
         - "http://intranet.wa.bl.uk/ukwa-reports/"
         - "https://data.bl.uk/"
@@ -263,7 +261,7 @@ scrape_configs:
 
     static_configs:
       - targets:
-        - '192.168.45.15:9191'
+        - 'crawler05:9191'
 
 
 #  - job_name: 'container-metrics'
