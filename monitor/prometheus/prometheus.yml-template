@@ -237,7 +237,7 @@ scrape_configs:
 
   - job_name: 'hdfs-prod'
     static_configs:
-      - targets: ['ingest:9118']
+      - targets: ['hdfs-exporter:9118']
 
   - job_name: 'webhdfs'
     static_configs:
