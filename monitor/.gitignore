@@ -1,0 +1,5 @@
+*out
+alertmanager/config.yml
+grafana/grafana.ini
+prometheus/prometheus.yml
+grafana/provisioning/datasources/prometheus.yaml

@@ -1,4 +1,6 @@
 # ukwa-monitor
 Dashboard and monitoring system for the UK Web Archive
 
-Currently has `reporting` and `metrics` but the latter will move to `ukwa-ingest-services` eventually.
+__Note__
+Default organisation name used within Grafana still needs to be set manually via the Grafana UI. 
+See https://github.com/grafana/grafana/issues/2908 for details/progress.

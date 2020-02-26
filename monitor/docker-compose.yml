@@ -1,0 +1,190 @@
+version: '3.2'
+
+# prometheus monitoring service
+
+services:
+  visualizer:
+    image: dockersamples/visualizer:stable
+    ports:
+      - "${VISUALIZER_PORT}:8080"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+
+  grafana:
+    image: grafana/grafana
+    ports:
+      - "${GRAFANA_PORT}:3000"
+    depends_on:
+      - prometheus
+    user: "1000"
+    environment:
+      - "GF_AUTH_ANONYMOUS_ENABLED=true"
+      - GF_AUTH_ANONYMOUS_ORG_NAME=${GRAFANA_ORG_NAME}
+      - "GF_AUTH_ANONYMOUS_ORG_ROLE=Viewer"
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_ADMIN_PASSWORD}
+    volumes:
+      - ./grafana:/etc/grafana
+      - "${DATA_GRAFANA}:/var/lib/grafana"
+
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - "${PROMETHEUS_PORT}:9090"
+    depends_on:
+      - alertmanager:alertmanager
+      - pushgateway:pushgateway
+    user: root
+    volumes:
+      - ./prometheus:/etc/prometheus
+      - "${DATA_PROMETHEUS}:/prometheus"
+
+    # hosts referenced by docker prometheus must be detailed here OR in DNS
+    # as OS /etc/hosts declaration not visible to container
+    extra_hosts:
+      - "access:192.168.45.25"
+      - "api-lb1:192.168.45.41"
+      - "api-lb2:192.168.45.42"
+      - "bapi-lb1:192.168.45.43"
+      - "bapi-lb2:192.168.45.44"
+      - "beta1:192.168.45.37"
+      - "beta2:192.168.45.38"
+      - "bigcdx:192.168.45.21"
+      - "cdx1:192.168.45.7"
+      - "cdx2:192.168.45.8"
+      - "clamd:192.168.45.87"
+      - "clamd-lb1:192.168.45.50"
+      - "clamd-lb2:192.168.45.51"
+      - "clamd-lb3:192.168.45.52"
+      - "clamd-lb4:192.168.45.54"
+      - "clamd-lb5:192.168.45.55"
+      - "clamd-lb6:192.168.45.56"
+      - "clamd-lb7:192.168.45.57"
+      - "clamd-lb8:192.168.45.58"
+      - "clamd-lb9:192.168.45.59"
+      - "crawler04:192.168.45.12"
+      - "crawler05:192.168.45.15"
+      - "crawler06:192.168.45.34"
+      - "data.bl.uk:192.168.45.230"
+      - "dev1:192.168.45.91"
+      - "dev2:192.168.45.92"
+      - "explorer2:192.168.45.3"
+      - "ftp:192.168.45.202"
+      - "git:192.168.45.207"
+      - "gluster-fuse:192.168.45.109"
+      - "gluster01:192.168.45.111"
+      - "gluster02:192.168.45.112"
+      - "gluster03:192.168.45.113"
+      - "gluster13:192.168.45.126"
+      - "gluster14:192.168.45.127"
+      - "gluster15:192.168.45.128"
+      - "gluster16:192.168.45.129"
+      - "gluster17:192.168.45.130"
+      - "gluster18:192.168.45.131"
+#      - "grunt11:192.168.1.111"
+      - "h3dn1:192.168.45.191"
+      - "h3dn2:192.168.45.192"
+      - "h3dn3:192.168.45.193"
+      - "h3nn:192.168.45.181"
+      - "h3rm:192.168.45.182"
+      - "h3snn:192.168.45.185"
+      - "hdfs:192.168.45.13"
+      - "hdfs-lb1:192.168.1.44"
+      - "hdfs-lb2:192.168.1.45"
+      - "hdfs-lb3:192.168.1.46"
+      - "hdfs-lb4:192.168.1.47"
+      - "hdfs-lb5:192.168.1.48"
+      - "ingest:192.168.45.60"
+      - "intranet:192.168.45.30"
+      - "jisc03:192.168.1.57"
+      - "jisc-zk01:192.168.1.62"
+      - "jisc-zk02:192.168.1.63"
+      - "jisc-zk03:192.168.1.64"
+      - "jobtracker:192.168.1.104"
+      - "jupyter2:192.168.45.35"
+      - "ldukwa04:192.168.1.54"
+      - "ldukwa-proxy:192.168.45.17"
+      - "ldukwa-zk01:192.168.1.209"
+      - "ldukwa-zk02:192.168.1.210"
+      - "ldukwa-zk03:192.168.1.211"
+      - "logs:192.168.45.32"
+      - "mapred:192.168.45.18"
+      - "monitor:${HOST_IP}"
+      - "namenode-backup:192.168.1.105"
+      - "namenode:192.168.1.103"
+      - "prod1:192.168.45.5"
+      - "prod2:192.168.45.6"
+      - "priv-gtw-n1:192.168.45.29"
+      - "sh:192.168.45.2"
+      - "solr1:192.168.1.71"
+      - "solr2:192.168.1.72"
+      - "solr3:192.168.1.73"
+      - "solr4:192.168.1.74"
+      - "solr-proxy:192.168.45.33"
+      - "syslog:192.168.45.9"
+      - "wa-jupyter:172.16.202.75"
+      - "wa-www:192.168.45.10"
+      - "zk4:192.168.1.84"
+      - "zk5:192.168.1.85"
+      - "zk6:192.168.1.86"
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--storage.tsdb.retention.time=365d'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+      - '--web.external-url=http://${PROMETHEUS_SERVICE_NAME}/'
+      - '--web.enable-admin-api'
+      - '--web.enable-lifecycle'
+
+  alertmanager:
+    image: prom/alertmanager
+    ports:
+      - "${ALERTMANAGER_PORT}:9093"
+    volumes:
+      - ./alertmanager:/etc/alertmanager
+      - "${DATA_ALERTMANAGER}:/alertmanager"
+    command:
+      - '--config.file=/etc/alertmanager/config.yml'
+      - '--storage.path=/alertmanager'
+      - '--web.external-url=http://${ALERTMANAGER_SERVICE_NAME}/'
+
+  pushgateway:
+    image: prom/pushgateway
+    ports:
+      - 9091:9091
+
+  uptimerobot-exporter:
+    image: ukwa/uptimerobot-prometheus-exporter
+    environment:
+      - UPTIMEROBOT_API_KEY=${UPTIMEROBOT_API_KEY}
+      - http_proxy=${HTTP_PROXY}
+    ports:
+      - "9429:9429"
+
+  blackbox-exporter:
+    image: prom/blackbox-exporter
+    ports:
+      - "9115:9115"
+    volumes:
+      - ./blackbox_exporter:/config
+    command:
+      - '--config.file=/config/config.yml'
+    extra_hosts:
+      - "access:192.168.45.25"
+      - "bigcdx:192.168.45.21"
+      - "ingest:192.168.45.60"
+      - "intranet:192.168.45.30"
+      - "intranet-wayback:192.168.45.23"
+      - "jisc03:192.168.1.57"
+      - "ldukwa04:192.168.1.54"
+      - "ldukwa-proxy:192.168.45.17"
+      - "solr1:192.168.1.71"
+      - "solr2:192.168.1.72"
+      - "solr3:192.168.1.73"
+      - "solr4:192.168.1.74"
+      - "solr-proxy:192.168.45.33"
+      - "www.webarchive.org.uk:192.168.45.10"
+      - "beta.webarchive.org.uk:192.168.45.94"
