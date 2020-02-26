@@ -91,13 +91,13 @@ def replace_output_single(outHandle, **kwargs):
 		expr = 'count(sum(node_memory_MemFree_bytes{job=\\"' + kwargs['job'] + '\\"} + node_memory_Buffers_bytes{job=\\"' + kwargs['job'] + '\\"} + node_memory_Cached_bytes{job=\\"' + kwargs['job'] + '\\"}) by (instance) / sum(node_memory_MemTotal_bytes{job=\\"' + kwargs['job'] + '\\"}) by (instance) < 0.05) OR vector(0)'
 		templateCode = templateCode.replace('<expr>', expr)
 	elif kwargs['title'] == 'Nodes':
-		expr = 'hdfs_node_count{status=\\"dead\\",instance=\\"ingest:9118\\"}'
+		expr = 'hdfs_node_count{status=\\"dead\\",instance=\\"${HDFS_EXPORTER}\\"}'
 		templateCode = templateCode.replace('<expr>', expr)
 	elif kwargs['title'] == 'Under-rep':
-		expr = 'hdfs_under_replicated_block_count{instance=\\"ingest:9118\\"}'
+		expr = 'hdfs_under_replicated_block_count{instance=\\"${HDFS_EXPORTER}\\"}'
 		templateCode = templateCode.replace('<expr>', expr)
 	elif kwargs['title'] == 'Used':
-		expr = 'hdfs_used_percent{instance=\\"ingest:9118\\"}'
+		expr = 'hdfs_used_percent{instance=\\"${HDFS_EXPORTER}\\"}'
 		templateCode = templateCode.replace('<expr>', expr)
 	elif kwargs['title'] == 'UTR':
 		expr = 'count(uptimerobot_monitor_up==0) OR vector(0)'

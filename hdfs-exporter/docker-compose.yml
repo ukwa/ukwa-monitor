@@ -1,0 +1,10 @@
+version: "3.2"
+
+services:
+  # export HDFS stats scraped from the front page of namenode
+  hdfs-exporter:
+    image: ukwa/hdfs-exporter
+    ports: 
+     - 9118:9118
+    environment:
+     - "HDFS_HEALTH_PAGE=http://namenode.api.wa.bl.uk/dfshealth.jsp"

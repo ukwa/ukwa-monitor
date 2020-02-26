@@ -12,6 +12,7 @@ export DATA_GRAFANA=/opt/data/grafana
 export DATA_PROMETHEUS=/opt/data/prometheus
 export DATA_ALERTMANAGER=/opt/data/alertmanager
 export HTTP_PROXY=http://explorer2:3128/
+export HDFS_EXPORTER='hdfs-exporter.api.wa.bl.uk:80'
 
 export ALERT_EMAIL='wa-sysadm@bl.uk'
 
@@ -21,4 +22,7 @@ envsubst < ./alertmanager/config.yml-template > ./alertmanager/config.yml
 envsubst < ./grafana/grafana.ini-template > ./grafana/grafana.ini
 envsubst < ./grafana/provisioning/datasources/prometheus.yaml-template > ./grafana/provisioning/datasources/prometheus.yaml
 envsubst < ./prometheus/prometheus.yml-template > ./prometheus/prometheus.yml
-docker stack deploy -c docker-compose.yml prometheus
+envsubst < ./grafana/provisioning/dashboards/daily_dashboard.json-template > ./grafana/provisioning/dashboards/daily_dashboard.json
+envsubst < ./grafana/provisioning/dashboards/wa_status.json-template > ./grafana/provisioning/dashboards/wa_status.json
+
+docker stack deploy -c docker-compose.yml monitor
