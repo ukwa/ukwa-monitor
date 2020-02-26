@@ -173,6 +173,7 @@ services:
     command:
       - '--config.file=/config/config.yml'
     extra_hosts:
+      - "access:192.168.45.25"
       - "bigcdx:192.168.45.21"
       - "ingest:192.168.45.60"
       - "intranet:192.168.45.30"

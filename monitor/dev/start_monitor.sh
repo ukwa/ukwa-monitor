@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 export HOST_IP=$(hostname -i |  grep -oP "192\.168\.45\.[0-9]+")
-export DEPLOYMENT_IP=192.168.45.45
+#export DEPLOYMENT_IP=192.168.45.45
 export PROMETHEUS_SERVICE_NAME='monitor-prometheus.dapi.wa.bl.uk'
 export ALERTMANAGER_SERVICE_NAME='monitor-alerts.dapi.wa.bl.uk'
 export GRAFANA_SERVICE_NAME='monitor-grafana.dapi.wa.bl.uk'

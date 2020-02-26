@@ -188,7 +188,7 @@ scrape_configs:
         - "http://cdx.api.wa.bl.uk/data-heritrix"
         - "http://ingest:9001/act/login"
         - "http://ingest:9081/archive/"
-        - "http://hdfs.gtw.wa.bl.uk:14000/webhdfs/v1/?user.name=tomcat&op=LISTSTATUS"
+        - "http://hdfs.api.wa.bl.uk/webhdfs/v1/?user.name=tomcat&op=LISTSTATUS"
         - "http://access:8082/static/visualiser/index.html"
         - "http://ingest:8082/static/visualiser/index.html"
         - "http://intranet.wa.bl.uk/ukwa-reports/"
