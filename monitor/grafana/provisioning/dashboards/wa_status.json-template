@@ -817,7 +817,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "hdfs_node_count{status=\"dead\",instance=\"hdfs-exporter.dapi.wa.bl.uk:80\"}",
+          "expr": "hdfs_node_count{status=\"dead\",instance=\"${HDFS_EXPORTER}\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A"
@@ -896,7 +896,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "hdfs_under_replicated_block_count{instance=\"hdfs-exporter.dapi.wa.bl.uk:80\"}",
+          "expr": "hdfs_under_replicated_block_count{instance=\"${HDFS_EXPORTER}\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A"
@@ -975,7 +975,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "hdfs_used_percent{instance=\"hdfs-exporter.dapi.wa.bl.uk:80\"}",
+          "expr": "hdfs_used_percent{instance=\"${HDFS_EXPORTER}\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A"
