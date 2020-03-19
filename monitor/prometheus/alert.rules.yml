@@ -95,7 +95,7 @@ groups:
  
   - alert: fc_crawl_is_slow
     expr: sum(rate(kafka_log_logendoffset{topic="fc.crawled"}[10m])) < 5
-    for: 10m
+    for: 30m
     labels:
       severity: severe
     annotations:
