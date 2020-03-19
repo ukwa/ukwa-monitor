@@ -150,6 +150,8 @@ services:
       - '--config.file=/etc/alertmanager/config.yml'
       - '--storage.path=/alertmanager'
       - '--web.external-url=http://${ALERTMANAGER_SERVICE_NAME}/'
+    extra_hosts:
+      - "explorer2:192.168.45.3"
 
   pushgateway:
     image: prom/pushgateway
@@ -163,6 +165,8 @@ services:
       - http_proxy=${HTTP_PROXY}
     ports:
       - "9429:9429"
+    extra_hosts:
+      - "explorer2:192.168.45.3"
 
   blackbox-exporter:
     image: prom/blackbox-exporter
@@ -188,11 +192,4 @@ services:
       - "solr-proxy:192.168.45.33"
       - "www.webarchive.org.uk:192.168.45.10"
       - "beta.webarchive.org.uk:192.168.45.94"
-
-  # Also export HDFS stats scraped from the front page:
-  hdfs-exporter:
-    image: ukwa/hdfs-exporter
-     - 9118:9118
-    environment:
-     - "HDFS_HEALTH_PAGE=http://namenode.api.wa.bl.uk/dfshealth.jsp"
 

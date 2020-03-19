@@ -4,6 +4,14 @@ global:
   smtp_from: "alertmanager@${ALERTMANAGER_SERVICE_NAME}"
   smtp_require_tls: false
 
+  # Slack basic config:
+  slack_api_url: '${SLACK_WEBHOOK_URL}'
+
+  # Plus proxy so we can get to Slack:
+  http_config:
+    proxy_url: '${HTTP_PROXY}'
+
+
 # The directory from which notification templates are read.
 templates:
 - '/etc/alertmanager/template/*.tmpl'
@@ -30,10 +38,19 @@ route:
   # resend them.
   repeat_interval: 3h
 
+  # Say when the problem goes away:
+
   # A default receiver
-  receiver: team-X-mails
+  #receiver: team-X-mails
+  receiver: 'slack-notifications'
 
 receivers:
 - name: 'team-X-mails'
   email_configs:
   - to: "${ALERT_EMAIL}"
+
+- name: 'slack-notifications'
+  slack_configs:
+  - channel: '#alerts'
+    send_resolved: true
+
