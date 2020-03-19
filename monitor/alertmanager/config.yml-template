@@ -41,11 +41,15 @@ route:
   # Say when the problem goes away:
 
   # A default receiver
-  #receiver: team-X-mails
-  receiver: 'slack-notifications'
+  receiver: 'wa-sysadm-mails'
+
+  # Additional routes:
+  routes:
+  - receiver: 'pushover-notifications-anj'
+  #- receiver: 'slack-notifications'
 
 receivers:
-- name: 'team-X-mails'
+- name: 'wa-sysadm-mails'
   email_configs:
   - to: "${ALERT_EMAIL}"
 
@@ -53,4 +57,11 @@ receivers:
   slack_configs:
   - channel: '#alerts'
     send_resolved: true
+
+- name: 'pushover-notifications-anj'
+  pushover_configs:
+  - user_key: '${PUSHOVER_USER_KEY}'
+    token: '${PUSHOVER_APP_TOKEN}'
+    send_resolved: true
+
 
