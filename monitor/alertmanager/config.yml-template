@@ -21,7 +21,7 @@ route:
   # The labels by which incoming alerts are grouped together. For example,
   # multiple alerts coming in for cluster=A and alertname=LatencyHigh would
   # be batched into a single group.
-  group_by: ['alertname', 'cluster', 'service']
+  group_by: ['alertname', 'job']
 
   # When a new group of alerts is created by an incoming alert, wait at
   # least 'group_wait' to send the initial notification.
@@ -36,32 +36,33 @@ route:
 
   # If an alert has successfully been sent, wait 'repeat_interval' to
   # resend them.
-  repeat_interval: 3h
+  repeat_interval: 12h
 
   # Say when the problem goes away:
 
   # A default receiver
-  receiver: 'wa-sysadm-mails'
+  receiver: 'wa-sysadm'
 
   # Additional routes:
-  routes:
-  - receiver: 'pushover-notifications-anj'
+  #routes:
   #- receiver: 'slack-notifications'
 
 receivers:
-- name: 'wa-sysadm-mails'
+- name: 'wa-sysadm'
+  # Send email:
   email_configs:
   - to: "${ALERT_EMAIL}"
 
-- name: 'slack-notifications'
-  slack_configs:
-  - channel: '#alerts'
-    send_resolved: true
-
-- name: 'pushover-notifications-anj'
+  # Also sent Pushover notifications:
   pushover_configs:
   - user_key: '${PUSHOVER_USER_KEY}'
     token: '${PUSHOVER_APP_TOKEN}'
     send_resolved: true
+    retry: 1h
 
+# Slack updates (not in use at present):
+- name: 'slack-notifications'
+  slack_configs:
+  - channel: '#alerts'
+    send_resolved: true
 
