@@ -4,10 +4,7 @@ global:
   smtp_from: "alertmanager@${ALERTMANAGER_SERVICE_NAME}"
   smtp_require_tls: false
 
-  # Slack basic config:
-  slack_api_url: '${SLACK_WEBHOOK_URL}'
-
-  # Plus proxy so we can get to Slack:
+  # Plus proxy so we can get to external alert services:
   http_config:
     proxy_url: '${HTTP_PROXY}'
 
@@ -43,26 +40,15 @@ route:
   # A default receiver
   receiver: 'wa-sysadm'
 
-  # Additional routes:
-  #routes:
-  #- receiver: 'slack-notifications'
-
 receivers:
 - name: 'wa-sysadm'
   # Send email:
   email_configs:
   - to: "${ALERT_EMAIL}"
 
-  # Also sent Pushover notifications:
+  # Also sent Pushover notifications (for ANJ):
   pushover_configs:
   - user_key: '${PUSHOVER_USER_KEY}'
     token: '${PUSHOVER_APP_TOKEN}'
     send_resolved: true
     retry: 1h
-
-# Slack updates (not in use at present):
-- name: 'slack-notifications'
-  slack_configs:
-  - channel: '#alerts'
-    send_resolved: true
-
