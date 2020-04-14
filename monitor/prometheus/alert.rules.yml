@@ -101,5 +101,13 @@ groups:
     annotations:
       summary: "The frequent crawl is not running as fast as expected!"
       description: "The frequent crawl does not appear to be running as fast as it should be."
- 
 
+  - alert: cpu_running_too_hot
+    expr: max(node_hwmon_temp_celsius) by (instance) > 70
+    for: 30m
+    labels:
+      severity: severe
+    annotations:
+      summary: "CPU running too hot?"
+      description: "The CPU on {{ $labels.instance }} is running hot (>70C for 30mins)."
+ 
