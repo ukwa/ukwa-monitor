@@ -8,13 +8,14 @@ export VISUALIZER_PORT=8081
 export GRAFANA_PORT=3000
 export PROMETHEUS_PORT=9090
 export ALERTMANAGER_PORT=9093
-export DATA_GRAFANA=/mnt/nfs/data/ukwa-monitor/grafana
-export DATA_PROMETHEUS=/mnt/nfs/data/ukwa-monitor/prometheus
-export DATA_ALERTMANAGER=/mnt/nfs/data/ukwa-monitor/alertmanager
+export DATA_PREFIX=/mnt/nfs/data
+export DATA_GRAFANA=${DATA_PREFIX}/ukwa-monitor/grafana
+export DATA_PROMETHEUS=${DATA_PREFIX}/ukwa-monitor/prometheus
+export DATA_ALERTMANAGER=${DATA_PREFIX}/ukwa-monitor/alertmanager
 export HTTP_PROXY=http://explorer2:3128/
 export HDFS_EXPORTER='hdfs-exporter.dapi.wa.bl.uk:80'
 
-export ALERT_EMAIL='gil.hoggarth@bl.uk'
+export ALERT_EMAIL='andrew.jackson@bl.uk'
 
 source ~/gitlab/ukwa-monitor/monitoring.sh
 cd ../
