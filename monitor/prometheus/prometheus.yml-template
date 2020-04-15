@@ -157,7 +157,7 @@ scrape_configs:
         - 'http://jisc03:8983/solr/jisc6/select?q=*:*'
         - 'http://solr1:8983/solr/all/select?q=*:*'
         - 'http://solr2:8983/solr/all/select?q=*:*'
-        - 'http://solr3:8984/solr/all/select?q=*:*'
+        - 'http://solr3:8998/solr/all/select?q=*:*'
         - 'http://solr4:8983/solr/all/select?q=*:*'
         - 'http://solr.api.wa.bl.uk/solr/all/select?q=*:*'
     relabel_configs:
