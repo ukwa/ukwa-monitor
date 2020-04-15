@@ -3,6 +3,7 @@
 export PROMETHEUS_SERVICE_NAME='monitor-prometheus.bapi.wa.bl.uk'
 export ALERTMANAGER_SERVICE_NAME='monitor-alerts.bapi.wa.bl.uk'
 export GRAFANA_SERVICE_NAME='monitor-grafana.bapi.wa.bl.uk'
+export FC_EMBEDDED_SERVICE_NAME='192.168.45.15:9191'
 
 export VISUALIZER_PORT=8080
 export GRAFANA_PORT=3000
@@ -22,6 +23,7 @@ cd ../
 envsubst < ./alertmanager/config.yml-template > ./alertmanager/config.yml
 envsubst < ./grafana/grafana.ini-template > ./grafana/grafana.ini
 envsubst < ./grafana/provisioning/datasources/prometheus.yaml-template > ./grafana/provisioning/datasources/prometheus.yaml
+envsubst < ./grafana/provisioning/datasources/frequent_crawl.yaml-template > ./grafana/provisioning/datasources/frequent_crawl.yaml
 envsubst < ./prometheus/prometheus.yml-template > ./prometheus/prometheus.yml
 envsubst < ./grafana/provisioning/dashboards/daily_dashboard.json-template > ./grafana/provisioning/dashboards/daily_dashboard.json
 envsubst < ./grafana/provisioning/dashboards/wa_status.json-template > ./grafana/provisioning/dashboards/wa_status.json
