@@ -15,7 +15,10 @@ export DATA_ALERTMANAGER=/opt/data/alertmanager
 export HTTP_PROXY=http://explorer2:3128/
 export HDFS_EXPORTER='hdfs-exporter.api.wa.bl.uk:80'
 
-export ALERT_EMAIL='wa-sysadm@bl.uk'
+export ALERT_RECEIVER='prod'
+export ALERT_EMAIL_DEV='gil.hoggarth@bl.uk'
+export ALERT_EMAIL_BETA='gil.hoggarth@bl.uk'
+export ALERT_EMAIL_PROD='wa=sysadm@bl.uk'
 
 source ~/gitlab/ukwa-monitor/monitoring.sh
 cd ../

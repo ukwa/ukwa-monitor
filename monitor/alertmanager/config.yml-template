@@ -35,18 +35,40 @@ route:
   # resend them.
   repeat_interval: 12h
 
-  # Say when the problem goes away:
-
   # A default receiver
-  receiver: 'wa-sysadm'
+  receiver: ${ALERT_RECEIVER}
 
 receivers:
-- name: 'wa-sysadm'
+- name: 'dev'
   # Send email:
   email_configs:
-  - to: "${ALERT_EMAIL}"
+  - to: "${ALERT_EMAIL_DEV}"
 
-  # Also sent Pushover notifications (for ANJ):
+  # Also send Pushover notifications (for ANJ):
+  pushover_configs:
+  - user_key: '${PUSHOVER_USER_KEY}'
+    token: '${PUSHOVER_APP_TOKEN}'
+    send_resolved: true
+    retry: 1h
+
+- name: 'beta'
+  # Send email:
+  email_configs:
+  - to: "${ALERT_EMAIL_BETA}"
+
+  # Also send Pushover notifications (for ANJ):
+  pushover_configs:
+  - user_key: '${PUSHOVER_USER_KEY}'
+    token: '${PUSHOVER_APP_TOKEN}'
+    send_resolved: true
+    retry: 1h
+
+- name: 'prod'
+  # Send email:
+  email_configs:
+  - to: "${ALERT_EMAIL_PROD}"
+
+  # Also send Pushover notifications (for ANJ):
   pushover_configs:
   - user_key: '${PUSHOVER_USER_KEY}'
     token: '${PUSHOVER_APP_TOKEN}'
