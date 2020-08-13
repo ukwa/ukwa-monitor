@@ -1,5 +1,6 @@
 [dev]
 pushgtw = http://monitor-pushgateway.dapi.wa.bl.uk
+testsfile = dev.tests
 
 [beta]
 pushgtw = http://monitor-pushgateway.bapi.wa.bl.uk

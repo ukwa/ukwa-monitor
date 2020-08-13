@@ -24,6 +24,22 @@ def main():
 	# read environment settings
 	settings.read(env=environ)
 
+	# loop through wa service stats
+
+	# declare registry, inside loop for service
+	registry = CollectorRegistry()
+
+	# set/get stat values
+	statJob = 'gilh'
+	statName = statJob + '_' + 'unixtime'
+	statDesc = 'set to current unix time'
+	statValue = 824
+	g = Gauge(statName, statDesc, registry=registry)
+	g.set(statValue)
+	logging.debug("Added job [{}] statName [{}] statValue [{}]".format(statJob, statName, statValue))
+
+	# upload to push gateway
+	push_to_gateway(settings.get('pushgtw'), registry=registry, job=statJob)
 
 	logging.info('Fin')
 
