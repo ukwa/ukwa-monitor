@@ -1,0 +1,13 @@
+{
+	'job': 'trackdb',
+	'stats': [
+		{
+			'name': 'refresh_timestamp',
+			'host': 'solr8',
+			'label': '',
+			'desc': 'Most recent trackdb refresh_timestamp',
+			'uri': 'http://solr8.api.wa.bl.uk/solr/tracking/select?q=*:*&sort=refresh_date_dt%20desc&wt=json',
+			'match': 'refresh_date_dt'
+		}
+	]
+}
