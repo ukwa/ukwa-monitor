@@ -31,15 +31,19 @@ def main():
 
 	# set/get stat values
 	statJob = 'gilh'
+	statHost='solr8'
+	statLabel='asdf'
 	statName = statJob + '_' + 'unixtime'
 	statDesc = 'set to current unix time'
 	statValue = 824
-	g = Gauge(statName, statDesc, registry=registry)
-	g.set(statValue)
-	logging.debug("Added job [{}] statName [{}] statValue [{}]".format(statJob, statName, statValue))
+
+	g = Gauge(statName, statDesc, labelnames=['instance','label'], registry=registry)
+	g.labels(instance=statHost,label=statLabel).set(statValue)
+	logging.debug("Added job [{}] statHost [{}] statName [{}] statValue [{}]".format(statJob, statHost, statName, statValue))
 
 	# upload to push gateway
 	push_to_gateway(settings.get('pushgtw'), registry=registry, job=statJob)
+	logging.info("Uploaded job {}".format(statJob))
 
 	logging.info('Fin')
 
