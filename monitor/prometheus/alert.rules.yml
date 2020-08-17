@@ -1,4 +1,15 @@
 groups:
+- name: trackdb
+  rules:
+  - alert: trackdb_daily_refresh_has_not_run
+    expr: (time() - trackdb_refresh_timestamp) / (60*60) > 24
+    for: 1h
+    labels:
+      severity: severe
+    annotations:
+      summary: "TrackDB not updated in last 24 hours"
+      description: "{{ $labels.instance }} of {{ $labels.job }} hasn't changed in over 24 hours"
+
 - name: Core metrics
   rules:
 
