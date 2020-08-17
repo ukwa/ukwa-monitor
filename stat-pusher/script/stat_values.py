@@ -12,22 +12,24 @@ import dateutil.parser
 import calendar
 
 def get_json_value(uri, match):
-	logging.debug("uri [{}]".format(uri))
+	logging.debug(f"uri [{uri}]")
 
 	# convert match string into list, to traverse uri json response
 	matchList = ast.literal_eval(match)
-	logging.debug("matchList [{}] type [{}]".format(matchList, type(matchList)))
+	logging.debug(f"matchList [{matchList}] type [{type(matchList)}]")
 
 	# get response
 	try:
 		r = requests.get(uri)
+		logging.debug(f"Response code [{r.status_code}]")
+		r.raise_for_status()
 		response = r.json()
-	except Exception as e:
-		logging.error("Failed to get [{}]\n[{}]".format(uri, e))
+	except HTTPError as he:
+		logging.error(f"HTTP error trying  to get [{uri}]\n[{he}]")
 		sys.exit()
-
-	#### NEED TO ENSURE RESPONSE IS SUCCESSFUL ########################################
-
+	except Exception as e:
+		logging.error(f"Failed to get [{uri}]\n[{e}]")
+		sys.exit()
 
 	# extract value
 	for k in matchList:
@@ -36,9 +38,9 @@ def get_json_value(uri, match):
 		elif k in response[0]:
 			response = response[0][k]
 		else:
-			logging.error("match key [{}] not found in uri {}\njson [{}]".format(k, uri, response))
+			logging.error(f"match key [{k}] not found in uri {uri}\njson [{response}]")
 			sys.exit()
-	logging.debug("response [{}] type [{}]".format(response, type(response)))
+	logging.debug(f"Value [{response}] type [{type(response)}]")
 
 	# ensure numerical value
 	if type(response) is not int:
@@ -48,11 +50,12 @@ def get_json_value(uri, match):
 		# if value is a timestamp, get unixtime
 		#### NEED TO WORK OUT PROCESSING OF STRING INTO UNIXTIME ############################
 		elif dateutil.parser.parse(response):
-			dst = calendar.timegm(dateutil.parser.parse(response))
+			#dst = calendar.timegm(dateutil.parser.parse(response))
 			
-			logging.debug("date string [{}] dst [{}]".format(response, type(dst)))
+			#logging.debug(f"date string [{response}] dst [{type(dst)}]")
 			response = 42
 		else:
-			response = 4
+			logging.error(f"Value [{response}] type [{type(response)}] not convertible to numeric")
+			sys.exit()
 
 	return response

@@ -34,10 +34,10 @@ def main():
 			with open(settings.get('statsfile'), 'r') as infile:
 				statTests = json.load(infile)
 		except Exception as e:
-			logging.error("Failed to read statsfile [{}]\n[{}]".format(settings.get('statsfile'), e))
+			logging.error(f"Failed to read statsfile [{settings.get('statsfile')}]\n[{e}]")
 			sys.exit()
 	else:
-		logging.error("statsfile [{}] to test for [{}] environment missing".format(settings.get('statsfile'), environ))	
+		logging.error(f"statsfile [{settings.get('statsfile')}] to test for [{environ}] environment missing")	
 		sys.exit()
 
 	# declare registry, inside loop for service
@@ -46,6 +46,7 @@ def main():
 	# loop through wa service stats
 	for job in statTests:
 		for stat in statTests[job]:
+			# get stat details
 			try:
 				name = job + '_' + stat
 				host = statTests[job][stat]['host']
@@ -55,20 +56,21 @@ def main():
 				uri = statTests[job][stat]['uri']
 				match = statTests[job][stat]['match']
 			except Exception as e:
-				logging.error("Children of job [{}] stat [{}] missing\n[{}]".format(job, stat, e))
+				logging.error(f"Children of job [{job}] stat [{stat}] missing\n[{e}]")
 				sys.exit()
 
 			# get stat value
 			if kind == 'json':
 				value = stat_values.get_json_value(uri, match)
 
+			# set pushgateway submission details
 			g = Gauge(name, desc, labelnames=['instance','label'], registry=registry)
 			g.labels(instance=host,label=label).set(value)
-			logging.debug("Added job [{}] host [{}] name [{}] value [{}]".format(job, host, name, value))
+			logging.debug(f"Added job [{job}] host [{host}] name [{name}] value [{value}]")
 
 			# upload to push gateway
 			push_to_gateway(settings.get('pushgtw'), registry=registry, job=job)
-			logging.info("Uploaded {} {} {}".format(job, stat, value))
+			logging.info(f"Uploaded {job} {stat} {value}")
 
 	logging.info('Fin')
 

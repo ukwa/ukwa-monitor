@@ -14,23 +14,26 @@ def read(env='dev'):
 
 	# test settings file exists
 	if os.path.isfile(stgFile):
-		logging.debug("Reading [{}] settings".format(env))
+		logging.debug(f"Reading [{env}] settings")
 		# read environ settings file
 		cfg.read(stgFile)
 
 		if env in cfg.sections():
 			environ = cfg[env]
+		else:
+			logging.error(f"[{env}] section missing from [{stgFile}] settings file")
+			sys.exit()
 	else:
-		logging.error("[{}] settings file missing".format(stgFile))
+		logging.error(f"[{stgFile}] settings file missing")
 		sys.exit()
 
-	logging.info("Using {} environment settings".format(env))
+	logging.info(f"Using {env} environment settings")
 
 def get(key):
 	global environ
 	if key in environ:
-		logging.debug("setting {}: {}".format(key, environ[key]))
+		logging.debug(f"setting {key}: [{environ[key]}]")
 		return environ[key]
 	else:
-		logging.error("No cfg key [{}] declared".format(key))
+		logging.error(f"No cfg key [{key}] declared")
 		sys.exit()

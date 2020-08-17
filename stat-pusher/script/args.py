@@ -11,18 +11,18 @@ def passed():
 	environ = ''
 	if len(sys.argv) == 2:
 		environ = sys.argv[1]
-		logging.debug("Script argument [{}]".format(environ))
+		logging.debug(f"Script argument [{environ}]")
 
 		# test environ value
 		if environ == 'dev' or environ == 'beta' or environ == 'prod':
 			pass
 		else:
-			logging.error("Script environ argument not recognised [{}]".format(environ))
+			logging.error(f"Script environ argument not recognised [{environ}]")
 			sys.exit()
 
 	else:
 		logging.error("Script environ argument not identified")
-		logging.error("sys.argv [{}]".format(sys.argv))
+		logging.error(f"sys.argv [{sys.argv}]")
 		sys.exit()
 
 	return environ
