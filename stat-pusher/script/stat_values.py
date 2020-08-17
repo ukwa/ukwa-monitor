@@ -9,7 +9,7 @@ import ast
 import requests
 import sys
 import dateutil.parser
-import calendar
+import datetime
 
 def get_json_value(uri, match):
 	logging.debug(f"uri [{uri}]")
@@ -32,30 +32,32 @@ def get_json_value(uri, match):
 		sys.exit()
 
 	# extract value
+	value = response
 	for k in matchList:
-		if k in response:
-			response = response[k]
-		elif k in response[0]:
-			response = response[0][k]
+		if k in value:
+			value = value[k]
+		elif k in value[0]:
+			value = value[0][k]
 		else:
-			logging.error(f"match key [{k}] not found in uri {uri}\njson [{response}]")
+			logging.error(f"match key [{k}] not found in uri {uri}\njson [{value}]")
 			sys.exit()
-	logging.debug(f"Value [{response}] type [{type(response)}]")
+	logging.debug(f"Value [{value}] type [{type(value)}]")
 
 	# ensure numerical value
-	if type(response) is not int:
-		if type(response) is float:
-			response = int(response)
-
+	if type(value) is not int and type(value) is not float:
 		# if value is a timestamp, get unixtime
-		#### NEED TO WORK OUT PROCESSING OF STRING INTO UNIXTIME ############################
-		elif dateutil.parser.parse(response):
-			#dst = calendar.timegm(dateutil.parser.parse(response))
-			
-			#logging.debug(f"date string [{response}] dst [{type(dst)}]")
-			response = 42
+		dt = None
+		try:
+			dt = dateutil.parser.parse(value)
+		except Exception as e:
+			logging.error(f"Value [{value}] type [{type(value)}] not recognised as datestamp")
+			sys.exit()
+		if isinstance(dt, datetime.datetime):
+			logging.debug(f"timestamp dt [{dt}] type [{type(dt)}]")
+			value = dt.timestamp()
+			logging.debug(f"Value epoch [{value}]")
 		else:
-			logging.error(f"Value [{response}] type [{type(response)}] not convertible to numeric")
+			logging.error(f"Value [{value}] type [{type(value)}] not convertible to numeric")
 			sys.exit()
 
-	return response
+	return value
