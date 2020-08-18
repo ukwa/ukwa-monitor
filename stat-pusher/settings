@@ -7,3 +7,4 @@ pushgtw = http://monitor-pushgateway.bapi.wa.bl.uk
 
 [prod]
 pushgtw = http://monitor-pushgateway.api.wa.bl.uk
+statsfile = prod.stats
