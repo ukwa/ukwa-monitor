@@ -105,6 +105,9 @@ def replace_output_single(outHandle, **kwargs):
 	elif kwargs['title'] == 'WWW' or kwargs['title'] == 'Query':
 		expr = 'count(probe_http_status_code{job=\\"' + kwargs['job'] + '\\"} != 200) OR vector(0)'
 		templateCode = templateCode.replace('<expr>', expr)
+	elif kwargs['title'] == 'trackdb':
+		expr = '((time() - trackdb_refresh_timestamp) / (60*60) > 24) OR vector(0)'
+		templateCode = templateCode.replace('<expr>', expr)
 
 	# remove last comma if last panel
 	if 'lastPanel' in kwargs:
@@ -155,6 +158,7 @@ def main():
 	replace_output_single(outHandle, tmpFl=panelSingle, job='services', title='CPU', h=2, w=2, x=2, y=6)
 	replace_output_single(outHandle, tmpFl=panelSingle, job='services', title='Dsk', h=2, w=2, x=4, y=6)
 	replace_output_single(outHandle, tmpFl=panelSingle, job='services', title='Mem', h=2, w=2, x=6, y=6)
+	replace_output_single(outHandle, tmpFl=panelSingle, job='services', title='trackdb', h=2, w=2, x=0, y=8)
 	replace_output_title(outHandle, tmpFl=panelTitle, job='gluster', title='Gluster', h=1, w=8, x=8, y=6)
 	replace_output_single(outHandle, tmpFl=panelSingle, job='gluster', title='Up', h=2, w=2, x=8, y=7)
 	replace_output_single(outHandle, tmpFl=panelSingle, job='gluster', title='CPU', h=2, w=2, x=10, y=7)
