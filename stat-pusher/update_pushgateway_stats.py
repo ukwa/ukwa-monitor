@@ -17,7 +17,7 @@ from script import args, settings, stat_values
 
 # main ----------------------------------------
 def main():
-	log.configure(lvl='DEBUG')
+	log.configure(lvl='INFO')
 	logging.info('Start ---------------------')
 
 
