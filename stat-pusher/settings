@@ -1,0 +1,9 @@
+[dev]
+pushgtw = http://monitor-pushgateway.dapi.wa.bl.uk
+statsfile = dev.stats
+
+[beta]
+pushgtw = http://monitor-pushgateway.bapi.wa.bl.uk
+
+[prod]
+pushgtw = http://monitor-pushgateway.api.wa.bl.uk
