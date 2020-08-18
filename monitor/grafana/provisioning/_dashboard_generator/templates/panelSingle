@@ -3,9 +3,9 @@
       "colorBackground": true,
       "colorValue": false,
       "colors": [
-        "#299c46",
-        "<colour>",
-        "#d44a3a"
+        "<colour1>",
+        "<colour2>",
+        "<colour3>",
       ],
       "format": "none",
       "gauge": {

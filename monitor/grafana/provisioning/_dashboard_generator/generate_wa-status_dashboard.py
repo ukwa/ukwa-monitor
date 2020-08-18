@@ -68,14 +68,24 @@ def replace_output_single(outHandle, **kwargs):
 	templateCode = templateCode.replace('<w>', str(kwargs['w']))
 	templateCode = templateCode.replace('<x>', str(kwargs['x']))
 	templateCode = templateCode.replace('<y>', str(kwargs['y']))
+	# specific thresholds replacement
 	if 'thresholds' in kwargs:
 		templateCode = templateCode.replace('<thresholds>', kwargs['thresholds'])
 	else:
-		templateCode = templateCode.replace('<thresholds>', '0.1,1')			# default threshhold
-	if 'colour' in kwargs:
-		templateCode = templateCode.replace('<colour>', kwargs['colour'])
+		templateCode = templateCode.replace('<thresholds>', '0.1,1')				# default threshhold
+	# specific colours replacement
+	if 'colour1' in kwargs:
+		templateCode = templateCode.replace('<colour1>', kwargs['colour1'])
 	else:
-		templateCode = templateCode.replace('<colour>', 'rgba(237, 129, 40, 0.89)')			# default panel mid colour
+		templateCode = templateCode.replace('<colour1>', '#299C46')				# default panel okay colour
+	if 'colour2' in kwargs:
+		templateCode = templateCode.replace('<colour2>', kwargs['colour2'])
+	else:
+		templateCode = templateCode.replace('<colour2>', '#ED8027')				# default panel warning colour
+	if 'colour3' in kwargs:
+		templateCode = templateCode.replace('<colour3>', kwargs['colour3'])
+	else:
+		templateCode = templateCode.replace('<colour3>', '#D44A3A')				# default panel problem colour
 
 	# add expr
 	if kwargs['title'] == 'Up':
@@ -105,8 +115,11 @@ def replace_output_single(outHandle, **kwargs):
 	elif kwargs['title'] == 'WWW' or kwargs['title'] == 'Query':
 		expr = 'count(probe_http_status_code{job=\\"' + kwargs['job'] + '\\"} != 200) OR vector(0)'
 		templateCode = templateCode.replace('<expr>', expr)
-	elif kwargs['title'] == 'trackdb':
+	elif kwargs['title'] == 'trackdb refresh':
 		expr = '((time() - trackdb_refresh_timestamp) / (60*60) > 24) OR vector(0)'
+		templateCode = templateCode.replace('<expr>', expr)
+	elif kwargs['title'] == 'trackdb numFound':
+		expr = 'sum(trackdb_numFound - (trackdb_numFound offset 1d)) OR vector(0)'
 		templateCode = templateCode.replace('<expr>', expr)
 
 	# remove last comma if last panel
@@ -134,46 +147,55 @@ def main():
 	# output single panels
 	replace_output_title(outHandle, tmpFl=panelTitle, job='ingest_metadata', title='Ingest & Metadata', h=1, w=8, x=0, y=0)
 	replace_output_single(outHandle, tmpFl=panelSingle, job='ingest_metadata', title='Up', h=2, w=2, x=0, y=1)
-	replace_output_single(outHandle, tmpFl=panelSingle, job='ingest_metadata', title='CPU', h=2, w=2, x=2, y=1, thresholds='0.1,1.1', colour='#ba43a9')
+	replace_output_single(outHandle, tmpFl=panelSingle, job='ingest_metadata', title='CPU', h=2, w=2, x=2, y=1, thresholds='0.1,1.1', colour2='#ba43a9')
 	replace_output_single(outHandle, tmpFl=panelSingle, job='ingest_metadata', title='Dsk', h=2, w=2, x=4, y=1)
 	replace_output_single(outHandle, tmpFl=panelSingle, job='ingest_metadata', title='Mem', h=2, w=2, x=6, y=1)
 	replace_output_single(outHandle, tmpFl=panelSingle, job='im-access-http', title='WWW', h=2, w=2, x=0, y=3)
+
 	replace_output_title(outHandle, tmpFl=panelTitle, job='hadoop', title='Hadoop', h=1, w=8, x=8, y=0)
 	replace_output_single(outHandle, tmpFl=panelSingle, job='hadoop', title='Up', h=2, w=2, x=8, y=1)
 	replace_output_single(outHandle, tmpFl=panelSingle, job='hadoop', title='CPU', h=2, w=2, x=10, y=1)
 	replace_output_single(outHandle, tmpFl=panelSingle, job='hadoop', title='Dsk', h=2, w=2, x=12, y=1)
-	replace_output_single(outHandle, tmpFl=panelSingle, job='hadoop', title='Mem', h=2, w=2, x=14, y=1)
+	replace_output_single(outHandle, tmpFl=panelSingle, job='hadoop', title='Mem', h=2, w=2, x=14, y=1, thresholds='0.1,1.1')
 	replace_output_single(outHandle, tmpFl=panelSingle, job='hadoop', title='Nodes', h=2, w=2, x=8, y=3)
 	replace_output_single(outHandle, tmpFl=panelSingle, job='hadoop', title='Under-rep', h=2, w=2, x=10, y=3)
 	replace_output_single(outHandle, tmpFl=panelSingleHadoopUsed, job='hadoop', title='Used', h=2, w=2, x=12, y=3)
+
 	replace_output_title(outHandle, tmpFl=panelTitle, job='discovery_access', title='Discovery & Access', h=1, w=8, x=16, y=0)
 	replace_output_single(outHandle, tmpFl=panelSingle, job='discovery_access', title='Up', h=2, w=2, x=16, y=1)
 	replace_output_single(outHandle, tmpFl=panelSingle, job='discovery_access', title='CPU', h=2, w=2, x=18, y=1)
 	replace_output_single(outHandle, tmpFl=panelSingle, job='discovery_access', title='Dsk', h=2, w=2, x=20, y=1)
-	replace_output_single(outHandle, tmpFl=panelSingle, job='discovery_access', title='Mem', h=2, w=2, x=22, y=1, thresholds='0.1,1.1', colour='#ba43a9')
-	replace_output_single(outHandle, tmpFl=panelSingle, job='discovery_access', title='UTR', h=2, w=2, x=16, y=3)
-	replace_output_single(outHandle, tmpFl=panelSingle, job='da-access-http', title='WWW', h=2, w=2, x=18, y=3)
+	replace_output_single(outHandle, tmpFl=panelSingle, job='discovery_access', title='Mem', h=2, w=2, x=22, y=1, thresholds='0.1,1.1', colour2='#ba43a9')
+	replace_output_single(outHandle, tmpFl=panelSingle, job='discovery_access', title='UTR', h=2, w=2, x=16, y=3, thresholds='0.1,2.1')
+	replace_output_single(outHandle, tmpFl=panelSingle, job='da-access-http', title='WWW', h=2, w=2, x=18, y=3, thresholds='0.1,1.1')
+
 	replace_output_title(outHandle, tmpFl=panelTitle, job='services', title='Services', h=1, w=8, x=0, y=5)
 	replace_output_single(outHandle, tmpFl=panelSingle, job='services', title='Up', h=2, w=2, x=0, y=6)
 	replace_output_single(outHandle, tmpFl=panelSingle, job='services', title='CPU', h=2, w=2, x=2, y=6)
 	replace_output_single(outHandle, tmpFl=panelSingle, job='services', title='Dsk', h=2, w=2, x=4, y=6)
 	replace_output_single(outHandle, tmpFl=panelSingle, job='services', title='Mem', h=2, w=2, x=6, y=6)
-	replace_output_single(outHandle, tmpFl=panelSingle, job='services', title='trackdb', h=2, w=2, x=0, y=8)
+
 	replace_output_title(outHandle, tmpFl=panelTitle, job='gluster', title='Gluster', h=1, w=8, x=8, y=6)
 	replace_output_single(outHandle, tmpFl=panelSingle, job='gluster', title='Up', h=2, w=2, x=8, y=7)
 	replace_output_single(outHandle, tmpFl=panelSingle, job='gluster', title='CPU', h=2, w=2, x=10, y=7)
 	replace_output_single(outHandle, tmpFl=panelSingle, job='gluster', title='Dsk', h=2, w=2, x=12, y=7)
 	replace_output_single(outHandle, tmpFl=panelSingle, job='gluster', title='Mem', h=2, w=2, x=14, y=7)
+
 	replace_output_title(outHandle, tmpFl=panelTitle, job='solr', title='Solr', h=1, w=8, x=16, y=5)
 	replace_output_single(outHandle, tmpFl=panelSingle, job='solr', title='Up', h=2, w=2, x=16, y=6)
 	replace_output_single(outHandle, tmpFl=panelSingle, job='solr', title='CPU', h=2, w=2, x=18, y=6)
 	replace_output_single(outHandle, tmpFl=panelSingle, job='solr', title='Dsk', h=2, w=2, x=20, y=6)
 	replace_output_single(outHandle, tmpFl=panelSingle, job='solr', title='Mem', h=2, w=2, x=22, y=6)
 	replace_output_single(outHandle, tmpFl=panelSingle, job='solr-query', title='Query', h=2, w=2, x=16, y=8)
+
 	replace_output_title(outHandle, tmpFl=panelTitle, job='infrastructure', title='Infrastructure', h=1, w=8, x=8, y=9)
 	replace_output_single(outHandle, tmpFl=panelSingle, job='infrastructure', title='Up', h=2, w=2, x=8, y=10)
 	replace_output_single(outHandle, tmpFl=panelSingle, job='infrastructure', title='CPU', h=2, w=2, x=10, y=10)
 	replace_output_single(outHandle, tmpFl=panelSingle, job='infrastructure', title='Dsk', h=2, w=2, x=12, y=10)
+
+	replace_output_title(outHandle, tmpFl=panelTitle, job='wa_services', title='WA Services', h=1, w=24, x=0, y=12)
+	replace_output_single(outHandle, tmpFl=panelSingle, job='trackdb', title='trackdb refresh', h=2, w=3, x=0, y=13)
+	replace_output_single(outHandle, tmpFl=panelSingle, job='trackdb', title='trackdb numFound', h=2, w=3, x=3, y=13, thresholds='10,100', colour1='#D44A3A', colour3='#299C46')
 
 
 	# output last singlestat panel with final ',' removed to make output json valid
