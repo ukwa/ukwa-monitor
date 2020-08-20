@@ -9,7 +9,7 @@ import re
 import datetime
 
 # output filename
-outFile = 'wa-status_json.out-template'
+outFile = 'wa_status.json-template'
 
 # dashboard prefixes
 dashTitle = 'WA Status'
@@ -20,8 +20,9 @@ header = 'templates/header'
 panelHeader = 'templates/panelHeader'
 panelTitle = 'templates/panelTitle'
 panelSingle = 'templates/panelSingle'
-panelSingleIMCPU = 'templates/panelSingleIMCPU'
 panelSingleHadoopUsed = 'templates/panelSingleHadoopUsed'
+panelStat = 'templates/panelStat'
+panelStatHadoopUsed = 'templates/panelStatHadoopUsed'
 panelFooter = 'templates/panelFooter'
 footer = 'templates/footer'
 
@@ -36,43 +37,54 @@ def nextID():
 
 def read_template(**kwargs):
 	tplC = ''
-	with open(kwargs['tmpFl'], 'r') as tC:
+	with open(kwargs['pnl'], 'r') as tC:
 		tplC = tC.read()
 	return tplC
 
 def output(outHandle, **kwargs):
-	templateCode = read_template(tmpFl=kwargs['tmpFl'])
+	templateCode = read_template(pnl=kwargs['pnl'])
 	outHandle.write(templateCode)
 
 def replace_output_title(outHandle, **kwargs):
-	templateCode = read_template(tmpFl=kwargs['tmpFl'])
-
-	# replacements
+	templateCode = read_template(pnl=kwargs['pnl'])
 	templateCode = templateCode.replace('<title>', kwargs['title'])
 	templateCode = templateCode.replace('<id>', nextID())
 	templateCode = templateCode.replace('<h>', str(kwargs['h']))
 	templateCode = templateCode.replace('<w>', str(kwargs['w']))
 	templateCode = templateCode.replace('<x>', str(kwargs['x']))
 	templateCode = templateCode.replace('<y>', str(kwargs['y']))
-
-	print("template: {}\tjob: {}\ttitle: {}\th: {}\tw: {}\t\tx: {}\ty: {}".format(kwargs['tmpFl'], kwargs['job'], kwargs['title'], kwargs['h'], kwargs['w'], kwargs['x'], kwargs['y']))		# action reporting
 	outHandle.write(templateCode)
 
 def replace_output_single(outHandle, **kwargs):
-	templateCode = read_template(tmpFl=kwargs['tmpFl'])
-
-	# replacements
+	templateCode = read_template(pnl=kwargs['pnl'])
 	templateCode = templateCode.replace('<title>', kwargs['title'])
 	templateCode = templateCode.replace('<id>', nextID())
 	templateCode = templateCode.replace('<h>', str(kwargs['h']))
 	templateCode = templateCode.replace('<w>', str(kwargs['w']))
 	templateCode = templateCode.replace('<x>', str(kwargs['x']))
 	templateCode = templateCode.replace('<y>', str(kwargs['y']))
+
 	# specific thresholds replacement
-	if 'thresholds' in kwargs:
-		templateCode = templateCode.replace('<thresholds>', kwargs['thresholds'])
+	print("pnl [{}]".format(kwargs['pnl']))
+	if kwargs['pnl'] == panelStat or kwargs['pnl'] == panelStatHadoopUsed:
+		print("In Stat")
+		if 'threshold1' in kwargs:
+			templateCode = templateCode.replace('<threshold1>', kwargs['threshold1'])
+		else:
+			templateCode = templateCode.replace('<threshold1>', 'null')
+		if 'threshold2' in kwargs:
+			templateCode = templateCode.replace('<threshold2>', kwargs['threshold2'])
+		else:
+			templateCode = templateCode.replace('<threshold2>', '0.1')
+		if 'threshold3' in kwargs:
+			templateCode = templateCode.replace('<threshold3>', kwargs['threshold3'])
+		else:
+			templateCode = templateCode.replace('<threshold3>', '1')
 	else:
-		templateCode = templateCode.replace('<thresholds>', '0.1,1')				# default threshhold
+		if 'thresholds' in kwargs:
+			templateCode = templateCode.replace('<thresholds>', kwargs['thresholds'])
+		else:
+			templateCode = templateCode.replace('<thresholds>', '0.1,1')			# default threshhold
 	# specific colours replacement
 	if 'colour1' in kwargs:
 		templateCode = templateCode.replace('<colour1>', kwargs['colour1'])
@@ -116,97 +128,96 @@ def replace_output_single(outHandle, **kwargs):
 		expr = 'count(probe_http_status_code{job=\\"' + kwargs['job'] + '\\"} != 200) OR vector(0)'
 		templateCode = templateCode.replace('<expr>', expr)
 	elif kwargs['title'] == 'trackdb refresh':
-		expr = '((time() - trackdb_refresh_timestamp) / (60*60) > 24) OR vector(0)'
+		expr = 'sum((time() - trackdb_refresh_timestamp) / (60*60) > 24) OR vector(0)'
 		templateCode = templateCode.replace('<expr>', expr)
 	elif kwargs['title'] == 'trackdb numFound':
-		expr = 'sum(trackdb_numFound - (trackdb_numFound offset 1d)) OR vector(0)'
+		expr = 'sum(trackdb_numFound - (trackdb_numFound offset 1d))'
 		templateCode = templateCode.replace('<expr>', expr)
 
-	# remove last comma if last panel
-	if 'lastPanel' in kwargs:
-		templateCode = re.sub(r'},$', '}', templateCode)
-
-	print("template: {}\tjob: {}\ttitle: {}\t\th: {}\tw: {}\t\t\tx: {}\ty: {}".format(kwargs['tmpFl'], kwargs['job'], kwargs['title'], kwargs['h'], kwargs['w'], kwargs['x'], kwargs['y']))		# action reporting
+	# add last comma if not last panel
+	if 'lastPanel' not in kwargs:
+		templateCode = re.sub(r'}$', '},', templateCode)
 	outHandle.write(templateCode)
 
 def replace_output_footer(outHandle, **kwargs):
-	templateCode = read_template(tmpFl=kwargs['tmpFl'])
-
+	templateCode = read_template(pnl=kwargs['pnl'])
 	templateCode = templateCode.replace('<title>', kwargs['title'])
 	templateCode = templateCode.replace('<uid>', kwargs['uid'])
-
-	print("\ntemplate: {}\ttitle: {}\tuid: {}".format(kwargs['tmpFl'], kwargs['title'], kwargs['uid']))		# action reporting
 	outHandle.write(templateCode)
 
 # main -----------------------------------
 def main():
 	outHandle = open(outFile, 'w')
-	output(outHandle, tmpFl = header)
-	output(outHandle, tmpFl = panelHeader)
+	output(outHandle, pnl = header)
+	output(outHandle, pnl = panelHeader)
 
 	# output single panels
-	replace_output_title(outHandle, tmpFl=panelTitle, job='ingest_metadata', title='Ingest & Metadata', h=1, w=8, x=0, y=0)
-	replace_output_single(outHandle, tmpFl=panelSingle, job='ingest_metadata', title='Up', h=2, w=2, x=0, y=1)
-	replace_output_single(outHandle, tmpFl=panelSingle, job='ingest_metadata', title='CPU', h=2, w=2, x=2, y=1, thresholds='0.1,1.1', colour2='#ba43a9')
-	replace_output_single(outHandle, tmpFl=panelSingle, job='ingest_metadata', title='Dsk', h=2, w=2, x=4, y=1)
-	replace_output_single(outHandle, tmpFl=panelSingle, job='ingest_metadata', title='Mem', h=2, w=2, x=6, y=1)
-	replace_output_single(outHandle, tmpFl=panelSingle, job='im-access-http', title='WWW', h=2, w=2, x=0, y=3)
+	replace_output_title(outHandle, pnl=panelTitle, job='ingest_metadata', title='Ingest & Metadata', h=1, w=8, x=0, y=0)
+	replace_output_single(outHandle, pnl=panelStat, job='ingest_metadata', title='Up', h=2, w=2, x=0, y=1)
+#	replace_output_single(outHandle, pnl=panelSingle, job='ingest_metadata', title='CPU', h=2, w=2, x=2, y=1, thresholds='0.1,1.1', colour2='#ba43a9')
+	replace_output_single(outHandle, pnl=panelStat, job='ingest_metadata', title='CPU', h=2, w=2, x=2, y=1, threshold2='0.1', threshold3='1.1', colour2='#ba43a9')
+	replace_output_single(outHandle, pnl=panelStat, job='ingest_metadata', title='Dsk', h=2, w=2, x=4, y=1)
+	replace_output_single(outHandle, pnl=panelStat, job='ingest_metadata', title='Mem', h=2, w=2, x=6, y=1)
+	replace_output_single(outHandle, pnl=panelStat, job='im-access-http', title='WWW', h=2, w=2, x=0, y=3)
 
-	replace_output_title(outHandle, tmpFl=panelTitle, job='hadoop', title='Hadoop', h=1, w=8, x=8, y=0)
-	replace_output_single(outHandle, tmpFl=panelSingle, job='hadoop', title='Up', h=2, w=2, x=8, y=1)
-	replace_output_single(outHandle, tmpFl=panelSingle, job='hadoop', title='CPU', h=2, w=2, x=10, y=1)
-	replace_output_single(outHandle, tmpFl=panelSingle, job='hadoop', title='Dsk', h=2, w=2, x=12, y=1)
-	replace_output_single(outHandle, tmpFl=panelSingle, job='hadoop', title='Mem', h=2, w=2, x=14, y=1, thresholds='0.1,1.1')
-	replace_output_single(outHandle, tmpFl=panelSingle, job='hadoop', title='Nodes', h=2, w=2, x=8, y=3)
-	replace_output_single(outHandle, tmpFl=panelSingle, job='hadoop', title='Under-rep', h=2, w=2, x=10, y=3)
-	replace_output_single(outHandle, tmpFl=panelSingleHadoopUsed, job='hadoop', title='Used', h=2, w=2, x=12, y=3)
+	replace_output_title(outHandle, pnl=panelTitle, job='hadoop', title='Hadoop', h=1, w=8, x=8, y=0)
+	replace_output_single(outHandle, pnl=panelStat, job='hadoop', title='Up', h=2, w=2, x=8, y=1)
+	replace_output_single(outHandle, pnl=panelStat, job='hadoop', title='CPU', h=2, w=2, x=10, y=1)
+	replace_output_single(outHandle, pnl=panelStat, job='hadoop', title='Nodes', h=2, w=2, x=12, y=1)
+#	replace_output_single(outHandle, pnl=panelSingleHadoopUsed, job='hadoop', title='Used', h=4, w=2, x=14, y=1)
+	replace_output_single(outHandle, pnl=panelStatHadoopUsed, job='hadoop', title='Used', h=4, w=2, x=14, y=1, threshold2='85', threshold3='90')
+	replace_output_single(outHandle, pnl=panelStat, job='hadoop', title='Dsk', h=2, w=2, x=8, y=3)
+#	replace_output_single(outHandle, pnl=panelSingle, job='hadoop', title='Mem', h=2, w=2, x=10, y=3, thresholds='0.1,1.1')
+	replace_output_single(outHandle, pnl=panelStat, job='hadoop', title='Mem', h=2, w=2, x=10, y=3, threshold2='0.1', threshold3='1.1')
+	replace_output_single(outHandle, pnl=panelStat, job='hadoop', title='Under-rep', h=2, w=2, x=12, y=3)
 
-	replace_output_title(outHandle, tmpFl=panelTitle, job='discovery_access', title='Discovery & Access', h=1, w=8, x=16, y=0)
-	replace_output_single(outHandle, tmpFl=panelSingle, job='discovery_access', title='Up', h=2, w=2, x=16, y=1)
-	replace_output_single(outHandle, tmpFl=panelSingle, job='discovery_access', title='CPU', h=2, w=2, x=18, y=1)
-	replace_output_single(outHandle, tmpFl=panelSingle, job='discovery_access', title='Dsk', h=2, w=2, x=20, y=1)
-	replace_output_single(outHandle, tmpFl=panelSingle, job='discovery_access', title='Mem', h=2, w=2, x=22, y=1, thresholds='0.1,1.1', colour2='#ba43a9')
-	replace_output_single(outHandle, tmpFl=panelSingle, job='discovery_access', title='UTR', h=2, w=2, x=16, y=3, thresholds='0.1,2.1')
-	replace_output_single(outHandle, tmpFl=panelSingle, job='da-access-http', title='WWW', h=2, w=2, x=18, y=3, thresholds='0.1,1.1')
+	replace_output_title(outHandle, pnl=panelTitle, job='discovery_access', title='Discovery & Access', h=1, w=8, x=16, y=0)
+	replace_output_single(outHandle, pnl=panelStat, job='discovery_access', title='Up', h=2, w=2, x=16, y=1)
+	replace_output_single(outHandle, pnl=panelStat, job='discovery_access', title='CPU', h=2, w=2, x=18, y=1)
+	replace_output_single(outHandle, pnl=panelStat, job='discovery_access', title='Dsk', h=2, w=2, x=20, y=1)
+#	replace_output_single(outHandle, pnl=panelSingle, job='discovery_access', title='Mem', h=2, w=2, x=22, y=1, thresholds='0.1,1.1', colour2='#ba43a9')
+	replace_output_single(outHandle, pnl=panelStat, job='discovery_access', title='Mem', h=2, w=2, x=22, y=1, threshold2='0.1', threshold3='1.1', colour2='#ba43a9')
+#	replace_output_single(outHandle, pnl=panelSingle, job='discovery_access', title='UTR', h=2, w=2, x=16, y=3, thresholds='0.1,2.1')
+	replace_output_single(outHandle, pnl=panelStat, job='discovery_access', title='UTR', h=2, w=2, x=16, y=3, threshold2='0.1', threshold3='2.1')
+#	replace_output_single(outHandle, pnl=panelSingle, job='da-access-http', title='WWW', h=2, w=2, x=18, y=3, thresholds='0.1,1.1')
+	replace_output_single(outHandle, pnl=panelStat, job='da-access-http', title='WWW', h=2, w=2, x=18, y=3, threshold2='0.1', threshold3='1.1')
 
-	replace_output_title(outHandle, tmpFl=panelTitle, job='services', title='Services', h=1, w=8, x=0, y=5)
-	replace_output_single(outHandle, tmpFl=panelSingle, job='services', title='Up', h=2, w=2, x=0, y=6)
-	replace_output_single(outHandle, tmpFl=panelSingle, job='services', title='CPU', h=2, w=2, x=2, y=6)
-	replace_output_single(outHandle, tmpFl=panelSingle, job='services', title='Dsk', h=2, w=2, x=4, y=6)
-	replace_output_single(outHandle, tmpFl=panelSingle, job='services', title='Mem', h=2, w=2, x=6, y=6)
+	replace_output_title(outHandle, pnl=panelTitle, job='services', title='Services', h=1, w=8, x=0, y=5)
+	replace_output_single(outHandle, pnl=panelStat, job='services', title='Up', h=2, w=2, x=0, y=6)
+	replace_output_single(outHandle, pnl=panelStat, job='services', title='CPU', h=2, w=2, x=2, y=6)
+	replace_output_single(outHandle, pnl=panelStat, job='services', title='Dsk', h=2, w=2, x=4, y=6)
+	replace_output_single(outHandle, pnl=panelStat, job='services', title='Mem', h=2, w=2, x=6, y=6)
 
-	replace_output_title(outHandle, tmpFl=panelTitle, job='gluster', title='Gluster', h=1, w=8, x=8, y=6)
-	replace_output_single(outHandle, tmpFl=panelSingle, job='gluster', title='Up', h=2, w=2, x=8, y=7)
-	replace_output_single(outHandle, tmpFl=panelSingle, job='gluster', title='CPU', h=2, w=2, x=10, y=7)
-	replace_output_single(outHandle, tmpFl=panelSingle, job='gluster', title='Dsk', h=2, w=2, x=12, y=7)
-	replace_output_single(outHandle, tmpFl=panelSingle, job='gluster', title='Mem', h=2, w=2, x=14, y=7)
+	replace_output_title(outHandle, pnl=panelTitle, job='gluster', title='Gluster', h=1, w=8, x=8, y=6)
+	replace_output_single(outHandle, pnl=panelStat, job='gluster', title='Up', h=2, w=2, x=8, y=7)
+	replace_output_single(outHandle, pnl=panelStat, job='gluster', title='CPU', h=2, w=2, x=10, y=7)
+	replace_output_single(outHandle, pnl=panelStat, job='gluster', title='Dsk', h=2, w=2, x=12, y=7)
+	replace_output_single(outHandle, pnl=panelStat, job='gluster', title='Mem', h=2, w=2, x=14, y=7)
 
-	replace_output_title(outHandle, tmpFl=panelTitle, job='solr', title='Solr', h=1, w=8, x=16, y=5)
-	replace_output_single(outHandle, tmpFl=panelSingle, job='solr', title='Up', h=2, w=2, x=16, y=6)
-	replace_output_single(outHandle, tmpFl=panelSingle, job='solr', title='CPU', h=2, w=2, x=18, y=6)
-	replace_output_single(outHandle, tmpFl=panelSingle, job='solr', title='Dsk', h=2, w=2, x=20, y=6)
-	replace_output_single(outHandle, tmpFl=panelSingle, job='solr', title='Mem', h=2, w=2, x=22, y=6)
-	replace_output_single(outHandle, tmpFl=panelSingle, job='solr-query', title='Query', h=2, w=2, x=16, y=8)
+	replace_output_title(outHandle, pnl=panelTitle, job='solr', title='Solr', h=1, w=8, x=16, y=5)
+	replace_output_single(outHandle, pnl=panelStat, job='solr', title='Up', h=2, w=2, x=16, y=6)
+	replace_output_single(outHandle, pnl=panelStat, job='solr', title='CPU', h=2, w=2, x=18, y=6)
+	replace_output_single(outHandle, pnl=panelStat, job='solr', title='Dsk', h=2, w=2, x=20, y=6)
+	replace_output_single(outHandle, pnl=panelStat, job='solr', title='Mem', h=2, w=2, x=22, y=6)
+	replace_output_single(outHandle, pnl=panelStat, job='solr-query', title='Query', h=2, w=2, x=16, y=8)
 
-	replace_output_title(outHandle, tmpFl=panelTitle, job='infrastructure', title='Infrastructure', h=1, w=8, x=8, y=9)
-	replace_output_single(outHandle, tmpFl=panelSingle, job='infrastructure', title='Up', h=2, w=2, x=8, y=10)
-	replace_output_single(outHandle, tmpFl=panelSingle, job='infrastructure', title='CPU', h=2, w=2, x=10, y=10)
-	replace_output_single(outHandle, tmpFl=panelSingle, job='infrastructure', title='Dsk', h=2, w=2, x=12, y=10)
+	replace_output_title(outHandle, pnl=panelTitle, job='infrastructure', title='Infrastructure', h=1, w=8, x=8, y=9)
+	replace_output_single(outHandle, pnl=panelStat, job='infrastructure', title='Up', h=2, w=2, x=8, y=10)
+	replace_output_single(outHandle, pnl=panelStat, job='infrastructure', title='CPU', h=2, w=2, x=10, y=10)
+	replace_output_single(outHandle, pnl=panelStat, job='infrastructure', title='Dsk', h=2, w=2, x=12, y=10)
+	replace_output_single(outHandle, pnl = panelStat, job = 'infrastructure', title = 'Mem', h=2, w=2, x=14, y=10)
 
-	replace_output_title(outHandle, tmpFl=panelTitle, job='wa_services', title='WA Services', h=1, w=24, x=0, y=12)
-	replace_output_single(outHandle, tmpFl=panelSingle, job='trackdb', title='trackdb refresh', h=2, w=3, x=0, y=13)
-	replace_output_single(outHandle, tmpFl=panelSingle, job='trackdb', title='trackdb numFound', h=2, w=3, x=3, y=13, thresholds='10,100', colour1='#D44A3A', colour3='#299C46')
-
-
-	# output last singlestat panel with final ',' removed to make output json valid
-	replace_output_single(outHandle, tmpFl = panelSingle, job = 'infrastructure', title = 'Mem', h=2, w=2, x=14, y=10, lastPanel = True)
+	replace_output_title(outHandle, pnl=panelTitle, job='wa_services', title='WA Services', h=1, w=24, x=0, y=12)
+	replace_output_single(outHandle, pnl=panelStat, job='trackdb', title='trackdb refresh', h=2, w=3, x=0, y=13)
+	# output last panel with final ',' removed to make output json valid
+#	replace_output_single(outHandle, pnl=panelSingle, job='trackdb', title='trackdb numFound', h=2, w=3, x=3, y=13, thresholds='10,100', colour1='#D44A3A', colour3='#299C46', lastPanel=True)
+	replace_output_single(outHandle, pnl=panelStat, job='trackdb', title='trackdb numFound', h=2, w=3, x=3, y=13, threshold2='10', threshold3='100', colour1='#D44A3A', colour3='#299C46', lastPanel=True)
 
 	# amend dashboard values
-	output(outHandle, tmpFl = panelFooter)
+	output(outHandle, pnl = panelFooter)
 	date = datetime.datetime.now()
 	formattedDate = date.strftime("%Y%m%d%H%M%S")
-#	replace_output_footer(outHandle, tmpFl = footer, title = dashTitle +'-'+ formattedDate, uid = dashUid +'-'+ formattedDate)
-	replace_output_footer(outHandle, tmpFl = footer, title = dashTitle, uid = dashUid)
+	replace_output_footer(outHandle, pnl=footer, title=dashTitle, uid=dashUid)
 
 	outHandle.close()
 

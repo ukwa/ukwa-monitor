@@ -8,7 +8,7 @@ groups:
       severity: severe
     annotations:
       summary: "TrackDB not updated in last 24 hours"
-      description: "{{ $labels.instance }} of {{ $labels.job }} hasn't changed in over 24 hours"
+      description: "{{ $labels.instance }} {{ $labels.job }} refresh_timestamp_dt hasn't changed in over 24 hours"
 
 - name: Core metrics
   rules:
@@ -33,13 +33,22 @@ groups:
       description: "CPU rate on {{ $labels.instance }} > 80% for more than 10 minutes"
 
   - alert: host_free_disk_space
-    expr: (node_filesystem_avail_bytes{fstype=~"ext.|xfs|zfs"}/node_filesystem_size_bytes{fstype=~"ext.|xfs|zfs"}) * 100 < 15
+    expr: (node_filesystem_avail_bytes{fstype=~"ext.|xfs|zfs",instance!="jisc03:9100"}/node_filesystem_size_bytes{fstype=~"ext.|xfs|zfs",instance!="jisc03:9100"}) * 100 < 15
     for: 5m
     labels:
       severity: severe
     annotations:
       summary: "Disk space free < 15% on {{ $labels.instance }}"
       description: "Disk space free on {{ $labels.instance }} has been less that 15% for more than 5 minutes"
+
+  - alert: host_free_disk_space_jisc03
+    expr: (node_filesystem_avail_bytes{fstype=~"ext.|xfs|zfs",instance="jisc03:9100"}/node_filesystem_size_bytes{fstype=~"ext.|xfs|zfs",instance="jisc03:9100"}) * 100 < 5
+    for: 5m
+    labels:
+      severity: severe
+    annotations:
+      summary: "Disk space free < 5% on {{ $labels.instance }}"
+      description: "Disk space free on {{ $labels.instance }} has been less that 5% for more than 5 minutes"
 
   - alert: db_backup_failed
     expr: absent(ukwa_database_backup_size_bytes)

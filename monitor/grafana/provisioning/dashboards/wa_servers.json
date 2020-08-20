@@ -52,7 +52,9 @@
         "sort": "current",
         "sortDesc": true,
         "total": true,
-        "values": true
+        "values": true,
+        "hideZero": true,
+        "hideEmpty": true
       },
       "lines": true,
       "linewidth": 1,
@@ -152,7 +154,9 @@
         "sort": "current",
         "sortDesc": true,
         "total": false,
-        "values": true
+        "values": true,
+        "hideZero": true,
+        "hideEmpty": true
       },
       "lines": true,
       "linewidth": 1,
@@ -827,7 +831,7 @@
     "list": []
   },
   "time": {
-    "from": "now-2d",
+    "from": "now-7d",
     "to": "now"
   },
   "timepicker": {
