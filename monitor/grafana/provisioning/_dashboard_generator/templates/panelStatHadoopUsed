@@ -1,0 +1,73 @@
+    {
+      "gridPos": {
+        "h": <h>,
+        "w": <w>,
+        "x": <x>,
+        "y": <y>
+      },
+      "id": <id>,
+      "links": [],
+      "maxDataPoints": 100,
+      "targets": [
+        {
+          "expr": "<expr>",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "refId": "A"
+        }
+      ],
+      "title": "<title>",
+      "type": "stat",
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": ""
+        },
+        "orientation": "horizontal",
+        "textMode": "auto",
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "auto"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "unit": "percent",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": <threshold1>,
+                "color": "<colour1>"
+              },
+              {
+                "value": <threshold2>,
+                "color": "<colour2>"
+              },
+              {
+                "value": <threshold3>,
+                "color": "<colour3>"
+              }
+            ]
+          },
+          "mappings": [
+            {
+              "op": "=",
+              "text": "N/A",
+              "value": "null",
+              "id": 0,
+              "type": 1
+            }
+          ],
+          "nullValueMode": "connected"
+        },
+        "overrides": []
+      },
+      "pluginVersion": "7.1.3",
+      "cacheTimeout": null,
+      "interval": null,
+      "datasource": null
+    }
