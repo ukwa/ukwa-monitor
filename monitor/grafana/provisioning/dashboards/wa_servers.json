@@ -51,7 +51,7 @@
         "sideWidth": 200,
         "sort": "current",
         "sortDesc": true,
-        "total": true,
+        "total": false,
         "values": true,
         "hideZero": true,
         "hideEmpty": true
