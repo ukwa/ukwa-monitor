@@ -65,9 +65,7 @@ def replace_output_single(outHandle, **kwargs):
 	templateCode = templateCode.replace('<y>', str(kwargs['y']))
 
 	# specific thresholds replacement
-	print("pnl [{}]".format(kwargs['pnl']))
 	if kwargs['pnl'] == panelStat or kwargs['pnl'] == panelStatHadoopUsed:
-		print("In Stat")
 		if 'threshold1' in kwargs:
 			templateCode = templateCode.replace('<threshold1>', kwargs['threshold1'])
 		else:
