@@ -19,7 +19,7 @@ export HDFS_EXPORTER='hdfs-exporter.dapi.wa.bl.uk:80'
 export ALERT_RECEIVER='dev'
 export ALERT_EMAIL_DEV='gil.hoggarth@bl.uk'
 export ALERT_EMAIL_BETA='gil.hoggarth@bl.uk'
-export ALERT_EMAIL_PROD='wa=sysadm@bl.uk'
+export ALERT_EMAIL_PROD='wa-sysadm@bl.uk'
 
 source ~/gitlab/ukwa-monitor/monitoring.sh
 cd ../

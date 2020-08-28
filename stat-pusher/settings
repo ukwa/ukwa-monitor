@@ -4,6 +4,7 @@ statsfile = dev.stats
 
 [beta]
 pushgtw = http://monitor-pushgateway.bapi.wa.bl.uk
+statsfile = beta.stats
 
 [prod]
 pushgtw = http://monitor-pushgateway.api.wa.bl.uk
