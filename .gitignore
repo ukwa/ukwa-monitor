@@ -6,4 +6,12 @@ venv/
 ENV/
 
 *.pyc
+*out
 
+monitor/alertmanager/config.yml
+monitor/grafana/grafana.ini
+monitor/grafana/provisioning/_dashboard_generator/wa-status.json-template
+monitor/grafana/provisioning/dashboards/daily_dashboard.json
+monitor/grafana/provisioning/dashboards/wa_status.json
+monitor/grafana/provisioning/datasources/frequent_crawl.yaml
+monitor/grafana/provisioning/datasources/prometheus.yaml

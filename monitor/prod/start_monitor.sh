@@ -18,7 +18,7 @@ export HDFS_EXPORTER='hdfs-exporter.api.wa.bl.uk:80'
 export ALERT_RECEIVER='prod'
 export ALERT_EMAIL_DEV='gil.hoggarth@bl.uk'
 export ALERT_EMAIL_BETA='gil.hoggarth@bl.uk'
-export ALERT_EMAIL_PROD='wa=sysadm@bl.uk'
+export ALERT_EMAIL_PROD='wa-sysadm@bl.uk'
 
 source ~/gitlab/ukwa-monitor/monitoring.sh
 cd ../
