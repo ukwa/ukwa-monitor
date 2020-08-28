@@ -130,7 +130,7 @@ def replace_output_single(outHandle, **kwargs):
 		expr = 'count(probe_http_status_code{job=\\"' + kwargs['job'] + '\\"} != 200) OR vector(0)'
 		templateCode = templateCode.replace('<expr>', expr)
 	elif kwargs['title'] == 'trackdb refresh':
-		expr = 'sum((time() - trackdb_refresh_timestamp) / (60*60) > 24) OR vector(0)'
+		expr = '(time() - trackdb_refresh_timestamp) / (60*60)'
 		templateCode = templateCode.replace('<expr>', expr)
 	elif kwargs['title'] == 'trackdb numFound':
 		expr = 'sum(trackdb_numFound - (trackdb_numFound offset 1d))'
@@ -210,10 +210,10 @@ def main():
 	replace_output_single(outHandle, pnl = panelStat, job = 'infrastructure', title = 'Mem', h=2, w=2, x=14, y=10)
 
 	replace_output_title(outHandle, pnl=panelTitle, job='wa_services', title='WA Services', h=1, w=24, x=0, y=12)
-	replace_output_single(outHandle, pnl=panelStat, job='trackdb', title='trackdb refresh', h=2, w=3, x=0, y=13, textmode='value', threshold2='22', threshold3='24')
+	replace_output_single(outHandle, pnl=panelStat, job='trackdb', title='trackdb refresh', h=2, w=3, x=0, y=13, textmode='value', threshold2='22', threshold3='26')
 	# output last panel with final ',' removed to make output json valid
 #	replace_output_single(outHandle, pnl=panelSingle, job='trackdb', title='trackdb numFound', h=2, w=3, x=3, y=13, thresholds='10,100', colour1='#D44A3A', colour3='#299C46', lastPanel=True)
-	replace_output_single(outHandle, pnl=panelStat, job='trackdb', title='trackdb numFound', h=2, w=3, x=3, y=13, textnode='value', threshold2='10', threshold3='100', colour1='#D44A3A', colour3='#299C46', lastPanel=True)
+	replace_output_single(outHandle, pnl=panelStat, job='trackdb', title='trackdb numFound', h=2, w=3, x=3, y=13, textmode='value', threshold2='10', threshold3='100', colour1='#D44A3A', colour3='#299C46', lastPanel=True)
 
 	# amend dashboard values
 	output(outHandle, pnl = panelFooter)
