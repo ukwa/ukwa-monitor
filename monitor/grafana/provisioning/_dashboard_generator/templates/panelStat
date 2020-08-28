@@ -51,7 +51,7 @@
           "fields": ""
         },
         "orientation": "horizontal",
-        "textMode": "none",
+        "textMode": "<textMode>",
         "colorMode": "background",
         "graphMode": "none",
         "justifyMode": "auto"

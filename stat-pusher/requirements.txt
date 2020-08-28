@@ -1,4 +1,5 @@
 prometheus_client
 requests
+urllib
 python_dateutil
 datetime

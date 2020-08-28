@@ -65,9 +65,7 @@ def replace_output_single(outHandle, **kwargs):
 	templateCode = templateCode.replace('<y>', str(kwargs['y']))
 
 	# specific thresholds replacement
-	print("pnl [{}]".format(kwargs['pnl']))
 	if kwargs['pnl'] == panelStat or kwargs['pnl'] == panelStatHadoopUsed:
-		print("In Stat")
 		if 'threshold1' in kwargs:
 			templateCode = templateCode.replace('<threshold1>', kwargs['threshold1'])
 		else:
@@ -80,6 +78,10 @@ def replace_output_single(outHandle, **kwargs):
 			templateCode = templateCode.replace('<threshold3>', kwargs['threshold3'])
 		else:
 			templateCode = templateCode.replace('<threshold3>', '1')
+		if 'textmode' in kwargs:
+			templateCode = templateCode.replace('<textmode>', kwargs['textmode'])
+		else:
+			templateCode = templateCode.replace('<textmode>', 'none')
 	else:
 		if 'thresholds' in kwargs:
 			templateCode = templateCode.replace('<thresholds>', kwargs['thresholds'])
@@ -208,10 +210,10 @@ def main():
 	replace_output_single(outHandle, pnl = panelStat, job = 'infrastructure', title = 'Mem', h=2, w=2, x=14, y=10)
 
 	replace_output_title(outHandle, pnl=panelTitle, job='wa_services', title='WA Services', h=1, w=24, x=0, y=12)
-	replace_output_single(outHandle, pnl=panelStat, job='trackdb', title='trackdb refresh', h=2, w=3, x=0, y=13)
+	replace_output_single(outHandle, pnl=panelStat, job='trackdb', title='trackdb refresh', h=2, w=3, x=0, y=13, textmode='value', threshold2='22', threshold3='24')
 	# output last panel with final ',' removed to make output json valid
 #	replace_output_single(outHandle, pnl=panelSingle, job='trackdb', title='trackdb numFound', h=2, w=3, x=3, y=13, thresholds='10,100', colour1='#D44A3A', colour3='#299C46', lastPanel=True)
-	replace_output_single(outHandle, pnl=panelStat, job='trackdb', title='trackdb numFound', h=2, w=3, x=3, y=13, threshold2='10', threshold3='100', colour1='#D44A3A', colour3='#299C46', lastPanel=True)
+	replace_output_single(outHandle, pnl=panelStat, job='trackdb', title='trackdb numFound', h=2, w=3, x=3, y=13, textnode='value', threshold2='10', threshold3='100', colour1='#D44A3A', colour3='#299C46', lastPanel=True)
 
 	# amend dashboard values
 	output(outHandle, pnl = panelFooter)

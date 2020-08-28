@@ -7,6 +7,7 @@ This module is to cater for each variant.
 import logging
 import ast
 import requests
+from urllib.error import HTTPError
 import sys
 import dateutil.parser
 import datetime

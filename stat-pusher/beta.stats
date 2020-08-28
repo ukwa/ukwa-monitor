@@ -5,14 +5,14 @@
 			"label": "",
 			"desc": "Number of records in trackdb collection",
 			"kind": "json",
-			"uri": "http://solr8.bapi.wa.bl.uk/solr/tracking/select?q=*:*&wt=json",
+			"uri": "http://solr8.api.wa.bl.uk/solr/tracking/select?q=*:*&wt=json",
 			"match": "['response','numFound']"
 		},
 		"refresh_timestamp": {
 			"host": "solr8",
 			"label": "",
 			"desc": "Most recent trackdb refresh_timestamp",
-			"uri": "http://solr8.bapi.wa.bl.uk/solr/tracking/select?q=*:*&sort=refresh_date_dt%20desc&wt=json",
+			"uri": "http://solr8.api.wa.bl.uk/solr/tracking/select?q=*:*&sort=refresh_date_dt%20desc&wt=json",
 			"kind": "json",
 			"match": "['response','docs','refresh_date_dt']"
 		}

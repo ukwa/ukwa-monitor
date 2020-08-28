@@ -767,13 +767,13 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "mtail_solr_loglevel_count{loglevel=\"ERROR\"} - (mtail_solr_loglevel_count{loglevel=\"ERROR\"} offset 1d)",
+          "expr": "mtail_solr_loglevel_count{loglevel=\"ERROR\"} - (mtail_solr_loglevel_count{loglevel=\"ERROR\"} offset 10m)",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
         },
         {
-          "expr": "mtail_solr_loglevel_count{loglevel=\"WARN\"} - (mtail_solr_loglevel_count{loglevel=\"WARN\"} offset 1d)",
+          "expr": "mtail_solr_loglevel_count{loglevel=\"WARN\"} - (mtail_solr_loglevel_count{loglevel=\"WARN\"} offset 10m)",
           "interval": "",
           "legendFormat": "",
           "refId": "B"
