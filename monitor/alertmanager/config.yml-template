@@ -44,24 +44,10 @@ receivers:
   email_configs:
   - to: "${ALERT_EMAIL_DEV}"
 
-  # Also send Pushover notifications (for ANJ):
-  pushover_configs:
-  - user_key: '${PUSHOVER_USER_KEY}'
-    token: '${PUSHOVER_APP_TOKEN}'
-    send_resolved: true
-    retry: 1h
-
 - name: 'beta'
   # Send email:
   email_configs:
   - to: "${ALERT_EMAIL_BETA}"
-
-  # Also send Pushover notifications (for ANJ):
-  pushover_configs:
-  - user_key: '${PUSHOVER_USER_KEY}'
-    token: '${PUSHOVER_APP_TOKEN}'
-    send_resolved: true
-    retry: 1h
 
 - name: 'prod'
   # Send email:
