@@ -272,11 +272,11 @@ scrape_configs:
 
     params:
       'match[]':
-        - '{job="npld-heritrix-workers"}'
+        - '{job="npld-dc-heritrix-workers"}'
         - '{job="kafka"}'
 
     # Only accessible via explorer2:
-    proxy_url: '192.168.45.3:3128'
+    proxy_url: 'http://192.168.45.3:3128/'
 
     static_configs:
       - targets:
