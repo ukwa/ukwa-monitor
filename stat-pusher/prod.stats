@@ -8,6 +8,14 @@
 			"uri": "http://solr8.api.wa.bl.uk/solr/tracking/select?q=*:*&wt=json",
 			"match": "['response','numFound']"
 		},
+		"numFound": {
+			"host": "solr8",
+			"label": "cdx",
+			"desc": "Number of records in trackdb collection that are marked as cdx-indexed",
+			"uri": "http://solr8.api.wa.bl.uk/solr/tracking/select?q=cdx_index_ss%3A%5B*%20TO%20*%5D&sort=timestamp_dt%20desc&wt=json",
+			"kind": "json",
+			"match": "['response','numFound']"
+		},
 		"refresh_timestamp": {
 			"host": "solr8",
 			"label": "",
@@ -15,6 +23,14 @@
 			"uri": "http://solr8.api.wa.bl.uk/solr/tracking/select?q=*:*&sort=refresh_date_dt%20desc&wt=json",
 			"kind": "json",
 			"match": "['response','docs','refresh_date_dt']"
+		},
+		"last_timestamp": {
+			"host": "solr8",
+			"label": "cdx",
+			"desc": "Most recent trackdb timestamp that is marked as having been cdx-indexed",
+			"uri": "http://solr8.api.wa.bl.uk/solr/tracking/select?q=cdx_index_ss%3A%5B*%20TO%20*%5D&sort=timestamp_dt%20desc&wt=json",
+			"kind": "json",
+			"match": "['response','docs','timestamp_dt']"
 		}
 	}
 }
