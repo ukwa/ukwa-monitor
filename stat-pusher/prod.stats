@@ -15,56 +15,6 @@
 			"uri": "http://solr8.api.wa.bl.uk/solr/tracking/select?q=*:*&sort=refresh_date_dt%20desc&wt=json",
 			"kind": "json",
 			"match": "['response','docs','refresh_date_dt']"
-		},
-		"numFound": {
-			"host": "solr8",
-			"label": "missing",
-			"desc": "Number of records in trackdb collection that appear to be missing as their records no longer refreshed",
-			"uri": "http://solr8.api.wa.bl.uk/solr/tracking/select?q=refresh_date_dt%3A%5B*%20TO%20NOW-1DAY%5D&sort=refresh_date_dt%20desc&wt=json",
-			"kind": "json",
-			"match": "['response','numFound']"
-		},
-		"numFound": {
-			"host": "solr8",
-			"label": "warcs",
-			"desc": "Number of records in trackdb collection that are marked as WARCs",
-			"uri": "http://solr8.api.wa.bl.uk/solr/tracking/select?q=kind_s%3Awarcs&sort=timestamp_dt%20desc&wt=json",
-			"kind": "json",
-			"match": "['response','numFound']"
-		},		
-		"last_timestamp": {
-			"host": "solr8",
-			"label": "warcs",
-			"desc": "Most recent trackdb timestamp of the WARCs",
-			"uri": "http://solr8.api.wa.bl.uk/solr/tracking/select?q=kind_s%3Awarcs&sort=timestamp_dt%20desc&wt=json",
-			"kind": "json",
-			"match": "['response','docs','timestamp_dt']"
-		}
-		"numFound": {
-			"host": "solr8",
-			"label": "cdx",
-			"desc": "Number of records in trackdb collection that are marked as cdx-indexed",
-			"uri": "http://solr8.api.wa.bl.uk/solr/tracking/select?q=cdx_index_ss%3A%5B*%20TO%20*%5D&sort=timestamp_dt%20desc&wt=json",
-			"kind": "json",
-			"match": "['response','numFound']"
-		},
-		"last_timestamp": {
-			"host": "solr8",
-			"label": "cdx",
-			"desc": "Most recent trackdb timestamp that is marked as having been cdx-indexed",
-			"uri": "http://solr8.api.wa.bl.uk/solr/tracking/select?q=cdx_index_ss%3A%5B*%20TO%20*%5D&sort=timestamp_dt%20desc&wt=json",
-			"kind": "json",
-			"match": "['response','docs','timestamp_dt']"
-		}
-	},
-	"cdx_oa_wayback" {
-		"last_timestamp": {
-			"host": "www.webarchive.org.uk",
-			"label": "cdx",
-			"desc": "Most recent CDX timestamp of a page that should be crawled every day (bl.uk/robots.txt)",
-			"uri": "https://www.webarchive.org.uk/wayback/archive/cdx?url=https%3A%2F%2Fwww.bl.uk%2Frobots.txt&output=json&allowFuzzy=false&sort=reverse&limit=1",
-			"kind": "json",
-			"match": "['timestamp']"
 		}
 	}
 }
