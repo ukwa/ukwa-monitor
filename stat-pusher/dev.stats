@@ -59,8 +59,8 @@
 		"numFound_rr_logs": {
 			"host": "solr8",
 			"label": "logs",
-			"desc": "Number of reading-room catalina.out log files that have been updated in the last 24 hours.",
-			"uri": "http://solr8.api.wa.bl.uk/solr/tracking/select?q=file_path_s%3A%5C%2Flogs%5C%2F*%5C%2Fopt%5C%2Ftomcat_instances%5C%2Fwayback%5C%2Flogs%5C%2Fcatalina.out%20AND%20timestamp_dt%3A%5BNOW-1DAY%20TO%20NOW%5D",
+			"desc": "Number of reading-room hdfs-sync log files that have been updated in the last 24 hours.",
+			"uri": "http://solr8.api.wa.bl.uk/solr/tracking/select?q=file_path_s%3A\\%2Flogs\\%2F*\\%2Fusr\\%2Flocal\\%2Fbin\\%2Fhdfslogsync.log-*%20AND%20timestamp_dt%3A[NOW-1DAY%20TO%20NOW]",
 			"kind": "json",
 			"match": "['response','numFound']"
 		}
