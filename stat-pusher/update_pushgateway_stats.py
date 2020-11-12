@@ -40,11 +40,11 @@ def main():
 		logging.error(f"statsfile [{settings.get('statsfile')}] to test for [{environ}] environment missing")	
 		sys.exit()
 
-	# declare registry, inside loop for service
-	registry = CollectorRegistry()
-
 	# loop through wa service stats
 	for job in statTests:
+		# declare registry per job, inside loop for each stat:
+		registry = CollectorRegistry()
+		
 		for stat in statTests[job]:
 			# get stat details
 			try:
@@ -66,11 +66,11 @@ def main():
 			# set pushgateway submission details
 			g = Gauge(name, desc, labelnames=['instance','label'], registry=registry)
 			g.labels(instance=host,label=label).set(value)
-			logging.debug(f"Added job [{job}] host [{host}] name [{name}] value [{value}]")
+			logging.info(f"Added job [{job}] host [{host}] name [{name}] value [{value}]")
 
-			# upload to push gateway
-			push_to_gateway(settings.get('pushgtw'), registry=registry, job=job)
-			logging.info(f"Uploaded {job} {stat} {value}")
+		# upload to push gateway
+		push_to_gateway(settings.get('pushgtw'), registry=registry, job=job)
+		logging.info(f"Uploaded all [{job}] stats.")
 
 	logging.info('Fin')
 
