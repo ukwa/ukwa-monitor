@@ -1,8 +1,71 @@
 groups:
-- name: trackdb
+- name: UKWA metrics
   rules:
+  - alert: db_backup_failed
+    expr: absent(ukwa_database_backup_size_bytes)
+    for: 24h
+    labels:
+      severity: severe
+    annotations:
+      summary: "Databse back instance {{ $labels.instance }} failed to run"
+      description: "{{ $labels.instance }} of job {{ $labels.job }} failed to run."
+
+  - alert: daily_access_task_is_missing
+    expr: absent(ukwa_task_event_timestamp{job="DailyAccessTasks"})
+    for: 24h
+    labels:
+      severity: severe
+    annotations:
+      summary: "Task {{ $labels.job }} failed to run"
+      description: "Job {{ $labels.job }} failed to run successfully."
+  
+  - alert: daily_ingest_task_is_missing
+    expr: absent(ukwa_task_event_timestamp{job="DailyIngestTasks"})
+    for: 24h
+    labels:
+      severity: severe
+    annotations:
+      summary: "Task {{ $labels.job }} failed to run"
+      description: "Job {{ $labels.job }} failed to run successfully."
+
+  - alert: daily_task_has_not_run
+    expr: (time() - ukwa_task_event_timestamp{job=~"DailyAccessTasks|DailyIngestTasks", status="event.core.success"} ) / (60*60) > 24
+    for: 2h
+    labels:
+      severity: severe
+    annotations:
+      summary: "Task {{ $labels.job }} failed to run"
+      description: "Job {{ $labels.job }} failed to run successfully."
+
+  - alert: nominet_task_has_not_run
+    expr: absent(ukwa_task_event_timestamp{job="NominetDomainListToHDFS"}) or (time() - ukwa_task_event_timestamp{job="NominetDomainListToHDFS", status="event.core.success"} ) / (60*60*24) > 31
+    for: 2h
+    labels:
+      severity: severe
+    annotations:
+      summary: "Task {{ $labels.job }} failed to run"
+      description: "Job {{ $labels.job }} failed to run successfully."
+
+  - alert: crawl_launcher_has_not_run
+    expr: absent(ukwa_task_event_timestamp{job="crawl.LaunchCrawls"}) or (time() - ukwa_task_event_timestamp{job='crawl.LaunchCrawls', status="event.core.success"}) > 3600
+    for: 10m
+    labels:
+      severity: severe
+    annotations:
+      summary: "Task {{ $labels.job }} failed to run"
+      description: "Job {{ $labels.job }} failed to run successfully."
+  
+  - alert: fc_crawl_is_slow
+    expr: sum(rate(kafka_log_logendoffset{topic="fc.crawled"}[10m])) < 5
+    for: 30m
+    labels:
+      severity: severe
+    annotations:
+      summary: "The frequent crawl is not running as fast as expected!"
+      description: "The frequent crawl does not appear to be running as fast as it should be."
+
   - alert: trackdb_daily_refresh_has_not_run
-    expr: (time() - trackdb_refresh_timestamp) / (60*60) > 24
+    expr: absent(trackdb_refresh_timestamp) or (time() - trackdb_refresh_timestamp) / (60*60) > 24
     for: 1h
     labels:
       severity: severe
@@ -10,7 +73,43 @@ groups:
       summary: "TrackDB not updated in last 24 hours"
       description: "{{ $labels.instance }} {{ $labels.job }} refresh_timestamp_dt hasn't changed in over 24 hours"
 
-- name: Core metrics
+  - alert: trackdb_no_new_warcs
+    expr: absent(trackdb_last_timestamp_warcs) or (time() - trackdb_last_timestamp_warcs) / (60 * 60) > 24
+    for: 2h
+    labels:
+      severity: severe
+    annotations:
+      summary: "No new WARCs on HDFS!"
+      description: "According to TrackDB, no new WARCs have turned up on HDFS lately."
+  
+  - alert: trackdb_no_new_warcs_cdxed
+    expr: absent(trackdb_last_timestamp_cdx) or (time() - trackdb_last_timestamp_cdx) / (60 * 60) > 24
+    for: 2h
+    labels:
+      severity: severe
+    annotations:
+      summary: "No WARCs have been CDX-indexed recently!"
+      description: "According to TrackDB, no new WARCs have been CDX-indexed lately."
+  
+  - alert: cdx_oa_no_new_mementos
+    expr: absent(cdx_oa_wayback_last_timestamp) or (time() - cdx_oa_wayback_last_timestamp) / (60 * 60) > 48
+    for: 2h
+    labels:
+      severity: severe
+    annotations:
+      summary: "No new Mementos available via OA Wayback!"
+      description: "According to the PyWB CDX API, no new content has turned up for a site we expect to visit every day."
+
+  - alert: trackdb_no_recent_rr_logs
+    expr: absent(trackdb_numFound_rr_logs) or trackdb_numFound_rr_logs != 10
+    for: 2h
+    labels:
+      severity: severe
+    annotations:
+      summary: "Missing Reading Room log files!"
+      description: "According to TrackDB, there are not the expected number (10) of up-to-date log files on HDFS."
+
+- name: Generic metrics
   rules:
 
   # Alert for any instance that is unreachable for >5 minutes.
@@ -50,15 +149,6 @@ groups:
       summary: "Disk space free < 5% on {{ $labels.instance }}"
       description: "Disk space free on {{ $labels.instance }} has been less that 5% for more than 5 minutes"
 
-  - alert: db_backup_failed
-    expr: absent(ukwa_database_backup_size_bytes)
-    for: 24h
-    labels:
-      severity: severe
-    annotations:
-      summary: "Databse back instance {{ $labels.instance }} failed to run"
-      description: "{{ $labels.instance }} of job {{ $labels.job }} failed to run."
-
   - alert: predict_host_disk_space
     expr: min(predict_linear(node_filesystem_free{mountpoint=~"/|/data"}[48h], 2*7*24*3600)) by (instance, mountpoint) < 0
     for: 1h
@@ -67,60 +157,6 @@ groups:
     annotations:
       summary: "Disk space running out on {{ $labels.instance }} at {{ $labels.mountpoint }}"
       description: "Based on recent sampling, the disk is likely to will fill on volume {{ $labels.mountpoint }} within the next two weeks, for instance: {{ $labels.instance }}."
-
-  - alert: daily_access_task_is_missing
-    expr: absent(ukwa_task_event_timestamp{job=~"DailyAccessTasks"})
-    for: 24h
-    labels:
-      severity: severe
-    annotations:
-      summary: "Task {{ $labels.job }} failed to run"
-      description: "Job {{ $labels.job }} failed to run successfully."
-
-  - alert: daily_ingest_task_is_missing
-    expr: absent(ukwa_task_event_timestamp{job=~"DailyIngestTasks"})
-    for: 24h
-    labels:
-      severity: severe
-    annotations:
-      summary: "Task {{ $labels.job }} failed to run"
-      description: "Job {{ $labels.job }} failed to run successfully."
-
-  - alert: daily_task_has_not_run
-    expr: (time() - ukwa_task_event_timestamp{job=~"DailyAccessTasks|DailyIngestTasks", status="event.core.success"} ) / (60*60) > 24
-    for: 2h
-    labels:
-      severity: severe
-    annotations:
-      summary: "Task {{ $labels.job }} failed to run"
-      description: "Job {{ $labels.job }} failed to run successfully."
-
-  - alert: nominet_task_has_not_run
-    expr: (time() - ukwa_task_event_timestamp{job="NominetDomainListToHDFS", status="event.core.success"} ) / (60*60*24) > 31
-    for: 2h
-    labels:
-      severity: severe
-    annotations:
-      summary: "Task {{ $labels.job }} failed to run"
-      description: "Job {{ $labels.job }} failed to run successfully."
-
-  - alert: crawl_launcher_has_not_run
-    expr: (time() - ukwa_task_event_timestamp{job='crawl.LaunchCrawls', status="event.core.success"}) > 3600
-    for: 10m
-    labels:
-      severity: severe
-    annotations:
-      summary: "Task {{ $labels.job }} failed to run"
-      description: "Job {{ $labels.job }} failed to run successfully."
- 
-  - alert: fc_crawl_is_slow
-    expr: sum(rate(kafka_log_logendoffset{topic="fc.crawled"}[10m])) < 5
-    for: 30m
-    labels:
-      severity: severe
-    annotations:
-      summary: "The frequent crawl is not running as fast as expected!"
-      description: "The frequent crawl does not appear to be running as fast as it should be."
 
   - alert: cpu_running_too_hot
     expr: max(node_hwmon_temp_celsius) by (instance) > 70

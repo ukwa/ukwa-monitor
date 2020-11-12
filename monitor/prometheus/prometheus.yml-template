@@ -55,6 +55,7 @@ scrape_configs:
         - 'jupyter2:9100'
         - 'wa-jupyter:9100'
         - 'wa-www:9100'
+        - 'wa-www:3903' # mtail http status metrics
 
   - job_name: 'gluster'
     static_configs:
@@ -188,7 +189,6 @@ scrape_configs:
         - "http://cdx.api.wa.bl.uk/data-heritrix"
         - "http://ingest:9001/act/login"
         - "http://ingest:9081/archive/"
-        - "http://hdfs.api.wa.bl.uk/webhdfs/v1/?user.name=tomcat&op=LISTSTATUS"
         - "http://access:8082/static/visualiser/index.html"
         - "http://ingest:8082/static/visualiser/index.html"
         - "http://intranet.wa.bl.uk/ukwa-reports/"
@@ -218,6 +218,25 @@ scrape_configs:
         - "http://ingest:9001/act/login"
         - "http://ingest:9081/archive/"
         - "http://ingest:8082/static/visualiser/index.html"
+        - "http://crawldb-fc.api.wa.bl.uk/fc"
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: blackbox-exporter:9115  
+
+  - job_name: 'hadoop-http'
+    metrics_path: /probe
+    scrape_timeout: 30s
+    params:
+      module: [http_2xx]  # Look for a HTTP 200 response.
+    static_configs:
+      - targets:
+        - "http://namenode.api.wa.bl.uk/dfshealth.jsp"
+        - "http://jobtracker.api.wa.bl.uk/jobtracker.jsp"
+        - "http://hdfs.api.wa.bl.uk/webhdfs/v1/?op=LISTSTATUS&user.name=access"
     relabel_configs:
       - source_labels: [__address__]
         target_label: __param_target
