@@ -2848,7 +2848,7 @@
       "pluginVersion": "7.1.3",
       "targets": [
         {
-          "expr": "(time() - trackdb_refresh_timestamp{job="trackdb"}) / (60*60)",
+          "expr": "(time() - trackdb_refresh_timestamp{job=\"trackdb\"}) / (60*60)",
           "legendFormat": "",
           "interval": "",
           "format": "time_series",
@@ -2924,7 +2924,7 @@
       "pluginVersion": "7.1.3",
       "targets": [
         {
-          "expr": "sum(trackdb_numFound - (trackdb_numFound offset 1d))",
+          "expr": "sum(trackdb_numFound{job=\"trackdb\"} - (trackdb_numFound{job=\"trackdb\"} offset 1d))",
           "legendFormat": "",
           "interval": "",
           "format": "time_series",
