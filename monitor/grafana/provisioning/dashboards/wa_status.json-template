@@ -2848,7 +2848,7 @@
       "pluginVersion": "7.1.3",
       "targets": [
         {
-          "expr": "(time() - trackdb_refresh_timestamp) / (60*60)",
+          "expr": "(time() - trackdb_refresh_timestamp{job="trackdb"}) / (60*60)",
           "legendFormat": "",
           "interval": "",
           "format": "time_series",
