@@ -75,7 +75,7 @@ groups:
 
   - alert: trackdb_no_new_warcs
     expr: absent(trackdb_last_timestamp_warcs) or (time() - trackdb_last_timestamp_warcs) / (60 * 60) > 24
-    for: 2h
+    for: 8h
     labels:
       severity: severe
     annotations:
@@ -84,7 +84,7 @@ groups:
   
   - alert: trackdb_no_new_warcs_cdxed
     expr: absent(trackdb_last_timestamp_cdx) or (time() - trackdb_last_timestamp_cdx) / (60 * 60) > 24
-    for: 2h
+    for: 8h
     labels:
       severity: severe
     annotations:
