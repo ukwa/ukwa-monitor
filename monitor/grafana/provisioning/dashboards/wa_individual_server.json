@@ -671,8 +671,8 @@
       {
         "allValue": null,
         "current": {
-          "text": "crawler05:9100",
-          "value": "crawler05:9100"
+          "text": "crawler06:9100",
+          "value": "crawler06:9100"
         },
         "datasource": "Prometheus",
         "definition": "up{instance=~\".*\"}",
