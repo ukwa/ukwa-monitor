@@ -23,7 +23,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Frequent Crawler 05 Embedded Prometheus",
+      "datasource": "Frequent Crawler 06 Embedded Prometheus",
       "description": "Compares the last hour's queue activity with the same hour yesterday.",
       "fill": 1,
       "gridPos": {
@@ -110,7 +110,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Frequent Crawler 05 Embedded Prometheus",
+      "datasource": "Frequent Crawler 06 Embedded Prometheus",
       "fill": 1,
       "gridPos": {
         "h": 5,
@@ -200,7 +200,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Frequent Crawler 05 Embedded Prometheus",
+      "datasource": "Frequent Crawler 06 Embedded Prometheus",
       "fill": 1,
       "gridPos": {
         "h": 5,
@@ -290,7 +290,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Frequent Crawler 05 Embedded Prometheus",
+      "datasource": "Frequent Crawler 06 Embedded Prometheus",
       "fill": 1,
       "gridPos": {
         "h": 5,
@@ -379,7 +379,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Frequent Crawler 05 Embedded Prometheus",
+      "datasource": "Frequent Crawler 06 Embedded Prometheus",
       "fill": 1,
       "gridPos": {
         "h": 5,
@@ -476,7 +476,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Frequent Crawler 05 Embedded Prometheus",
+      "datasource": "Frequent Crawler 06 Embedded Prometheus",
       "fill": 1,
       "gridPos": {
         "h": 5,
@@ -585,7 +585,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Frequent Crawler 05 Embedded Prometheus",
+      "datasource": "Frequent Crawler 06 Embedded Prometheus",
       "fill": 1,
       "gridPos": {
         "h": 5,
@@ -673,7 +673,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Frequent Crawler 05 Embedded Prometheus",
+      "datasource": "Frequent Crawler 06 Embedded Prometheus",
       "fill": 1,
       "gridPos": {
         "h": 5,
@@ -761,7 +761,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Frequent Crawler 05 Embedded Prometheus",
+      "datasource": "Frequent Crawler 06 Embedded Prometheus",
       "fill": 1,
       "gridPos": {
         "h": 5,
