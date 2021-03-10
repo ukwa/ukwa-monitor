@@ -63,6 +63,24 @@
 			"uri": "http://solr8.api.wa.bl.uk/solr/tracking/select?q=file_path_s%3A\\%2Flogs\\%2F*\\%2Fusr\\%2Flocal\\%2Fbin\\%2Fhdfslogsync.log-*%20AND%20timestamp_dt%3A[NOW-1DAY%20TO%20NOW]",
 			"kind": "json",
 			"match": "['response','numFound']"
+		},
+		"sql_backup_size_shine": {
+			"host": "solr8",
+			"name": "ukwa_database_backup_size_bytes",
+			"label": "shine",
+			"desc": "Size of backup of SQL database stored on HDFS.",
+			"uri": "http://solr8.api.wa.bl.uk/solr/tracking/select?q=modified_at_dt%3A[NOW-1DAY%20TO%20NOW]%20AND%20file_path_s:%22/2_backups/shine/dev/shine_dump.sql%22&sort=refresh_date_dt%20desc&wt=json",
+			"kind": "json",
+			"match": "['response','docs', 'file_size_l']"
+		},
+		"sql_backup_size_w3act": {
+			"host": "solr8",
+			"name": "ukwa_database_backup_size_bytes",
+			"label": "w3act",
+			"desc": "Size of backup of SQL database stored on HDFS.",
+			"uri": "http://solr8.api.wa.bl.uk/solr/tracking/select?q=modified_at_dt%3A[NOW-1DAY%20TO%20NOW]%20AND%20file_path_s:%22/2_backups/w3act/dev/w3act_dump.sql%22&sort=refresh_date_dt%20desc&wt=json",
+			"kind": "json",
+			"match": "['response','docs', 'file_size_l']"
 		}
 	},
 	"cdx_oa_wayback": {

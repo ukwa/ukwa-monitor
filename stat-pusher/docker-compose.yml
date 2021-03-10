@@ -1,0 +1,14 @@
+version: "3.2"
+
+services:
+
+  stats_pusher:
+    build:
+      context: .
+      args:
+        http_proxy: ${HTTP_PROXY}
+        https_proxy: ${HTTPS_PROXY}
+    environment:
+      http_proxy: ${HTTP_PROXY}
+      https_proxy: ${HTTPS_PROXY}
+

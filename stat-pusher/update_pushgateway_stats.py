@@ -49,6 +49,9 @@ def main():
 			# get stat details
 			try:
 				name = job + '_' + stat
+				# Allow name to be overridden in config:
+				if 'name' in statTests[job][stat]:
+					name = statTests[job][stat]['name']
 				host = statTests[job][stat]['host']
 				label = statTests[job][stat]['label']
 				desc = statTests[job][stat]['desc']
@@ -59,14 +62,18 @@ def main():
 				logging.error(f"Children of job [{job}] stat [{stat}] missing\n[{e}]")
 				sys.exit()
 
-			# get stat value
-			if kind == 'json':
-				value = stat_values.get_json_value(uri, match)
+			# Get the value and send it, but cope if there are no matches:
+			try:
+				# get stat value
+				if kind == 'json':
+					value = stat_values.get_json_value(uri, match)
 
-			# set pushgateway submission details
-			g = Gauge(name, desc, labelnames=['instance','label'], registry=registry)
-			g.labels(instance=host,label=label).set(value)
-			logging.info(f"Added job [{job}] host [{host}] name [{name}] value [{value}]")
+				# set pushgateway submission details
+				g = Gauge(name, desc, labelnames=['instance','label'], registry=registry)
+				g.labels(instance=host,label=label).set(value)
+				logging.info(f"Added job [{job}] host [{host}] name [{name}] value [{value}]")
+			except Exception as e:
+				logging.error(f"Match not found for job [{job}] stat [{stat}] missing\n[{e}]")
 
 		# upload to push gateway
 		push_to_gateway(settings.get('pushgtw'), registry=registry, job=job)
