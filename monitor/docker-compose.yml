@@ -13,8 +13,9 @@ services:
       placement:
         constraints: [node.role == manager]
 
+  # last 7-series version looks to be 7.5.7
   grafana:
-    image: grafana/grafana
+    image: grafana/grafana:7.5.7
     ports:
       - "${GRAFANA_PORT}:3000"
     depends_on:
