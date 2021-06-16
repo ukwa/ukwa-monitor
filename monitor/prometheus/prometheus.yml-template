@@ -108,7 +108,7 @@ scrape_configs:
         - 'clamd-lb8:9100'
         - 'clamd-lb9:9100'
         - 'crawler04:9100'
-#        - 'crawler05:9100'
+        - 'crawler05:9100'
         - 'crawler06:9100'
         - 'ingest:9100'
 
