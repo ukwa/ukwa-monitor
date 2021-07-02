@@ -62,7 +62,7 @@
 			"host": "www.webarchive.org.uk",
 			"label": "cdx",
 			"desc": "Most recent CDX timestamp of a page that should be crawled every day (bl.uk/robots.txt)",
-			"uri": "https://www.webarchive.org.uk/wayback/archive/cdx?url=https%3A%2F%2Fwww.bbc.co.uk%2Frobots.txt&output=json&allowFuzzy=false&sort=reverse&limit=1",
+			"uri": "https://www.webarchive.org.uk/wayback/archive/cdx?url=https%3A%2F%2Fwww.bbc.co.uk%2Fnews&output=json&allowFuzzy=false&sort=reverse&limit=1",
 			"kind": "json",
 			"match": "['timestamp']"
 		}
