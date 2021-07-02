@@ -60,3 +60,5 @@ receivers:
     token: '${PUSHOVER_APP_TOKEN}'
     send_resolved: true
     retry: 1h
+  pagerduty_configs:
+  - service_key: '${PAGERDUTY_INTEGRATION_KEY}'
