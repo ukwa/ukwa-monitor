@@ -109,6 +109,25 @@ groups:
       summary: "Missing Reading Room log files!"
       description: "According to TrackDB, there are not the expected number (10) of up-to-date log files on HDFS."
 
+  - alert: airflow_dags_failing
+    expr: airflow_dag_last_status{status='failed'} > 0
+    for: 2h
+    labels:
+      severity: severe
+    annotations:
+      summary: "Airflow reports {{ $labels.dag_id }} is failing"
+      description: "The Airflow service at {{ $labels.instance }} is reporting that the most recent run of DAG workflow {{ $labels.dag_id }} has failed."
+
+  - alert: gluster_fc_filling_up
+    expr: -delta(node_filesystem_free_bytes{mountpoint='/mnt/gluster/fc',instance='gluster-fuse:9100'}[12h]) > 0
+    for: 1h
+    labels:
+      severity: severe
+    annotations:
+      summary: "The FC Gluster volume is filling up"
+      description: "The Gluster volume that stores FC output is filling up. This likely means there's a problem with the move-to-hdfs process and WARCs are backing up."
+
+
 - name: Generic metrics
   rules:
 
@@ -166,4 +185,6 @@ groups:
     annotations:
       summary: "CPU running too hot?"
       description: "The CPU on {{ $labels.instance }} is running hot (>70C for 30mins)."
+
+
  
