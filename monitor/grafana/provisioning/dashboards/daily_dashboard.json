@@ -436,7 +436,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "hdfs_under_replicated_block_count{instance='hdfs-exporter.bapi.wa.bl.uk:80'}",
+          "expr": "hdfs_under_replicated_block_count{instance='hdfs-exporter.api.wa.bl.uk:80'}",
           "format": "time_series",
           "instant": true,
           "intervalFactor": 1,
@@ -521,7 +521,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "hdfs_used_percent{instance='hdfs-exporter.bapi.wa.bl.uk:80'}",
+          "expr": "hdfs_used_percent{instance='hdfs-exporter.api.wa.bl.uk:80'}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "",
@@ -602,7 +602,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "hdfs_node_count{status='dead',instance='hdfs-exporter.bapi.wa.bl.uk:80'}",
+          "expr": "hdfs_node_count{status='dead',instance='hdfs-exporter.api.wa.bl.uk:80'}",
           "format": "time_series",
           "instant": true,
           "intervalFactor": 1,
@@ -683,7 +683,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "hdfs_node_count{status='live',instance='hdfs-exporter.bapi.wa.bl.uk:80'}",
+          "expr": "hdfs_node_count{status='live',instance='hdfs-exporter.api.wa.bl.uk:80'}",
           "format": "time_series",
           "instant": true,
           "intervalFactor": 1,

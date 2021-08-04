@@ -55,6 +55,14 @@
 			"uri": "http://solr8.api.wa.bl.uk/solr/tracking/select?q=cdx_index_ss%3A%5B*%20TO%20*%5D&sort=timestamp_dt%20desc&wt=json",
 			"kind": "json",
 			"match": "['response','docs','timestamp_dt']"
+		},
+		"numFound_rr_logs": {
+			"host": "solr8",
+			"label": "logs",
+			"desc": "Number of reading-room hdfs-sync log files that have been updated in the last 24 hours.",
+			"uri": "http://solr8.api.wa.bl.uk/solr/tracking/select?q=file_path_s%3A\\%2Flogs\\%2F*\\%2Fusr\\%2Flocal\\%2Fbin\\%2Fhdfslogsync.log-*%20AND%20timestamp_dt%3A[NOW-1DAY%20TO%20NOW]",
+			"kind": "json",
+			"match": "['response','numFound']"
 		}
 	},
 	"cdx_oa_wayback": {
@@ -62,7 +70,7 @@
 			"host": "www.webarchive.org.uk",
 			"label": "cdx",
 			"desc": "Most recent CDX timestamp of a page that should be crawled every day (bl.uk/robots.txt)",
-			"uri": "https://www.webarchive.org.uk/wayback/archive/cdx?url=https%3A%2F%2Fwww.bbc.co.uk%2Frobots.txt&output=json&allowFuzzy=false&sort=reverse&limit=1",
+			"uri": "https://www.webarchive.org.uk/wayback/archive/cdx?url=https%3A%2F%2Fwww.bbc.co.uk%2Fnews&output=json&allowFuzzy=false&sort=reverse&limit=1",
 			"kind": "json",
 			"match": "['timestamp']"
 		}

@@ -119,6 +119,12 @@ scrape_configs:
         - 'monitor:9100'
         - 'syslog:9100'
 
+  - job_name: 'airflow'
+    metrics_path: /admin/metrics/
+    static_configs:
+      - targets: 
+        - 'ingest:5050'
+
   - job_name: 'solr'
     static_configs:
       - targets:

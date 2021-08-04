@@ -5,9 +5,9 @@
 apiVersion: 1
 
 datasources:
-  - name: 'Frequent Crawler 05 Embedded Prometheus'
+  - name: 'Frequent Crawler 06 Embedded Prometheus'
     type: prometheus
     access: proxy
     orgId: 1
-    url: http://192.168.45.15:9191
+    url: http://192.168.45.34:9191
     isDefault: false
