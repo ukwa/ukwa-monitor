@@ -44,6 +44,8 @@ def main():
 	for job in statTests:
 		# declare registry per job, inside loop for each stat:
 		registry = CollectorRegistry()
+		# Store gauges by name, so we can re-use the same metrics with different labels:
+		gauges = {}
 		
 		for stat in statTests[job]:
 			# get stat details
@@ -69,9 +71,13 @@ def main():
 					value = stat_values.get_json_value(uri, match)
 
 				# set pushgateway submission details
-				g = Gauge(name, desc, labelnames=['instance','label'], registry=registry)
+				if name in gauges:
+					g = gauges[name]
+				else:
+					g = Gauge(name, desc, labelnames=['instance','label'], registry=registry)
+					gauges[name] = g
 				g.labels(instance=host,label=label).set(value)
-				logging.info(f"Added job [{job}] host [{host}] name [{name}] value [{value}]")
+				logging.info(f"Added job [{job}] host [{host}] name [{name}] label [{label}] value [{value}]")
 			except Exception as e:
 				logging.error(f"Match not found for job [{job}] stat [{stat}] missing\n[{e}]")
 
