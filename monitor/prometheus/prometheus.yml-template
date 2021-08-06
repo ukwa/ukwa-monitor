@@ -289,38 +289,24 @@ scrape_configs:
         - 'crawler06:9191'
 
 
-#  - job_name: 'federate-dc'
-#    scrape_interval: 30s
-#
-#    honor_labels: true
-#    metrics_path: '/federate'
-#
-#    params:
-#      'match[]':
-#        - '{job="npld-dc-heritrix-workers"}'
-#        - '{job="kafka"}'
-#
-#    # Only accessible via explorer2:
-#    proxy_url: 'http://192.168.45.3:3128/'
-#
-#    static_configs:
-#      - targets:
-#        - 'crawler07.bl.uk:9191'
+  - job_name: 'federate-dc'
+    scrape_interval: 30s
 
+    honor_labels: true
+    metrics_path: '/federate'
 
-#  - job_name: 'aws-dc_node_exporter'
-#    scrape_interval: 30s
-#
-#    honor_labels: true
-#    metrics_path: '/metrics'
-#
-#    proxy_url: 'http://192.168.45.3:3128/'
-#
-#    static_configs:
-#      - targets:
-#        - 'crawler07.bl.uk:9100'
+    params:
+      'match[]':
+        - '{job="npld-dc-heritrix-workers"}'
+        - '{job="kafka"}'
+        - '{job="aws_dc_node_exporter"}'
 
+    # Only accessible via explorer2:
+    proxy_url: 'http://192.168.45.3:3128/'
 
+    static_configs:
+      - targets:
+        - 'crawler07.bl.uk:9191'
 
 
 #  - job_name: 'container-metrics'

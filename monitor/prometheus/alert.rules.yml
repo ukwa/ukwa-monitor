@@ -55,6 +55,15 @@ groups:
       summary: "Task {{ $labels.job }} failed to run"
       description: "Job {{ $labels.job }} failed to run successfully."
   
+  - alert: low_crawler_activity
+    expr: increase(heritrix3_crawl_job_uris_total{kind="finished"}[4h]) < 10
+    for: 10m
+    labels:
+      severity: severe
+    annotations:
+      description: Low crawl rate for {{ $labels.instance }} of job {{ $labels.job }}.
+      summary: The {{ $labels.job }} {{ $labels.instance }} crawler is crawling too slowly.
+
   - alert: fc_crawl_is_slow
     expr: sum(rate(kafka_log_logendoffset{topic="fc.crawled"}[10m])) < 5
     for: 30m
@@ -102,7 +111,7 @@ groups:
 
   - alert: trackdb_no_recent_rr_logs
     expr: absent(trackdb_numFound_rr_logs) or trackdb_numFound_rr_logs != 10
-    for: 2h
+    for: 12h
     labels:
       severity: severe
     annotations:
@@ -120,7 +129,7 @@ groups:
 
   - alert: gluster_fc_filling_up
     expr: -delta(node_filesystem_free_bytes{mountpoint='/mnt/gluster/fc',instance='gluster-fuse:9100'}[12h]) > 0
-    for: 1h
+    for: 12h
     labels:
       severity: severe
     annotations:
