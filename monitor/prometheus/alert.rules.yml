@@ -55,7 +55,7 @@ groups:
       summary: "Task {{ $labels.job }} failed to run"
       description: "Job {{ $labels.job }} failed to run successfully."
   
-  - alert: low_crawler_activityu
+  - alert: low_crawler_activity
     # Explicitly not monitoring the by-permission crawl at present:
     expr: increase(heritrix3_crawl_job_uris_total{kind="finished", job!="bypm-heritrix-workers"}[4h]) < 10
     for: 10m
