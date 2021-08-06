@@ -31,12 +31,21 @@
 			"uri": "http://solr8.api.wa.bl.uk/solr/tracking/select?q=kind_s%3Awarcs&sort=timestamp_dt%20desc&wt=json",
 			"kind": "json",
 			"match": "['response','numFound']"
-		},		
+		},
 		"last_timestamp_warcs": {
 			"host": "solr8",
 			"label": "warcs",
 			"desc": "Most recent trackdb timestamp of the WARCs",
 			"uri": "http://solr8.api.wa.bl.uk/solr/tracking/select?q=kind_s%3Awarcs&sort=timestamp_dt%20desc&wt=json",
+			"kind": "json",
+			"match": "['response','docs','timestamp_dt']"
+		},
+		"last_timestamp_crawl_logs_npld": {
+			"host": "solr8",
+			"name": "trackdb_last_timestamp",
+			"label": "npld.crawl-logs",
+			"desc": "Most recent trackdb timestamp of the NPLD crawl logs.",
+			"uri": "http://solr8.api.wa.bl.uk/solr/tracking/select?q=kind_s%3Acrawl-logs%20AND%20job_s:frequent-npld&sort=timestamp_dt%20desc&wt=json",
 			"kind": "json",
 			"match": "['response','docs','timestamp_dt']"
 		},
@@ -69,7 +78,7 @@
 			"name": "ukwa_database_backup_size_bytes",
 			"label": "shine",
 			"desc": "Size of backup of SQL database stored on HDFS.",
-			"uri": "http://solr8.api.wa.bl.uk/solr/tracking/select?q=modified_at_dt%3A[NOW-1DAY%20TO%20NOW]%20AND%20file_path_s:%22/2_backups/shine/dev/shine_dump.sql%22&sort=refresh_date_dt%20desc&wt=json",
+			"uri": "http://solr8.api.wa.bl.uk/solr/tracking/select?q=modified_at_dt%3A[NOW-1DAY%20TO%20NOW]%20AND%20file_path_s:\\/2_backups\\/access\\/access_shinedb\\/shine.pgdump*&sort=timestamp_dt%20desc&wt=json",
 			"kind": "json",
 			"match": "['response','docs', 'file_size_l']"
 		},
@@ -78,7 +87,7 @@
 			"name": "ukwa_database_backup_size_bytes",
 			"label": "w3act",
 			"desc": "Size of backup of SQL database stored on HDFS.",
-			"uri": "http://solr8.api.wa.bl.uk/solr/tracking/select?q=modified_at_dt%3A[NOW-1DAY%20TO%20NOW]%20AND%20file_path_s:%22/2_backups/w3act/dev/w3act_dump.sql%22&sort=refresh_date_dt%20desc&wt=json",
+			"uri": "http://solr8.api.wa.bl.uk/solr/tracking/select?q=modified_at_dt%3A[NOW-1DAY%20TO%20NOW]%20AND%20file_path_s:\\/2_backups\\/ingest\\/ife_prod_postgres\\/w3act.pgdump*&sort=timestamp_dt%20desc&wt=json",
 			"kind": "json",
 			"match": "['response','docs', 'file_size_l']"
 		}
@@ -88,7 +97,7 @@
 			"host": "www.webarchive.org.uk",
 			"label": "cdx",
 			"desc": "Most recent CDX timestamp of a page that should be crawled every day (bl.uk/robots.txt)",
-			"uri": "https://www.webarchive.org.uk/wayback/archive/cdx?url=https%3A%2F%2Fwww.bl.uk%2Frobots.txt&output=json&allowFuzzy=false&sort=reverse&limit=1",
+			"uri": "https://www.webarchive.org.uk/wayback/archive/cdx?url=https%3A%2F%2Fwww.bbc.co.uk%2Fnews&output=json&allowFuzzy=false&sort=reverse&limit=1",
 			"kind": "json",
 			"match": "['timestamp']"
 		}

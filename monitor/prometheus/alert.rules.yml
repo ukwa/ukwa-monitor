@@ -92,6 +92,15 @@ groups:
       summary: "No new WARCs on HDFS!"
       description: "According to TrackDB, no new WARCs have turned up on HDFS lately."
   
+  - alert: trackdb_no_new_npld_crawl_logs
+    expr: absent(trackdb_last_timestamp{label="npld.crawl-logs"}) or (time() - trackdb_last_timestamp{label="npld.crawl-logs"}) / (60 * 60) > 24
+    for: 8h
+    labels:
+      severity: severe
+    annotations:
+      summary: "No new NPLD crawl logs on HDFS!"
+      description: "According to TrackDB, no new NPLD crawl logs have turned up on HDFS lately."
+  
   - alert: trackdb_no_new_warcs_cdxed
     expr: absent(trackdb_last_timestamp_cdx) or (time() - trackdb_last_timestamp_cdx) / (60 * 60) > 24
     for: 8h
