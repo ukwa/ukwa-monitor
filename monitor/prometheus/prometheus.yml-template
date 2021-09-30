@@ -193,8 +193,7 @@ scrape_configs:
     static_configs:
       - targets:
         - "http://cdx.api.wa.bl.uk/data-heritrix"
-        - "https://www.webarchive.org.uk/act/login"
-        - "https://www.webarchive.org.uk/archive/"
+        - "https://prod1:9000/act/login"
         - "http://access:8082/static/visualiser/index.html"
 #        - "http://ingest:8082/static/visualiser/index.html"
         - "http://intranet.wa.bl.uk/ukwa-reports/"
@@ -221,8 +220,7 @@ scrape_configs:
       module: [http_2xx]  # Look for a HTTP 200 response.
     static_configs:
       - targets:
-        - "https://www.webarchive.org.uk/act/login"
-        - "https://www.webarchive.org.uk/archive/"
+        - "https://prod1:9000/act/login"
 #        - "http://ingest:8082/static/visualiser/index.html"
         - "http://crawldb-fc.api.wa.bl.uk/fc"
     relabel_configs:
