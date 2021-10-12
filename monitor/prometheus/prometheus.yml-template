@@ -140,11 +140,11 @@ scrape_configs:
         - 'jisc-zk01:9100'
         - 'jisc-zk02:9100'
         - 'jisc-zk03:9100'
-        - 'ldukwa04:9100'
+#        - 'ldukwa04:9100'
         - 'ldukwa-proxy:9100'
-        - 'ldukwa-zk01:9100'
-        - 'ldukwa-zk02:9100'
-        - 'ldukwa-zk03:9100'
+#        - 'ldukwa-zk01:9100'
+#        - 'ldukwa-zk02:9100'
+#        - 'ldukwa-zk03:9100'
         - 'solr1:3903'
         - 'solr2:3903'
         - 'solr3:3903'
@@ -158,8 +158,8 @@ scrape_configs:
       module: [http_2xx]  # Look for a HTTP 200 response.
     static_configs:
       - targets:
-        - 'http://ldukwa-proxy:8983/solr/ldwa/select?q=*:*'
-        - 'http://ldukwa04:8983/solr/ldukwadev/select?q=*:*'
+#        - 'http://ldukwa-proxy:8983/solr/ldwa/select?q=*:*'
+#        - 'http://ldukwa04:8983/solr/ldukwadev/select?q=*:*'
         - 'http://solr-jisc.api.wa.bl.uk/solr/jisc/select?q=*:*'
         - 'http://jisc03:8983/solr/jisc6/select?q=*:*'
         - 'http://solr1:8983/solr/all/select?q=*:*'
