@@ -22,408 +22,28 @@
       "content": "",
       "gridPos": {
         "h": 1,
-        "w": 8,
+        "w": 24,
         "x": 0,
         "y": 0
       },
       "id": 1,
       "links": [],
       "mode": "markdown",
-      "title": "Ingest & Metadata",
+      "title": "Storage",
       "type": "text"
-    },
-    {
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "unit": "none",
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "value": null,
-                "color": "#299C46"
-              },
-              {
-                "value": 0.1,
-                "color": "#ED8027"
-              },
-              {
-                "value": 1,
-                "color": "#D44A3A"
-              }
-            ]
-          },
-          "mappings": [
-            {
-              "op": "=",
-              "text": "N/A",
-              "value": "null",
-              "id": 0,
-              "type": 1
-            }
-          ],
-          "nullValueMode": "connected"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 2,
-        "w": 2,
-        "x": 0,
-        "y": 1
-      },
-      "id": 2,
-      "links": [],
-      "maxDataPoints": 100,
-      "options": {
-        "reduceOptions": {
-          "values": false,
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": ""
-        },
-        "orientation": "horizontal",
-        "textMode": "none",
-        "colorMode": "background",
-        "graphMode": "none",
-        "justifyMode": "auto"
-      },
-      "pluginVersion": "7.1.3",
-      "targets": [
-        {
-          "expr": "sum(1 - up{job=\"ingest_metadata\"})",
-          "legendFormat": "",
-          "interval": "",
-          "format": "time_series",
-          "instant": false,
-          "intervalFactor": 1,
-          "refId": "A"
-        }
-      ],
-      "type": "stat",
-      "title": "Up",
-      "cacheTimeout": null,
-      "interval": null,
-      "datasource": null
-    },
-    {
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "unit": "none",
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "value": null,
-                "color": "#299C46"
-              },
-              {
-                "value": 0.1,
-                "color": "#ba43a9"
-              },
-              {
-                "value": 1.1,
-                "color": "#D44A3A"
-              }
-            ]
-          },
-          "mappings": [
-            {
-              "op": "=",
-              "text": "N/A",
-              "value": "null",
-              "id": 0,
-              "type": 1
-            }
-          ],
-          "nullValueMode": "connected"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 2,
-        "w": 2,
-        "x": 2,
-        "y": 1
-      },
-      "id": 3,
-      "links": [],
-      "maxDataPoints": 100,
-      "options": {
-        "reduceOptions": {
-          "values": false,
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": ""
-        },
-        "orientation": "horizontal",
-        "textMode": "none",
-        "colorMode": "background",
-        "graphMode": "none",
-        "justifyMode": "auto"
-      },
-      "pluginVersion": "7.1.3",
-      "targets": [
-        {
-          "expr": "count(sum(irate(node_cpu_seconds_total{job=\"ingest_metadata\",mode=\"idle\"}[5m]) < 0.1) by (instance)) OR vector(0)",
-          "legendFormat": "",
-          "interval": "",
-          "format": "time_series",
-          "instant": false,
-          "intervalFactor": 1,
-          "refId": "A"
-        }
-      ],
-      "type": "stat",
-      "title": "CPU",
-      "cacheTimeout": null,
-      "interval": null,
-      "datasource": null
-    },
-    {
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "unit": "none",
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "value": null,
-                "color": "#299C46"
-              },
-              {
-                "value": 0.1,
-                "color": "#ED8027"
-              },
-              {
-                "value": 1,
-                "color": "#D44A3A"
-              }
-            ]
-          },
-          "mappings": [
-            {
-              "op": "=",
-              "text": "N/A",
-              "value": "null",
-              "id": 0,
-              "type": 1
-            }
-          ],
-          "nullValueMode": "connected"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 2,
-        "w": 2,
-        "x": 4,
-        "y": 1
-      },
-      "id": 4,
-      "links": [],
-      "maxDataPoints": 100,
-      "options": {
-        "reduceOptions": {
-          "values": false,
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": ""
-        },
-        "orientation": "horizontal",
-        "textMode": "none",
-        "colorMode": "background",
-        "graphMode": "none",
-        "justifyMode": "auto"
-      },
-      "pluginVersion": "7.1.3",
-      "targets": [
-        {
-          "expr": "count((node_filesystem_avail_bytes{job=\"ingest_metadata\",fstype!~\"tmpfs|rootfs|cifs\"} / node_filesystem_size_bytes{job=\"ingest_metadata\",fstype!~\"tmpfs|rootfs|cifs\"}) < 0.04) OR vector(0)",
-          "legendFormat": "",
-          "interval": "",
-          "format": "time_series",
-          "instant": false,
-          "intervalFactor": 1,
-          "refId": "A"
-        }
-      ],
-      "type": "stat",
-      "title": "Dsk",
-      "cacheTimeout": null,
-      "interval": null,
-      "datasource": null
-    },
-    {
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "unit": "none",
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "value": null,
-                "color": "#299C46"
-              },
-              {
-                "value": 0.1,
-                "color": "#ED8027"
-              },
-              {
-                "value": 1,
-                "color": "#D44A3A"
-              }
-            ]
-          },
-          "mappings": [
-            {
-              "op": "=",
-              "text": "N/A",
-              "value": "null",
-              "id": 0,
-              "type": 1
-            }
-          ],
-          "nullValueMode": "connected"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 2,
-        "w": 2,
-        "x": 6,
-        "y": 1
-      },
-      "id": 5,
-      "links": [],
-      "maxDataPoints": 100,
-      "options": {
-        "reduceOptions": {
-          "values": false,
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": ""
-        },
-        "orientation": "horizontal",
-        "textMode": "none",
-        "colorMode": "background",
-        "graphMode": "none",
-        "justifyMode": "auto"
-      },
-      "pluginVersion": "7.1.3",
-      "targets": [
-        {
-          "expr": "count(sum(node_memory_MemFree_bytes{job=\"ingest_metadata\"} + node_memory_Buffers_bytes{job=\"ingest_metadata\"} + node_memory_Cached_bytes{job=\"ingest_metadata\"}) by (instance) / sum(node_memory_MemTotal_bytes{job=\"ingest_metadata\"}) by (instance) < 0.05) OR vector(0)",
-          "legendFormat": "",
-          "interval": "",
-          "format": "time_series",
-          "instant": false,
-          "intervalFactor": 1,
-          "refId": "A"
-        }
-      ],
-      "type": "stat",
-      "title": "Mem",
-      "cacheTimeout": null,
-      "interval": null,
-      "datasource": null
-    },
-    {
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "unit": "none",
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "value": null,
-                "color": "#299C46"
-              },
-              {
-                "value": 0.1,
-                "color": "#ED8027"
-              },
-              {
-                "value": 1,
-                "color": "#D44A3A"
-              }
-            ]
-          },
-          "mappings": [
-            {
-              "op": "=",
-              "text": "N/A",
-              "value": "null",
-              "id": 0,
-              "type": 1
-            }
-          ],
-          "nullValueMode": "connected"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 2,
-        "w": 2,
-        "x": 0,
-        "y": 3
-      },
-      "id": 6,
-      "links": [],
-      "maxDataPoints": 100,
-      "options": {
-        "reduceOptions": {
-          "values": false,
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": ""
-        },
-        "orientation": "horizontal",
-        "textMode": "none",
-        "colorMode": "background",
-        "graphMode": "none",
-        "justifyMode": "auto"
-      },
-      "pluginVersion": "7.1.3",
-      "targets": [
-        {
-          "expr": "count(probe_http_status_code{job=\"im-access-http\"} != 200) OR vector(0)",
-          "legendFormat": "",
-          "interval": "",
-          "format": "time_series",
-          "instant": false,
-          "intervalFactor": 1,
-          "refId": "A"
-        }
-      ],
-      "type": "stat",
-      "title": "WWW",
-      "cacheTimeout": null,
-      "interval": null,
-      "datasource": null
     },
     { 
       "content": "",
       "gridPos": {
         "h": 1,
         "w": 8,
-        "x": 8,
-        "y": 0
+        "x": 0,
+        "y": 1
       },
-      "id": 7,
+      "id": 2,
       "links": [],
       "mode": "markdown",
-      "title": "Hadoop",
+      "title": "Hadoop 0.20",
       "type": "text"
     },
     {
@@ -464,10 +84,10 @@
       "gridPos": {
         "h": 2,
         "w": 2,
-        "x": 8,
-        "y": 1
+        "x": 0,
+        "y": 2
       },
-      "id": 8,
+      "id": 3,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -540,10 +160,10 @@
       "gridPos": {
         "h": 2,
         "w": 2,
-        "x": 10,
-        "y": 1
+        "x": 2,
+        "y": 2
       },
-      "id": 9,
+      "id": 4,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -616,10 +236,10 @@
       "gridPos": {
         "h": 2,
         "w": 2,
-        "x": 12,
-        "y": 1
+        "x": 4,
+        "y": 2
       },
-      "id": 10,
+      "id": 5,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -658,10 +278,10 @@
       "gridPos": {
         "h": 4,
         "w": 2,
-        "x": 14,
-        "y": 1
+        "x": 6,
+        "y": 2
       },
-      "id": 11,
+      "id": 6,
       "links": [],
       "maxDataPoints": 100,
       "targets": [
@@ -765,10 +385,10 @@
       "gridPos": {
         "h": 2,
         "w": 2,
-        "x": 8,
-        "y": 3
+        "x": 0,
+        "y": 4
       },
-      "id": 12,
+      "id": 7,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -841,10 +461,10 @@
       "gridPos": {
         "h": 2,
         "w": 2,
-        "x": 10,
-        "y": 3
+        "x": 2,
+        "y": 4
       },
-      "id": 13,
+      "id": 8,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -917,10 +537,10 @@
       "gridPos": {
         "h": 2,
         "w": 2,
-        "x": 12,
-        "y": 3
+        "x": 4,
+        "y": 4
       },
-      "id": 14,
+      "id": 9,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -960,13 +580,331 @@
       "gridPos": {
         "h": 1,
         "w": 8,
+        "x": 8,
+        "y": 1
+      },
+      "id": 10,
+      "links": [],
+      "mode": "markdown",
+      "title": "Gluster",
+      "type": "text"
+    },
+    {
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "unit": "none",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "#299C46"
+              },
+              {
+                "value": 0.1,
+                "color": "#ED8027"
+              },
+              {
+                "value": 1,
+                "color": "#D44A3A"
+              }
+            ]
+          },
+          "mappings": [
+            {
+              "op": "=",
+              "text": "N/A",
+              "value": "null",
+              "id": 0,
+              "type": 1
+            }
+          ],
+          "nullValueMode": "connected"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 2,
+        "x": 8,
+        "y": 2
+      },
+      "id": 11,
+      "links": [],
+      "maxDataPoints": 100,
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": ""
+        },
+        "orientation": "horizontal",
+        "textMode": "none",
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "auto"
+      },
+      "pluginVersion": "7.1.3",
+      "targets": [
+        {
+          "expr": "sum(1 - up{job=\"gluster\"})",
+          "legendFormat": "",
+          "interval": "",
+          "format": "time_series",
+          "instant": false,
+          "intervalFactor": 1,
+          "refId": "A"
+        }
+      ],
+      "type": "stat",
+      "title": "Up",
+      "cacheTimeout": null,
+      "interval": null,
+      "datasource": null
+    },
+    {
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "unit": "none",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "#299C46"
+              },
+              {
+                "value": 0.1,
+                "color": "#ED8027"
+              },
+              {
+                "value": 1,
+                "color": "#D44A3A"
+              }
+            ]
+          },
+          "mappings": [
+            {
+              "op": "=",
+              "text": "N/A",
+              "value": "null",
+              "id": 0,
+              "type": 1
+            }
+          ],
+          "nullValueMode": "connected"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 2,
+        "x": 10,
+        "y": 2
+      },
+      "id": 12,
+      "links": [],
+      "maxDataPoints": 100,
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": ""
+        },
+        "orientation": "horizontal",
+        "textMode": "none",
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "auto"
+      },
+      "pluginVersion": "7.1.3",
+      "targets": [
+        {
+          "expr": "count(sum(irate(node_cpu_seconds_total{job=\"gluster\",mode=\"idle\"}[5m]) < 0.1) by (instance)) OR vector(0)",
+          "legendFormat": "",
+          "interval": "",
+          "format": "time_series",
+          "instant": false,
+          "intervalFactor": 1,
+          "refId": "A"
+        }
+      ],
+      "type": "stat",
+      "title": "CPU",
+      "cacheTimeout": null,
+      "interval": null,
+      "datasource": null
+    },
+    {
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "unit": "none",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "#299C46"
+              },
+              {
+                "value": 0.1,
+                "color": "#ED8027"
+              },
+              {
+                "value": 1,
+                "color": "#D44A3A"
+              }
+            ]
+          },
+          "mappings": [
+            {
+              "op": "=",
+              "text": "N/A",
+              "value": "null",
+              "id": 0,
+              "type": 1
+            }
+          ],
+          "nullValueMode": "connected"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 2,
+        "x": 12,
+        "y": 2
+      },
+      "id": 13,
+      "links": [],
+      "maxDataPoints": 100,
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": ""
+        },
+        "orientation": "horizontal",
+        "textMode": "none",
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "auto"
+      },
+      "pluginVersion": "7.1.3",
+      "targets": [
+        {
+          "expr": "count((node_filesystem_avail_bytes{job=\"gluster\",fstype!~\"tmpfs|rootfs|cifs\"} / node_filesystem_size_bytes{job=\"gluster\",fstype!~\"tmpfs|rootfs|cifs\"}) < 0.04) OR vector(0)",
+          "legendFormat": "",
+          "interval": "",
+          "format": "time_series",
+          "instant": false,
+          "intervalFactor": 1,
+          "refId": "A"
+        }
+      ],
+      "type": "stat",
+      "title": "Dsk",
+      "cacheTimeout": null,
+      "interval": null,
+      "datasource": null
+    },
+    {
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "unit": "none",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "#299C46"
+              },
+              {
+                "value": 0.1,
+                "color": "#ED8027"
+              },
+              {
+                "value": 1,
+                "color": "#D44A3A"
+              }
+            ]
+          },
+          "mappings": [
+            {
+              "op": "=",
+              "text": "N/A",
+              "value": "null",
+              "id": 0,
+              "type": 1
+            }
+          ],
+          "nullValueMode": "connected"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 2,
+        "x": 14,
+        "y": 2
+      },
+      "id": 14,
+      "links": [],
+      "maxDataPoints": 100,
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": ""
+        },
+        "orientation": "horizontal",
+        "textMode": "none",
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "auto"
+      },
+      "pluginVersion": "7.1.3",
+      "targets": [
+        {
+          "expr": "count(sum(node_memory_MemFree_bytes{job=\"gluster\"} + node_memory_Buffers_bytes{job=\"gluster\"} + node_memory_Cached_bytes{job=\"gluster\"}) by (instance) / sum(node_memory_MemTotal_bytes{job=\"gluster\"}) by (instance) < 0.05) OR vector(0)",
+          "legendFormat": "",
+          "interval": "",
+          "format": "time_series",
+          "instant": false,
+          "intervalFactor": 1,
+          "refId": "A"
+        }
+      ],
+      "type": "stat",
+      "title": "Mem",
+      "cacheTimeout": null,
+      "interval": null,
+      "datasource": null
+    },
+    { 
+      "content": "",
+      "gridPos": {
+        "h": 1,
+        "w": 8,
         "x": 16,
         "y": 0
       },
       "id": 15,
       "links": [],
       "mode": "markdown",
-      "title": "Discovery & Access",
+      "title": "Hadoop 3",
       "type": "text"
     },
     {
@@ -1030,7 +968,7 @@
       "pluginVersion": "7.1.3",
       "targets": [
         {
-          "expr": "sum(1 - up{job=\"discovery_access\"})",
+          "expr": "sum(1 - up{job=\"hadoop3\"})",
           "legendFormat": "",
           "interval": "",
           "format": "time_series",
@@ -1106,7 +1044,7 @@
       "pluginVersion": "7.1.3",
       "targets": [
         {
-          "expr": "count(sum(irate(node_cpu_seconds_total{job=\"discovery_access\",mode=\"idle\"}[5m]) < 0.1) by (instance)) OR vector(0)",
+          "expr": "count(sum(irate(node_cpu_seconds_total{job=\"hadoop3\",mode=\"idle\"}[5m]) < 0.1) by (instance)) OR vector(0)",
           "legendFormat": "",
           "interval": "",
           "format": "time_series",
@@ -1182,7 +1120,7 @@
       "pluginVersion": "7.1.3",
       "targets": [
         {
-          "expr": "count((node_filesystem_avail_bytes{job=\"discovery_access\",fstype!~\"tmpfs|rootfs|cifs\"} / node_filesystem_size_bytes{job=\"discovery_access\",fstype!~\"tmpfs|rootfs|cifs\"}) < 0.04) OR vector(0)",
+          "expr": "hadoop_hdfs_namenode_nninfo_live_nodes_count{instance=\"${HDFS3_EXPORTER}\"} - hadoop_hdfs_namenode_nninfo_dead_nodes_count{instance=\"${HDFS3_EXPORTER}\"",
           "legendFormat": "",
           "interval": "",
           "format": "time_series",
@@ -1192,16 +1130,49 @@
         }
       ],
       "type": "stat",
-      "title": "Dsk",
+      "title": "Nodes",
       "cacheTimeout": null,
       "interval": null,
       "datasource": null
     },
     {
+      "gridPos": {
+        "h": 4,
+        "w": 2,
+        "x": 22,
+        "y": 1
+      },
+      "id": 19,
+      "links": [],
+      "maxDataPoints": 100,
+      "targets": [
+        {
+          "expr": "hadoop_hdfs_namenode_nninfo_percent_remaining{instance=\"${HDFS3_EXPORTER}\"}",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "refId": "A"
+        }
+      ],
+      "title": "Used",
+      "type": "stat",
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": ""
+        },
+        "orientation": "horizontal",
+        "textMode": "auto",
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "auto"
+      },
       "fieldConfig": {
         "defaults": {
           "custom": {},
-          "unit": "none",
+          "unit": "percent",
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -1210,11 +1181,11 @@
                 "color": "#299C46"
               },
               {
-                "value": 0.1,
-                "color": "#ba43a9"
+                "value": 85,
+                "color": "#ED8027"
               },
               {
-                "value": 1.1,
+                "value": 90,
                 "color": "#D44A3A"
               }
             ]
@@ -1232,43 +1203,7 @@
         },
         "overrides": []
       },
-      "gridPos": {
-        "h": 2,
-        "w": 2,
-        "x": 22,
-        "y": 1
-      },
-      "id": 19,
-      "links": [],
-      "maxDataPoints": 100,
-      "options": {
-        "reduceOptions": {
-          "values": false,
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": ""
-        },
-        "orientation": "horizontal",
-        "textMode": "none",
-        "colorMode": "background",
-        "graphMode": "none",
-        "justifyMode": "auto"
-      },
       "pluginVersion": "7.1.3",
-      "targets": [
-        {
-          "expr": "count(sum(node_memory_MemFree_bytes{job=\"discovery_access\"} + node_memory_Buffers_bytes{job=\"discovery_access\"} + node_memory_Cached_bytes{job=\"discovery_access\"}) by (instance) / sum(node_memory_MemTotal_bytes{job=\"discovery_access\"}) by (instance) < 0.05) OR vector(0)",
-          "legendFormat": "",
-          "interval": "",
-          "format": "time_series",
-          "instant": false,
-          "intervalFactor": 1,
-          "refId": "A"
-        }
-      ],
-      "type": "stat",
-      "title": "Mem",
       "cacheTimeout": null,
       "interval": null,
       "datasource": null
@@ -1290,7 +1225,7 @@
                 "color": "#ED8027"
               },
               {
-                "value": 2.1,
+                "value": 1,
                 "color": "#D44A3A"
               }
             ]
@@ -1334,7 +1269,7 @@
       "pluginVersion": "7.1.3",
       "targets": [
         {
-          "expr": "count(uptimerobot_monitor_up==0) OR vector(0)",
+          "expr": "count((node_filesystem_avail_bytes{job=\"hadoop3\",fstype!~\"tmpfs|rootfs|cifs\"} / node_filesystem_size_bytes{job=\"hadoop3\",fstype!~\"tmpfs|rootfs|cifs\"}) < 0.04) OR vector(0)",
           "legendFormat": "",
           "interval": "",
           "format": "time_series",
@@ -1344,7 +1279,7 @@
         }
       ],
       "type": "stat",
-      "title": "UTR",
+      "title": "Dsk",
       "cacheTimeout": null,
       "interval": null,
       "datasource": null
@@ -1410,7 +1345,7 @@
       "pluginVersion": "7.1.3",
       "targets": [
         {
-          "expr": "count(probe_http_status_code{job=\"da-access-http\"} != 200) OR vector(0)",
+          "expr": "count(sum(node_memory_MemFree_bytes{job=\"hadoop3\"} + node_memory_Buffers_bytes{job=\"hadoop3\"} + node_memory_Cached_bytes{job=\"hadoop3\"}) by (instance) / sum(node_memory_MemTotal_bytes{job=\"hadoop3\"}) by (instance) < 0.05) OR vector(0)",
           "legendFormat": "",
           "interval": "",
           "format": "time_series",
@@ -1420,10 +1355,100 @@
         }
       ],
       "type": "stat",
-      "title": "WWW",
+      "title": "Mem",
       "cacheTimeout": null,
       "interval": null,
       "datasource": null
+    },
+    {
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "unit": "none",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "#299C46"
+              },
+              {
+                "value": 0.1,
+                "color": "#ED8027"
+              },
+              {
+                "value": 1,
+                "color": "#D44A3A"
+              }
+            ]
+          },
+          "mappings": [
+            {
+              "op": "=",
+              "text": "N/A",
+              "value": "null",
+              "id": 0,
+              "type": 1
+            }
+          ],
+          "nullValueMode": "connected"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 2,
+        "x": 20,
+        "y": 3
+      },
+      "id": 22,
+      "links": [],
+      "maxDataPoints": 100,
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": ""
+        },
+        "orientation": "horizontal",
+        "textMode": "none",
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "auto"
+      },
+      "pluginVersion": "7.1.3",
+      "targets": [
+        {
+          "expr": "hadoop_hdfs_namenode_fsname_system_under_replicated_blocks{instance=\"${HDFS3_EXPORTER}\"}",
+          "legendFormat": "",
+          "interval": "",
+          "format": "time_series",
+          "instant": false,
+          "intervalFactor": 1,
+          "refId": "A"
+        }
+      ],
+      "type": "stat",
+      "title": "Under-rep",
+      "cacheTimeout": null,
+      "interval": null,
+      "datasource": null
+    },
+    { 
+      "content": "",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 4
+      },
+      "id": 23,
+      "links": [],
+      "mode": "markdown",
+      "title": "WA Systems",
+      "type": "text"
     },
     { 
       "content": "",
@@ -1433,10 +1458,10 @@
         "x": 0,
         "y": 5
       },
-      "id": 22,
+      "id": 24,
       "links": [],
       "mode": "markdown",
-      "title": "Services",
+      "title": "Infrastructure",
       "type": "text"
     },
     {
@@ -1480,7 +1505,325 @@
         "x": 0,
         "y": 6
       },
-      "id": 23,
+      "id": 25,
+      "links": [],
+      "maxDataPoints": 100,
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": ""
+        },
+        "orientation": "horizontal",
+        "textMode": "none",
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "auto"
+      },
+      "pluginVersion": "7.1.3",
+      "targets": [
+        {
+          "expr": "sum(1 - up{job=\"infrastructure\"})",
+          "legendFormat": "",
+          "interval": "",
+          "format": "time_series",
+          "instant": false,
+          "intervalFactor": 1,
+          "refId": "A"
+        }
+      ],
+      "type": "stat",
+      "title": "Up",
+      "cacheTimeout": null,
+      "interval": null,
+      "datasource": null
+    },
+    {
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "unit": "none",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "#299C46"
+              },
+              {
+                "value": 0.1,
+                "color": "#ED8027"
+              },
+              {
+                "value": 1,
+                "color": "#D44A3A"
+              }
+            ]
+          },
+          "mappings": [
+            {
+              "op": "=",
+              "text": "N/A",
+              "value": "null",
+              "id": 0,
+              "type": 1
+            }
+          ],
+          "nullValueMode": "connected"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 2,
+        "x": 2,
+        "y": 6
+      },
+      "id": 26,
+      "links": [],
+      "maxDataPoints": 100,
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": ""
+        },
+        "orientation": "horizontal",
+        "textMode": "none",
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "auto"
+      },
+      "pluginVersion": "7.1.3",
+      "targets": [
+        {
+          "expr": "count(sum(irate(node_cpu_seconds_total{job=\"infrastructure\",mode=\"idle\"}[5m]) < 0.1) by (instance)) OR vector(0)",
+          "legendFormat": "",
+          "interval": "",
+          "format": "time_series",
+          "instant": false,
+          "intervalFactor": 1,
+          "refId": "A"
+        }
+      ],
+      "type": "stat",
+      "title": "CPU",
+      "cacheTimeout": null,
+      "interval": null,
+      "datasource": null
+    },
+    {
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "unit": "none",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "#299C46"
+              },
+              {
+                "value": 0.1,
+                "color": "#ED8027"
+              },
+              {
+                "value": 1,
+                "color": "#D44A3A"
+              }
+            ]
+          },
+          "mappings": [
+            {
+              "op": "=",
+              "text": "N/A",
+              "value": "null",
+              "id": 0,
+              "type": 1
+            }
+          ],
+          "nullValueMode": "connected"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 2,
+        "x": 4,
+        "y": 6
+      },
+      "id": 27,
+      "links": [],
+      "maxDataPoints": 100,
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": ""
+        },
+        "orientation": "horizontal",
+        "textMode": "none",
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "auto"
+      },
+      "pluginVersion": "7.1.3",
+      "targets": [
+        {
+          "expr": "count((node_filesystem_avail_bytes{job=\"infrastructure\",fstype!~\"tmpfs|rootfs|cifs\"} / node_filesystem_size_bytes{job=\"infrastructure\",fstype!~\"tmpfs|rootfs|cifs\"}) < 0.04) OR vector(0)",
+          "legendFormat": "",
+          "interval": "",
+          "format": "time_series",
+          "instant": false,
+          "intervalFactor": 1,
+          "refId": "A"
+        }
+      ],
+      "type": "stat",
+      "title": "Dsk",
+      "cacheTimeout": null,
+      "interval": null,
+      "datasource": null
+    },
+    {
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "unit": "none",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "#299C46"
+              },
+              {
+                "value": 0.1,
+                "color": "#ED8027"
+              },
+              {
+                "value": 1,
+                "color": "#D44A3A"
+              }
+            ]
+          },
+          "mappings": [
+            {
+              "op": "=",
+              "text": "N/A",
+              "value": "null",
+              "id": 0,
+              "type": 1
+            }
+          ],
+          "nullValueMode": "connected"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 2,
+        "x": 6,
+        "y": 6
+      },
+      "id": 28,
+      "links": [],
+      "maxDataPoints": 100,
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": ""
+        },
+        "orientation": "horizontal",
+        "textMode": "none",
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "auto"
+      },
+      "pluginVersion": "7.1.3",
+      "targets": [
+        {
+          "expr": "count(sum(node_memory_MemFree_bytes{job=\"infrastructure\"} + node_memory_Buffers_bytes{job=\"infrastructure\"} + node_memory_Cached_bytes{job=\"infrastructure\"}) by (instance) / sum(node_memory_MemTotal_bytes{job=\"infrastructure\"}) by (instance) < 0.05) OR vector(0)",
+          "legendFormat": "",
+          "interval": "",
+          "format": "time_series",
+          "instant": false,
+          "intervalFactor": 1,
+          "refId": "A"
+        }
+      ],
+      "type": "stat",
+      "title": "Mem",
+      "cacheTimeout": null,
+      "interval": null,
+      "datasource": null
+    },
+    { 
+      "content": "",
+      "gridPos": {
+        "h": 1,
+        "w": 8,
+        "x": 8,
+        "y": 5
+      },
+      "id": 29,
+      "links": [],
+      "mode": "markdown",
+      "title": "Services",
+      "type": "text"
+    },
+    {
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "unit": "none",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "#299C46"
+              },
+              {
+                "value": 0.1,
+                "color": "#ED8027"
+              },
+              {
+                "value": 1,
+                "color": "#D44A3A"
+              }
+            ]
+          },
+          "mappings": [
+            {
+              "op": "=",
+              "text": "N/A",
+              "value": "null",
+              "id": 0,
+              "type": 1
+            }
+          ],
+          "nullValueMode": "connected"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 2,
+        "x": 8,
+        "y": 6
+      },
+      "id": 30,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -1553,10 +1896,10 @@
       "gridPos": {
         "h": 2,
         "w": 2,
-        "x": 2,
+        "x": 10,
         "y": 6
       },
-      "id": 24,
+      "id": 31,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -1629,10 +1972,10 @@
       "gridPos": {
         "h": 2,
         "w": 2,
-        "x": 4,
+        "x": 12,
         "y": 6
       },
-      "id": 25,
+      "id": 32,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -1705,10 +2048,10 @@
       "gridPos": {
         "h": 2,
         "w": 2,
-        "x": 6,
+        "x": 14,
         "y": 6
       },
-      "id": 26,
+      "id": 33,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -1748,328 +2091,10 @@
       "gridPos": {
         "h": 1,
         "w": 8,
-        "x": 8,
-        "y": 6
-      },
-      "id": 27,
-      "links": [],
-      "mode": "markdown",
-      "title": "Gluster",
-      "type": "text"
-    },
-    {
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "unit": "none",
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "value": null,
-                "color": "#299C46"
-              },
-              {
-                "value": 0.1,
-                "color": "#ED8027"
-              },
-              {
-                "value": 1,
-                "color": "#D44A3A"
-              }
-            ]
-          },
-          "mappings": [
-            {
-              "op": "=",
-              "text": "N/A",
-              "value": "null",
-              "id": 0,
-              "type": 1
-            }
-          ],
-          "nullValueMode": "connected"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 2,
-        "w": 2,
-        "x": 8,
-        "y": 7
-      },
-      "id": 28,
-      "links": [],
-      "maxDataPoints": 100,
-      "options": {
-        "reduceOptions": {
-          "values": false,
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": ""
-        },
-        "orientation": "horizontal",
-        "textMode": "none",
-        "colorMode": "background",
-        "graphMode": "none",
-        "justifyMode": "auto"
-      },
-      "pluginVersion": "7.1.3",
-      "targets": [
-        {
-          "expr": "sum(1 - up{job=\"gluster\"})",
-          "legendFormat": "",
-          "interval": "",
-          "format": "time_series",
-          "instant": false,
-          "intervalFactor": 1,
-          "refId": "A"
-        }
-      ],
-      "type": "stat",
-      "title": "Up",
-      "cacheTimeout": null,
-      "interval": null,
-      "datasource": null
-    },
-    {
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "unit": "none",
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "value": null,
-                "color": "#299C46"
-              },
-              {
-                "value": 0.1,
-                "color": "#ED8027"
-              },
-              {
-                "value": 1,
-                "color": "#D44A3A"
-              }
-            ]
-          },
-          "mappings": [
-            {
-              "op": "=",
-              "text": "N/A",
-              "value": "null",
-              "id": 0,
-              "type": 1
-            }
-          ],
-          "nullValueMode": "connected"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 2,
-        "w": 2,
-        "x": 10,
-        "y": 7
-      },
-      "id": 29,
-      "links": [],
-      "maxDataPoints": 100,
-      "options": {
-        "reduceOptions": {
-          "values": false,
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": ""
-        },
-        "orientation": "horizontal",
-        "textMode": "none",
-        "colorMode": "background",
-        "graphMode": "none",
-        "justifyMode": "auto"
-      },
-      "pluginVersion": "7.1.3",
-      "targets": [
-        {
-          "expr": "count(sum(irate(node_cpu_seconds_total{job=\"gluster\",mode=\"idle\"}[5m]) < 0.1) by (instance)) OR vector(0)",
-          "legendFormat": "",
-          "interval": "",
-          "format": "time_series",
-          "instant": false,
-          "intervalFactor": 1,
-          "refId": "A"
-        }
-      ],
-      "type": "stat",
-      "title": "CPU",
-      "cacheTimeout": null,
-      "interval": null,
-      "datasource": null
-    },
-    {
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "unit": "none",
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "value": null,
-                "color": "#299C46"
-              },
-              {
-                "value": 0.1,
-                "color": "#ED8027"
-              },
-              {
-                "value": 1,
-                "color": "#D44A3A"
-              }
-            ]
-          },
-          "mappings": [
-            {
-              "op": "=",
-              "text": "N/A",
-              "value": "null",
-              "id": 0,
-              "type": 1
-            }
-          ],
-          "nullValueMode": "connected"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 2,
-        "w": 2,
-        "x": 12,
-        "y": 7
-      },
-      "id": 30,
-      "links": [],
-      "maxDataPoints": 100,
-      "options": {
-        "reduceOptions": {
-          "values": false,
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": ""
-        },
-        "orientation": "horizontal",
-        "textMode": "none",
-        "colorMode": "background",
-        "graphMode": "none",
-        "justifyMode": "auto"
-      },
-      "pluginVersion": "7.1.3",
-      "targets": [
-        {
-          "expr": "count((node_filesystem_avail_bytes{job=\"gluster\",fstype!~\"tmpfs|rootfs|cifs\"} / node_filesystem_size_bytes{job=\"gluster\",fstype!~\"tmpfs|rootfs|cifs\"}) < 0.04) OR vector(0)",
-          "legendFormat": "",
-          "interval": "",
-          "format": "time_series",
-          "instant": false,
-          "intervalFactor": 1,
-          "refId": "A"
-        }
-      ],
-      "type": "stat",
-      "title": "Dsk",
-      "cacheTimeout": null,
-      "interval": null,
-      "datasource": null
-    },
-    {
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "unit": "none",
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "value": null,
-                "color": "#299C46"
-              },
-              {
-                "value": 0.1,
-                "color": "#ED8027"
-              },
-              {
-                "value": 1,
-                "color": "#D44A3A"
-              }
-            ]
-          },
-          "mappings": [
-            {
-              "op": "=",
-              "text": "N/A",
-              "value": "null",
-              "id": 0,
-              "type": 1
-            }
-          ],
-          "nullValueMode": "connected"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 2,
-        "w": 2,
-        "x": 14,
-        "y": 7
-      },
-      "id": 31,
-      "links": [],
-      "maxDataPoints": 100,
-      "options": {
-        "reduceOptions": {
-          "values": false,
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": ""
-        },
-        "orientation": "horizontal",
-        "textMode": "none",
-        "colorMode": "background",
-        "graphMode": "none",
-        "justifyMode": "auto"
-      },
-      "pluginVersion": "7.1.3",
-      "targets": [
-        {
-          "expr": "count(sum(node_memory_MemFree_bytes{job=\"gluster\"} + node_memory_Buffers_bytes{job=\"gluster\"} + node_memory_Cached_bytes{job=\"gluster\"}) by (instance) / sum(node_memory_MemTotal_bytes{job=\"gluster\"}) by (instance) < 0.05) OR vector(0)",
-          "legendFormat": "",
-          "interval": "",
-          "format": "time_series",
-          "instant": false,
-          "intervalFactor": 1,
-          "refId": "A"
-        }
-      ],
-      "type": "stat",
-      "title": "Mem",
-      "cacheTimeout": null,
-      "interval": null,
-      "datasource": null
-    },
-    { 
-      "content": "",
-      "gridPos": {
-        "h": 1,
-        "w": 8,
         "x": 16,
         "y": 5
       },
-      "id": 32,
+      "id": 34,
       "links": [],
       "mode": "markdown",
       "title": "Solr",
@@ -2116,7 +2141,7 @@
         "x": 16,
         "y": 6
       },
-      "id": 33,
+      "id": 35,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -2192,7 +2217,7 @@
         "x": 18,
         "y": 6
       },
-      "id": 34,
+      "id": 36,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -2268,7 +2293,7 @@
         "x": 20,
         "y": 6
       },
-      "id": 35,
+      "id": 37,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -2344,7 +2369,7 @@
         "x": 22,
         "y": 6
       },
-      "id": 36,
+      "id": 38,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -2420,7 +2445,7 @@
         "x": 16,
         "y": 8
       },
-      "id": 37,
+      "id": 39,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -2459,14 +2484,28 @@
       "content": "",
       "gridPos": {
         "h": 1,
-        "w": 8,
-        "x": 8,
-        "y": 9
+        "w": 24,
+        "x": 0,
+        "y": 11
       },
-      "id": 38,
+      "id": 40,
       "links": [],
       "mode": "markdown",
-      "title": "Infrastructure",
+      "title": "WA Services",
+      "type": "text"
+    },
+    { 
+      "content": "",
+      "gridPos": {
+        "h": 1,
+        "w": 8,
+        "x": 0,
+        "y": 12
+      },
+      "id": 41,
+      "links": [],
+      "mode": "markdown",
+      "title": "Ingest & Metadata",
       "type": "text"
     },
     {
@@ -2507,10 +2546,10 @@
       "gridPos": {
         "h": 2,
         "w": 2,
-        "x": 8,
-        "y": 10
+        "x": 0,
+        "y": 13
       },
-      "id": 39,
+      "id": 42,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -2530,7 +2569,7 @@
       "pluginVersion": "7.1.3",
       "targets": [
         {
-          "expr": "sum(1 - up{job=\"infrastructure\"})",
+          "expr": "sum(1 - up{job=\"ingest_metadata\"})",
           "legendFormat": "",
           "interval": "",
           "format": "time_series",
@@ -2559,10 +2598,10 @@
               },
               {
                 "value": 0.1,
-                "color": "#ED8027"
+                "color": "#ba43a9"
               },
               {
-                "value": 1,
+                "value": 1.1,
                 "color": "#D44A3A"
               }
             ]
@@ -2583,10 +2622,10 @@
       "gridPos": {
         "h": 2,
         "w": 2,
-        "x": 10,
-        "y": 10
+        "x": 2,
+        "y": 13
       },
-      "id": 40,
+      "id": 43,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -2606,7 +2645,7 @@
       "pluginVersion": "7.1.3",
       "targets": [
         {
-          "expr": "count(sum(irate(node_cpu_seconds_total{job=\"infrastructure\",mode=\"idle\"}[5m]) < 0.1) by (instance)) OR vector(0)",
+          "expr": "count(sum(irate(node_cpu_seconds_total{job=\"ingest_metadata\",mode=\"idle\"}[5m]) < 0.1) by (instance)) OR vector(0)",
           "legendFormat": "",
           "interval": "",
           "format": "time_series",
@@ -2659,10 +2698,10 @@
       "gridPos": {
         "h": 2,
         "w": 2,
-        "x": 12,
-        "y": 10
+        "x": 4,
+        "y": 13
       },
-      "id": 41,
+      "id": 44,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -2682,7 +2721,7 @@
       "pluginVersion": "7.1.3",
       "targets": [
         {
-          "expr": "count((node_filesystem_avail_bytes{job=\"infrastructure\",fstype!~\"tmpfs|rootfs|cifs\"} / node_filesystem_size_bytes{job=\"infrastructure\",fstype!~\"tmpfs|rootfs|cifs\"}) < 0.04) OR vector(0)",
+          "expr": "count((node_filesystem_avail_bytes{job=\"ingest_metadata\",fstype!~\"tmpfs|rootfs|cifs\"} / node_filesystem_size_bytes{job=\"ingest_metadata\",fstype!~\"tmpfs|rootfs|cifs\"}) < 0.04) OR vector(0)",
           "legendFormat": "",
           "interval": "",
           "format": "time_series",
@@ -2735,10 +2774,10 @@
       "gridPos": {
         "h": 2,
         "w": 2,
-        "x": 14,
-        "y": 10
+        "x": 6,
+        "y": 13
       },
-      "id": 42,
+      "id": 45,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -2758,7 +2797,7 @@
       "pluginVersion": "7.1.3",
       "targets": [
         {
-          "expr": "count(sum(node_memory_MemFree_bytes{job=\"infrastructure\"} + node_memory_Buffers_bytes{job=\"infrastructure\"} + node_memory_Cached_bytes{job=\"infrastructure\"}) by (instance) / sum(node_memory_MemTotal_bytes{job=\"infrastructure\"}) by (instance) < 0.05) OR vector(0)",
+          "expr": "count(sum(node_memory_MemFree_bytes{job=\"ingest_metadata\"} + node_memory_Buffers_bytes{job=\"ingest_metadata\"} + node_memory_Cached_bytes{job=\"ingest_metadata\"}) by (instance) / sum(node_memory_MemTotal_bytes{job=\"ingest_metadata\"}) by (instance) < 0.05) OR vector(0)",
           "legendFormat": "",
           "interval": "",
           "format": "time_series",
@@ -2773,18 +2812,94 @@
       "interval": null,
       "datasource": null
     },
+    {
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "unit": "none",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "#299C46"
+              },
+              {
+                "value": 0.1,
+                "color": "#ED8027"
+              },
+              {
+                "value": 1,
+                "color": "#D44A3A"
+              }
+            ]
+          },
+          "mappings": [
+            {
+              "op": "=",
+              "text": "N/A",
+              "value": "null",
+              "id": 0,
+              "type": 1
+            }
+          ],
+          "nullValueMode": "connected"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 2,
+        "x": 0,
+        "y": 15
+      },
+      "id": 46,
+      "links": [],
+      "maxDataPoints": 100,
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": ""
+        },
+        "orientation": "horizontal",
+        "textMode": "none",
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "auto"
+      },
+      "pluginVersion": "7.1.3",
+      "targets": [
+        {
+          "expr": "count(probe_http_status_code{job=\"im-access-http\"} != 200) OR vector(0)",
+          "legendFormat": "",
+          "interval": "",
+          "format": "time_series",
+          "instant": false,
+          "intervalFactor": 1,
+          "refId": "A"
+        }
+      ],
+      "type": "stat",
+      "title": "WWW",
+      "cacheTimeout": null,
+      "interval": null,
+      "datasource": null
+    },
     { 
       "content": "",
       "gridPos": {
         "h": 1,
-        "w": 24,
-        "x": 0,
+        "w": 8,
+        "x": 8,
         "y": 12
       },
-      "id": 43,
+      "id": 47,
       "links": [],
       "mode": "markdown",
-      "title": "WA Services",
+      "title": "TrackDB",
       "type": "text"
     },
     {
@@ -2824,11 +2939,11 @@
       },
       "gridPos": {
         "h": 2,
-        "w": 3,
-        "x": 0,
+        "w": 4,
+        "x": 8,
         "y": 13
       },
-      "id": 44,
+      "id": 48,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -2848,7 +2963,7 @@
       "pluginVersion": "7.1.3",
       "targets": [
         {
-          "expr": "(time() - trackdb_refresh_timestamp{job=\"trackdb\"}) / (60*60)",
+          "expr": "(time() - trackdb_refresh_timestamp) / (60*60)",
           "legendFormat": "",
           "interval": "",
           "format": "time_series",
@@ -2900,11 +3015,11 @@
       },
       "gridPos": {
         "h": 2,
-        "w": 3,
-        "x": 3,
+        "w": 4,
+        "x": 12,
         "y": 13
       },
-      "id": 45,
+      "id": 49,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -2924,7 +3039,7 @@
       "pluginVersion": "7.1.3",
       "targets": [
         {
-          "expr": "sum(trackdb_numFound{job=\"trackdb\"} - (trackdb_numFound{job=\"trackdb\"} offset 1d))",
+          "expr": "sum(trackdb_numFound - (trackdb_numFound offset 1d))",
           "legendFormat": "",
           "interval": "",
           "format": "time_series",
@@ -2935,6 +3050,476 @@
       ],
       "type": "stat",
       "title": "trackdb numFound",
+      "cacheTimeout": null,
+      "interval": null,
+      "datasource": null
+    },
+    { 
+      "content": "",
+      "gridPos": {
+        "h": 1,
+        "w": 8,
+        "x": 16,
+        "y": 12
+      },
+      "id": 50,
+      "links": [],
+      "mode": "markdown",
+      "title": "Discovery & Access",
+      "type": "text"
+    },
+    {
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "unit": "none",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "#299C46"
+              },
+              {
+                "value": 0.1,
+                "color": "#ED8027"
+              },
+              {
+                "value": 1,
+                "color": "#D44A3A"
+              }
+            ]
+          },
+          "mappings": [
+            {
+              "op": "=",
+              "text": "N/A",
+              "value": "null",
+              "id": 0,
+              "type": 1
+            }
+          ],
+          "nullValueMode": "connected"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 2,
+        "x": 16,
+        "y": 13
+      },
+      "id": 51,
+      "links": [],
+      "maxDataPoints": 100,
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": ""
+        },
+        "orientation": "horizontal",
+        "textMode": "none",
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "auto"
+      },
+      "pluginVersion": "7.1.3",
+      "targets": [
+        {
+          "expr": "sum(1 - up{job=\"discovery_access\"})",
+          "legendFormat": "",
+          "interval": "",
+          "format": "time_series",
+          "instant": false,
+          "intervalFactor": 1,
+          "refId": "A"
+        }
+      ],
+      "type": "stat",
+      "title": "Up",
+      "cacheTimeout": null,
+      "interval": null,
+      "datasource": null
+    },
+    {
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "unit": "none",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "#299C46"
+              },
+              {
+                "value": 0.1,
+                "color": "#ED8027"
+              },
+              {
+                "value": 1,
+                "color": "#D44A3A"
+              }
+            ]
+          },
+          "mappings": [
+            {
+              "op": "=",
+              "text": "N/A",
+              "value": "null",
+              "id": 0,
+              "type": 1
+            }
+          ],
+          "nullValueMode": "connected"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 2,
+        "x": 18,
+        "y": 13
+      },
+      "id": 52,
+      "links": [],
+      "maxDataPoints": 100,
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": ""
+        },
+        "orientation": "horizontal",
+        "textMode": "none",
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "auto"
+      },
+      "pluginVersion": "7.1.3",
+      "targets": [
+        {
+          "expr": "count(sum(irate(node_cpu_seconds_total{job=\"discovery_access\",mode=\"idle\"}[5m]) < 0.1) by (instance)) OR vector(0)",
+          "legendFormat": "",
+          "interval": "",
+          "format": "time_series",
+          "instant": false,
+          "intervalFactor": 1,
+          "refId": "A"
+        }
+      ],
+      "type": "stat",
+      "title": "CPU",
+      "cacheTimeout": null,
+      "interval": null,
+      "datasource": null
+    },
+    {
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "unit": "none",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "#299C46"
+              },
+              {
+                "value": 0.1,
+                "color": "#ED8027"
+              },
+              {
+                "value": 1,
+                "color": "#D44A3A"
+              }
+            ]
+          },
+          "mappings": [
+            {
+              "op": "=",
+              "text": "N/A",
+              "value": "null",
+              "id": 0,
+              "type": 1
+            }
+          ],
+          "nullValueMode": "connected"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 2,
+        "x": 20,
+        "y": 13
+      },
+      "id": 53,
+      "links": [],
+      "maxDataPoints": 100,
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": ""
+        },
+        "orientation": "horizontal",
+        "textMode": "none",
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "auto"
+      },
+      "pluginVersion": "7.1.3",
+      "targets": [
+        {
+          "expr": "count((node_filesystem_avail_bytes{job=\"discovery_access\",fstype!~\"tmpfs|rootfs|cifs\"} / node_filesystem_size_bytes{job=\"discovery_access\",fstype!~\"tmpfs|rootfs|cifs\"}) < 0.04) OR vector(0)",
+          "legendFormat": "",
+          "interval": "",
+          "format": "time_series",
+          "instant": false,
+          "intervalFactor": 1,
+          "refId": "A"
+        }
+      ],
+      "type": "stat",
+      "title": "Dsk",
+      "cacheTimeout": null,
+      "interval": null,
+      "datasource": null
+    },
+    {
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "unit": "none",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "#299C46"
+              },
+              {
+                "value": 0.1,
+                "color": "#ba43a9"
+              },
+              {
+                "value": 1.1,
+                "color": "#D44A3A"
+              }
+            ]
+          },
+          "mappings": [
+            {
+              "op": "=",
+              "text": "N/A",
+              "value": "null",
+              "id": 0,
+              "type": 1
+            }
+          ],
+          "nullValueMode": "connected"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 2,
+        "x": 22,
+        "y": 13
+      },
+      "id": 54,
+      "links": [],
+      "maxDataPoints": 100,
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": ""
+        },
+        "orientation": "horizontal",
+        "textMode": "none",
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "auto"
+      },
+      "pluginVersion": "7.1.3",
+      "targets": [
+        {
+          "expr": "count(sum(node_memory_MemFree_bytes{job=\"discovery_access\"} + node_memory_Buffers_bytes{job=\"discovery_access\"} + node_memory_Cached_bytes{job=\"discovery_access\"}) by (instance) / sum(node_memory_MemTotal_bytes{job=\"discovery_access\"}) by (instance) < 0.05) OR vector(0)",
+          "legendFormat": "",
+          "interval": "",
+          "format": "time_series",
+          "instant": false,
+          "intervalFactor": 1,
+          "refId": "A"
+        }
+      ],
+      "type": "stat",
+      "title": "Mem",
+      "cacheTimeout": null,
+      "interval": null,
+      "datasource": null
+    },
+    {
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "unit": "none",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "#299C46"
+              },
+              {
+                "value": 0.1,
+                "color": "#ED8027"
+              },
+              {
+                "value": 2.1,
+                "color": "#D44A3A"
+              }
+            ]
+          },
+          "mappings": [
+            {
+              "op": "=",
+              "text": "N/A",
+              "value": "null",
+              "id": 0,
+              "type": 1
+            }
+          ],
+          "nullValueMode": "connected"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 2,
+        "x": 16,
+        "y": 15
+      },
+      "id": 55,
+      "links": [],
+      "maxDataPoints": 100,
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": ""
+        },
+        "orientation": "horizontal",
+        "textMode": "none",
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "auto"
+      },
+      "pluginVersion": "7.1.3",
+      "targets": [
+        {
+          "expr": "count(uptimerobot_monitor_up==0) OR vector(0)",
+          "legendFormat": "",
+          "interval": "",
+          "format": "time_series",
+          "instant": false,
+          "intervalFactor": 1,
+          "refId": "A"
+        }
+      ],
+      "type": "stat",
+      "title": "UTR",
+      "cacheTimeout": null,
+      "interval": null,
+      "datasource": null
+    },
+    {
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "unit": "none",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "#299C46"
+              },
+              {
+                "value": 0.1,
+                "color": "#ED8027"
+              },
+              {
+                "value": 1.1,
+                "color": "#D44A3A"
+              }
+            ]
+          },
+          "mappings": [
+            {
+              "op": "=",
+              "text": "N/A",
+              "value": "null",
+              "id": 0,
+              "type": 1
+            }
+          ],
+          "nullValueMode": "connected"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 2,
+        "x": 18,
+        "y": 15
+      },
+      "id": 56,
+      "links": [],
+      "maxDataPoints": 100,
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": ""
+        },
+        "orientation": "horizontal",
+        "textMode": "none",
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "auto"
+      },
+      "pluginVersion": "7.1.3",
+      "targets": [
+        {
+          "expr": "count(probe_http_status_code{job=\"da-access-http\"} != 200) OR vector(0)",
+          "legendFormat": "",
+          "interval": "",
+          "format": "time_series",
+          "instant": false,
+          "intervalFactor": 1,
+          "refId": "A"
+        }
+      ],
+      "type": "stat",
+      "title": "WWW",
       "cacheTimeout": null,
       "interval": null,
       "datasource": null
