@@ -13,7 +13,7 @@ services:
       placement:
         constraints: [node.role == manager]
 
-  # last 7-series version looks to be 7.5.7
+  # 7-series version
   grafana:
     image: grafana/grafana:7.5.7
     ports:
@@ -31,7 +31,7 @@ services:
       - "${DATA_GRAFANA}:/var/lib/grafana"
 
   prometheus:
-    image: prom/prometheus
+    image: prom/prometheus:v2.30.3
     ports:
       - "${PROMETHEUS_PORT}:9090"
     depends_on:
@@ -41,7 +41,6 @@ services:
     volumes:
       - ./prometheus:/etc/prometheus
       - "${DATA_PROMETHEUS}:/prometheus"
-
     # hosts referenced by docker prometheus must be detailed here OR in DNS
     # as OS /etc/hosts declaration not visible to container
     extra_hosts:
@@ -88,9 +87,20 @@ services:
       - "h3dn1:192.168.45.191"
       - "h3dn2:192.168.45.192"
       - "h3dn3:192.168.45.193"
+      - "h3dn4:192.168.45.194"
+      - "h3dn5:192.168.45.195"
+      - "h3dn6:192.168.45.196"
+      - "h3dn7:192.168.45.197"
+      - "h3httpfs1:192.168.45.184"
+      - "h3httpfs2:192.168.45.190"
+      - "h3httpfs3:192.168.45.198"
+      - "h3jh:192.168.45.183"
       - "h3nn:192.168.45.181"
       - "h3rm:192.168.45.182"
       - "h3snn:192.168.45.185"
+      - "h3zk1:192.168.45.187"
+      - "h3zk2:192.168.45.188"
+      - "h3zk3:192.168.45.189"
       - "hdfs:192.168.45.13"
       - "hdfs-lb1:192.168.1.44"
       - "hdfs-lb2:192.168.1.45"
@@ -105,11 +115,7 @@ services:
       - "jisc-zk03:192.168.1.64"
       - "jobtracker:192.168.1.104"
       - "jupyter2:192.168.45.35"
-#      - "ldukwa04:192.168.1.54"
       - "ldukwa-proxy:192.168.45.17"
-#      - "ldukwa-zk01:192.168.1.209"
-#      - "ldukwa-zk02:192.168.1.210"
-#      - "ldukwa-zk03:192.168.1.211"
       - "logs:192.168.45.32"
       - "mapred:192.168.45.18"
       - "monitor:192.168.45.204"
@@ -141,7 +147,7 @@ services:
       - '--web.enable-lifecycle'
 
   alertmanager:
-    image: prom/alertmanager
+    image: prom/alertmanager:v2.30.3
     ports:
       - "${ALERTMANAGER_PORT}:9093"
     volumes:
@@ -155,7 +161,7 @@ services:
       - "explorer2:192.168.45.3"
 
   pushgateway:
-    image: prom/pushgateway
+    image: prom/pushgateway:v1.4.2
     ports:
       - 9091:9091
 
@@ -170,7 +176,7 @@ services:
       - "explorer2:192.168.45.3"
 
   blackbox-exporter:
-    image: prom/blackbox-exporter
+    image: prom/blackbox-exporter:v0.19.0
     ports:
       - "9115:9115"
     volumes:
@@ -184,7 +190,6 @@ services:
       - "intranet:192.168.45.30"
       - "intranet-wayback:192.168.45.23"
       - "jisc03:192.168.1.57"
-#      - "ldukwa04:192.168.1.54"
       - "ldukwa-proxy:192.168.45.17"
       - "solr1:192.168.1.71"
       - "solr2:192.168.1.72"

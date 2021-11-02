@@ -639,7 +639,7 @@
       "pluginVersion": "7.1.3",
       "targets": [
         {
-          "expr": "hdfs_node_count{status=\"dead\",instance=\"hdfs-exporter.api.wa.bl.uk:80\"}",
+          "expr": "hdfs_node_count{status=\"dead\",instance=\"h3exporter.api.wa.bl.uk:80\"}",
           "legendFormat": "",
           "interval": "",
           "format": "time_series",
@@ -666,7 +666,7 @@
       "maxDataPoints": 100,
       "targets": [
         {
-          "expr": "hdfs_used_percent{instance=\"hdfs-exporter.api.wa.bl.uk:80\"}",
+          "expr": "hdfs_used_percent{instance=\"h3exporter.api.wa.bl.uk:80\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A"
@@ -940,7 +940,7 @@
       "pluginVersion": "7.1.3",
       "targets": [
         {
-          "expr": "hdfs_under_replicated_block_count{instance=\"hdfs-exporter.api.wa.bl.uk:80\"}",
+          "expr": "hdfs_under_replicated_block_count{instance=\"h3exporter.api.wa.bl.uk:80\"}",
           "legendFormat": "",
           "interval": "",
           "format": "time_series",
