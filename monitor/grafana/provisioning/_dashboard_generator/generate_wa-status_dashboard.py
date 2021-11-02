@@ -138,13 +138,13 @@ def replace_output_single(outHandle, **kwargs):
 			templateCode = templateCode.replace('<expr>', expr)
 	elif kwargs['job'] == 'hadoop3':
 		if kwargs['title'] == 'Nodes':
-			expr = 'hadoop_hdfs_namenode_nninfo_live_nodes_count{instance=\\"${HDFS3_EXPORTER}\\"} - hadoop_hdfs_namenode_nninfo_dead_nodes_count{instance=\\"${HDFS3_EXPORTER}\\"'
+			expr = 'hadoop_hdfs_namenode_nninfo_live_nodes_count{instance=\\"${HDFS3_EXPORTER}\\"} - hadoop_hdfs_namenode_nninfo_dead_nodes_count{instance=\\"${HDFS3_EXPORTER}\\"}'
 			templateCode = templateCode.replace('<expr>', expr)
 		elif kwargs['title'] == 'Under-rep':
 			expr = 'hadoop_hdfs_namenode_fsname_system_under_replicated_blocks{instance=\\"${HDFS3_EXPORTER}\\"}'
 			templateCode = templateCode.replace('<expr>', expr)
 		elif kwargs['title'] == 'Used':
-			expr = 'hadoop_hdfs_namenode_nninfo_percent_remaining{instance=\\"${HDFS3_EXPORTER}\\"}'
+			expr = '100 - hadoop_hdfs_namenode_nninfo_percent_remaining{instance=\\"${HDFS3_EXPORTER}\\"}'
 			templateCode = templateCode.replace('<expr>', expr)
 
 	# add last comma if not last panel
@@ -172,76 +172,76 @@ def main():
 	# output single panels -----
 
 	## storage title bar
-	replace_output_title(outHandle, pnl=panelTitle, job='hadoop', title='Storage', h=1, w=24,  x=0, y=0)
+	replace_output_title(outHandle, pnl=panelTitle, job='hadoop', title='Storage', h=2, w=24, x=0, y=0)
 	## hadoop 0.20
-	replace_output_title(outHandle, pnl=panelTitle, job='hadoop', title='Hadoop 0.20', h=1, w=8,  x=0, y=1)
-	replace_output_single(outHandle, pnl=panelStat, job='hadoop', title='Up', h=2, w=2,  x=0, y=2)
-	replace_output_single(outHandle, pnl=panelStat, job='hadoop', title='CPU', h=2, w=2,  x=2, y=2)
-	replace_output_single(outHandle, pnl=panelStat, job='hadoop', title='Nodes', h=2, w=2,  x=4, y=2)
-	replace_output_single(outHandle, pnl=panelStatHadoopUsed, job='hadoop', title='Used', threshold2='85', threshold3='90', h=4, w=2,  x=6, y=2)
-	replace_output_single(outHandle, pnl=panelStat, job='hadoop', title='Dsk', h=2, w=2,  x=0, y=4)
-	replace_output_single(outHandle, pnl=panelStat, job='hadoop', title='Mem', threshold2='0.1', threshold3='1.1', h=2, w=2,  x=2, y=4)
-	replace_output_single(outHandle, pnl=panelStat, job='hadoop', title='Under-rep', h=2, w=2,  x=4, y=4)
+	replace_output_title(outHandle, pnl=panelTitle, job='hadoop', title='Hadoop 0.20', h=1, w=8, x=0, y=2)
+	replace_output_single(outHandle, pnl=panelStat, job='hadoop', title='Up', h=2, w=2, x=0, y=3)
+	replace_output_single(outHandle, pnl=panelStat, job='hadoop', title='CPU', h=2, w=2, x=2, y=3)
+	replace_output_single(outHandle, pnl=panelStat, job='hadoop', title='Nodes', h=2, w=2, x=4, y=3)
+	replace_output_single(outHandle, pnl=panelStatHadoopUsed, job='hadoop', title='Used', threshold2='85', threshold3='90', h=4, w=2, x=6, y=3)
+	replace_output_single(outHandle, pnl=panelStat, job='hadoop', title='Dsk', h=2, w=2, x=0, y=5)
+	replace_output_single(outHandle, pnl=panelStat, job='hadoop', title='Mem', threshold2='0.1', threshold3='1.1', h=2, w=2, x=2, y=5)
+	replace_output_single(outHandle, pnl=panelStat, job='hadoop', title='Under-rep', h=2, w=2, x=4, y=5)
 	# gluster
-	replace_output_title(outHandle, pnl=panelTitle, job='gluster', title='Gluster', h=1, w=8,  x=8, y=1)
-	replace_output_single(outHandle, pnl=panelStat, job='gluster', title='Up', h=2, w=2,  x=8, y=2)
-	replace_output_single(outHandle, pnl=panelStat, job='gluster', title='CPU', h=2, w=2,  x=10, y=2)
-	replace_output_single(outHandle, pnl=panelStat, job='gluster', title='Dsk', h=2, w=2,  x=12, y=2)
-	replace_output_single(outHandle, pnl=panelStat, job='gluster', title='Mem', h=2, w=2,  x=14, y=2)
+	replace_output_title(outHandle, pnl=panelTitle, job='gluster', title='Gluster', h=1, w=8, x=8, y=2)
+	replace_output_single(outHandle, pnl=panelStat, job='gluster', title='Up', h=2, w=2, x=8, y=3)
+	replace_output_single(outHandle, pnl=panelStat, job='gluster', title='CPU', h=2, w=2, x=10, y=3)
+	replace_output_single(outHandle, pnl=panelStat, job='gluster', title='Dsk', h=2, w=2, x=12, y=3)
+	replace_output_single(outHandle, pnl=panelStat, job='gluster', title='Mem', h=2, w=2, x=14, y=3)
 	## hadoop 3
-	replace_output_title(outHandle, pnl=panelTitle, job='hadoop3', title='Hadoop 3', h=1, w=8,  x=16, y=0)
-	replace_output_single(outHandle, pnl=panelStat, job='hadoop3', title='Up', h=2, w=2,  x=16, y=1)
-	replace_output_single(outHandle, pnl=panelStat, job='hadoop3', title='CPU', h=2, w=2,  x=18, y=1)
-	replace_output_single(outHandle, pnl=panelStat, job='hadoop3', title='Nodes', h=2, w=2,  x=20, y=1)
-	replace_output_single(outHandle, pnl=panelStatHadoopUsed, job='hadoop3', title='Used', threshold2='85', threshold3='90', h=4, w=2,  x=22, y=1)
-	replace_output_single(outHandle, pnl=panelStat, job='hadoop3', title='Dsk', h=2, w=2,  x=16, y=3)
-	replace_output_single(outHandle, pnl=panelStat, job='hadoop3', title='Mem', threshold2='0.1', threshold3='1.1', h=2, w=2,  x=18, y=3)
-	replace_output_single(outHandle, pnl=panelStat, job='hadoop3', title='Under-rep', h=2, w=2,  x=20, y=3)
+	replace_output_title(outHandle, pnl=panelTitle, job='hadoop3', title='Hadoop 3', h=1, w=8,  x=16, y=2)
+	replace_output_single(outHandle, pnl=panelStat, job='hadoop3', title='Up', h=2, w=2,  x=16, y=3)
+	replace_output_single(outHandle, pnl=panelStat, job='hadoop3', title='CPU', h=2, w=2,  x=18, y=3)
+	replace_output_single(outHandle, pnl=panelStat, job='hadoop3', title='Nodes', h=2, w=2,  x=20, y=3)
+	replace_output_single(outHandle, pnl=panelStatHadoopUsed, job='hadoop3', title='Used', threshold2='85', threshold3='90', h=4, w=2,  x=22, y=3)
+	replace_output_single(outHandle, pnl=panelStat, job='hadoop3', title='Dsk', h=2, w=2,  x=16, y=5)
+	replace_output_single(outHandle, pnl=panelStat, job='hadoop3', title='Mem', threshold2='0.1', threshold3='1.1', h=2, w=2, x=18, y=5)
+	replace_output_single(outHandle, pnl=panelStat, job='hadoop3', title='Under-rep', textmode='value', h=2, w=2,  x=20, y=5)
 
 	## wa systems title bar
-	replace_output_title(outHandle, pnl=panelTitle, job='infrastructure', title='WA Systems', h=1, w=24,  x=0, y=4)
+	replace_output_title(outHandle, pnl=panelTitle, job='infrastructure', title='WA Systems', h=2, w=24, x=0, y=6)
 	## infrastructure
-	replace_output_title(outHandle, pnl=panelTitle, job='infrastructure', title='Infrastructure', h=1, w=8,  x=0, y=5)
-	replace_output_single(outHandle, pnl=panelStat, job='infrastructure', title='Up', h=2, w=2,  x=0, y=6)
-	replace_output_single(outHandle, pnl=panelStat, job='infrastructure', title='CPU', h=2, w=2,  x=2, y=6)
-	replace_output_single(outHandle, pnl=panelStat, job='infrastructure', title='Dsk', h=2, w=2,  x=4, y=6)
-	replace_output_single(outHandle, pnl=panelStat, job = 'infrastructure', title = 'Mem', h=2, w=2,  x=6, y=6)
+	replace_output_title(outHandle, pnl=panelTitle, job='infrastructure', title='Infrastructure', h=1, w=8, x=0, y=8)
+	replace_output_single(outHandle, pnl=panelStat, job='infrastructure', title='Up', h=2, w=2, x=0, y=9)
+	replace_output_single(outHandle, pnl=panelStat, job='infrastructure', title='CPU', h=2, w=2, x=2, y=9)
+	replace_output_single(outHandle, pnl=panelStat, job='infrastructure', title='Dsk', h=2, w=2, x=4, y=9)
+	replace_output_single(outHandle, pnl=panelStat, job = 'infrastructure', title = 'Mem', h=2, w=2, x=6, y=9)
 	# general services
-	replace_output_title(outHandle, pnl=panelTitle, job='services', title='Services', h=1, w=8,  x=8, y=5)
-	replace_output_single(outHandle, pnl=panelStat, job='services', title='Up', h=2, w=2,  x=8, y=6)
-	replace_output_single(outHandle, pnl=panelStat, job='services', title='CPU', h=2, w=2,  x=10, y=6)
-	replace_output_single(outHandle, pnl=panelStat, job='services', title='Dsk', h=2, w=2,  x=12, y=6)
-	replace_output_single(outHandle, pnl=panelStat, job='services', title='Mem', h=2, w=2,  x=14, y=6)
+	replace_output_title(outHandle, pnl=panelTitle, job='services', title='Services', h=1, w=8, x=8, y=8)
+	replace_output_single(outHandle, pnl=panelStat, job='services', title='Up', h=2, w=2, x=8, y=9)
+	replace_output_single(outHandle, pnl=panelStat, job='services', title='CPU', h=2, w=2, x=10, y=9)
+	replace_output_single(outHandle, pnl=panelStat, job='services', title='Dsk', h=2, w=2, x=12, y=9)
+	replace_output_single(outHandle, pnl=panelStat, job='services', title='Mem', h=2, w=2, x=14, y=9)
 	# solr servers
-	replace_output_title(outHandle, pnl=panelTitle, job='solr', title='Solr', h=1, w=8, x=16, y=5)
-	replace_output_single(outHandle, pnl=panelStat, job='solr', title='Up', h=2, w=2, x=16, y=6)
-	replace_output_single(outHandle, pnl=panelStat, job='solr', title='CPU', h=2, w=2, x=18, y=6)
-	replace_output_single(outHandle, pnl=panelStat, job='solr', title='Dsk', h=2, w=2, x=20, y=6)
-	replace_output_single(outHandle, pnl=panelStat, job='solr', title='Mem', h=2, w=2, x=22, y=6)
-	replace_output_single(outHandle, pnl=panelStat, job='solr-query', title='Query', h=2, w=2, x=16, y=8)
+	replace_output_title(outHandle, pnl=panelTitle, job='solr', title='Solr', h=1, w=8, x=16, y=8)
+	replace_output_single(outHandle, pnl=panelStat, job='solr', title='Up', h=2, w=2, x=16, y=9)
+	replace_output_single(outHandle, pnl=panelStat, job='solr', title='CPU', h=2, w=2, x=18, y=9)
+	replace_output_single(outHandle, pnl=panelStat, job='solr', title='Dsk', h=2, w=2, x=20, y=9)
+	replace_output_single(outHandle, pnl=panelStat, job='solr', title='Mem', h=2, w=2, x=22, y=9)
+	replace_output_single(outHandle, pnl=panelStat, job='solr-query', title='Query', h=2, w=2, x=16, y=11)
 
 	## wa services title bar
-	replace_output_title(outHandle, pnl=panelTitle, job='wa_services', title='WA Services', h=1, w=24, x=0, y=11)
+	replace_output_title(outHandle, pnl=panelTitle, job='wa_services', title='WA Services', h=2, w=24, x=0, y=12)
 	# ingest & metadata
-	replace_output_title(outHandle, pnl=panelTitle, job='ingest_metadata', title='Ingest & Metadata', h=1, w=8,  x=0, y=12)
-	replace_output_single(outHandle, pnl=panelStat, job='ingest_metadata', title='Up', h=2, w=2,  x=0, y=13)
-	replace_output_single(outHandle, pnl=panelStat, job='ingest_metadata', title='CPU', threshold2='0.1', threshold3='1.1', colour2='#ba43a9', h=2, w=2,  x=2, y=13)
-	replace_output_single(outHandle, pnl=panelStat, job='ingest_metadata', title='Dsk', h=2, w=2,  x=4, y=13)
-	replace_output_single(outHandle, pnl=panelStat, job='ingest_metadata', title='Mem', h=2, w=2,  x=6, y=13)
-	replace_output_single(outHandle, pnl=panelStat, job='im-access-http', title='WWW', h=2, w=2,  x=0, y=15)
+	replace_output_title(outHandle, pnl=panelTitle, job='ingest_metadata', title='Ingest & Metadata', h=1, w=8, x=0, y=14)
+	replace_output_single(outHandle, pnl=panelStat, job='ingest_metadata', title='Up', h=2, w=2, x=0, y=15)
+	replace_output_single(outHandle, pnl=panelStat, job='ingest_metadata', title='CPU', threshold2='0.1', threshold3='1.1', colour2='#ba43a9', h=2, w=2, x=2, y=15)
+	replace_output_single(outHandle, pnl=panelStat, job='ingest_metadata', title='Dsk', h=2, w=2, x=4, y=15)
+	replace_output_single(outHandle, pnl=panelStat, job='ingest_metadata', title='Mem', h=2, w=2, x=6, y=15)
+	replace_output_single(outHandle, pnl=panelStat, job='im-access-http', title='WWW', h=2, w=2, x=0, y=17)
 	#trackdb
-	replace_output_title(outHandle, pnl=panelTitle, job='trackdb', title='TrackDB', h=1, w=8,  x=8, y=12)
-	replace_output_single(outHandle, pnl=panelStat, job='trackdb', title='trackdb refresh', textmode='value', threshold2='22', threshold3='26', h=2, w=4,  x=8, y=13)
-	replace_output_single(outHandle, pnl=panelStat, job='trackdb', title='trackdb numFound', textmode='value', threshold2='10', threshold3='100', colour1='#D44A3A', colour3='#299C46', h=2, w=4, x=12, y=13)
+	replace_output_title(outHandle, pnl=panelTitle, job='trackdb', title='TrackDB', h=1, w=8,  x=8, y=14)
+	replace_output_single(outHandle, pnl=panelStat, job='trackdb', title='trackdb refresh', textmode='value', threshold2='22', threshold3='26', h=2, w=4, x=8, y=15)
+	replace_output_single(outHandle, pnl=panelStat, job='trackdb', title='trackdb numFound', textmode='value', threshold2='10', threshold3='100', colour1='#D44A3A', colour3='#299C46', h=2, w=4, x=12, y=15)
 	# discovery & access
-	replace_output_title(outHandle, pnl=panelTitle, job='discovery_access', title='Discovery & Access', h=1, w=8,  x=16, y=12)
-	replace_output_single(outHandle, pnl=panelStat, job='discovery_access', title='Up', h=2, w=2,  x=16, y=13)
-	replace_output_single(outHandle, pnl=panelStat, job='discovery_access', title='CPU', h=2, w=2,  x=18, y=13)
-	replace_output_single(outHandle, pnl=panelStat, job='discovery_access', title='Dsk', h=2, w=2,  x=20, y=13)
-	replace_output_single(outHandle, pnl=panelStat, job='discovery_access', title='Mem', threshold2='0.1', threshold3='1.1', colour2='#ba43a9', h=2, w=2,  x=22, y=13)
-	replace_output_single(outHandle, pnl=panelStat, job='discovery_access', title='UTR', threshold2='0.1', threshold3='2.1', h=2, w=2,  x=16, y=15)
+	replace_output_title(outHandle, pnl=panelTitle, job='discovery_access', title='Discovery & Access', h=1, w=8, x=16, y=14)
+	replace_output_single(outHandle, pnl=panelStat, job='discovery_access', title='Up', h=2, w=2, x=16, y=15)
+	replace_output_single(outHandle, pnl=panelStat, job='discovery_access', title='CPU', h=2, w=2, x=18, y=15)
+	replace_output_single(outHandle, pnl=panelStat, job='discovery_access', title='Dsk', h=2, w=2, x=20, y=15)
+	replace_output_single(outHandle, pnl=panelStat, job='discovery_access', title='Mem', threshold2='0.1', threshold3='1.1', colour2='#ba43a9', h=2, w=2, x=22, y=15)
+	replace_output_single(outHandle, pnl=panelStat, job='discovery_access', title='UTR', threshold2='0.1', threshold3='2.1', h=2, w=2, x=16, y=17)
 	#### tag last panel as 'lastPanel=True' so that the template ',' is removed (to make json valid)
-	replace_output_single(outHandle, pnl=panelStat, job='da-access-http', title='WWW', threshold2='0.1', threshold3='1.1', h=2, w=2,  x=18, y=15, lastPanel=True)
+	replace_output_single(outHandle, pnl=panelStat, job='da-access-http', title='WWW', threshold2='0.1', threshold3='1.1', h=2, w=2, x=18, y=17, lastPanel=True)
 
 
 	# amend dashboard values
