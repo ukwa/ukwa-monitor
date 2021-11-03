@@ -18,6 +18,7 @@ dashUid = 'wast'
 # template files
 header = 'templates/header'
 panelHeader = 'templates/panelHeader'
+panelBanner = 'templates/panelBanner'
 panelTitle = 'templates/panelTitle'
 panelSingle = 'templates/panelSingle'
 panelSingleHadoopUsed = 'templates/panelSingleHadoopUsed'
@@ -137,14 +138,14 @@ def replace_output_single(outHandle, **kwargs):
 			expr = 'hdfs_used_percent{instance=\\"${HDFS_EXPORTER}\\"}'
 			templateCode = templateCode.replace('<expr>', expr)
 	elif kwargs['job'] == 'hadoop3':
-		if kwargs['title'] == 'Nodes':
-			expr = 'hadoop_hdfs_namenode_nninfo_live_nodes_count{instance=\\"${HDFS3_EXPORTER}\\"} - hadoop_hdfs_namenode_nninfo_dead_nodes_count{instance=\\"${HDFS3_EXPORTER}\\"}'
+		if kwargs['title'] == 'Dead Nodes':
+			expr = 'hadoop_hdfs_namenode_nninfo_dead_nodes_count{instance=\\"${HDFS3_EXPORTER}\\"}'
 			templateCode = templateCode.replace('<expr>', expr)
 		elif kwargs['title'] == 'Under-rep':
 			expr = 'hadoop_hdfs_namenode_fsname_system_under_replicated_blocks{instance=\\"${HDFS3_EXPORTER}\\"}'
 			templateCode = templateCode.replace('<expr>', expr)
 		elif kwargs['title'] == 'Used':
-			expr = '100 - hadoop_hdfs_namenode_nninfo_percent_remaining{instance=\\"${HDFS3_EXPORTER}\\"}'
+			expr = 'round(100 - hadoop_hdfs_namenode_nninfo_percent_remaining{instance=\\"${HDFS3_EXPORTER}\\"})'
 			templateCode = templateCode.replace('<expr>', expr)
 
 	# add last comma if not last panel
@@ -172,7 +173,7 @@ def main():
 	# output single panels -----
 
 	## storage title bar
-	replace_output_title(outHandle, pnl=panelTitle, job='hadoop', title='Storage', h=2, w=24, x=0, y=0)
+	replace_output_title(outHandle, pnl=panelBanner, job='hadoop', title='Storage', h=2, w=24, x=0, y=0)
 	## hadoop 0.20
 	replace_output_title(outHandle, pnl=panelTitle, job='hadoop', title='Hadoop 0.20', h=1, w=8, x=0, y=2)
 	replace_output_single(outHandle, pnl=panelStat, job='hadoop', title='Up', h=2, w=2, x=0, y=3)
@@ -192,14 +193,14 @@ def main():
 	replace_output_title(outHandle, pnl=panelTitle, job='hadoop3', title='Hadoop 3', h=1, w=8,  x=16, y=2)
 	replace_output_single(outHandle, pnl=panelStat, job='hadoop3', title='Up', h=2, w=2,  x=16, y=3)
 	replace_output_single(outHandle, pnl=panelStat, job='hadoop3', title='CPU', h=2, w=2,  x=18, y=3)
-	replace_output_single(outHandle, pnl=panelStat, job='hadoop3', title='Nodes', h=2, w=2,  x=20, y=3)
+	replace_output_single(outHandle, pnl=panelStat, job='hadoop3', title='Dead Nodes', h=2, w=2,  x=20, y=3)
 	replace_output_single(outHandle, pnl=panelStatHadoopUsed, job='hadoop3', title='Used', threshold2='85', threshold3='90', h=4, w=2,  x=22, y=3)
 	replace_output_single(outHandle, pnl=panelStat, job='hadoop3', title='Dsk', h=2, w=2,  x=16, y=5)
 	replace_output_single(outHandle, pnl=panelStat, job='hadoop3', title='Mem', threshold2='0.1', threshold3='1.1', h=2, w=2, x=18, y=5)
 	replace_output_single(outHandle, pnl=panelStat, job='hadoop3', title='Under-rep', textmode='value', h=2, w=2,  x=20, y=5)
 
 	## wa systems title bar
-	replace_output_title(outHandle, pnl=panelTitle, job='infrastructure', title='WA Systems', h=2, w=24, x=0, y=6)
+	replace_output_title(outHandle, pnl=panelBanner, job='infrastructure', title='WA Systems', h=2, w=24, x=0, y=6)
 	## infrastructure
 	replace_output_title(outHandle, pnl=panelTitle, job='infrastructure', title='Infrastructure', h=1, w=8, x=0, y=8)
 	replace_output_single(outHandle, pnl=panelStat, job='infrastructure', title='Up', h=2, w=2, x=0, y=9)
@@ -221,7 +222,7 @@ def main():
 	replace_output_single(outHandle, pnl=panelStat, job='solr-query', title='Query', h=2, w=2, x=16, y=11)
 
 	## wa services title bar
-	replace_output_title(outHandle, pnl=panelTitle, job='wa_services', title='WA Services', h=2, w=24, x=0, y=12)
+	replace_output_title(outHandle, pnl=panelBanner, job='wa_services', title='WA Services', h=2, w=24, x=0, y=12)
 	# ingest & metadata
 	replace_output_title(outHandle, pnl=panelTitle, job='ingest_metadata', title='Ingest & Metadata', h=1, w=8, x=0, y=14)
 	replace_output_single(outHandle, pnl=panelStat, job='ingest_metadata', title='Up', h=2, w=2, x=0, y=15)
