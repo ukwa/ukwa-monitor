@@ -130,7 +130,7 @@ groups:
 
   - alert: airflow_dags_failing
     expr: airflow_dag_last_status{status='failed'} > 0
-    for: 2h
+    for: 10m
     labels:
       severity: severe
     annotations:
@@ -138,7 +138,7 @@ groups:
       description: "The Airflow service at {{ $labels.instance }} is reporting that the most recent run of DAG workflow {{ $labels.dag_id }} has failed."
 
   - alert: gluster_fc_filling_up
-    expr: -delta(node_filesystem_free_bytes{mountpoint='/mnt/gluster/fc',instance='gluster-fuse:9100'}[12h]) > 0
+    expr: deriv(node_filesystem_free_bytes{instance="gluster-fuse:9100",mountpoint="/mnt/gluster/fc"}[24h]) > 1e6
     for: 12h
     labels:
       severity: severe
