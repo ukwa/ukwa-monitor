@@ -7,7 +7,7 @@ groups:
     labels:
       severity: severe
     annotations:
-      summary: "Databse back instance {{ $labels.instance }} failed to run"
+      summary: "Database backup instance {{ $labels.instance }} failed to run"
       description: "{{ $labels.instance }} of job {{ $labels.job }} failed to run."
 
   - alert: daily_access_task_is_missing
@@ -204,6 +204,13 @@ groups:
     annotations:
       summary: "CPU running too hot?"
       description: "The CPU on {{ $labels.instance }} is running hot (>70C for 30mins)."
+  
+  - alert: tidy-logs_no_new_crawl_logs
+    expr: delta(ukwa_crawler_log_size_bytes{log='crawl.log'}[1h]) == 0 or absent(ukwa_crawler_log_size_bytes{log='crawl.log'})
+    for: 1h
+    labels:
+      severity: severe
+    annotations:
+      summary: "No new crawl logs from tidy-logs"
+      description: "{{ $labels.instance }} of job {{ $labels.job }} failed to run."
 
-
- 
