@@ -167,7 +167,7 @@ scrape_configs:
     metrics_path: /admin/metrics/
     static_configs:
       - targets: 
-        - 'ingest:5050'
+        - 'prod1:5050'
 
   - job_name: 'solr'
     static_configs:
