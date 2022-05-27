@@ -199,3 +199,9 @@ services:
       - "www.webarchive.org.uk:192.168.45.10"
       - "beta.webarchive.org.uk:192.168.45.94"
 
+  # PushProx, a proxy to pull metrics over a push (poll+post) connection:
+  pushprox:
+    image: prom/pushprox:v0.1.0
+    ports:
+    - "9494:8080"
+
