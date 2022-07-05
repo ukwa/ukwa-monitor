@@ -10,33 +10,6 @@ groups:
       summary: "Database backup instance {{ $labels.instance }} failed to run"
       description: "{{ $labels.instance }} of job {{ $labels.job }} failed to run."
 
-  - alert: daily_access_task_is_missing
-    expr: absent(ukwa_task_event_timestamp{job="DailyAccessTasks"})
-    for: 24h
-    labels:
-      severity: severe
-    annotations:
-      summary: "Task {{ $labels.job }} failed to run"
-      description: "Job {{ $labels.job }} failed to run successfully."
-  
-  - alert: daily_ingest_task_is_missing
-    expr: absent(ukwa_task_event_timestamp{job="DailyIngestTasks"})
-    for: 24h
-    labels:
-      severity: severe
-    annotations:
-      summary: "Task {{ $labels.job }} failed to run"
-      description: "Job {{ $labels.job }} failed to run successfully."
-
-  - alert: daily_task_has_not_run
-    expr: (time() - ukwa_task_event_timestamp{job=~"DailyAccessTasks|DailyIngestTasks", status="event.core.success"} ) / (60*60) > 24
-    for: 2h
-    labels:
-      severity: severe
-    annotations:
-      summary: "Task {{ $labels.job }} failed to run"
-      description: "Job {{ $labels.job }} failed to run successfully."
-
 # Commenting this out until we have an agreement in place:
 #  - alert: nominet_task_has_not_run
 #    expr: absent(ukwa_task_event_timestamp{job="NominetDomainListToHDFS"}) or (time() - ukwa_task_event_timestamp{job="NominetDomainListToHDFS", status="event.core.success"} ) / (60*60*24) > 31
@@ -47,15 +20,6 @@ groups:
 #      summary: "Task {{ $labels.job }} failed to run"
 #      description: "Job {{ $labels.job }} failed to run successfully."
 
-  - alert: crawl_launcher_has_not_run
-    expr: absent(ukwa_task_event_timestamp{job="crawl.LaunchCrawls"}) or (time() - ukwa_task_event_timestamp{job='crawl.LaunchCrawls', status="event.core.success"}) > 3600
-    for: 10m
-    labels:
-      severity: severe
-    annotations:
-      summary: "Task {{ $labels.job }} failed to run"
-      description: "Job {{ $labels.job }} failed to run successfully."
-  
   - alert: low_crawler_activity
     # Explicitly not monitoring the by-permission crawl at present:
     expr: increase(heritrix3_crawl_job_uris_total{kind="finished", job!="bypm-heritrix-workers"}[4h]) < 10
