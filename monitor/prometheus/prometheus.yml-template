@@ -41,7 +41,6 @@ scrape_configs:
     static_configs:
       - targets:
         - 'access:9100'
-        - 'bigcdx:9100'
         - 'cdx1:9100'
         - 'cdx2:9100'
         - 'data.bl.uk:9100'
