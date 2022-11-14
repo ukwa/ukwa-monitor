@@ -1,1 +1,1 @@
-import common.log
+from common import log
