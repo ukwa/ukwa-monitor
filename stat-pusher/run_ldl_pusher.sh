@@ -14,4 +14,4 @@ cd $PYTHONPATH
 pip install -r ldl-requirements.txt
 
 # run stat-pusher script
-python ldl-pusher.py
+nohup python ldl-pusher.py &

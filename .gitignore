@@ -7,6 +7,12 @@ ENV/
 
 *.pyc
 *out
+*log
+*pid
+*lock
+stat-pusher/dev[0-9]-*-[0-9]*
+stat-pusher/beta[0-9]-*-[0-9]*
+stat-pusher/prod[0-9]-*-[0-9]*
 
 */alertmanager/config.yml
 */grafana/grafana.ini
