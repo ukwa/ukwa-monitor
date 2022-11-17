@@ -5,12 +5,13 @@ statsfile = dev.stats
 # ldl server connection testing
 logfpfn = /home/gilh/github/ukwa-monitor/stat-pusher/logs/ldl-pusher.log
 output = /home/gilh/github/ukwa-monitor/stat-pusher/logs/ldl-pusher.out
-loglevel = INFO
+loglevel = DEBUG
 uid = 1004
 gid = 1004
 hostname = 0.0.0.0
 port = 9119
 # prometheus settings
+schedule = 5
 job = ldl_rr
 metric = recent_connections
 desc = Curl requests from LDL VMs, indicating LDL to WA connectivity
@@ -24,3 +25,18 @@ statsfile = beta.stats
 [prod]
 pushgtw = http://monitor-pushgateway.api.wa.bl.uk
 statsfile = prod.stats
+
+# ldl server connection testing
+logfpfn = /home/monitor/github/ukwa-monitor/stat-pusher/logs/ldl-pusher.log
+output = /home/monitor/github/ukwa-monitor/stat-pusher/logs/ldl-pusher.out
+loglevel = INFO
+uid = 1000
+gid = 1000
+hostname = 0.0.0.0
+port = 9119
+# prometheus settings
+schedule = 20
+job = ldl_rr
+metric = recent_connections
+desc = Curl requests from LDL VMs, indicating LDL to WA connectivity
+

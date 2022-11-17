@@ -20,9 +20,9 @@ PIDFILE = f"{__file__}.pid"
 LOCKFILE = f"{PIDFILE}.lock"
 SETTINGSFILE = 'settings'
 REQUEST = re.compile("^\w+\s+(/.+)\s+HTTP/\d.\d$")
-LDLHOST = re.compile("^/wa/monitor\?host=(.+)$")
+HOSTREQ = re.compile("^/wa/monitor\?host=(.+)$")
+LDLHOST = re.compile("^DLS-(BSP|LON|NLS|NLW)-WB0[1-4]$")
 YMDHM = '%Y%m%d%H%M'
-SCHEDULE = 15
 INSTANCE = 'ldl_connection_count'
 
 # environ settings
@@ -48,6 +48,7 @@ def _read_settings(environ):
 		sys.exit(1)
 
 class webServer(BaseHTTPRequestHandler):
+	global REQUEST
 	def _set_headers(self):
 		self.send_response(200)
 		self.send_header("Content-type", "text/html")
@@ -70,8 +71,9 @@ class webServer(BaseHTTPRequestHandler):
 		_process_request(request)
 
 def _process_request(request):
+	global HOSTREQ
+	global LDLHOST
 	global YMDHM
-	global SCHEDULE
 	global INSTANCE
 	global eset
 	global dldl
@@ -79,11 +81,19 @@ def _process_request(request):
 	logger.debug(f"Received request:  {request}")
 
 	# get hostname, skip further processing if fail
-	ldlHostMatch = LDLHOST.match(request)
-	if ldlHostMatch:
-		ldlHost = ldlHostMatch.group(1)
+	hostReqMatch = HOSTREQ.match(request)
+	if hostReqMatch:
+		hostReq = hostReqMatch.group(1)
 	else:
 		logger.warning(f"Failed to get hostname from [{request}]")
+		return
+
+	# check hostname is LDL VM
+	ldlHostMatch = LDLHOST.match(hostReq)
+	if ldlHostMatch:
+		ldlHost = hostReq
+	else:
+		logger.warning(f"Skipping non LDL DLS VM hostname [{hostReq}]")
 		return
 
 	# get current time
@@ -93,26 +103,29 @@ def _process_request(request):
 	dldl[ldlHost] = nowymdhm
 
 	# on schedule, report LDL connection status to pushgateway
+	schedule = int(eset['schedule'])
 	logger.debug(f"dldl {dldl}")
-	if (nowymdhm - pushymdhm) > SCHEDULE:
-		# count LDLs responded in last SCHEDULE period
+	logger.debug(f"Schedule: [{nowymdhm} - {pushymdhm}] = [{nowymdhm - pushymdhm}], schedule [{schedule}]")
+	if (nowymdhm - pushymdhm) > schedule:
+		# count LDLs responded in last schedule period
 		up = 0
 		for _ldl in dldl:
-			if (nowymdhm - dldl[_ldl]) < SCHEDULE: up += 1
-			else: logger.debug(f"LDL [{_ldl}] hasn't curled in {SCHEDULE} minutes")
+			if (nowymdhm - dldl[_ldl]) < schedule: up += 1
+			else: logger.debug(f"LDL [{_ldl}] hasn't curled in {schedule} minutes")
 
 		# set pushgateway values and push to prometheus service
 		registry = CollectorRegistry()
 		g = Gauge(eset['metric'], eset['desc'], labelnames=['instance'], registry=registry)
 		g.labels(instance=INSTANCE).set(up)
 		push_to_gateway(eset['pushgtw'], registry=registry, job=eset['job'])
+		logger.debug(f"Pushed to gateway:\tjob={eset['job']}, instance={INSTANCE}, recent_connections={up}\n")
 
 		# write latest push to output file (done via output rather than log so log doesn't 
 		# become huge over time)
 		with open(eset['output'], 'w') as out:
 			out.write(f"Output datestamp:\t{nowymdhm}\n")
-			out.write(f"Pushing to gateway:\tjob={eset['job']}, instance={INSTANCE}, recent_connections={up}\n")
-			for _ldl in dldl: out.write(f"\t{_ldl}:\t{dldl[_ldl]}\n")
+			out.write(f"Pushed to gateway:\tjob={eset['job']}, instance={INSTANCE}, recent_connections={up}\n")
+			for _ldl in dldl: out.write(f"\t{_ldl}:\t{dldl[_ldl]}\tRecent [{(nowymdhm - dldl[_ldl]) < schedule}]\n")
 			out.write("\n")
 		out.close()
 
@@ -121,11 +134,13 @@ def _process_request(request):
 
 # script --------------------------------------
 def script(eset):
+	global pushymdhm
 	log.configure_file(eset)
 
 	# create web service
 	monitorServer = HTTPServer((eset['hostname'], int(eset['port'])), webServer)
 	logger.info(f"Started LDL monitoring web server:  {eset['hostname']}:{eset['port']}")
+	logger.debug(f"Pushing to gateway every [{eset['schedule']}] minutes")
 	try:
 		monitorServer.serve_forever()
 	except Exception as e:

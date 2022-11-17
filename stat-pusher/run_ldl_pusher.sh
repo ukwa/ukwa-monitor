@@ -14,4 +14,8 @@ cd $PYTHONPATH
 pip install -r ldl-requirements.txt
 
 # run stat-pusher script
-nohup python ldl-pusher.py &
+if [[ ${HOSTNAME} =~ ^prod ]]; then
+	nohup python ldl-pusher.py  > /dev/null &	# disable generation of large logs over time
+else
+	nohup python ldl-pusher.py &
+fi
