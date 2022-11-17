@@ -147,6 +147,9 @@ def replace_output_single(outHandle, **kwargs):
 		elif kwargs['title'] == 'Used':
 			expr = 'round(100 - hadoop_hdfs_namenode_nninfo_percent_remaining{instance=\\"${HDFS3_EXPORTER}\\"})'
 			templateCode = templateCode.replace('<expr>', expr)
+	elif kwargs['title'] == 'LDLs':
+		expr = 'recent_connections{instance=\\"ldl_connection_count\\", job=\\"ldl_rr\\"}'
+		templateCode = templateCode.replace('<expr>', expr)
 
 	# add last comma if not last panel
 	if 'lastPanel' not in kwargs:
@@ -207,6 +210,7 @@ def main():
 	replace_output_single(outHandle, pnl=panelStat, job='infrastructure', title='CPU', h=2, w=2, x=2, y=9)
 	replace_output_single(outHandle, pnl=panelStat, job='infrastructure', title='Dsk', h=2, w=2, x=4, y=9)
 	replace_output_single(outHandle, pnl=panelStat, job = 'infrastructure', title = 'Mem', h=2, w=2, x=6, y=9)
+	replace_output_single(outHandle, pnl=panelStat, job='infrastructure', title='LDLs', h=2, w=2, x=0, y=11, textmode='value', colour1='#D44A3A', colour3='#299C46', threshold2='8.5', threshold3='9.5')
 	# general services
 	replace_output_title(outHandle, pnl=panelTitle, job='services', title='Services', h=1, w=8, x=8, y=8)
 	replace_output_single(outHandle, pnl=panelStat, job='services', title='Up', h=2, w=2, x=8, y=9)
