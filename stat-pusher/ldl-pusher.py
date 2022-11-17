@@ -30,7 +30,7 @@ eset = ''
 # dldl - dictionary of latest LDL connections
 dldl = {'DLS-BSP-WB01':0, 'DLS-BSP-WB02':0, 'DLS-BSP-WB03':0, 'DLS-BSP-WB04':0, 'DLS-LON-WB01':0, 'DLS-LON-WB02':0, 'DLS-LON-WB03':0, 'DLS-LON-WB04':0, 'DLS-NLS-WB01':0, 'DLS-NLW-WB01':0}
 # last YYYYMMDDHHMM push to gateway happened
-pushymdhm = 0
+pushymdhm = datetime.datetime.now()
 
 
 # classes and functions -----------------------
@@ -70,6 +70,11 @@ class webServer(BaseHTTPRequestHandler):
 		# process request
 		_process_request(request)
 
+def _time_gap(now, push):
+	_td = (now - push)	# _td = time difference
+	_mins, _secs = divmod(_td.days * (24 * 60 * 60) + _td.seconds, 60)
+	return int(_mins)
+
 def _process_request(request):
 	global HOSTREQ
 	global LDLHOST
@@ -97,20 +102,21 @@ def _process_request(request):
 		return
 
 	# get current time
-	nowymdhm = int((datetime.datetime.now()).strftime(YMDHM))
+	nowymdhm = datetime.datetime.now()
 
 	# update LDL in dldl
 	dldl[ldlHost] = nowymdhm
 
 	# on schedule, report LDL connection status to pushgateway
-	schedule = int(eset['schedule'])
 	logger.debug(f"dldl {dldl}")
-	logger.debug(f"Schedule: [{nowymdhm} - {pushymdhm}] = [{nowymdhm - pushymdhm}], schedule [{schedule}]")
-	if (nowymdhm - pushymdhm) > schedule:
+	schedule = int(eset['schedule'])
+	timeGapSincePushMins = _time_gap(nowymdhm, pushymdhm)
+	logger.debug(f"Schedule: [{nowymdhm.strftime(YMDHM)} - {pushymdhm.strftime(YMDHM)}] = [{timeGapSincePushMins}], schedule [{schedule}]")
+	if timeGapSincePushMins >= schedule:
 		# count LDLs responded in last schedule period
 		up = 0
 		for _ldl in dldl:
-			if (nowymdhm - dldl[_ldl]) < schedule: up += 1
+			if _time_gap(nowymdhm, dldl[_ldl]) < schedule: up += 1
 			else: logger.debug(f"LDL [{_ldl}] hasn't curled in {schedule} minutes")
 
 		# set pushgateway values and push to prometheus service
@@ -123,9 +129,11 @@ def _process_request(request):
 		# write latest push to output file (done via output rather than log so log doesn't 
 		# become huge over time)
 		with open(eset['output'], 'w') as out:
-			out.write(f"Output datestamp:\t{nowymdhm}\n")
+			out.write(f"Output datestamp:\t{nowymdhm.strftime(YMDHM)}\n")
 			out.write(f"Pushed to gateway:\tjob={eset['job']}, instance={INSTANCE}, recent_connections={up}\n")
-			for _ldl in dldl: out.write(f"\t{_ldl}:\t{dldl[_ldl]}\tRecent [{(nowymdhm - dldl[_ldl]) < schedule}]\n")
+			for _ldl in dldl:
+				_tg = _time_gap(nowymdhm, dldl[_ldl])
+				out.write(f"\t{_ldl}:\t{dldl[_ldl]}\tRecent [{_tg < schedule}, {dldl[_ldl].strftime(YMDHM)}]\n")
 			out.write("\n")
 		out.close()
 
