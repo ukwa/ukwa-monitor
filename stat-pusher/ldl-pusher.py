@@ -159,12 +159,15 @@ if __name__ == '__main__':
 		sys.exit(1)
 
 	# get swarm environment
-	senvMatch = re.match('^(dev|beta|prod)', socket.gethostname())
+	senvMatch = re.match('^(dev|beta|monitor)', socket.gethostname())
 	if senvMatch:
 		environ = senvMatch.group(1)
 	else:
 		print(f"Swarm environment not identified from [{socket.gethostname()}]")
 		sys.exit(1)
+	if environ == 'monitor': environ = 'prod'
+
+
 
 	# read environment settings
 	eset = _read_settings(environ)
