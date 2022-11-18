@@ -148,7 +148,7 @@ def replace_output_single(outHandle, **kwargs):
 			expr = 'round(100 - hadoop_hdfs_namenode_nninfo_percent_remaining{instance=\\"${HDFS3_EXPORTER}\\"})'
 			templateCode = templateCode.replace('<expr>', expr)
 	elif kwargs['title'] == 'LDLs':
-		expr = 'sum(last_over_time(recent_connections{job=\\"ldl_rr\\"}[30m]))'
+		expr = 'sum(last_over_time(recent_connections{job=\\"ldl_rr\\",instance=~\\"DLS-.+\\"}[30m]))'
 		templateCode = templateCode.replace('<expr>', expr)
 
 	# add last comma if not last panel
