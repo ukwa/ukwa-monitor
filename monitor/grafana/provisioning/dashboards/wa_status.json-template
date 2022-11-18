@@ -1843,7 +1843,7 @@
       "pluginVersion": "7.1.3",
       "targets": [
         {
-          "expr": "sum(last_over_time(recent_connections{job=\"ldl_rr\"}[15m]))",
+          "expr": "sum(last_over_time(recent_connections{job=\"ldl_rr\"}[30m]))",
           "legendFormat": "",
           "interval": "",
           "format": "time_series",
