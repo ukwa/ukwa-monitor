@@ -159,7 +159,7 @@ def script(eset):
 	# create web service
 	monitorServer = HTTPServer((eset['hostname'], int(eset['port'])), webServer)
 	logger.info(f"Started LDL monitoring web server:  {eset['hostname']}:{eset['port']}")
-	logger.debug(f"Pushing to gateway every [{eset['schedule']}] minutes")
+	logger.info(f"Pushing to {eset['pushgtw']} gateway every {eset['schedule']} minutes")
 	try:
 		monitorServer.serve_forever()
 	except Exception as e:
@@ -178,7 +178,7 @@ if __name__ == '__main__':
 		sys.exit(1)
 
 	# get swarm environment
-	senvMatch = re.match('^(dev|beta|monitor)', socket.gethostname())
+	senvMatch = re.match('^(dev|beta|prod|monitor)', socket.gethostname())
 	if senvMatch:
 		environ = senvMatch.group(1)
 	else:
