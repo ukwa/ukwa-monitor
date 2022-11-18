@@ -23,7 +23,6 @@ REQUEST = re.compile("^\w+\s+(/.+)\s+HTTP/\d.\d$")
 HOSTREQ = re.compile("^/wa/monitor\?host=(.+)$")
 LDLHOST = re.compile("^DLS-(BSP|LON|NLS|NLW)-WB0[1-4]$")
 YMDHM = '%Y%m%d%H%M'
-INSTANCE = 'ldl_connection_count'
 
 # environ settings
 eset = ''
@@ -79,7 +78,6 @@ def _process_request(request):
 	global HOSTREQ
 	global LDLHOST
 	global YMDHM
-	global INSTANCE
 	global eset
 	global dldl
 	global pushymdhm
@@ -108,34 +106,47 @@ def _process_request(request):
 	dldl[ldlHost] = nowymdhm
 
 	# on schedule, report LDL connection status to pushgateway
-	logger.debug(f"dldl {dldl}")
 	schedule = int(eset['schedule'])
 	timeGapSincePushMins = _time_gap(nowymdhm, pushymdhm)
-	logger.debug(f"Schedule: [{nowymdhm.strftime(YMDHM)} - {pushymdhm.strftime(YMDHM)}] = [{timeGapSincePushMins}], schedule [{schedule}]")
 	if timeGapSincePushMins >= schedule:
-		# count LDLs responded in last schedule period
-		up = 0
-		for _ldl in dldl:
-			if _time_gap(nowymdhm, dldl[_ldl]) < schedule: up += 1
-			else: logger.debug(f"LDL [{_ldl}] hasn't curled in {schedule} minutes")
+		logger.debug(f"Pushing to [{eset['pushgtw']}]")
+		logger.debug(f"Schedule: [{nowymdhm.strftime(YMDHM)} - {pushymdhm.strftime(YMDHM)}] = [{timeGapSincePushMins}], schedule [{schedule}]")
+		logger.debug(f"dldl {dldl}")
 
-		# set pushgateway values and push to prometheus service
+		# set registry and gauge for metrics
 		registry = CollectorRegistry()
 		g = Gauge(eset['metric'], eset['desc'], labelnames=['instance'], registry=registry)
-		g.labels(instance=INSTANCE).set(up)
-		push_to_gateway(eset['pushgtw'], registry=registry, job=eset['job'])
-		logger.debug(f"Pushed to gateway:\tjob={eset['job']}, instance={INSTANCE}, recent_connections={up}\n")
 
-		# write latest push to output file (done via output rather than log so log doesn't 
-		# become huge over time)
+		# write-open output file for local record of metrics
+		## (done via output rather than log so that log doesn't become huge over time)
+		upCount = 0
 		with open(eset['output'], 'w') as out:
 			out.write(f"Output datestamp:\t{nowymdhm.strftime(YMDHM)}\n")
-			out.write(f"Pushed to gateway:\tjob={eset['job']}, instance={INSTANCE}, recent_connections={up}\n")
+
+			# for each host, set metric
 			for _ldl in dldl:
+				# get time gap in mins between time now and last _ldl curl recived
 				_tg = _time_gap(nowymdhm, dldl[_ldl])
-				out.write(f"\t{_ldl}:\t{dldl[_ldl]}\tRecent [{_tg < schedule}, {dldl[_ldl].strftime(YMDHM)}]\n")
+
+				# set _ldl metric
+				up = 0
+				if _tg < schedule: up = 1
+				else: logger.debug(f"LDL [{_ldl}] hasn't curled in {schedule} minutes")
+				g.labels(instance=_ldl).set(up)
+				upCount += up
+
+				# write result to output
+				out.write(f"\t{_ldl}:\t{dldl[_ldl]}\tRecent [{_tg < schedule}]\n")
+
+			out.write(f"Pushed to gateway:\tjob={eset['job']}, recent_connections={upCount}\n")
 			out.write("\n")
+
+		# close output
 		out.close()
+
+		# push to prometheus service
+		push_to_gateway(eset['pushgtw'], registry=registry, job=eset['job'])
+		logger.debug(f"Pushed to gateway:\tjob={eset['job']}, recent_connections={upCount}\n")
 
 		# store push time
 		pushymdhm = nowymdhm
@@ -157,7 +168,7 @@ def script(eset):
 
 	# close and end
 	monitorServer.server_close()
-	logger.warning(f"//////////////////// RUNNING AS DAEMON - SHOULD NEVER FINISH /////////////////////\n")
+	logger.error(f"//////////////////// RUNNING AS DAEMON - SHOULD NEVER FINISH /////////////////////\n")
 
 # main ----------------------------------------
 if __name__ == '__main__':

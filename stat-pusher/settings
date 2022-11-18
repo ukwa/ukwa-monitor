@@ -11,7 +11,7 @@ gid = 1004
 hostname = 0.0.0.0
 port = 9119
 # prometheus settings
-schedule = 5
+schedule = 10
 job = ldl_rr
 metric = recent_connections
 desc = Curl requests from LDL VMs, indicating LDL to WA connectivity
@@ -39,4 +39,3 @@ schedule = 20
 job = ldl_rr
 metric = recent_connections
 desc = Curl requests from LDL VMs, indicating LDL to WA connectivity
-
