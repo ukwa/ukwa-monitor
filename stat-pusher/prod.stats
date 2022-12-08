@@ -91,6 +91,24 @@
 			"kind": "json",
 			"match": "['response','docs', 'file_size_l']"
 		},
+		"nominet_last_upload_size": {
+			"host": "solr8",
+			"name": "ukwa_nominet_file_size_bytes",
+			"label": "nominet",
+			"desc": "Size of recent Nominet dump stored on HDFS.",
+			"uri": "http://solr8.api.wa.bl.uk/solr/tracking/select?q=modified_at_dt%3A[NOW-1MONTH%20TO%20NOW]%20AND%20file_path_s:\\/1_data\\/nominet\\/ukdata-*&sort=refresh_date_dt%20desc&wt=json",
+			"kind": "json",
+			"match": "['response','docs', 'file_size_l']"
+		},
+		"nominet_last_upload_timestamp": {
+			"host": "solr8",
+			"name": "trackdb_last_timestamp",
+			"label": "nominet",
+			"desc": "Timestamp of most recent Nominet dump stored on HDFS.",
+			"uri": "http://solr8.api.wa.bl.uk/solr/tracking/select?q=file_path_s:\\/1_data\\/nominet\\/ukdata-*&sort=modified_date_dt%20desc&wt=json",
+			"kind": "json",
+			"match": "['response','docs', 'timestamp_dt']"
+		},
 		"crawl_log_elasticsearch_updates": {
 			"host": "logs",
 			"name": "ukwa_crawl_log_records",
