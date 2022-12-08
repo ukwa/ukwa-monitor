@@ -1127,7 +1127,7 @@
       "pluginVersion": "7.1.3",
       "targets": [
         {
-          "expr": "hadoop_hdfs_namenode_nninfo_dead_nodes_count{instance=\"h3exporter.api.wa.bl.uk:80\"}",
+          "expr": "hadoop_hdfs_namenode_nninfo_dead_nodes_count{instance=\"h3exporter.dapi.wa.bl.uk:80\"}",
           "legendFormat": "",
           "interval": "",
           "format": "time_series",
@@ -1154,7 +1154,7 @@
       "maxDataPoints": 100,
       "targets": [
         {
-          "expr": "round(100 - hadoop_hdfs_namenode_nninfo_percent_remaining{instance=\"h3exporter.api.wa.bl.uk:80\"})",
+          "expr": "round(100 - hadoop_hdfs_namenode_nninfo_percent_remaining{instance=\"h3exporter.dapi.wa.bl.uk:80\"})",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A"
@@ -1428,7 +1428,7 @@
       "pluginVersion": "7.1.3",
       "targets": [
         {
-          "expr": "hadoop_hdfs_namenode_fsname_system_under_replicated_blocks{instance=\"h3exporter.api.wa.bl.uk:80\"}",
+          "expr": "hadoop_hdfs_namenode_fsname_system_under_replicated_blocks{instance=\"h3exporter.dapi.wa.bl.uk:80\"}",
           "legendFormat": "",
           "interval": "",
           "format": "time_series",
