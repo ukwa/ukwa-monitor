@@ -1,34 +1,44 @@
 groups:
 - name: UKWA metrics
   rules:
-  - alert: db_backup_failed
-    expr: absent(ukwa_database_backup_size_bytes)
+  - alert: w3act_db_backup_failed
+    expr: absent(ukwa_database_backup_size_bytes{label="w3act"})
     for: 24h
     labels:
       severity: severe
     annotations:
-      summary: "Database backup instance {{ $labels.instance }} failed to run"
+      summary: "No recent database backup for W3ACT found on HDFS"
       description: "{{ $labels.instance }} of job {{ $labels.job }} failed to run."
 
-# Commenting this out until we have an agreement in place:
-#  - alert: nominet_task_has_not_run
-#    expr: absent(ukwa_task_event_timestamp{job="NominetDomainListToHDFS"}) or (time() - ukwa_task_event_timestamp{job="NominetDomainListToHDFS", status="event.core.success"} ) / (60*60*24) > 31
-#    for: 2h
-#    labels:
-#      severity: severe
-#    annotations:
-#      summary: "Task {{ $labels.job }} failed to run"
-#      description: "Job {{ $labels.job }} failed to run successfully."
+  - alert: nominet_upload_not_on_hdfs
+    expr: absent(trackdb_last_timestamp{label="nominet"}) or (time() - trackdb_last_timestamp{label="nominet"}) / (60*60*24) > 31
+    for: 2h
+    labels:
+      severity: severe
+    annotations:
+      summary: "No recent upload of Nominet data was found on HDFS"
+      description: "Job {{ $labels.job }} failed to run successfully."
 
   - alert: low_crawler_activity
-    # Explicitly not monitoring the by-permission crawl at present:
-    expr: increase(heritrix3_crawl_job_uris_total{kind="finished", job!="bypm-heritrix-workers"}[4h]) < 10
+    # The NPLD crawler is busier:
+    expr: increase(heritrix3_crawl_job_uris_total{kind="finished", jobname!="frequent-bypm"}[4h]) < 10
     for: 10m
     labels:
       severity: severe
     annotations:
       description: Low crawl rate for crawl job {{ $labels.jobname }}.
       summary: The {{ $labels.jobname }} crawl job is crawling too slowly.
+
+  - alert: low_crawler_activity_bypm
+    # By permissions crawls are not running all day, but every day:
+    expr: increase(heritrix3_crawl_job_uris_total{kind="finished",jobname="frequent-bypm"}[24h]) == 0
+    for: 10m
+    labels:
+      severity: severe
+    annotations:
+      description: Low crawl rate for crawl job {{ $labels.jobname }}.
+      summary: The {{ $labels.jobname }} crawl job is crawling too slowly.
+      
 
   - alert: fc_crawl_is_slow
     expr: sum(rate(kafka_log_logendoffset{topic="fc.crawled"}[10m])) < 5
