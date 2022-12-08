@@ -10,33 +10,6 @@ groups:
       summary: "Database backup instance {{ $labels.instance }} failed to run"
       description: "{{ $labels.instance }} of job {{ $labels.job }} failed to run."
 
-  - alert: daily_access_task_is_missing
-    expr: absent(ukwa_task_event_timestamp{job="DailyAccessTasks"})
-    for: 24h
-    labels:
-      severity: severe
-    annotations:
-      summary: "Task {{ $labels.job }} failed to run"
-      description: "Job {{ $labels.job }} failed to run successfully."
-  
-  - alert: daily_ingest_task_is_missing
-    expr: absent(ukwa_task_event_timestamp{job="DailyIngestTasks"})
-    for: 24h
-    labels:
-      severity: severe
-    annotations:
-      summary: "Task {{ $labels.job }} failed to run"
-      description: "Job {{ $labels.job }} failed to run successfully."
-
-  - alert: daily_task_has_not_run
-    expr: (time() - ukwa_task_event_timestamp{job=~"DailyAccessTasks|DailyIngestTasks", status="event.core.success"} ) / (60*60) > 24
-    for: 2h
-    labels:
-      severity: severe
-    annotations:
-      summary: "Task {{ $labels.job }} failed to run"
-      description: "Job {{ $labels.job }} failed to run successfully."
-
 # Commenting this out until we have an agreement in place:
 #  - alert: nominet_task_has_not_run
 #    expr: absent(ukwa_task_event_timestamp{job="NominetDomainListToHDFS"}) or (time() - ukwa_task_event_timestamp{job="NominetDomainListToHDFS", status="event.core.success"} ) / (60*60*24) > 31
@@ -47,15 +20,6 @@ groups:
 #      summary: "Task {{ $labels.job }} failed to run"
 #      description: "Job {{ $labels.job }} failed to run successfully."
 
-  - alert: crawl_launcher_has_not_run
-    expr: absent(ukwa_task_event_timestamp{job="crawl.LaunchCrawls"}) or (time() - ukwa_task_event_timestamp{job='crawl.LaunchCrawls', status="event.core.success"}) > 3600
-    for: 10m
-    labels:
-      severity: severe
-    annotations:
-      summary: "Task {{ $labels.job }} failed to run"
-      description: "Job {{ $labels.job }} failed to run successfully."
-  
   - alert: low_crawler_activity
     # Explicitly not monitoring the by-permission crawl at present:
     expr: increase(heritrix3_crawl_job_uris_total{kind="finished", job!="bypm-heritrix-workers"}[4h]) < 10
@@ -139,13 +103,13 @@ groups:
       description: "The Airflow service at {{ $labels.instance }} is reporting that the most recent run of DAG workflow {{ $labels.dag_id }} has failed."
 
   - alert: gluster_fc_filling_up
-    expr: deriv(node_filesystem_free_bytes{instance="gluster-fuse:9100",mountpoint="/mnt/gluster/fc"}[24h]) > 1e6
+    expr: delta(ukwa_files_count{fs="gluster", job="warc_tidy", kind="warcs"}[12h] ) > 0
     for: 12h
     labels:
       severity: severe
     annotations:
-      summary: "The FC Gluster volume is filling up"
-      description: "The Gluster volume that stores FC output is filling up. This likely means there's a problem with the move-to-hdfs process and WARCs are backing up."
+      summary: "The FC output volume is filling up with WARCs"
+      description: "The number of WARCs on the FC Gluster volume appears to be increasing: check move-to-hdfs is working as expected."
 
 
 - name: Generic metrics

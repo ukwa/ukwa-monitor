@@ -51,7 +51,6 @@ services:
       - "bapi-lb2:192.168.45.44"
       - "beta1:192.168.45.37"
       - "beta2:192.168.45.38"
-      - "bigcdx:192.168.45.21"
       - "cdx1:192.168.45.7"
       - "cdx2:192.168.45.8"
       - "clamd:192.168.45.87"
@@ -185,7 +184,6 @@ services:
       - '--config.file=/config/config.yml'
     extra_hosts:
       - "access:192.168.45.25"
-      - "bigcdx:192.168.45.21"
       - "ingest:192.168.45.60"
       - "intranet:192.168.45.30"
       - "intranet-wayback:192.168.45.23"
@@ -198,4 +196,10 @@ services:
       - "solr-proxy:192.168.45.33"
       - "www.webarchive.org.uk:192.168.45.10"
       - "beta.webarchive.org.uk:192.168.45.94"
+
+  # PushProx, a proxy to pull metrics over a push (poll+post) connection:
+  pushprox:
+    image: prom/pushprox:v0.1.0
+    ports:
+    - "9494:8080"
 

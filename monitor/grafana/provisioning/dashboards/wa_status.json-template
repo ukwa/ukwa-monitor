@@ -1782,6 +1782,82 @@
       "interval": null,
       "datasource": null
     },
+    {
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "unit": "none",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "#D44A3A"
+              },
+              {
+                "value": 8.5,
+                "color": "#ED8027"
+              },
+              {
+                "value": 9.5,
+                "color": "#299C46"
+              }
+            ]
+          },
+          "mappings": [
+            {
+              "op": "=",
+              "text": "N/A",
+              "value": "null",
+              "id": 0,
+              "type": 1
+            }
+          ],
+          "nullValueMode": "connected"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 2,
+        "x": 0,
+        "y": 11
+      },
+      "id": 29,
+      "links": [],
+      "maxDataPoints": 100,
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": ""
+        },
+        "orientation": "horizontal",
+        "textMode": "value",
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "auto"
+      },
+      "pluginVersion": "7.1.3",
+      "targets": [
+        {
+          "expr": "sum(last_over_time(recent_connections{job=\"ldl_rr\"}[30m]))",
+          "legendFormat": "",
+          "interval": "",
+          "format": "time_series",
+          "instant": false,
+          "intervalFactor": 1,
+          "refId": "A"
+        }
+      ],
+      "type": "stat",
+      "title": "LDLs",
+      "cacheTimeout": null,
+      "interval": null,
+      "datasource": null
+    },
     { 
       "content": "",
       "gridPos": {
@@ -1790,7 +1866,7 @@
         "x": 8,
         "y": 8
       },
-      "id": 29,
+      "id": 30,
       "links": [],
       "mode": "markdown",
       "title": "Services",
@@ -1837,7 +1913,7 @@
         "x": 8,
         "y": 9
       },
-      "id": 30,
+      "id": 31,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -1913,7 +1989,7 @@
         "x": 10,
         "y": 9
       },
-      "id": 31,
+      "id": 32,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -1989,7 +2065,7 @@
         "x": 12,
         "y": 9
       },
-      "id": 32,
+      "id": 33,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -2065,7 +2141,7 @@
         "x": 14,
         "y": 9
       },
-      "id": 33,
+      "id": 34,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -2108,7 +2184,7 @@
         "x": 16,
         "y": 8
       },
-      "id": 34,
+      "id": 35,
       "links": [],
       "mode": "markdown",
       "title": "Solr",
@@ -2155,7 +2231,7 @@
         "x": 16,
         "y": 9
       },
-      "id": 35,
+      "id": 36,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -2231,7 +2307,7 @@
         "x": 18,
         "y": 9
       },
-      "id": 36,
+      "id": 37,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -2307,7 +2383,7 @@
         "x": 20,
         "y": 9
       },
-      "id": 37,
+      "id": 38,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -2383,7 +2459,7 @@
         "x": 22,
         "y": 9
       },
-      "id": 38,
+      "id": 39,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -2459,7 +2535,7 @@
         "x": 16,
         "y": 11
       },
-      "id": 39,
+      "id": 40,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -2502,7 +2578,7 @@
         "x": 0,
         "y": 12
       },
-      "id": 40,
+      "id": 41,
       "options": {
         "mode": "markdown",
         "content": "# WA Services"
@@ -2523,7 +2599,7 @@
         "x": 0,
         "y": 14
       },
-      "id": 41,
+      "id": 42,
       "links": [],
       "mode": "markdown",
       "title": "Ingest & Metadata",
@@ -2570,7 +2646,7 @@
         "x": 0,
         "y": 15
       },
-      "id": 42,
+      "id": 43,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -2646,7 +2722,7 @@
         "x": 2,
         "y": 15
       },
-      "id": 43,
+      "id": 44,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -2722,7 +2798,7 @@
         "x": 4,
         "y": 15
       },
-      "id": 44,
+      "id": 45,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -2798,7 +2874,7 @@
         "x": 6,
         "y": 15
       },
-      "id": 45,
+      "id": 46,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -2874,7 +2950,7 @@
         "x": 0,
         "y": 17
       },
-      "id": 46,
+      "id": 47,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -2917,7 +2993,7 @@
         "x": 8,
         "y": 14
       },
-      "id": 47,
+      "id": 48,
       "links": [],
       "mode": "markdown",
       "title": "TrackDB",
@@ -2964,7 +3040,7 @@
         "x": 8,
         "y": 15
       },
-      "id": 48,
+      "id": 49,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -3040,7 +3116,7 @@
         "x": 12,
         "y": 15
       },
-      "id": 49,
+      "id": 50,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -3083,7 +3159,7 @@
         "x": 16,
         "y": 14
       },
-      "id": 50,
+      "id": 51,
       "links": [],
       "mode": "markdown",
       "title": "Discovery & Access",
@@ -3130,7 +3206,7 @@
         "x": 16,
         "y": 15
       },
-      "id": 51,
+      "id": 52,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -3206,7 +3282,7 @@
         "x": 18,
         "y": 15
       },
-      "id": 52,
+      "id": 53,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -3282,7 +3358,7 @@
         "x": 20,
         "y": 15
       },
-      "id": 53,
+      "id": 54,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -3358,7 +3434,7 @@
         "x": 22,
         "y": 15
       },
-      "id": 54,
+      "id": 55,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -3434,7 +3510,7 @@
         "x": 16,
         "y": 17
       },
-      "id": 55,
+      "id": 56,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -3510,7 +3586,7 @@
         "x": 18,
         "y": 17
       },
-      "id": 56,
+      "id": 57,
       "links": [],
       "maxDataPoints": 100,
       "options": {
