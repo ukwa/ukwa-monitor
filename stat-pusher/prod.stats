@@ -90,6 +90,15 @@
 			"uri": "http://solr8.api.wa.bl.uk/solr/tracking/select?q=modified_at_dt%3A[NOW-1DAY%20TO%20NOW]%20AND%20file_path_s:\\/2_backups\\/w3act\\/prod\\/w3act-dump-*&sort=refresh_date_dt%20desc&wt=json",
 			"kind": "json",
 			"match": "['response','docs', 'file_size_l']"
+		},
+		"crawl_log_elasticsearch_updates": {
+			"host": "logs",
+			"name": "ukwa_crawl_log_records",
+			"label": "indexed_1m",
+			"desc": "Number of crawl log entries in ElasticSearch in the last minute.",
+			"uri": "http://logs.wa.bl.uk:9200/crawl_log*/_search?pretty=true&q=@timestamp:[now-1m+TO+*]&sort=@timestamp:desc&size=0",
+			"kind": "json",
+			"match": "['hits','total', 'value']"
 		}
 	},
 	"cdx_oa_wayback": {
