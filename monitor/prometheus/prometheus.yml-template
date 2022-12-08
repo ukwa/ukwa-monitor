@@ -159,6 +159,8 @@ scrape_configs:
     static_configs:
       - targets: 
         - 'logs:9100'
+        - 'logs:9114' # ElasticSearch
+        - 'logs:9304' # LogStash
         - 'monitor:9100'
         - 'syslog:9100'
 
