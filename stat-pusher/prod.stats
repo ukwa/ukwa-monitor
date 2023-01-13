@@ -105,7 +105,7 @@
 			"name": "trackdb_last_timestamp",
 			"label": "nominet",
 			"desc": "Timestamp of most recent Nominet dump stored on HDFS.",
-			"uri": "http://solr8.api.wa.bl.uk/solr/tracking/select?q=file_path_s:\\/1_data\\/nominet\\/ukdata-*&sort=modified_date_dt%20desc&wt=json",
+			"uri": "http://solr8.api.wa.bl.uk/solr/tracking/select?q=file_path_s:\\/1_data\\/nominet\\/ukdata-*&sort=modified_at_dt%20desc&wt=json",
 			"kind": "json",
 			"match": "['response','docs', 'timestamp_dt']"
 		},
