@@ -41,7 +41,7 @@ scrape_configs:
     static_configs:
       - targets:
         - 'access:9100'
-        - 'cdx1:9100'
+#        - 'cdx1:9100'
         - 'cdx2:9100'
         - 'data.bl.uk:9100'
         - 'intranet:9100'
@@ -326,24 +326,26 @@ scrape_configs:
         - 'crawler06:9191'
 
 
-  - job_name: 'federate-dc'
-    scrape_interval: 30s
-
-    honor_labels: true
-    metrics_path: '/federate'
-
-    params:
-      'match[]':
-        - '{job="npld-dc-heritrix-workers"}'
-        - '{job="kafka"}'
-        - '{job="aws-dc_node_exporter"}'
-
-   # Only accessible via explorer2:
-    proxy_url: 'http://192.168.45.3:3128/'
-
-    static_configs:
-      - targets:
-        - 'crawler07.bl.uk:9191'
+## federate-dc commented out Jan 31 2023 as DC not currently running
+#  - job_name: 'federate-dc'
+#    scrape_interval: 30s
+#
+#    honor_labels: true
+#    metrics_path: '/federate'
+#
+#    params:
+#      'match[]':
+#        - '{job="npld-dc-heritrix-workers"}'
+#        - '{job="kafka"}'
+#        - '{job="aws-dc_node_exporter"}'
+#
+#   # Only accessible via explorer2:
+#    proxy_url: 'http://192.168.45.3:3128/'
+#
+#    static_configs:
+#      - targets:
+#        - 'crawler07.bl.uk:9191'
+## eo federate-dc commented out Jan 31 2023 as DC not currently running
 
 
 #  - job_name: 'container-metrics'

@@ -5,7 +5,7 @@ export ALERTMANAGER_SERVICE_NAME='monitor-alerts.dapi.wa.bl.uk'
 export GRAFANA_SERVICE_NAME='monitor-grafana.dapi.wa.bl.uk'
 export FC_EMBEDDED_SERVICE_NAME='192.168.45.34:9191'
 
-export VISUALIZER_PORT=8081
+export VISUALIZER_PORT=8082
 export GRAFANA_PORT=3000
 export PROMETHEUS_PORT=9090
 export ALERTMANAGER_PORT=9093
