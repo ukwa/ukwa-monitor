@@ -18,7 +18,7 @@ dashUid = 'wast'
 # template files
 header = 'templates/header'
 panelHeader = 'templates/panelHeader'
-panelBanner = 'templates/panelBanner'
+#panelBanner = 'templates/panelBanner'
 panelTitle = 'templates/panelTitle'
 panelSingle = 'templates/panelSingle'
 panelSingleHadoopUsed = 'templates/panelSingleHadoopUsed'
@@ -176,7 +176,7 @@ def main():
 	# output single panels -----
 
 	## storage title bar
-	replace_output_title(outHandle, pnl=panelBanner, job='hadoop', title='Storage', h=2, w=24, x=0, y=0)
+#	replace_output_title(outHandle, pnl=panelBanner, job='hadoop', title='Storage', h=2, w=24, x=0, y=0)
 	## hadoop 0.20
 	replace_output_title(outHandle, pnl=panelTitle, job='hadoop', title='Hadoop 0.20', h=1, w=8, x=0, y=2)
 	replace_output_single(outHandle, pnl=panelStat, job='hadoop', title='Up', h=2, w=2, x=0, y=3)
@@ -203,7 +203,7 @@ def main():
 	replace_output_single(outHandle, pnl=panelStat, job='hadoop3', title='Under-rep', textmode='value', h=2, w=2,  x=20, y=5)
 
 	## wa systems title bar
-	replace_output_title(outHandle, pnl=panelBanner, job='infrastructure', title='WA Systems', h=2, w=24, x=0, y=6)
+#	replace_output_title(outHandle, pnl=panelBanner, job='infrastructure', title='WA Systems', h=2, w=24, x=0, y=6)
 	## infrastructure
 	replace_output_title(outHandle, pnl=panelTitle, job='infrastructure', title='Infrastructure', h=1, w=8, x=0, y=8)
 	replace_output_single(outHandle, pnl=panelStat, job='infrastructure', title='Up', h=2, w=2, x=0, y=9)
@@ -226,7 +226,7 @@ def main():
 	replace_output_single(outHandle, pnl=panelStat, job='solr-query', title='Query', h=2, w=2, x=16, y=11)
 
 	## wa services title bar
-	replace_output_title(outHandle, pnl=panelBanner, job='wa_services', title='WA Services', h=2, w=24, x=0, y=12)
+#	replace_output_title(outHandle, pnl=panelBanner, job='wa_services', title='WA Services', h=2, w=24, x=0, y=12)
 	# ingest & metadata
 	replace_output_title(outHandle, pnl=panelTitle, job='ingest_metadata', title='Ingest & Metadata', h=1, w=8, x=0, y=14)
 	replace_output_single(outHandle, pnl=panelStat, job='ingest_metadata', title='Up', h=2, w=2, x=0, y=15)
