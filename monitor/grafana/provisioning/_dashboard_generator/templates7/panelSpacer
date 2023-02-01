@@ -1,0 +1,23 @@
+    {
+      "gridPos": {
+        "h": <h>,
+        "w": <w>,
+        "x": <x>,
+        "y": <y>
+      },
+      "id": <id>,
+      "links": [],
+      "title": " ",
+      "type": "text",
+      "transparent": true,
+      "options": {
+        "mode": "markdown",
+        "content": ""
+      },
+      "pluginVersion": "7.5.7",
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "datasource": null
+    },
