@@ -27,3 +27,6 @@ stat-pusher/prod[0-9]-*-[0-9]*
 
 monitor/grafana/provisioning/dashboards/daily_dashboard.json
 monitor/grafana/provisioning/dashboards/wa_status.json
+
+# h3exporter
+h3exporter/h3exporter.pid.lock
