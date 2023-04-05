@@ -70,9 +70,14 @@ class webServer(BaseHTTPRequestHandler):
 		_process_request(request)
 
 def _time_gap(now, push):
-	_td = (now - push)	# _td = time difference
-	_mins, _secs = divmod(_td.days * (24 * 60 * 60) + _td.seconds, 60)
-	return int(_mins)
+	mins = 0
+	try:
+		_td = (now - push)	# _td = time difference
+		mins, _secs = divmod(_td.days * (24 * 60 * 60) + _td.seconds, 60)
+		logger.debug(f"time difference _td: [{_td} /{type(_td)}]  mins [{mins} /{type(mins)}]")
+	except Exception as e:
+		logger.warning(f"Caught datetime delta issue\nError: [{e}]")
+	return mins
 
 def _process_request(request):
 	global HOSTREQ
@@ -81,7 +86,7 @@ def _process_request(request):
 	global eset
 	global dldl
 	global pushymdhm
-	logger.debug(f"Received request:  {request}")
+	logger.debug(f"Received request:  {request}  pushymdhm [{pushymdhm}]")
 
 	# get hostname, skip further processing if fail
 	hostReqMatch = HOSTREQ.match(request)
@@ -108,7 +113,9 @@ def _process_request(request):
 	# on schedule, report LDL connection status to pushgateway
 	schedule = int(eset['schedule'])
 	timeGapSincePushMins = _time_gap(nowymdhm, pushymdhm)
-	if timeGapSincePushMins >= schedule:
+	if timeGapSincePushMins < schedule:
+		logger.debug(f"Insufficient time gap: [{nowymdhm.strftime(YMDHM)} - {pushymdhm.strftime(YMDHM)}] = [{timeGapSincePushMins}], schedule [{schedule}]")
+	else:
 		logger.debug(f"Pushing to [{eset['pushgtw']}]")
 		logger.debug(f"Schedule: [{nowymdhm.strftime(YMDHM)} - {pushymdhm.strftime(YMDHM)}] = [{timeGapSincePushMins}], schedule [{schedule}]")
 		logger.debug(f"dldl {dldl}")
@@ -125,18 +132,24 @@ def _process_request(request):
 
 			# for each host, set metric
 			for _ldl in dldl:
-				# get time gap in mins between time now and last _ldl curl recived
-				_tg = _time_gap(nowymdhm, dldl[_ldl])
+				if dldl[_ldl]:
+					logger.debug(f"Adding [{_ldl}] instance")
 
-				# set _ldl metric
-				up = 0
-				if _tg < schedule: up = 1
-				else: logger.debug(f"LDL [{_ldl}] hasn't curled in {schedule} minutes")
-				g.labels(instance=_ldl).set(up)
-				upCount += up
+					# get time gap in mins between time now and last _ldl curl recived
+					_tg = _time_gap(nowymdhm, dldl[_ldl])
 
-				# write result to output
-				out.write(f"\t{_ldl}:\t{dldl[_ldl]}\tRecent [{_tg < schedule}]\n")
+					# set _ldl metric
+					up = 0
+					if _tg < schedule: up = 1
+					else: logger.debug(f"LDL [{_ldl}] hasn't curled in {schedule} minutes")
+					g.labels(instance=_ldl).set(up)
+					upCount += up
+					logger.debug(f"Collating ldl updates: [{_ldl}]  [{_tg}]  [{up}/{upCount}]")
+
+					# write result to output
+					out.write(f"\t{_ldl}:\t{dldl[_ldl]}\tRecent [{_tg < schedule}]\n")
+				else:
+					logger.debug(f"Skipping [{_ldl}] as no date value")
 
 			out.write(f"Pushed to gateway:\tjob={eset['job']}, recent_connections={upCount}\n")
 			out.write("\n")
@@ -145,6 +158,7 @@ def _process_request(request):
 		out.close()
 
 		# push to prometheus service
+		logger.debug(f"Pushing to gateway:\tjob={eset['job']}, recent_connections={upCount}\n")
 		push_to_gateway(eset['pushgtw'], registry=registry, job=eset['job'])
 		logger.debug(f"Pushed to gateway:\tjob={eset['job']}, recent_connections={upCount}\n")
 
@@ -185,8 +199,6 @@ if __name__ == '__main__':
 		print(f"Swarm environment not identified from [{socket.gethostname()}]")
 		sys.exit(1)
 	if environ == 'monitor': environ = 'prod'
-
-
 
 	# read environment settings
 	eset = _read_settings(environ)

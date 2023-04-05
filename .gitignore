@@ -11,12 +11,14 @@ ENV/
 *log
 *pid
 *lock
-.swp
+*swp
+
 
 # generated content
-stat-pusher/dev[0-9]-*-[0-9]*
-stat-pusher/beta[0-9]-*-[0-9]*
-stat-pusher/prod[0-9]-*-[0-9]*
+stat-pusher/dev[0-9]-*.[0-9]*
+stat-pusher/beta[0-9]-*.[0-9]*
+stat-pusher/prod[0-9]-*.[0-9]*
+stat-pusher/monitor[0-9]-*.[0-9]*
 
 */alertmanager/config.yml
 */grafana/grafana.ini
