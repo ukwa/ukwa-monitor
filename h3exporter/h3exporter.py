@@ -1,51 +1,72 @@
 #!/usr/bin/env python3
 '''
 Simple python3 script to report WA hadoop3 stats scrapped from namenode /jmx
+Runs as a daemon via systemctl --user
 '''
 import os, sys, logging
 import __main__
-#import daemon, lockfile, signal
-from modules import pid
+from http.server import BaseHTTPRequestHandler, HTTPServer
+import re
+
+# script modules
+from modules import config
+from modules import log
 
 # globals 
 logger = logging.getLogger(__name__)
 SCRIPTNAME = os.path.splitext(os.path.basename(__main__.__file__))[0]
-PIDFILE = f"{SCRIPTNAME}.pid"
-UID = os.getuid()
-GID = os.getgid()
+CONFIG = 'config/settings'
+REQUEST = re.compile("^\w+\s+(/.+)\s+HTTP/\d.\d$")
 
+
+# classes and functions -----
+class webServer(BaseHTTPRequestHandler):
+	global REQUEST
+	def _set_headers(self):
+		self.send_response(200)
+		self.send_header("Content-type", "text/html")
+		self.end_headers()
+	def do_HEAD(self):
+		self._set_headers()
+	def do_GET(self):
+		self._set_headers()
+		# grab request
+		try:
+			reqMatch = REQUEST.match(self.requestline)
+			request = reqMatch.group(1)
+			# process request
+			if request:
+				process_request(request)
+		except Exception as e:
+			logger.warning(f"Failed to match request in [{self.requestline}]")
+
+def process_request(request):
+	logger.debug(f"Received request: [{request}]")
 
 
 # script --------------------
-# IF/WHEN UPGRADED TO PY3.7 AND python-daemon, THE DAEMONIZED SCRIPT IS NOT AWARE OF WRAPPER OUTSIDE OF script()
-# SO MODULES IMPORTED WITHIN script()
 def script():
-	from modules import config
-	from modules import log
-	from modules import srv
+	global CONFIG
 
 	# read service environment variables, configure logger
-	settings = config.settings_read()
-	log.start(settings['logfpfn'], settings['loglevel'])
+	settings = config.settings_read(CONFIG)
+	log.configure(settings['logfpfn'], settings['loglevel'])
+	log.start()
+	log.list_settings(settings)
 
-	# create and bind service socket
-	srv.bind_to_socket(settings)
+	# create web service
+	monitorServer = HTTPServer((settings['host'], int(settings['port'])), webServer)
+	logger.info(f"Started Hadoop3 stats web server:  {settings['host']}:{settings['port']}")
+	try:
+		monitorServer.serve_forever()
+	except Exception as e:
+		logger.warning(f"Hadoop3 stats web server exiting")
+		logger.warning(f"Message: [{e}]")
 
-	while True:
-		# listen for request
-		request = srv.listen_for_request()
-
+	# close and end
+	monitorServer.server_close()
+	logger.error(f"//////////////////// RUNNING AS DAEMON - SHOULD NEVER FINISH /////////////////////\n")
 
 
 if __name__ == '__main__':
-	if os.path.exists(f"{PIDFILE}.lock"):
-		print(f"ERROR: pid file [{PIDFILE}.lock] exists")
-		sys.exit(1)
-
-# IF/WHEN UPGRADE TO PY3.7, USE python-daemon PACKAGE
-#	with daemon.DaemonContext(stdout=sys.stdout, stderr=sys.stderr, uid=UID, gid=GID, pidfile=lockfile.FileLock(PIDFILE)):
-#		script()
-
-	pid.create(f"{PIDFILE}.lock")
 	script()
-	pid.delete(f"{PIDFILE}.lock")
