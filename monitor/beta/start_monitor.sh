@@ -16,8 +16,6 @@ export DATA_ALERTMANAGER=${DATA_PREFIX}/ukwa-monitor/alertmanager
 export HTTP_PROXY=http://explorer2:3128/
 export HDFS_EXPORTER='hdfs-exporter.bapi.wa.bl.uk:80'
 
-export HDFS3_EXPORTER='h3exporter.bapi.wa.bl.uk:80'
-
 export ALERT_RECEIVER='beta'
 export ALERT_EMAIL_DEV='gil.hoggarth@bl.uk'
 export ALERT_EMAIL_BETA='gil.hoggarth@bl.uk'

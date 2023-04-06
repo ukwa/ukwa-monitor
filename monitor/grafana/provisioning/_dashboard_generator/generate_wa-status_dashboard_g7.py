@@ -48,50 +48,52 @@ def script():
 	xpos = FIRSTCOL		# panel x position for hadoop 0.20, 0
 	ypos = blockRow		# panel y position for hadoop 0.20, 0
 	blockCol = xpos		# set block beginning column
-	replace.title(oH, pnl=panelTitle, title='Hadoop 0.20', h=titleHeight, w=blockWidth, x=xpos, y=ypos)					# 0.0
+	replace.title(oH, pnl=panelTitle, title='Hadoop 0.20', h=titleHeight, w=blockWidth, x=xpos, y=ypos)
 	ypos += titleHeight	# increment ypos by title height
 	for _title in ['Up', 'CPU', 'Nodes']:
-		replace.single(oH, pnl=panelStat, job='hadoop', title=_title, h=HEIGHT, w=WIDTH, x=xpos, y=ypos)				# 0.1, 2.1, 4.1
+		replace.single(oH, pnl=panelStat, job='hadoop', title=_title, h=HEIGHT, w=WIDTH, x=xpos, y=ypos)
 		xpos += WIDTH	# increment xpos by WIDTH
-	replace.single(oH, pnl=panelStatHadoopUsed, job='hadoop', title='Used', threshold2='85', threshold3='96', h=4, w=2, x=xpos, y=ypos)	# 6.1
+	replace.single(oH, pnl=panelStatHadoopUsed, job='hadoop', title='Used', threshold2='85', threshold3='96', h=4, w=2, x=xpos, y=ypos)
 	xpos = blockCol		# reset xpos to beginning of block
 	ypos += HEIGHT		# increment ypos by HEIGHT
-	replace.single(oH, pnl=panelStat, job='hadoop', title='Dsk', h=HEIGHT, w=WIDTH, x=xpos, y=ypos)						# 0.3
+	replace.single(oH, pnl=panelStat, job='hadoop', title='Dsk', h=HEIGHT, w=WIDTH, x=xpos, y=ypos)
 	xpos += WIDTH		# increment xpos by WIDTH
-	replace.single(oH, pnl=panelStat, job='hadoop', title='Mem', threshold2='0.1', threshold3='1.1', h=HEIGHT, w=WIDTH, x=xpos, y=ypos)	# 2.3
+	replace.single(oH, pnl=panelStat, job='hadoop', title='Mem', threshold2='0.1', threshold3='1.1', h=HEIGHT, w=WIDTH, x=xpos, y=ypos)
 	xpos += WIDTH		# increment xpos by WIDTH
-	replace.single(oH, pnl=panelStat, job='hadoop', title='Under-rep', h=HEIGHT, w=WIDTH, x=xpos, y=ypos)					# 4.3
+	replace.single(oH, pnl=panelStat, job='hadoop', title='Under-rep', h=HEIGHT, w=WIDTH, x=xpos, y=ypos)
 
 	# gluster
 	xpos = blockWidth	# panel x position for gluster, 8
 	ypos = blockRow		# panel x position for gluster, 0
 	blockCol = xpos
-	replace.title(oH, pnl=panelTitle, title='Gluster', h=titleHeight, w=blockWidth, x=xpos, y=ypos)						# 8.0
+	replace.title(oH, pnl=panelTitle, title='Gluster', h=titleHeight, w=blockWidth, x=xpos, y=ypos)
 	ypos += titleHeight
 	for _title in ['Up', 'CPU', 'Dsk', 'Mem']:
-		replace.single(oH, pnl=panelStat, job='gluster', title=_title, h=HEIGHT, w=WIDTH, x=xpos, y=ypos)				# 8.1, 10.1, 12.1, 14.1
+		replace.single(oH, pnl=panelStat, job='gluster', title=_title, h=HEIGHT, w=WIDTH, x=xpos, y=ypos)
 		xpos += WIDTH
 	xpos = blockCol
 	ypos += HEIGHT
-	replace.space(oH, pnl=panelSpace, h=HEIGHT, w=blockWidth, x=xpos, y=ypos)								# 8.3
+	replace.space(oH, pnl=panelSpace, h=HEIGHT, w=blockWidth, x=xpos, y=ypos)
 
 	## hadoop 3
 	xpos += blockWidth	# panel x position for hadoop 3, blockWidth as previous spacer, 16
 	ypos = blockRow		# panel x position for hadoop 3, 0
 	blockCol = xpos
-	replace.title(oH, pnl=panelTitle, title='Hadoop 3', h=titleHeight, w=blockWidth, x=xpos, y=ypos)					# 16.0
+	replace.title(oH, pnl=panelTitle, title='Hadoop 3', h=titleHeight, w=blockWidth, x=xpos, y=ypos)
 	ypos += titleHeight
-	for _title in ['Up', 'CPU', 'Dead Nodes']:
-		replace.single(oH, pnl=panelStat, job='hadoop3', title=_title, h=HEIGHT, w=WIDTH, x=xpos, y=ypos)				# 16.1, 18.1, 20.1
+	for _title in ['Up', 'CPU']:
+		replace.single(oH, pnl=panelStat, job='hadoop3', title=_title, h=HEIGHT, w=WIDTH, x=xpos, y=ypos)
 		xpos += WIDTH
-	replace.single(oH, pnl=panelStatHadoopUsed, job='hadoop3', title='Used', threshold2='85', threshold3='96', h=4, w=2, x=xpos, y=ypos)	# 22.1
+	replace.single(oH, pnl=panelStat, job='h3stats', title='Dead Nodes' threshold2='0.9', threshold3='1.2', h=HEIGHT, w=WIDTH, x=xpos, y=ypos)
+	xpos += WIDTH
+	replace.single(oH, pnl=panelStatHadoopUsed, job='h3stats', title='Used', threshold2='85', threshold3='96', h=4, w=2, x=xpos, y=ypos)
 	xpos = blockCol
 	ypos += HEIGHT
-	replace.single(oH, pnl=panelStat, job='hadoop3', title='Dsk', h=HEIGHT, w=WIDTH, x=xpos, y=ypos)					# 16.3
+	replace.single(oH, pnl=panelStat, job='hadoop3', title='Dsk', h=HEIGHT, w=WIDTH, x=xpos, y=ypos)
 	xpos += WIDTH
-	replace.single(oH, pnl=panelStat, job='hadoop3', title='Mem', threshold2='0.1', threshold3='1.1', h=HEIGHT, w=WIDTH, x=xpos, y=ypos)	# 18.3
+	replace.single(oH, pnl=panelStat, job='hadoop3', title='Mem', threshold2='0.1', threshold3='1.1', h=HEIGHT, w=WIDTH, x=xpos, y=ypos)
 	xpos += WIDTH
-	replace.single(oH, pnl=panelStat, job='hadoop3', title='Under-rep', h=HEIGHT, w=WIDTH, x=xpos, y=ypos)					# 20.3
+	replace.single(oH, pnl=panelStat, job='h3stats', title='Under-rep', threshold2='9', threshold3='250', h=HEIGHT, w=WIDTH, x=xpos, y=ypos)
 
 	# second 'row' of sections -----
 	blockRow = (titleHeight + HEIGHT + HEIGHT)	# blockRow set to exceed above titles and panels, 5

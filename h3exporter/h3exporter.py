@@ -5,68 +5,54 @@ Runs as a daemon via systemctl --user
 '''
 import os, sys, logging
 import __main__
-from http.server import BaseHTTPRequestHandler, HTTPServer
-import re
+import time
 
 # script modules
 from modules import config
 from modules import log
+from modules import h3stats
 
 # globals 
 logger = logging.getLogger(__name__)
 SCRIPTNAME = os.path.splitext(os.path.basename(__main__.__file__))[0]
 CONFIG = 'config/settings'
-REQUEST = re.compile("^\w+\s+(/.+)\s+HTTP/\d.\d$")
-
-
-# classes and functions -----
-class webServer(BaseHTTPRequestHandler):
-	global REQUEST
-	def _set_headers(self):
-		self.send_response(200)
-		self.send_header("Content-type", "text/html")
-		self.end_headers()
-	def do_HEAD(self):
-		self._set_headers()
-	def do_GET(self):
-		self._set_headers()
-		# grab request
-		try:
-			reqMatch = REQUEST.match(self.requestline)
-			request = reqMatch.group(1)
-			# process request
-			if request:
-				process_request(request)
-		except Exception as e:
-			logger.warning(f"Failed to match request in [{self.requestline}]")
-
-def process_request(request):
-	logger.debug(f"Received request: [{request}]")
 
 
 # script --------------------
 def script():
+	# read config
 	global CONFIG
+	settings = config.settings_read(CONFIG)
 
 	# read service environment variables, configure logger
-	settings = config.settings_read(CONFIG)
 	log.configure(settings['logfpfn'], settings['loglevel'])
 	log.start()
 	log.list_settings(settings)
 
-	# create web service
-	monitorServer = HTTPServer((settings['host'], int(settings['port'])), webServer)
-	logger.info(f"Started Hadoop3 stats web server:  {settings['host']}:{settings['port']}")
-	try:
-		monitorServer.serve_forever()
-	except Exception as e:
-		logger.warning(f"Hadoop3 stats web server exiting")
-		logger.warning(f"Message: [{e}]")
+	# previous values
+	prevUsedPercent = prevDeadNodes = prevUnderReplicated = 0
+	while True:
+		# get hadoop3 stats
+		failStatus, usedPercent, deadNodes, underReplicated = h3stats.get_hadoop_stats(settings)
+		if failStatus:
+			logger.warning(f"Failed to get hadoop3 stats")
+			continue
 
-	# close and end
-	monitorServer.server_close()
-	logger.error(f"//////////////////// RUNNING AS DAEMON - SHOULD NEVER FINISH /////////////////////\n")
+		# send stats to prometheus if change
+		if ( int(usedPercent) != int(prevUsedPercent) ) \
+			or ( deadNodes != prevDeadNodes ) \
+			or ( underReplicated != prevUnderReplicated):
+			h3stats.send_hadoop_stats(settings, usedPercent, deadNodes, underReplicated)
 
+		# update previous values
+		prevUsedPercent = usedPercent
+		prevDeadNodes = deadNodes
+		prevUnderReplicated = underReplicated
+
+		# sleep until next time to send hadoop3 stats
+		time.sleep(int(settings['sleep']))
+
+	log.stop('Unexpected stop')
 
 if __name__ == '__main__':
 	script()

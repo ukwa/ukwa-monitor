@@ -1,9 +1,49 @@
 [dev]
 logfpfn = logs/h3exporter.log
 loglevel = DEBUG
+sleep = 10
+
+# h3nn settings
+#h3nnjmx = http://h3nn.api.wa.bl.uk/jmx
+#namenodeinfo = {'qry':'Hadoop:service=NameNode', 'name':'NameNodeInfo'}
+#fsnamesystem = {'qry':'Hadoop:service=NameNode', 'name':'FSNamesystem'}
+namenodeinfo = http://h3nn.api.wa.bl.uk/jmx?qry=Hadoop:service=NameNode,name=NameNodeInfo
+fsnamesystem = http://h3nn.api.wa.bl.uk/jmx?qry=Hadoop:service=NameNode,name=FSNamesystem
+
+# prometheus settings
+pushgtw = http://monitor-pushgateway.dapi.wa.bl.uk
+job = h3stats
+metric = hadoop3stats
+desc = Scrapped hadoop3 stats
+
 
 [beta]
 logfpfn = logs/h3exporter.log
-loglevel = DEBUG
-host = 0.0.0.0
-port = 19120
+loglevel = INFO
+sleep = 30
+
+# h3nn settings
+namenodeinfo = http://h3nn.api.wa.bl.uk/jmx?qry=Hadoop:service=NameNode,name=NameNodeInfo
+fsnamesystem = http://h3nn.api.wa.bl.uk/jmx?qry=Hadoop:service=NameNode,name=FSNamesystem
+
+# prometheus settings
+pushgtw = http://monitor-pushgateway.bapi.wa.bl.uk
+job = h3stats
+metric = hadoop3stats
+desc = Scrapped hadoop3 stats
+
+
+[prod]
+logfpfn = logs/h3exporter.log
+loglevel = INFO
+
+# h3nn settings
+sleep = 55
+namenodeinfo = http://h3nn.api.wa.bl.uk/jmx?qry=Hadoop:service=NameNode,name=NameNodeInfo
+fsnamesystem = http://h3nn.api.wa.bl.uk/jmx?qry=Hadoop:service=NameNode,name=FSNamesystem
+
+# prometheus settings
+pushgtw = http://monitor-pushgateway.api.wa.bl.uk
+job = h3stats
+metric = hadoop3stats
+desc = Scrapped hadoop3 stats

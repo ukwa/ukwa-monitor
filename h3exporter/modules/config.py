@@ -29,7 +29,5 @@ def settings_read(cfgFpfn):
 	# gather settings
 	config = cfg[senv]
 	config['senv'] = senv
-#	for _k in cfg[senv]:
-#		config[_k] = cfg[senv][_k]
 
 	return config

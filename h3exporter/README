@@ -1,1 +1,31 @@
 Python3 script to report WA hadoop3 key stats
+
+
+CURRENTLY, BELOW systemctl SETUP NOT WORK - ISSUE WITH D-BUS AND monitor USER
+
+To set up as a systemctl daemon:
+* Ensure user systemd directory exists
+ * mkdir -p ~/.config/systemd/user
+
+* Create service file as ~/.config/systemd/user/h3exporter.service, chmod 644
+
+```
+[Unit]
+Description=h3exporter systemctl configuration
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/home/monitor/github/ukwa-monitor/h3exporter/run_h3exporter.sh
+Restart=always
+RestartSec=30
+
+[Install]
+WantedBy=default.target
+```
+
+* Reload user systemctl 
+ * systemctl --user daemon-reload
+
+* Enable and start h3exporter service
+ * systemctl --user enable --now h3exporter

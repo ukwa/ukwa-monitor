@@ -22,5 +22,6 @@ def list_settings(settings):
 def start():
 	logger.info(f"Start {'-'*38}")
 
-def stop():
+def stop(msg):
+	if msg: logger.warning(f"{msg}")
 	logger.info(f"Fin {'-'*40}")

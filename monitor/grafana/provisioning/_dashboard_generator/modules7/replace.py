@@ -100,15 +100,15 @@ def single(oH, **kwargs):
 		elif kwargs['title'] == 'Used':
 			expr = 'hdfs_used_percent{instance=\\"${HDFS_EXPORTER}\\"}'
 			templateCode = templateCode.replace('<expr>', expr)
-	elif kwargs['job'] == 'hadoop3':
+	elif kwargs['job'] == 'h3stats':
 		if kwargs['title'] == 'Dead Nodes':
-			expr = 'hadoop_hdfs_namenode_nninfo_dead_nodes_count{instance=\\"${HDFS3_EXPORTER}\\"}'
+			expr = 'hadoop3stats{instance=\\"deadNodes\\",job=\\"h3stats\\"}'
 			templateCode = templateCode.replace('<expr>', expr)
 		elif kwargs['title'] == 'Under-rep':
-			expr = 'hadoop_hdfs_namenode_fsname_system_under_replicated_blocks{instance=\\"${HDFS3_EXPORTER}\\"}'
+			expr = 'hadoop3stats{instance=\\"underReplicatedBlocks\\",job=\\"h3stats\\"}'
 			templateCode = templateCode.replace('<expr>', expr)
 		elif kwargs['title'] == 'Used':
-			expr = 'round(100 - hadoop_hdfs_namenode_nninfo_percent_remaining{instance=\\"${HDFS3_EXPORTER}\\"})'
+			expr = 'hadoop3stats{instance=\\"usedPercent\\",job=\\"h3stats\\"}'
 			templateCode = templateCode.replace('<expr>', expr)
 	elif kwargs['title'] == 'LDLs':
 		expr = 'sum(last_over_time(recent_connections{job=\\"ldl_rr\\",instance=~\\"DLS-.+\\"}[30m]))'
