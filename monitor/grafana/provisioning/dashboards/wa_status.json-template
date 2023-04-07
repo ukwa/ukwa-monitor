@@ -1081,11 +1081,11 @@
                 "color": "#299C46"
               },
               {
-                "value": 0.1,
+                "value": 0.9,
                 "color": "#ED8027"
               },
               {
-                "value": 1,
+                "value": 1.2,
                 "color": "#D44A3A"
               }
             ]
@@ -1382,11 +1382,11 @@
                 "color": "#299C46"
               },
               {
-                "value": 0.1,
+                "value": 9,
                 "color": "#ED8027"
               },
               {
-                "value": 1,
+                "value": 250,
                 "color": "#D44A3A"
               }
             ]

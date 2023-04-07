@@ -84,7 +84,7 @@ def script():
 	for _title in ['Up', 'CPU']:
 		replace.single(oH, pnl=panelStat, job='hadoop3', title=_title, h=HEIGHT, w=WIDTH, x=xpos, y=ypos)
 		xpos += WIDTH
-	replace.single(oH, pnl=panelStat, job='h3stats', title='Dead Nodes' threshold2='0.9', threshold3='1.2', h=HEIGHT, w=WIDTH, x=xpos, y=ypos)
+	replace.single(oH, pnl=panelStat, job='h3stats', title='Dead Nodes', threshold2='0.9', threshold3='1.2', h=HEIGHT, w=WIDTH, x=xpos, y=ypos)
 	xpos += WIDTH
 	replace.single(oH, pnl=panelStatHadoopUsed, job='h3stats', title='Used', threshold2='85', threshold3='96', h=4, w=2, x=xpos, y=ypos)
 	xpos = blockCol
