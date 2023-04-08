@@ -15,7 +15,7 @@ from modules import h3stats
 # globals 
 logger = logging.getLogger(__name__)
 SCRIPTNAME = os.path.splitext(os.path.basename(__main__.__file__))[0]
-CONFIG = 'config/settings'
+CONFIG = '/home/monitor/github/ukwa-monitor/h3exporter/config/settings'
 
 
 # script --------------------
@@ -44,10 +44,10 @@ def script():
 			or ( underReplicated != prevUnderReplicated):
 			h3stats.send_hadoop_stats(settings, usedPercent, deadNodes, underReplicated)
 
-		# update previous values
-		prevUsedPercent = usedPercent
-		prevDeadNodes = deadNodes
-		prevUnderReplicated = underReplicated
+			# update previous values
+			prevUsedPercent = usedPercent
+			prevDeadNodes = deadNodes
+			prevUnderReplicated = underReplicated
 
 		# sleep until next time to send hadoop3 stats
 		time.sleep(int(settings['sleep']))
