@@ -1,0 +1,14 @@
+[Unit]
+Description=ldl-pusher systemctl configuration
+After=network.target
+
+[Service]
+Type=forking
+User=monitor
+Group=monitor
+ExecStart=/home/monitor/github/ukwa-monitor/stat-pusher/run_ldl_pusher.sh
+Restart=always
+RestartSec=30
+
+[Install]
+WantedBy=default.target
