@@ -1,4 +1,2 @@
-python-daemon
-lockfile
 datetime
 prometheus_client

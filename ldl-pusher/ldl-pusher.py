@@ -6,7 +6,6 @@ Pushes LDL monitoring curls into prometheus
 import os, sys, logging
 import socket, re
 import configparser
-import daemon, lockfile
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import datetime
 from prometheus_client import CollectorRegistry, Gauge, push_to_gateway
@@ -16,8 +15,6 @@ from common import log
 # globals
 logger = logging.getLogger(__name__)
 
-PIDFILE = f"{__file__}.pid"
-LOCKFILE = f"{PIDFILE}.lock"
 SETTINGSFILE = 'settings'
 REQUEST = re.compile("^\w+\s+(/.+)\s+HTTP/\d.\d$")
 HOSTREQ = re.compile("^/wa/monitor\?host=(.+)$")
@@ -186,11 +183,6 @@ def script(eset):
 
 # main ----------------------------------------
 if __name__ == '__main__':
-	# check for lockfile
-	if os.path.exists(LOCKFILE):
-		print(f"Exiting as [{LOCKFILE}] exists, service already be running")
-		sys.exit(1)
-
 	# get swarm environment
 	senvMatch = re.match('^(dev|beta|prod|monitor)', socket.gethostname())
 	if senvMatch:
@@ -203,12 +195,5 @@ if __name__ == '__main__':
 	# read environment settings
 	eset = _read_settings(environ)
 
-	# run daemon
-	with daemon.DaemonContext(
-		stdout = sys.stdout,
-		stderr = sys.stderr,
-		uid = int(eset['uid']),
-		gid = int(eset['gid']),
-		pidfile = lockfile.FileLock(PIDFILE)
-	):
-		script(eset)
+	# run 
+	script(eset)
