@@ -745,7 +745,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "heritrix3_crawl_job_alerts_count{jobname=\"dc2020\"}",
+          "expr": "heritrix3_crawl_job_alerts_count{jobname='dc2023'}",
           "interval": "",
           "legendFormat": "{{jobname}}",
           "refId": "A"

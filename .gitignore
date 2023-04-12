@@ -20,15 +20,11 @@ stat-pusher/beta[0-9]-*.[0-9]*
 stat-pusher/prod[0-9]-*.[0-9]*
 stat-pusher/monitor[0-9]-*.[0-9]*
 
-*/alertmanager/config.yml
-*/grafana/grafana.ini
-*daily_dashboard.json
-*/grafana/provisioning/datasources/frequent_crawl.yaml
-*/grafana/provisioning/datasources/prometheus.yaml
-*/prometheus/prometheus.yml
+monitor/alertmanager/config.yml
+monitor/grafana/grafana.ini
+monitor/grafana/provisioning/datasources/frequent_crawl.yaml
+monitor/grafana/provisioning/datasources/prometheus.yaml
+monitor/grafana/provisioning/datasources/domain_crawl.yaml
+monitor/prometheus/prometheus.yml
 
-monitor/grafana/provisioning/dashboards/daily_dashboard.json
 monitor/grafana/provisioning/dashboards/wa_status.json
-
-# h3exporter
-h3exporter/h3exporter.pid.lock
