@@ -31,12 +31,21 @@
 			"uri": "http://solr8.api.wa.bl.uk/solr/tracking/select?q=kind_s%3Awarcs&sort=timestamp_dt%20desc&wt=json",
 			"kind": "json",
 			"match": "['response','numFound']"
-		},		
+		},
 		"last_timestamp_warcs": {
 			"host": "solr8",
 			"label": "warcs",
 			"desc": "Most recent trackdb timestamp of the WARCs",
 			"uri": "http://solr8.api.wa.bl.uk/solr/tracking/select?q=kind_s%3Awarcs&sort=timestamp_dt%20desc&wt=json",
+			"kind": "json",
+			"match": "['response','docs','timestamp_dt']"
+		},
+		"last_timestamp_crawl_logs_npld": {
+			"host": "solr8",
+			"name": "trackdb_last_timestamp",
+			"label": "npld.crawl-logs",
+			"desc": "Most recent trackdb timestamp of the NPLD crawl logs.",
+			"uri": "http://solr8.api.wa.bl.uk/solr/tracking/select?q=kind_s%3Acrawl-logs%20AND%20job_s:frequent-npld&sort=timestamp_dt%20desc&wt=json",
 			"kind": "json",
 			"match": "['response','docs','timestamp_dt']"
 		},
@@ -55,6 +64,59 @@
 			"uri": "http://solr8.api.wa.bl.uk/solr/tracking/select?q=cdx_index_ss%3A%5B*%20TO%20*%5D&sort=timestamp_dt%20desc&wt=json",
 			"kind": "json",
 			"match": "['response','docs','timestamp_dt']"
+		},
+		"numFound_rr_logs": {
+			"host": "solr8",
+			"label": "logs",
+			"desc": "Number of reading-room hdfs-sync log files that have been updated in the last 24 hours.",
+			"uri": "http://solr8.api.wa.bl.uk/solr/tracking/select?q=file_path_s%3A\\%2Flogs\\%2F*\\%2Fusr\\%2Flocal\\%2Fbin\\%2Fhdfslogsync.log-*%20AND%20timestamp_dt%3ANOW-1DAY%20TO%20NOW",
+			"kind": "json",
+			"match": "['response','numFound']"
+		},
+		"sql_backup_size_shine": {
+			"host": "solr8",
+			"name": "ukwa_database_backup_size_bytes",
+			"label": "shine",
+			"desc": "Size of backup of SQL database stored on HDFS.",
+			"uri": "http://solr8.api.wa.bl.uk/solr/tracking/select?q=modified_at_dt%3A[NOW-1DAY%20TO%20NOW]%20AND%20file_path_s:\\/2_backups\\/access\\/access_shinedb\\/shine.pgdump-*&sort=refresh_date_dt%20desc&wt=json",
+			"kind": "json",
+			"match": "['response','docs', 'file_size_l']"
+		},
+		"sql_backup_size_w3act": {
+			"host": "solr8",
+			"name": "ukwa_database_backup_size_bytes",
+			"label": "w3act",
+			"desc": "Size of backup of SQL database stored on HDFS.",
+			"uri": "http://solr8.api.wa.bl.uk/solr/tracking/select?q=modified_at_dt%3A[NOW-1DAY%20TO%20NOW]%20AND%20file_path_s:\\/2_backups\\/w3act\\/prod\\/w3act-dump-*&sort=refresh_date_dt%20desc&wt=json",
+			"kind": "json",
+			"match": "['response','docs', 'file_size_l']"
+		},
+		"nominet_last_upload_size": {
+			"host": "solr8",
+			"name": "ukwa_nominet_file_size_bytes",
+			"label": "nominet",
+			"desc": "Size of recent Nominet dump stored on HDFS.",
+			"uri": "http://solr8.api.wa.bl.uk/solr/tracking/select?q=modified_at_dt%3A[NOW-1MONTH%20TO%20NOW]%20AND%20file_path_s:\\/1_data\\/nominet\\/ukdata-*&sort=refresh_date_dt%20desc&wt=json",
+			"kind": "json",
+			"match": "['response','docs', 'file_size_l']"
+		},
+		"nominet_last_upload_timestamp": {
+			"host": "solr8",
+			"name": "trackdb_last_timestamp",
+			"label": "nominet",
+			"desc": "Timestamp of most recent Nominet dump stored on HDFS.",
+			"uri": "http://solr8.api.wa.bl.uk/solr/tracking/select?q=file_path_s:\\/1_data\\/nominet\\/ukdata-*&sort=modified_at_dt%20desc&wt=json",
+			"kind": "json",
+			"match": "['response','docs', 'timestamp_dt']"
+		},
+		"crawl_log_elasticsearch_updates": {
+			"host": "logs",
+			"name": "ukwa_crawl_log_records",
+			"label": "indexed_1m",
+			"desc": "Number of crawl log entries in ElasticSearch in the last minute.",
+			"uri": "http://logs.wa.bl.uk:9200/crawl_log*/_search?pretty=true&q=@timestamp:[now-1m+TO+*]&sort=@timestamp:desc&size=0",
+			"kind": "json",
+			"match": "['hits','total', 'value']"
 		}
 	},
 	"cdx_oa_wayback": {
@@ -62,7 +124,7 @@
 			"host": "www.webarchive.org.uk",
 			"label": "cdx",
 			"desc": "Most recent CDX timestamp of a page that should be crawled every day (bl.uk/robots.txt)",
-			"uri": "https://www.webarchive.org.uk/wayback/archive/cdx?url=https%3A%2F%2Fwww.bl.uk%2Frobots.txt&output=json&allowFuzzy=false&sort=reverse&limit=1",
+			"uri": "https://www.webarchive.org.uk/wayback/archive/cdx?url=https%3A%2F%2Fwww.bbc.co.uk%2Fnews&output=json&allowFuzzy=false&sort=reverse&limit=1",
 			"kind": "json",
 			"match": "['timestamp']"
 		}
