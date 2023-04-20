@@ -163,9 +163,16 @@
       "targets": [
         {
           "expr": "node_filesystem_free_bytes{instance=\"crawler08:9100\", mountpoint=\"/opt\"}",
+          "hide": false,
           "interval": "",
           "legendFormat": "{{ mountpoint}}",
           "refId": "A"
+        },
+        {
+          "expr": "node_filesystem_free_bytes{instance=\"crawler08:9100\", mountpoint=\"/mnt/gluster/dc2023\"}",
+          "interval": "",
+          "legendFormat": "{{ mountpoint}}",
+          "refId": "B"
         }
       ],
       "thresholds": [],
