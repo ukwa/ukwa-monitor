@@ -684,6 +684,11 @@
         "name": "job",
         "options": [
           {
+            "selected": true,
+            "text": "services",
+            "value": "services"
+          },
+          {
             "selected": false,
             "text": "discovery_access",
             "value": "discovery_access"
@@ -700,11 +705,16 @@
           },
           {
             "selected": false,
+            "text": "hadoop3",
+            "value": "hadoop3"
+          },
+          {
+            "selected": false,
             "text": "infrastructure",
             "value": "infrastructure"
           },
           {
-            "selected": true,
+            "selected": false,
             "text": "ingest_metadata",
             "value": "ingest_metadata"
           },
@@ -715,8 +725,23 @@
           },
           {
             "selected": false,
+            "text": "airflow",
+            "value": "airflow"
+          },
+          {
+            "selected": false,
             "text": "solr",
             "value": "solr"
+          },
+          {
+            "selected": false,
+            "text": "federate",
+            "value": "federate"
+          },
+          {
+            "selected": false,
+            "text": "federate-dc",
+            "value": "federate-dc"
           }
         ],
         "query": "up{instance=~\".*\"}",
