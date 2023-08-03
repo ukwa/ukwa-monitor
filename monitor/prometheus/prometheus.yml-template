@@ -99,8 +99,8 @@ scrape_configs:
   - job_name: 'hadoop3'
     static_configs:
       - targets:
-        - 'h3dn1:9100'
-        - 'h3dn2:9100'
+#        - 'h3dn1:9100'
+#        - 'h3dn2:9100'
         - 'h3dn3:9100'
         - 'h3dn4:9100'
         - 'h3dn5:9100'
@@ -206,7 +206,7 @@ scrape_configs:
         - 'solr2:3903'
         - 'solr3:3903'
         - 'solr4:3903'
-        - 'solr5:3903'
+#        - 'solr5:3903'
         - 'solr-proxy:3903'
 
   - job_name: 'solr-query'
