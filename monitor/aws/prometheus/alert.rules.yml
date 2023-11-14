@@ -1,0 +1,78 @@
+groups:
+- name: UKWA metrics
+  rules:
+  - alert: low_crawler_activity
+    # The NPLD crawler is busier:
+    expr: increase(heritrix3_crawl_job_uris_total{kind="finished", jobname!="frequent-bypm"}[4h]) < 10
+    for: 10m
+    labels:
+      severity: severe
+    annotations:
+      description: Low crawl rate for crawl job {{ $labels.jobname }}.
+      summary: The {{ $labels.jobname }} crawl job is crawling too slowly.
+
+  - alert: low_crawler_activity_bypm
+    # By permissions crawls are not running all day, but every day:
+    expr: increase(heritrix3_crawl_job_uris_total{kind="finished",jobname="frequent-bypm"}[24h]) == 0
+    for: 10m
+    labels:
+      severity: severe
+    annotations:
+      description: Low crawl rate for crawl job {{ $labels.jobname }}.
+      summary: The {{ $labels.jobname }} crawl job is crawling too slowly.
+      
+  - alert: fc_crawl_is_slow
+    expr: sum(rate(kafka_log_logendoffset{topic="fc.crawled"}[10m])) < 5
+    for: 30m
+    labels:
+      severity: severe
+    annotations:
+      summary: "The frequent crawls are not running as fast as expected!"
+      description: "The frequent crawls do not appear to be running as fast as it should be."
+
+- name: Generic metrics
+  rules:
+  # Alert for any instance that is unreachable for >5 minutes.
+  - alert: service_down
+    expr: up == 0
+    for: 5m
+    labels:
+      severity: severe
+    annotations:
+      summary: "Service {{ $labels.instance }} down"
+      description: "{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 5 minutes."
+
+  - alert: host_cpu_rate
+    expr: 100 - 100*avg(irate(node_cpu_seconds_total{mode='idle'}[10m])) > 80
+    for: 10m
+    labels:
+      severity: severe
+    annotations:
+      summary: "CPU rate on {{ $labels.instance }} > 80%"
+      description: "CPU rate on {{ $labels.instance }} > 80% for more than 10 minutes"
+
+  - alert: host_free_disk_space
+    expr: (node_filesystem_avail_bytes{fstype=~"ext.|xfs|zfs",instance!="jisc03:9100"}/node_filesystem_size_bytes{fstype=~"ext.|xfs|zfs",instance!="jisc03:9100"}) * 100 < 15
+    for: 5m
+    labels:
+      severity: severe
+    annotations:
+      summary: "Disk space free < 15% on {{ $labels.instance }}"
+      description: "Disk space free on {{ $labels.instance }} has been less that 15% for more than 5 minutes"
+  - alert: predict_host_disk_space
+    expr: min(predict_linear(node_filesystem_free{mountpoint=~"/|/data"}[48h], 2*7*24*3600)) by (instance, mountpoint) < 0
+    for: 1h
+    labels:
+      severity: severe
+    annotations:
+      summary: "Disk space running out on {{ $labels.instance }} at {{ $labels.mountpoint }}"
+      description: "Based on recent sampling, the disk is likely to will fill on volume {{ $labels.mountpoint }} within the next two weeks, for instance: {{ $labels.instance }}."
+
+  - alert: cpu_running_too_hot
+    expr: max(node_hwmon_temp_celsius) by (instance) > 70
+    for: 30m
+    labels:
+      severity: severe
+    annotations:
+      summary: "CPU running too hot?"
+      description: "The CPU on {{ $labels.instance }} is running hot (>70C for 30mins)."

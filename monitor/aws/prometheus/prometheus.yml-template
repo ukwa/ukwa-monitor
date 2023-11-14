@@ -1,0 +1,32 @@
+# scrape_interval controls frequency of scraping targets
+# evaluation_interval controls how often the prometheus rules are evaluated against target data
+global:
+  scrape_interval:     1m
+  scrape_timeout:      1m
+  evaluation_interval: 1m
+
+
+# Specify the location of rules we want prometheus to load
+rule_files:
+  - 'alert.rules.yml'
+
+
+# prometheus has a dependency on alertmanager, as defined in docker_compose.yml
+alerting:
+  alertmanagers:
+  - scheme: http
+    static_configs:
+    - targets:
+      - "${ALERTMANAGER_SERVICE_NAME}"
+
+# Define which resources prometheus should monitor
+scrape_configs:
+  - job_name: 'services'
+    static_configs:
+      - targets:
+        - 'fc:9100'
+
+  - job_name: 'pushgateway'
+    honor_labels: true
+    static_configs:
+      - targets: ['pushgateway:9091']
