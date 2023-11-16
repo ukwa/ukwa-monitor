@@ -9,5 +9,5 @@ datasources:
     type: prometheus
     access: proxy
     orgId: 1
-    url: http://${FC_EMBEDDED_SERVICE_NAME}
+    url: http://${FC_EMBEDDED_SERVICE_NAME}:9191
     isDefault: false

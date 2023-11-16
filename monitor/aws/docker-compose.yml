@@ -14,28 +14,23 @@ services:
       - '--storage.path=/alertmanager'
       - '--web.external-url=http://${ALERTMANAGER_SERVICE_NAME}/'
 
-  pushgateway:
-    image: prom/pushgateway:v1.4.2
-    ports:
-      - 9091:9091
-
   prometheus:
     image: prom/prometheus:v2.30.3
     ports:
       - "${PROMETHEUS_PORT}:9090"
     depends_on:
       - alertmanager:alertmanager
-      - pushgateway:pushgateway
     user: root
     volumes:
       - ./prometheus:/etc/prometheus
       - "${PROMETHEUS_DATA}:/prometheus"
     extra_hosts:
       - 'fc:172.31.43.254'
+      - 'monitor:172.31.18.188'
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--storage.tsdb.path=/prometheus'
-      - '--storage.tsdb.retention.time=365d'
+      - '--storage.tsdb.retention.time=180d'
       - '--web.console.libraries=/usr/share/prometheus/console_libraries'
       - '--web.console.templates=/usr/share/prometheus/consoles'
       - '--web.external-url=http://${PROMETHEUS_SERVICE_NAME}/'
