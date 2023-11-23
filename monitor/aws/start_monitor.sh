@@ -18,11 +18,11 @@ STORAGE_PATH=/mnt/data/monitor
 
 
 # alertmanager
-export ALERTMANAGER_SERVICE_NAME='monitor'
-export ALERTMANAGER_DATA=${STORAGE_PATH}/alertmanager
-export ALERTMANAGER_PORT=9093
-[[ -d ${ALERTMANAGER_DATA}/ ]] || mkdir -p ${ALERTMANAGER_DATA}
-envsubst < ./alertmanager/config.yml-template > ./alertmanager/config.yml
+#export ALERTMANAGER_SERVICE_NAME='monitor'
+#export ALERTMANAGER_DATA=${STORAGE_PATH}/alertmanager
+#export ALERTMANAGER_PORT=9093
+#[[ -d ${ALERTMANAGER_DATA}/ ]] || mkdir -p ${ALERTMANAGER_DATA}
+#envsubst < ./alertmanager/config.yml-template > ./alertmanager/config.yml
 
 
 # prometheus
@@ -42,8 +42,8 @@ export FC_EMBEDDED_SERVICE_NAME='172.31.43.254'
 [[ -d ${GRAFANA_DATA}/ ]] || mkdir -p ${GRAFANA_DATA}
 chown -R ${USER}:${USER} ${GRAFANA_DATA}
 envsubst < ./grafana/grafana.ini-template > ./grafana/grafana.ini
-envsubst < ./grafana/datasources/prometheus.yaml-template > ./grafana/datasources/prometheus.yaml
-envsubst < ./grafana/datasources/frequent_crawl.yaml-template > ./grafana/datasources/frequent_crawl.yaml
+envsubst < ./grafana/provisioning/datasources/prometheus.yaml-template > ./grafana/provisioning/datasources/prometheus.yaml
+envsubst < ./grafana/provisioning/datasources/frequent_crawl.yaml-template > ./grafana/provisioning/datasources/frequent_crawl.yaml
 
 
 # start monitoring stacks

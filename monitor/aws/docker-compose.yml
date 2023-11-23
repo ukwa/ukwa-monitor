@@ -2,24 +2,24 @@ version: '3.2'
 # prometheus monitoring service
 
 services:
-  alertmanager:
-    image: prom/alertmanager
-    ports:
-      - "${ALERTMANAGER_PORT}:9093"
-    volumes:
-      - ./alertmanager:/etc/alertmanager
-      - "${ALERTMANAGER_DATA}:/alertmanager"
-    command:
-      - '--config.file=/etc/alertmanager/config.yml'
-      - '--storage.path=/alertmanager'
-      - '--web.external-url=http://${ALERTMANAGER_SERVICE_NAME}/'
+  #  alertmanager:
+  #  image: prom/alertmanager
+  #  ports:
+  #    - "${ALERTMANAGER_PORT}:9093"
+  #  volumes:
+  #    - ./alertmanager:/etc/alertmanager
+  #    - "${ALERTMANAGER_DATA}:/alertmanager"
+  #  command:
+  #    - '--config.file=/etc/alertmanager/config.yml'
+  #    - '--storage.path=/alertmanager'
+  #    - '--web.external-url=http://${ALERTMANAGER_SERVICE_NAME}/'
 
   prometheus:
     image: prom/prometheus:v2.30.3
     ports:
       - "${PROMETHEUS_PORT}:9090"
-    depends_on:
-      - alertmanager:alertmanager
+#   depends_on:
+#     - alertmanager:alertmanager
     user: root
     volumes:
       - ./prometheus:/etc/prometheus

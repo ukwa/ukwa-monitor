@@ -7,17 +7,17 @@ global:
 
 
 # Specify the location of rules we want prometheus to load
-rule_files:
-  - 'alert.rules.yml'
+#rule_files:
+#  - 'alert.rules.yml'
 
 
 # prometheus has a dependency on alertmanager, as defined in docker_compose.yml
-alerting:
-  alertmanagers:
-  - scheme: http
-    static_configs:
-    - targets:
-      - "${ALERTMANAGER_SERVICE_NAME}"
+#alerting:
+#  alertmanagers:
+#  - scheme: http
+#    static_configs:
+#    - targets:
+#      - "${ALERTMANAGER_SERVICE_NAME}"
 
 
 # Define which resources prometheus should monitor
