@@ -23,11 +23,11 @@ STORAGE_PATH=/mnt/data/monitor
 
 
 # alertmanager
-#export ALERTMANAGER_SERVICE_NAME='monitor'
-#export ALERTMANAGER_DATA=${STORAGE_PATH}/alertmanager
-#export ALERTMANAGER_PORT=9093
-#[[ -d ${ALERTMANAGER_DATA}/ ]] || mkdir -p ${ALERTMANAGER_DATA}
-#envsubst < ./alertmanager/config.yml-template > ./alertmanager/config.yml
+export ALERTMANAGER_SERVICE_NAME='monitor'
+export ALERTMANAGER_DATA=${STORAGE_PATH}/alertmanager
+export ALERTMANAGER_PORT=9093
+[[ -d ${ALERTMANAGER_DATA}/ ]] || mkdir -p ${ALERTMANAGER_DATA}
+envsubst < ./alertmanager/config.yml-template > ./alertmanager/config.yml
 
 
 # prometheus
