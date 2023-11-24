@@ -32,6 +32,7 @@ monitor/grafana/provisioning/dashboards/wa_status.json
 # aws generated content
 monitor/aws/alertmanager/config.yml
 monitor/aws/grafana/grafana.ini
+monitor/aws/grafana/provisioning/dashboards/blukwa.yaml
 monitor/aws/grafana/provisioning/datasources/frequent_crawl.yaml
 monitor/aws/grafana/provisioning/datasources/prometheus.yaml
 monitor/aws/prometheus/prometheus.yml

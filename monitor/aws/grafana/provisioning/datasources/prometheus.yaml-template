@@ -5,9 +5,9 @@
 apiVersion: 1
 
 datasources:
-  - name: Prometheus
-    type: prometheus
-    access: direct
+  - name: "Prometheus"
+    type: "prometheus"
+    access: "proxy"
     orgId: 1
-    url: http://${PROMETHEUS_SERVICE_NAME}
-    isDefault: true
+    url: "http://${SERVER_IP}:${PROMETHEUS_PORT}"
+    isDefault: "true"

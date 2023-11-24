@@ -26,7 +26,7 @@ services:
       - "${PROMETHEUS_DATA}:/prometheus"
     extra_hosts:
       - 'fc:172.31.43.254'
-      - 'monitor:172.31.18.188'
+      - "monitor:${SERVER_IP}"
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--storage.tsdb.path=/prometheus'
@@ -44,11 +44,14 @@ services:
     depends_on:
       - prometheus
     user: "1000"
+    extra_hosts:
+      - 'fc:172.31.43.254'
+      - "monitor:${SERVER_IP}"
     environment:
       - "GF_AUTH_ANONYMOUS_ENABLED=true"
-      - GF_AUTH_ANONYMOUS_ORG_NAME=${GRAFANA_ORG_NAME}
+      - "GF_AUTH_ANONYMOUS_ORG_NAME=${GRAFANA_ORG_NAME}"
       - "GF_AUTH_ANONYMOUS_ORG_ROLE=Viewer"
-      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_ADMIN_PASSWORD}
+      - "GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_ADMIN_PASSWORD}"
     volumes:
       - ./grafana:/etc/grafana
       - "${GRAFANA_DATA}:/var/lib/grafana"

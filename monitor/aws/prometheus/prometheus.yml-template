@@ -25,8 +25,8 @@ scrape_configs:
   - job_name: 'node_exporter'
     static_configs:
       - targets:
-        - 'monitor:9100'
-        - 'fc:9100'
+        - "${PROMETHEUS_SERVICE_NAME}:9100"
+        - "${FC_PROMETHEUS_SERVICE_NAME}:9100"
 
   - job_name: 'federate'
     scrape_interval: 20s
@@ -39,4 +39,4 @@ scrape_configs:
         - '{job="kafka"}'
     static_configs:
       - targets:
-        - 'fc:9191'
+        - "${FC_PROMETHEUS_SERVICE_NAME}:9191"
