@@ -3,7 +3,7 @@ version: '3.2'
 
 services:
   alertmanager:
-    image: prom/alertmanager
+    image: prom/alertmanager:main
     ports:
       - "${ALERTMANAGER_PORT}:9093"
     volumes:
@@ -15,11 +15,11 @@ services:
       - '--web.external-url=http://${ALERTMANAGER_SERVICE_NAME}/'
 
   prometheus:
-    image: prom/prometheus:v2.30.3
+    image: prom/prometheus:main
     ports:
       - "${PROMETHEUS_PORT}:9090"
     depends_on:
-      - alertmanager:alertmanager
+      - alertmanager
     user: root
     volumes:
       - ./prometheus:/etc/prometheus
@@ -38,7 +38,7 @@ services:
       - '--web.enable-lifecycle'
 
   grafana:
-    image: grafana/grafana:7.5.7
+    image: grafana/grafana:main
     ports:
       - "${GRAFANA_PORT}:3000"
     depends_on:

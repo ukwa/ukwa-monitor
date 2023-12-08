@@ -1,23 +1,16 @@
 global:
   resolve_timeout: 5m
-  slack_api_url: ${SLACK_API_URL}
+  slack_api_url: "${SLACK_API_URL}"
 
-# The directory from which notification templates are read.
-templates:
-- '/etc/alertmanager/template/*.tmpl'
-
-# to slack 
 route:
--  group_by: ['alertname', 'job']
--  group_wait: 30s
--  group_interval: 5m
--  repeat_interval: 12h
-  receiver: 'slack-webhook'
-
+  receiver: slack
+  group_by: ['alertname', 'job']
+  group_wait: 30s
+  group_interval: 5m
+  repeat_interval: 12h
 
 receivers:
-- name: 'slack-webhook'
+- name: slack
   slack_configs:
   - channel: '#alerts'
     send_resolved: true
-

@@ -31,8 +31,9 @@ export ALERTMANAGER_SERVICE_NAME='monitor'
 export ALERTMANAGER_DATA=${STORAGE_PATH}/alertmanager
 export ALERTMANAGER_PORT=9093
 [[ -d ${ALERTMANAGER_DATA}/ ]] || mkdir -p ${ALERTMANAGER_DATA}
-envsubst < ./alertmanager/config.yml-template > ./alertmanager/config.yml
 sudo chown nobody:nobody ${ALERTMANAGER_DATA}
+sudo chmod 775 ${ALERTMANAGER_DATA}
+envsubst < ./alertmanager/config.yml-template > ./alertmanager/config.yml
 
 
 # prometheus
