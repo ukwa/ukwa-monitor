@@ -15,6 +15,10 @@ if [[ "${GRAFANA_ADMIN_PASSWORD}" == "" ]]; then
 	echo -e "ERROR: GRAFANA_ADMIN_PASSWORD missing"
 	exit 1
 fi
+if [[ "${SLACK_API_URL}" == "" ]]; then
+	echo -e "ERROR: SLACK_API_URL missing"
+	exit 1
+fi
 
 
 # common

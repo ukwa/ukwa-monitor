@@ -1,12 +1,12 @@
 global:
   resolve_timeout: 5m
-  slack_api_url: 'https://hooks.slack.com/services/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'
+  slack_api_url: ${SLACK_API_URL}
 
 # The directory from which notification templates are read.
 templates:
 - '/etc/alertmanager/template/*.tmpl'
 
-# https://grafana.com/blog/2020/02/25/step-by-step-guide-to-setting-up-prometheus-alertmanager-with-slack-pagerduty-and-gmail/
+# to slack 
 route:
 -  group_by: ['alertname', 'job']
 -  group_wait: 30s
