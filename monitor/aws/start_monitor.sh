@@ -32,7 +32,6 @@ export ALERTMANAGER_DATA=${STORAGE_PATH}/alertmanager
 export ALERTMANAGER_PORT=9093
 [[ -d ${ALERTMANAGER_DATA}/ ]] || mkdir -p ${ALERTMANAGER_DATA}
 envsubst < ./alertmanager/config.yml-template > ./alertmanager/config.yml
-chmod 777 ${ALERTMANAGER_DATA}/
 sudo chown nobody:nobody ${ALERTMANAGER_DATA}
 
 
