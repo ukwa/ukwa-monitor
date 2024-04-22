@@ -1,5 +1,5 @@
 # ukwa-monitor
-Dashboard and monitoring system for the UK Web Archive
+Dashboard and monitoring system for the UK Web Archive.
 
 __Note__
 Default organisation name used within Grafana still needs to be set manually via the Grafana UI. 
