@@ -27,6 +27,7 @@ services:
     extra_hosts:
       - 'fc:172.31.43.254'
       - "monitor:${SERVER_IP}"
+      - 'ac:172.31.20.115'
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--storage.tsdb.path=/prometheus'
