@@ -62,4 +62,5 @@ envsubst < ./grafana/provisioning/datasources/frequent_crawl.yaml-template > ./g
 
 
 # start monitoring stacks
+#docker stack deploy --detach=false -c docker-compose.yml monitor
 docker stack deploy -c docker-compose.yml monitor
