@@ -52,6 +52,7 @@ export GRAFANA_SERVICE_NAME='monitor'
 export GRAFANA_PORT=3000
 export GRAFANA_DATA=${STORAGE_PATH}/grafana
 export FC_EMBEDDED_SERVICE_IP='172.31.43.254'
+export DC_EMBEDDED_SERVICE_IP='172.31.25.96'
 export GRAFANA_ORG_NAME='blukwa'
 [[ -d ${GRAFANA_DATA}/ ]] || mkdir -p ${GRAFANA_DATA}
 chown -R ${USER}:${USER} ${GRAFANA_DATA}
@@ -59,6 +60,7 @@ envsubst < ./grafana/grafana.ini-template > ./grafana/grafana.ini
 envsubst < ./grafana/provisioning/dashboards/blukwa.yaml-template > ./grafana/provisioning/dashboards/blukwa.yaml
 envsubst < ./grafana/provisioning/datasources/prometheus.yaml-template > ./grafana/provisioning/datasources/prometheus.yaml
 envsubst < ./grafana/provisioning/datasources/frequent_crawl.yaml-template > ./grafana/provisioning/datasources/frequent_crawl.yaml
+envsubst < ./grafana/provisioning/datasources/domain_crawl.yaml-template > ./grafana/provisioning/datasources/domain_crawl.yaml
 
 
 # start monitoring stacks
