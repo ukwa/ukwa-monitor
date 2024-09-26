@@ -40,6 +40,7 @@ envsubst < ./alertmanager/config.yml-template > ./alertmanager/config.yml
 export PROMETHEUS_SERVICE_NAME='monitor'
 export FC_PROMETHEUS_SERVICE_NAME='fc'
 export AC_PROMETHEUS_SERVICE_NAME='ac'
+export DC_PROMETHEUS_SERVICE_NAME='dc'
 export PROMETHEUS_DATA=${STORAGE_PATH}/prometheus
 export PROMETHEUS_PORT=9090
 [[ -d ${PROMETHEUS_DATA}/ ]] || mkdir -p ${PROMETHEUS_DATA}

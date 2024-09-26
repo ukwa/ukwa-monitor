@@ -35,5 +35,6 @@ monitor/aws/grafana/grafana.ini
 monitor/aws/grafana/provisioning/dashboards/blukwa.yaml
 monitor/aws/grafana/provisioning/datasources/frequent_crawl.yaml
 monitor/aws/grafana/provisioning/datasources/prometheus.yaml
+monitor/aws/grafana/provisioning/datasources/domain_crawl.yaml
 monitor/aws/prometheus/prometheus.yml
 monitor/aws/_z/*
