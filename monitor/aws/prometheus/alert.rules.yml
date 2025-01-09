@@ -31,25 +31,25 @@ groups:
       description: "The frequent crawls do not appear to be running as fast as it should be."
 
 
-- name: DC metrics
-  rules:
-  - alert: low_dc_crawler_activity
-    expr: increase(heritrix3_crawl_job_uris_total{kind="finished", jobname="dc2024"}[4h]) < 10
-    for: 10m
-    labels:
-      severity: severe
-    annotations:
-      description: Low crawl rate for crawl job {{ $labels.jobname }}.
-      summary: The {{ $labels.jobname }} crawl job is crawling too slowly.
-     
-  - alert: dc_crawl_is_slow
-    expr: sum(rate(kafka_log_logendoffset{topic="dc.crawled"}[10m])) < 5
-    for: 30m
-    labels:
-      severity: severe
-    annotations:
-      summary: "The domain crawl is not running as fast as expected!"
-      description: "The domain crawl does not appear to be running as fast as it should be."
+#- name: DC metrics
+#  rules:
+#  - alert: low_dc_crawler_activity
+#    expr: increase(heritrix3_crawl_job_uris_total{kind="finished", jobname="dc2024"}[4h]) < 10
+#    for: 10m
+#    labels:
+#      severity: severe
+#    annotations:
+#      description: Low crawl rate for crawl job {{ $labels.jobname }}.
+#      summary: The {{ $labels.jobname }} crawl job is crawling too slowly.
+#     
+#  - alert: dc_crawl_is_slow
+#    expr: sum(rate(kafka_log_logendoffset{topic="dc.crawled"}[10m])) < 5
+#    for: 30m
+#    labels:
+#      severity: severe
+#    annotations:
+#      summary: "The domain crawl is not running as fast as expected!"
+#      description: "The domain crawl does not appear to be running as fast as it should be."
 
 
 - name: Generic metrics

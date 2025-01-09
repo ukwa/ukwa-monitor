@@ -28,7 +28,7 @@ services:
       - 'fc:172.31.43.254'
       - "monitor:${SERVER_IP}"
       - 'ac:172.31.20.115'
-      - 'dc:172.31.25.96'
+#      - 'dc:172.31.25.96'
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--storage.tsdb.path=/prometheus'
@@ -49,7 +49,7 @@ services:
     extra_hosts:
       - 'fc:172.31.43.254'
       - "monitor:${SERVER_IP}"
-      - 'dc:172.31.25.96'
+#      - 'dc:172.31.25.96'
     environment:
       - "GF_AUTH_ANONYMOUS_ENABLED=true"
       - "GF_AUTH_ANONYMOUS_ORG_NAME=${GRAFANA_ORG_NAME}"

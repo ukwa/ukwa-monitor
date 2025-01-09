@@ -28,7 +28,7 @@ scrape_configs:
         - "${PROMETHEUS_SERVICE_NAME}:9100"
         - "${FC_PROMETHEUS_SERVICE_NAME}:9100"
         - "${AC_PROMETHEUS_SERVICE_NAME}:9100"
-        - "${DC_PROMETHEUS_SERVICE_NAME}:9100"
+#        - "${DC_PROMETHEUS_SERVICE_NAME}:9100"
 
   - job_name: 'federate'
     scrape_interval: 20s
@@ -39,9 +39,9 @@ scrape_configs:
         - '{job="npld-heritrix-workers"}'
         - '{job="bypm-heritrix-workers"}'
         - '{job="kafka"}'
-        - '{job="npld-dc-heritrix-worker"}'
+#        - '{job="npld-dc-heritrix-worker"}'
         - '{job="kafka-1"}'
     static_configs:
       - targets:
         - "${FC_PROMETHEUS_SERVICE_NAME}:9191"
-        - "${DC_PROMETHEUS_SERVICE_NAME}:9191"
+#        - "${DC_PROMETHEUS_SERVICE_NAME}:9191"

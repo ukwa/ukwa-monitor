@@ -61,9 +61,8 @@ envsubst < ./grafana/grafana.ini-template > ./grafana/grafana.ini
 envsubst < ./grafana/provisioning/dashboards/blukwa.yaml-template > ./grafana/provisioning/dashboards/blukwa.yaml
 envsubst < ./grafana/provisioning/datasources/prometheus.yaml-template > ./grafana/provisioning/datasources/prometheus.yaml
 envsubst < ./grafana/provisioning/datasources/frequent_crawl.yaml-template > ./grafana/provisioning/datasources/frequent_crawl.yaml
-envsubst < ./grafana/provisioning/datasources/domain_crawl.yaml-template > ./grafana/provisioning/datasources/domain_crawl.yaml
+#envsubst < ./grafana/provisioning/datasources/domain_crawl.yaml-template > ./grafana/provisioning/datasources/domain_crawl.yaml
 
 
 # start monitoring stacks
-#docker stack deploy --detach=false -c docker-compose.yml monitor
-docker stack deploy -c docker-compose.yml monitor
+docker stack deploy --detach=false -c docker-compose.yml monitor
